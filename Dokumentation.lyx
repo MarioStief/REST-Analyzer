@@ -2,7 +2,7 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass article
+\textclass paper
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -25,6 +25,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -59,12 +60,25 @@
 
 \begin_body
 
-\begin_layout Title
-Dokumentations-Chronik
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 Projektvorbereitung
+\end_layout
+
+\begin_layout Subsection
+XCode
 \end_layout
 
 \begin_layout Itemize
@@ -101,56 +115,81 @@ Identifier: Mario-Stief.RESTful-Web-Analyzer
 \end_layout
 
 \end_deeper
+\begin_layout Subsection
+Repository
+\end_layout
+
 \begin_layout Itemize
-Einrichten eines github-Accounts git@github.com:MarioStief/RESTful-Web-Analyzer.gi
-t
+Einrichten eines github-Accounts git@github.com:MarioStief/RemoteRepository.git
 \end_layout
 
 \begin_deeper
 \begin_layout Description
-Adresse: https://github.com/MarioStief/RESTful-Web-Analyzer
-\end_layout
-
-\begin_layout Standard
-Github die SSH-Schlüssel mitgeteilt
-\end_layout
-
-\begin_layout LyX-Code
-ssh-keygen -t rsa -C "mario.stief@gmail.com" (Schlüssel erstellen)
-\end_layout
-
-\begin_layout LyX-Code
-pbcopy < ~/.ssh/id_rsa.pub (Schlüssel in Zwischenablage kopieren und auf Github
- eintragen)
-\end_layout
-
-\begin_layout LyX-Code
-ssh -T git@github.com (Testconnect zu Github)
+Adresse: https://github.com/MarioStief/RemoteRepository
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-Sichern des Inhaltes, Checkout der Repo mit anlegen auf der Festplatte,
- reinkopieren der Backups.
+SSH-Schlüssel erstellen, auf github eintragen, Verbindung testen
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout LyX-Code
+
+ssh-keygen -t rsa -C "mario.stief@gmail.com"
+\end_layout
+
+\begin_layout LyX-Code
+
+pbcopy < ~/.ssh/id_rsa.pub
+\end_layout
+
+\begin_layout LyX-Code
+
+ssh -T git@github.com
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Hinzufügen im Project-Organizer als Remote Directory
+\end_layout
+
+\begin_layout Itemize
+Einbinden des Frameworks RestKit
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+Quelle: https://github.com/RestKit/RestKit/wiki/Installing-RestKit-in-Xcode-4.x
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Hinzufügen des Frameworks RestKit als Submodul:
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
-Einbinden des Frameworks RestKit (https://github.com/RestKit/RestKit/wiki/Install
-ing-RestKit-in-Xcode-4.x)
-\end_layout
-
-\begin_layout Standard
-Hinzufügen des Git-Submodules, um die eigene Installation von RestKit zu
- managen.
-\end_layout
-
-\begin_layout Standard
-Das Projekt um ein Submodul erweitern:
-\end_layout
+\begin_inset listings
+inline false
+status open
 
 \begin_layout LyX-Code
+
 git submodule add git://github.com/RestKit/RestKit.git
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -162,15 +201,382 @@ git submodule add git://github.com/RestKit/RestKit.git
 Initial Commit.
 \end_layout
 
-\begin_layout Itemize
-Da kein Developer-Account vorhanden: Einrichten einer Cydia-Repo
+\begin_layout Subsection
+79 € sparen – der Jailbreak
 \end_layout
 
-\begin_deeper
+\begin_layout Subsubsection
+Vom Code zur APP
+\end_layout
+
+\begin_layout Standard
+Problem: Wenn wir versuchen, die Ausgabe vom Simulator auf das iOS Device
+ umzustellen, um eine Ausgabedatei zu erzeugen, welche sich auf das Zielgerät
+ transferieren lässt, quittiert XCode dies mit der Fehlermeldung:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Code Sign error: The identity 'iPhone Developer' doesn't match any valid,
+ non-expired certificate/private key pair in your keychains
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+XCode verlangt einen Developer-Account für das Bereitstellen der compilierten
+ Apps.
+\end_layout
+
+\begin_layout Standard
+Eine einfache Möglichkeit wäre es, in der Preferences-Datei 
+\family typewriter
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/S
+DKs/iPhoneOS5.1.sdk/SDKSettings.plist
+\family default
+ den Schlüssel 
+\family typewriter
+CODE_SIGNING_REQUIRED
+\family default
+ von YES auf NO 
+\lang english
+zu setzen sowie in den 
+\shape italic
+Build Settings
+\shape default
+ des Projektes die 
+\shape italic
+Code Signing Identity
+\shape default
+ auf 
+\shape italic
+Don't Code Sign
+\shape default
+ anzuändern.
+ Auf diese Art und Weise komme ich zwar an die App-Dateien, jedoch verweigert
+ selbst ein gejailbreaktes iPad deren Ausführung.
+ Wir benötigen also eine Signierung ohne dass wir über einen gültigen Developer-
+Account verfügen.
+\end_layout
+
+\begin_layout Standard
+Hierfür erstellen wir uns in der Keychain ein selbstsigniertes Zertifikat
+ des Typs 
+\begin_inset Quotes eld
+\end_inset
+
+Code Signing
+\begin_inset Quotes erd
+\end_inset
+
+mit dem Namen 
+\begin_inset Quotes eld
+\end_inset
+
+iPhone Developer
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Statt auf 
+\shape italic
+Don't Code Sign
+\shape default
+ stellen wir die Signings Identity auf den eben erstellten 
+\shape italic
+iPhone Developer
+\shape default
+ und ändern in der Datei /Applications/Xcode.app/Contents/Developer/Platforms/iPh
+oneOS.platform/Info.plist alle Vorkommen von XCiPhoneOSCodeSignContext in
+ XCCodeSignContext ab.
+ Der Entwickler von Cydia hat ein Werkzeug mit dem Namen ldid bereitgestellt,
+ welches in der Lage ist, die SHA1 Hashes zu überprüfen, welche vom iOS-Kernel
+ überprüft werden.
+ Dieses Kommandozeilenprogramm kopieren wir – zusammen mit einem Python
+ Script - nach /usr/bin/ und tauschen in der Datei /Applications/Xcode.app/Conten
+ts/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/PrivatePlugIns/i
+PhoneOS Build System Support.xcplugin/Contents/Resources/iPhoneCodeSign.xcspec
+ die Zeile 
+\begin_inset Quotes erd
+\end_inset
+
+CommandLine = /usr/bin/codesign
+\begin_inset Quotes erd
+\end_inset
+
+ mit der Zeile “CommandLine = /usr/bin/ldid3.py” aus.
+ Von nun an übernimmt dieses Werkzeug die Signierng unserer Programme.
+\end_layout
+
+\begin_layout Standard
+Nachdem wir nun die Ausgabe vom Simulator auf das iOS Device abändern finden
+ wir nach dem Übersetzen in XCode im Verzeichnis Products die gewünschte
+ und signierte APP-Datei.
+\end_layout
+
 \begin_layout Description
-Adresse: http://cydia.myrepospace.com/RaveAngel/
+Quelle: http://iklive.org/objective-c-compiling-ios-5-software-without-developer-
+program/
 \end_layout
 
-\end_deeper
+\begin_layout Subsubsection
+Von der APP zum DEB-Paket
+\end_layout
+
+\begin_layout Standard
+Um unsere erstellten APP-Dateien in ein DEB-Paket umzuwandeln, bedienen
+ uns bequem des Programmes MacPorts, welches – ähnlich Fink – eine Paketverwaltu
+ng für freie und quelloffene Software für OS X ist.
+\end_layout
+
+\begin_layout Description
+Quelle: http://www.macports.org/
+\end_layout
+
+\begin_layout Standard
+Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
+ Verzeichnis unserem Pfad hinzu:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+\end_layout
+
+\end_inset
+
+Nun folgt ein Update dessen Paketquellen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+sudo port selfupdate
+\end_layout
+
+\end_inset
+
+und die Installation des gewünschten Paketes dpkg:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+sudo port install dpkg
+\end_layout
+
+\end_inset
+
+welche den gewünschten Befehl dkgp-deb bereitstellt.
+ Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repo-konforme
+ DEB-Pakete zu erstellen.
+\end_layout
+
+\begin_layout Standard
+Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
+ welche sich wie folgt aufbaut:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
++- MyProgram
+\end_layout
+
+\begin_layout Plain Layout
+
+   +- Applications
+\end_layout
+
+\begin_layout Plain Layout
+
+   |  +- MyProgram.app
+\end_layout
+
+\begin_layout Plain Layout
+
+   |     +- Info.plist
+\end_layout
+
+\begin_layout Plain Layout
+
+   |     +- MyProgram
+\end_layout
+
+\begin_layout Plain Layout
+
+   |     +- icon.png
+\end_layout
+
+\begin_layout Plain Layout
+
+   +- DEBIAN
+\end_layout
+
+\begin_layout Plain Layout
+
+   |  +- control
+\end_layout
+
+\begin_layout Plain Layout
+
+   +- System
+\end_layout
+
+\begin_layout Plain Layout
+
+      +- Library
+\end_layout
+
+\begin_layout Plain Layout
+
+         +- LaunchDaemons
+\end_layout
+
+\begin_layout Plain Layout
+
+            +- com.identifier.MyProgram.plist
+\end_layout
+
+\end_inset
+
+wobei das Verzeichnis System jedoch nicht zwingend notwendig ist.
+\end_layout
+
+\begin_layout Standard
+Die Datei control, kann folgende Einträge beinhalten: Package, Name, Version,
+ Architecture, Description, Homepage, Depiction, Maintainer, Author, Sponsor,
+ Section.
+ Zwingend vorgeschrieben sind davon jedoch nur Package und Version.
+\end_layout
+
+\begin_layout Standard
+Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
+ Teil der internen Struktur eines Debian-Paketes darstellen – einige ._*-Dateien,
+ welche zusätzliche Informationen enthalten.
+ Diese zusätzlichen Dateien würden zusammen mit dem Paket installiert werden
+ und Konflikte mit anderen Paketen erzeugen (abgesehen davon, dass diese
+ Dateien einfach nicht in unser Paket gehören).
+ Um dieses Feature zu deaktivieren werden folgende Umgebungsvariablen exportiert
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+export COPYFILE_DISABLE
+\end_layout
+
+\begin_layout Plain Layout
+
+export COPY_EXTENDED_ATTRIBUTES_DISABLE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sind wir nun soweit wechseln im Terminal ins Verzeichnis, in sich unsere
+ 
+\begin_inset Quotes eld
+\end_inset
+
+MyProgramm
+\begin_inset Quotes erd
+\end_inset
+
+-Strktur befindet und erzeuen unser DEB-Paket mittels:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+dpkg-deb -b MyProgram
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+Quelle: http://www.saurik.com/id/7
+\end_layout
+
+\begin_layout Subsubsection
+Vom DEB-Paket aufs Device
+\end_layout
+
+\begin_layout Standard
+Um die nun fertige DEB-Datei auf das iPad zu bekommen, benötigen wir ein
+ Cydia-kompatible Repository.
+ Hierfür habe ich auf das kostenlose Angebot von MyRepoSpace zurückgegriffen,
+ in dem man die fertigen Pakete komfortabel über ein Webinterface in die
+ Source lädt.
+ Die im Cydia Store eingebundene Paketquelle lautet:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+http://cydia.myrepospace.com/RaveAngel/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Objective-C
+\end_layout
+
+\begin_layout Section
+RESTful Web Services
+\end_layout
+
+\begin_layout Section
+Implementation
+\end_layout
+
 \end_body
 \end_document
