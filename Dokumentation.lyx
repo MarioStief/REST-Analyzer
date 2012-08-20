@@ -246,9 +246,7 @@ DKs/iPhoneOS5.1.sdk/SDKSettings.plist
 \family typewriter
 CODE_SIGNING_REQUIRED
 \family default
- von YES auf NO 
-\lang english
-zu setzen sowie in den 
+ von YES auf NO zu setzen sowie in den 
 \shape italic
 Build Settings
 \shape default
@@ -570,12 +568,127 @@ http://cydia.myrepospace.com/RaveAngel/
 Objective-C
 \end_layout
 
+\begin_layout Subsection
+Grundlegende Unterschiede zu C++
+\end_layout
+
+\begin_layout Subsection
+...
+\end_layout
+
 \begin_layout Section
+REST
+\end_layout
+
+\begin_layout Subsection
 RESTful Web Services
+\end_layout
+
+\begin_layout Subsection
+JSON
 \end_layout
 
 \begin_layout Section
 Implementation
+\end_layout
+
+\begin_layout Standard
+Notizen:
+\end_layout
+
+\begin_layout Itemize
+TextField erzeugt, Name: url
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+http://
+\begin_inset Quotes erd
+\end_inset
+
+ voreingestellt
+\end_layout
+
+\begin_layout Itemize
+url -> ViewController(delegate)
+\end_layout
+
+\begin_layout Itemize
+textFieldShouldReturn
+\end_layout
+
+\begin_layout Itemize
+Label 
+\begin_inset Quotes eld
+\end_inset
+
+URL
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Button 
+\begin_inset Quotes eld
+\end_inset
+
+Go
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Bei 
+\begin_inset Quotes eld
+\end_inset
+
+Go
+\begin_inset Quotes erd
+\end_inset
+
+-Knopfdruck das Keyboard verschwinden lassen [self.url resignFirstResponder]
+\end_layout
+
+\begin_layout Itemize
+-> in self.url.text befindet sich nun die URL
+\end_layout
+
+\begin_layout Itemize
+PickerView erzeugt, Name: requestMethod
+\end_layout
+
+\begin_layout Itemize
+requestMethod -> ViewController (delegate)
+\end_layout
+
+\begin_layout Itemize
+requestMethod -> ViewController (dataSource)
+\end_layout
+
+\begin_layout Subsection
+Layout
+\end_layout
+
+\begin_layout Standard
+Verwendete Grafiken:
+\end_layout
+
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/34203/128/box_green_square_icon
+\end_layout
+
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/34206/128/box_red_icon
+\end_layout
+
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/34224/128/browser_earth_internet_world_icon
 \end_layout
 
 \end_body
