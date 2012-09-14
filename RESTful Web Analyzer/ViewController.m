@@ -70,22 +70,11 @@
     /* if (self.url.beginswith("www.") then "http://" + self.url.text;
     NSString *self.url.text = ([[NSString alloc] initWithFormat:@"http://%@", self.url.text]);
      */
-    [self.url resignFirstResponder];
     
-    // Trennung in BaseURL und ResorceURL
-    NSLog(@"Komplette URL: %@",url.text);
-    NSArray* urlComponents = url.text. pathComponents;
-    baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
-    if ([urlComponents count] > 2) {
-        resourcePath = @"";
-        for (int i = 2; i < [urlComponents count]; i++)
-            resourcePath = [NSString stringWithFormat:@"%@/%@",resourcePath,[urlComponents objectAtIndex:i]];
-    }
-    NSLog(@"BaseURL: %@",baseUrl);
-    NSLog(@"ResourcePath: %@",resourcePath);
-
-    manager = [RKObjectManager objectManagerWithBaseURLString:baseUrl];
-    [manager loadObjectsAtResourcePath:resourcePath delegate:[NSObject class]];
+    [self.url resignFirstResponder];    // On-Screen-Tastatur entfernen
     
+    [mapper setUrl:self.url.text];      // URL an mapper übergeben
+    [mapper splitUrl];                  // aufteilen in Base URL und Resource URL
+    [mapper mapUrl];                    // die Resoure in ein lokales Objekt mappen
 }
 @end

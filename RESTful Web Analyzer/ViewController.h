@@ -12,9 +12,7 @@
 
 @interface ViewController : UIViewController <UITextFieldDelegate> {
     NSArray *requestMethods;
-    NSString* baseUrl;
-    NSString* resourcePath;
-    RKObjectManager* manager;
+    ObjectMapper* mapper;
 }
 @property (weak, nonatomic) IBOutlet UITextField *url;
 @property (weak, nonatomic) IBOutlet UIPickerView *requestMethod;

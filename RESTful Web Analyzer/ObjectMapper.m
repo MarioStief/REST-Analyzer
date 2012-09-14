@@ -27,4 +27,34 @@
             nil];
 }
 
+- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error {
+// wird vom RKObjectLoaderDelegate-Protokoll verlangt
+    
+}
+
+- (void)setUrl:(NSString *)_url {
+    url = _url;
+}
+
+- (void)splitUrl {
+    // Trennung in BaseURL und ResourceURL
+    NSArray* urlComponents = url.pathComponents;
+    baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
+    if ([urlComponents count] > 2) {
+        resourcePath = @"";
+        for (int i = 2; i < [urlComponents count]; i++)
+            resourcePath = [NSString stringWithFormat:@"%@/%@",resourcePath,[urlComponents objectAtIndex:i]];
+    }
+    resourcePath = @"/Mario.Stief";
+    NSLog(@"BaseURL: %@ + ResourcePath: %@",baseUrl, resourcePath);
+}
+
+- (void)mapUrl {
+    [RKObjectManager setSharedManager:[RKObjectManager managerWithBaseURL:[[NSURL alloc] initWithString:baseUrl]]];
+    //manager = [RKObjectManager objectManagerWithBaseURLString:baseUrl];
+    [manager loadObjectsAtResourcePath:resourcePath delegate:self];
+    //NSDictionary* dic = [mapper dictionaryWithValuesForKeys:[NSArray arrayWithObjects: @"id", @"name", nil]];
+    NSLog(@"Einträge in dic: %@",[NSString stringWithFormat:@"%d", [[self elementToPropertyMappings] count]]);
+}
+
 @end
