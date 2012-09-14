@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ObjectMapper.h"
+#import <RestKit/ObjectMapping.h>
 
 @interface ViewController : UIViewController <UITextFieldDelegate> {
     NSArray *requestMethods;
+    NSString* baseUrl;
+    NSString* resourcePath;
+    RKObjectManager* manager;
 }
 @property (weak, nonatomic) IBOutlet UITextField *url;
 @property (weak, nonatomic) IBOutlet UIPickerView *requestMethod;

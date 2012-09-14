@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC4727151602C97900AFC8D6 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC3A23C01602B7EF00318887 /* libRestKit.a */; };
 		AC8B877C15DF645F00E12B48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877B15DF645F00E12B48 /* UIKit.framework */; };
 		AC8B877E15DF645F00E12B48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877D15DF645F00E12B48 /* Foundation.framework */; };
 		AC8B878015DF645F00E12B48 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877F15DF645F00E12B48 /* CoreGraphics.framework */; };
@@ -32,9 +33,52 @@
 		AC92022B15E2FDF9009B1426 /* Box_Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022915E2FDF9009B1426 /* Box_Red.png */; };
 		AC92022D15E2FF16009B1426 /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022C15E2FF16009B1426 /* Globe.png */; };
 		AC92022F15E30128009B1426 /* webservice.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022E15E30128009B1426 /* webservice.png */; };
+		ACF0CD351602BF500019EF61 /* ObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF0CD331602BF240019EF61 /* ObjectMapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AC3A23BF1602B7EF00318887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D1614564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		AC3A23C11602B7EF00318887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D2614564E820060A5C5;
+			remoteInfo = RestKitTests;
+		};
+		AC3A23C31602B7EF00318887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E62145651060060A5C5;
+			remoteInfo = RestKitFramework;
+		};
+		AC3A23C51602B7EF00318887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E78145651060060A5C5;
+			remoteInfo = RestKitFrameworkTests;
+		};
+		AC3A23C71602B7EF00318887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 259C301615128079003066A2;
+			remoteInfo = RestKitResources;
+		};
+		AC3A23CA1602B82300318887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
+		};
 		AC8B879D15DF646000E12B48 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AC8B876E15DF645F00E12B48 /* Project object */;
@@ -45,6 +89,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		AC8B877715DF645F00E12B48 /* RESTful Web Analyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RESTful Web Analyzer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B877B15DF645F00E12B48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AC8B877D15DF645F00E12B48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -75,7 +120,9 @@
 		AC92022815E2FDF9009B1426 /* Box_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Green.png; sourceTree = "<group>"; };
 		AC92022915E2FDF9009B1426 /* Box_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Red.png; sourceTree = "<group>"; };
 		AC92022C15E2FF16009B1426 /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
-		AC92022E15E30128009B1426 /* webservice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webservice.png; sourceTree = "<group>"; };
+		AC92022E15E30128009B1426 /* webservice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = webservice.png; path = ../webservice.png; sourceTree = "<group>"; };
+		ACF0CD321602BF240019EF61 /* ObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectMapper.h; sourceTree = "<group>"; };
+		ACF0CD331602BF240019EF61 /* ObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectMapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC4727151602C97900AFC8D6 /* libRestKit.a in Frameworks */,
 				AC8B87CF15DF654E00E12B48 /* CFNetwork.framework in Frameworks */,
 				AC8B87D015DF654E00E12B48 /* CoreData.framework in Frameworks */,
 				AC8B87D115DF654E00E12B48 /* libxml2.dylib in Frameworks */,
@@ -109,10 +157,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC3A23B51602B7EF00318887 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC3A23C01602B7EF00318887 /* libRestKit.a */,
+				AC3A23C21602B7EF00318887 /* RestKitTests.octest */,
+				AC3A23C41602B7EF00318887 /* RestKit.framework */,
+				AC3A23C61602B7EF00318887 /* RestKitFrameworkTests.octest */,
+				AC3A23C81602B7EF00318887 /* RestKitResources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AC8B876C15DF645F00E12B48 = {
 			isa = PBXGroup;
 			children = (
-				AC92022E15E30128009B1426 /* webservice.png */,
+				AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */,
 				AC8E797215DF715F003DCA88 /* Dokumentation.lyx */,
 				AC8B878115DF646000E12B48 /* RESTful Web Analyzer */,
 				AC8B879F15DF646000E12B48 /* RESTful Web AnalyzerTests */,
@@ -151,14 +211,13 @@
 		AC8B878115DF646000E12B48 /* RESTful Web Analyzer */ = {
 			isa = PBXGroup;
 			children = (
-				AC92022C15E2FF16009B1426 /* Globe.png */,
-				AC92022815E2FDF9009B1426 /* Box_Green.png */,
-				AC92022915E2FDF9009B1426 /* Box_Red.png */,
 				AC8B878A15DF646000E12B48 /* AppDelegate.h */,
 				AC8B878B15DF646000E12B48 /* AppDelegate.m */,
 				AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */,
 				AC8B879015DF646000E12B48 /* ViewController.h */,
 				AC8B879115DF646000E12B48 /* ViewController.m */,
+				ACF0CD321602BF240019EF61 /* ObjectMapper.h */,
+				ACF0CD331602BF240019EF61 /* ObjectMapper.m */,
 				AC8B878215DF646000E12B48 /* Supporting Files */,
 			);
 			path = "RESTful Web Analyzer";
@@ -167,6 +226,10 @@
 		AC8B878215DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AC92022C15E2FF16009B1426 /* Globe.png */,
+				AC92022915E2FDF9009B1426 /* Box_Red.png */,
+				AC92022815E2FDF9009B1426 /* Box_Green.png */,
+				AC92022E15E30128009B1426 /* webservice.png */,
 				AC8B878315DF646000E12B48 /* RESTful Web Analyzer-Info.plist */,
 				AC8B878415DF646000E12B48 /* InfoPlist.strings */,
 				AC8B878715DF646000E12B48 /* main.m */,
@@ -208,6 +271,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AC3A23CB1602B82300318887 /* PBXTargetDependency */,
 			);
 			name = "RESTful Web Analyzer";
 			productName = "RESTful Web Analyzer";
@@ -251,6 +315,12 @@
 			mainGroup = AC8B876C15DF645F00E12B48;
 			productRefGroup = AC8B877815DF645F00E12B48 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AC3A23B51602B7EF00318887 /* Products */;
+					ProjectRef = AC3A23B41602B7EF00318887 /* RestKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AC8B877615DF645F00E12B48 /* RESTful Web Analyzer */,
@@ -258,6 +328,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AC3A23C01602B7EF00318887 /* libRestKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRestKit.a;
+			remoteRef = AC3A23BF1602B7EF00318887 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AC3A23C21602B7EF00318887 /* RestKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitTests.octest;
+			remoteRef = AC3A23C11602B7EF00318887 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AC3A23C41602B7EF00318887 /* RestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RestKit.framework;
+			remoteRef = AC3A23C31602B7EF00318887 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AC3A23C61602B7EF00318887 /* RestKitFrameworkTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitFrameworkTests.octest;
+			remoteRef = AC3A23C51602B7EF00318887 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AC3A23C81602B7EF00318887 /* RestKitResources.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitResources.bundle;
+			remoteRef = AC3A23C71602B7EF00318887 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AC8B877515DF645F00E12B48 /* Resources */ = {
@@ -308,6 +416,7 @@
 				AC8B878815DF646000E12B48 /* main.m in Sources */,
 				AC8B878C15DF646000E12B48 /* AppDelegate.m in Sources */,
 				AC8B879215DF646000E12B48 /* ViewController.m in Sources */,
+				ACF0CD351602BF500019EF61 /* ObjectMapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +431,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AC3A23CB1602B82300318887 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = AC3A23CA1602B82300318887 /* PBXContainerItemProxy */;
+		};
 		AC8B879E15DF646000E12B48 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AC8B877615DF645F00E12B48 /* RESTful Web Analyzer */;
@@ -380,10 +494,16 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
 		};
@@ -403,12 +523,18 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
 		};
@@ -419,6 +545,7 @@
 				GCC_PREFIX_HEADER = "RESTful Web Analyzer/RESTful Web Analyzer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "RESTful Web Analyzer/RESTful Web Analyzer-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -435,6 +562,7 @@
 				GCC_PREFIX_HEADER = "RESTful Web Analyzer/RESTful Web Analyzer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "RESTful Web Analyzer/RESTful Web Analyzer-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",

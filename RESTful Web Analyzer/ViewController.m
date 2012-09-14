@@ -71,5 +71,21 @@
     NSString *self.url.text = ([[NSString alloc] initWithFormat:@"http://%@", self.url.text]);
      */
     [self.url resignFirstResponder];
+    
+    // Trennung in BaseURL und ResorceURL
+    NSLog(@"Komplette URL: %@",url.text);
+    NSArray* urlComponents = url.text. pathComponents;
+    baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
+    if ([urlComponents count] > 2) {
+        resourcePath = @"";
+        for (int i = 2; i < [urlComponents count]; i++)
+            resourcePath = [NSString stringWithFormat:@"%@/%@",resourcePath,[urlComponents objectAtIndex:i]];
+    }
+    NSLog(@"BaseURL: %@",baseUrl);
+    NSLog(@"ResourcePath: %@",resourcePath);
+
+    manager = [RKObjectManager objectManagerWithBaseURLString:baseUrl];
+    [manager loadObjectsAtResourcePath:resourcePath delegate:[NSObject class]];
+    
 }
 @end

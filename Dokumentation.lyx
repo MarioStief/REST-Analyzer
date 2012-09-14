@@ -2,11 +2,11 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass paper
+\textclass ucthesisLyx
 \use_default_options true
 \maintain_unincluded_children false
-\language english
-\language_package default
+\language ngerman
+\language_package auto
 \inputencoding auto
 \fontencoding global
 \font_roman default
@@ -27,8 +27,8 @@
 \paperfontsize default
 \spacing single
 \use_hyperref false
-\papersize default
-\use_geometry false
+\papersize a4paper
+\use_geometry true
 \use_amsmath 1
 \use_esint 1
 \use_mhchem 1
@@ -43,8 +43,8 @@
 \shortcut idx
 \color #008000
 \end_index
-\secnumdepth 3
-\tocdepth 3
+\secnumdepth 2
+\tocdepth 2
 \paragraph_separation indent
 \paragraph_indentation default
 \quotes_language english
@@ -73,11 +73,15 @@ LatexCommand tableofcontents
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Chapter
+Einleitung (3 Seiten)
+\end_layout
+
+\begin_layout Chapter
 Projektvorbereitung
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 XCode
 \end_layout
 
@@ -89,7 +93,6 @@ Installation von Xcode 4.4
 Anlegen eines neuen Projektes
 \end_layout
 
-\begin_deeper
 \begin_layout Description
 Template: Single View Application
 \end_layout
@@ -100,7 +103,7 @@ Name: RESTful Web Analyzer
 
 \begin_layout Description
 Company
-\begin_inset space ~
+\begin_inset space \thinspace{}
 \end_inset
 
 Identifier: Mario Stief
@@ -108,14 +111,13 @@ Identifier: Mario Stief
 
 \begin_layout Description
 Bundle
-\begin_inset space ~
+\begin_inset space \thinspace{}
 \end_inset
 
 Identifier: Mario-Stief.RESTful-Web-Analyzer
 \end_layout
 
-\end_deeper
-\begin_layout Subsection
+\begin_layout Section
 Repository
 \end_layout
 
@@ -123,32 +125,32 @@ Repository
 Einrichten eines github-Accounts git@github.com:MarioStief/RemoteRepository.git
 \end_layout
 
-\begin_deeper
 \begin_layout Description
 Adresse: https://github.com/MarioStief/RemoteRepository
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
 SSH-Schlüssel erstellen, auf github eintragen, Verbindung testen
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
+
+\size small
 \begin_inset listings
 inline false
 status open
 
-\begin_layout LyX-Code
+\begin_layout Plain Layout
 
 ssh-keygen -t rsa -C "mario.stief@gmail.com"
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Plain Layout
 
 pbcopy < ~/.ssh/id_rsa.pub
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Plain Layout
 
 ssh -T git@github.com
 \end_layout
@@ -166,23 +168,22 @@ Hinzufügen im Project-Organizer als Remote Directory
 Einbinden des Frameworks RestKit
 \end_layout
 
-\begin_deeper
 \begin_layout Description
 Quelle: https://github.com/RestKit/RestKit/wiki/Installing-RestKit-in-Xcode-4.x
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
 Hinzufügen des Frameworks RestKit als Submodul:
 \end_layout
 
-\begin_deeper
 \begin_layout Standard
+
+\size small
 \begin_inset listings
 inline false
 status open
 
-\begin_layout LyX-Code
+\begin_layout Plain Layout
 
 git submodule add git://github.com/RestKit/RestKit.git
 \end_layout
@@ -196,13 +197,12 @@ git submodule add git://github.com/RestKit/RestKit.git
 (Weiteres Vorgehen wie auf der Seite beschrieben)
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
 Initial Commit.
 \end_layout
 
-\begin_layout Subsection
-79 € sparen – der Jailbreak
+\begin_layout Section
+Testen ohne Entwicklerlizenz
 \end_layout
 
 \begin_layout Subsubsection
@@ -216,14 +216,25 @@ Problem: Wenn wir versuchen, die Ausgabe vom Simulator auf das iOS Device
 \end_layout
 
 \begin_layout Standard
+
+\size small
 \begin_inset listings
 inline false
 status open
 
 \begin_layout Plain Layout
 
-Code Sign error: The identity 'iPhone Developer' doesn't match any valid,
- non-expired certificate/private key pair in your keychains
+Code Sign error: The identity 'iPhone Developer' doesn't
+\end_layout
+
+\begin_layout Plain Layout
+
+match any valid, non-expired certificate/private key pair
+\end_layout
+
+\begin_layout Plain Layout
+
+in your keychains
 \end_layout
 
 \end_inset
@@ -239,14 +250,29 @@ XCode verlangt einen Developer-Account für das Bereitstellen der compilierten
 \begin_layout Standard
 Eine einfache Möglichkeit wäre es, in der Preferences-Datei 
 \family typewriter
-/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/S
-DKs/iPhoneOS5.1.sdk/SDKSettings.plist
+\size small
+Xcode.app/.../ iPhoneOS5.1.sdk/SDKSettings.plist
 \family default
+\size default
  den Schlüssel 
 \family typewriter
+\size small
 CODE_SIGNING_REQUIRED
 \family default
- von YES auf NO zu setzen sowie in den 
+\size default
+ von 
+\family typewriter
+\size small
+YES
+\family default
+\size default
+ auf 
+\family typewriter
+\size small
+NO
+\family default
+\size default
+ zu setzen sowie in den 
 \shape italic
 Build Settings
 \shape default
@@ -292,16 +318,16 @@ Don't Code Sign
 \shape italic
 iPhone Developer
 \shape default
- und ändern in der Datei /Applications/Xcode.app/Contents/Developer/Platforms/iPh
-oneOS.platform/Info.plist alle Vorkommen von XCiPhoneOSCodeSignContext in
- XCCodeSignContext ab.
+ und ändern in der Datei /Applications/Xcode.app/Contents/Developer/Platforms/
+ iPhoneOS.platform/Info.plist alle Vorkommen von XCiPhoneOSCodeSignContext
+ in XCCodeSignContext ab.
  Der Entwickler von Cydia hat ein Werkzeug mit dem Namen ldid bereitgestellt,
  welches in der Lage ist, die SHA1 Hashes zu überprüfen, welche vom iOS-Kernel
  überprüft werden.
  Dieses Kommandozeilenprogramm kopieren wir – zusammen mit einem Python
  Script - nach /usr/bin/ und tauschen in der Datei /Applications/Xcode.app/Conten
-ts/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/PrivatePlugIns/i
-PhoneOS Build System Support.xcplugin/Contents/Resources/iPhoneCodeSign.xcspec
+ts/Developer/Platforms/ iPhoneOS.platform/Developer/Library/Xcode/PrivatePlugIns/
+iPhoneOS Build System Support.xcplugin/Contents/Resources/iPhoneCodeSign.xcspec
  die Zeile 
 \begin_inset Quotes erd
 \end_inset
@@ -344,48 +370,33 @@ Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
  Verzeichnis unserem Pfad hinzu:
 \end_layout
 
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
+\begin_layout LyX-Code
 
-\begin_layout Plain Layout
-
+\size small
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 Nun folgt ein Update dessen Paketquellen:
 \end_layout
 
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
+\begin_layout LyX-Code
 
-\begin_layout Plain Layout
-
+\size small
 sudo port selfupdate
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 und die Installation des gewünschten Paketes dpkg:
 \end_layout
 
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
+\begin_layout LyX-Code
 
-\begin_layout Plain Layout
-
+\size small
 sudo port install dpkg
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 welche den gewünschten Befehl dkgp-deb bereitstellt.
  Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repo-konforme
  DEB-Pakete zu erstellen.
@@ -396,73 +407,79 @@ Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
  welche sich wie folgt aufbaut:
 \end_layout
 
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
+\begin_layout LyX-Code
 
-\begin_layout Plain Layout
-
+\size small
 +- MyProgram
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    +- Applications
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    |  +- MyProgram.app
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    |     +- Info.plist
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    |     +- MyProgram
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    |     +- icon.png
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    +- DEBIAN
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    |  +- control
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
    +- System
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
       +- Library
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
          +- LaunchDaemons
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
             +- com.identifier.MyProgram.plist
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 wobei das Verzeichnis System jedoch nicht zwingend notwendig ist.
 \end_layout
 
@@ -484,29 +501,20 @@ Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
 :
 \end_layout
 
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
+\begin_layout LyX-Code
 
-\begin_layout Plain Layout
-
+\size small
 export COPYFILE_DISABLE
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout LyX-Code
 
+\size small
 export COPY_EXTENDED_ATTRIBUTES_DISABLE
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
-Sind wir nun soweit wechseln im Terminal ins Verzeichnis, in sich unsere
- 
+Sind wir nun soweit wechseln im Terminal ins Verzeichnis 
 \begin_inset Quotes eld
 \end_inset
 
@@ -514,26 +522,17 @@ MyProgramm
 \begin_inset Quotes erd
 \end_inset
 
--Strktur befindet und erzeuen unser DEB-Paket mittels:
+ und erzeuen unser DEB-Paket mittels:
 \end_layout
 
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
+\begin_layout LyX-Code
 
-\begin_layout Plain Layout
-
+\size small
 dpkg-deb -b MyProgram
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
 \begin_layout Description
-Quelle: http://www.saurik.com/id/7
+Quelle: http://www.saURLk.com/id/7
 \end_layout
 
 \begin_layout Subsubsection
@@ -549,47 +548,1831 @@ Um die nun fertige DEB-Datei auf das iPad zu bekommen, benötigen wir ein
  Die im Cydia Store eingebundene Paketquelle lautet:
 \end_layout
 
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
+\begin_layout LyX-Code
 
-\begin_layout Plain Layout
-
+\size small
 http://cydia.myrepospace.com/RaveAngel/
 \end_layout
 
+\begin_layout Chapter
+Die Entwicklungsumgebung (10 Seiten)
+\end_layout
+
+\begin_layout Section
+Sprache: Objective-C (2 - 3 Seiten)
+\end_layout
+
+\begin_layout Subsection*
+Singleton
+\end_layout
+
+\begin_layout Subsection*
+Delegate
+\end_layout
+
+\begin_layout Section
+API: Cocoa Touch (2 - 3 Seiten)
+\end_layout
+
+\begin_layout Section
+IDE: XCode 4 (5 - 6 Seiten)
+\end_layout
+
+\begin_layout Standard
+XCode ist Apples integrierte Entwicklungsumgebung und steht aktuell in der
+ Version 4.4.1 bereit.
+ Seit der Version 4.1 steht XCode jedermann zugänglich kostenlos im App Store
+ bereit, ab dieser Version ist die OS X-Version 10.7 Lion erforderlich.
+ Mit Hilfe von XCode lassen sich OS X- oder iOS-Anwendungen entwicklen,
+ wobei für OS X-Anwendungen auf die 
+\shape italic
+Cocoa
+\shape default
+-API basieren, mochte man eine iOS-Anwendung entwickeln, stellt Apple hierfür
+ die API Cocoa Touch bereit.
+\end_layout
+
+\begin_layout Chapter
+REST (10 Seiten)
+\end_layout
+
+\begin_layout Section
+RESTful Webservices (5 - 6 Seiten)
+\end_layout
+
+\begin_layout Subsection
+Begriffseinführung
+\end_layout
+
+\begin_layout Standard
+Wikipedia definiert den Begriff 
+\shape italic
+Webservice
+\shape default
+ als 
+\begin_inset Quotes eld
+\end_inset
+
+eine Methode der Kommunikation zwischen zwei elektronischen Geräten über
+ das Internet
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wikipedia - Webservice"
+
+\end_inset
+
+.
+ Man verbindet damit primär Akronyme wie SOAP (Simple Object Access Protocol)
+ - ein Netzwerkprotokoll für den Transfer von Daten und RPCs (Remote Procedure
+ Calls) - oder den einfacheren XML-RPC.
+ Diese Webservices arbeiten, wie der Name bereits ausdrückt, mit HTTP POST-Reque
+sts, um auf einem meist entfernten Computer eine Methode aufzurufen.
+ Unterhalten wird sich hierbei in der XML-basierten Webservices Description
+ Language (WSDL).
+\end_layout
+
+\begin_layout Standard
+Im Jahr 2000 führte Roy Fielding, einer der Authoren der HTTP-Spezifikationen
+ 1.0 und 1.1 und Mitbegründer des Apache HTTP Projektes, in seiner Dissertation
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Architectural Styles and the Design of Network-based Software Architectures
+\begin_inset Quotes erd
+\end_inset
+
+ den Begriff 
+\shape italic
+REpresentational State Transfer
+\shape default
+ ein und definiert ihn als einen 
+\begin_inset Quotes eld
+\end_inset
+
+Architekturstil für verteilte hypermediale Systeme, der die Richtlinien
+ für die Softwareentwicklung spezifiziert, welche sowohl REST selbst leiten
+ als auch die Interaktionsvoraussetzungen, die so gewählt werden, dass sie
+ diesen Richtlinien entsprechen
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Dissertation Fielding"
+
+\end_inset
+
+.
+ Die REST-Architektur ist also ein Modell, das spezifiziert, wie das Internet
+ - das im Grunde bereits eine riesige REST-Anwendung darstellt - eigentlich
+ funktionieren sollte.
+ Er nennt REST eine hybride Architektur, die von vielen verschiedenen Netzwerk
+ basierten Architekturstilen abgeleitet ist und bezeichnet Seiten, die mit
+ der Architektur REST kompatibel ist, als RESTful.
+\end_layout
+
+\begin_layout Standard
+Den Kern dieses Architekturmodells bilden so genannte Ressourcen, weswegen
+ es auch gerne als Ressource-oriented Architecture - oder kurz ROA - bezeichnet
+ wird.
+ Alles, was sich eindeutig identifizieren lässt, ist eine Ressource und
+ bekommt eine Adresse zugewiesen.
+ Jede Datei oder jedes Verzeihnis kann eine Ressource sein, aber auch eine
+ ausführbare Methode, die beispielsweise eine Anfrage in einer Datenbank
+ auslöst, ist eine denkbare Ressource.
+ Hervorragende Kanditaten stellen die Entitäten in einem Datenmodell: 
+\shape italic
+Artikel
+\shape default
+, 
+\shape italic
+Kunde
+\shape default
+, 
+\shape italic
+Bestellung
+\shape default
+ bieten sich hier an, aber auch 
+\shape italic
+Bestellungen von Kunde X aus Jahr Y
+\shape default
+ kann eine valide Ressource sein und dann ebenfalls eine möglichst langlebige
+ und stabile URL erhalten.
+ Bei der Wahl der Ressourcen gilt: Im Zweifel sind eher zu viele Ressourcen
+ zu identifizieren als zu wenige.
+\end_layout
+
+\begin_layout Subsection
+Richtlinien
+\end_layout
+
+\begin_layout Standard
+Die Tatsache, dass HTTP bereits ein ressourenbezogenes Caching mit sich
+ bringt, gibt einem das Gefühl, mit einer REST-Anwendung im Internet bereits
+ 
+\begin_inset Quotes eld
+\end_inset
+
+zu Hause zu sein
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Viele Onlineshops, Suchmaschinen oder Buchungssysteme auch ohne, dass sie
+ gezielt darauf abzielen, bereits RESTful.
+ Damit eine Anwendung das HTTP jedoch auch tatsächlich REST-konform nutzt,
+ muss sie sich an die von Fielding diktierten Richtlinien halten.
+ Diese Richtlinien lassen sich wie folgt untergliedern, wobei es den einzelnen
+ Diensten obliegt, wie diese implementiert werden:
+\end_layout
+
+\begin_layout Subsubsection
+Adressierbarkeit
+\end_layout
+
+\begin_layout Standard
+SOAP Webservices, aber auch viele HTML-Seiten, bilden ihre Funktionalität
+ auf eine einzelne URL ab.
+ Das sieht zwar in der Adresszeile durchaus 
+\begin_inset Quotes eld
+\end_inset
+
+sauber
+\begin_inset Quotes erd
+\end_inset
+
+ aus, bringt jedoch Nachteile mit sich: sie lassen sich weder als Lesezeichen
+ ablegen, noch kann man mal eben dem Freund/Kommilitonen einen Link auf
+ ein Produkt zusenden und auch Suchmaschinen haben es hier schwerer, denn
+ auch diese benötiogen zum direkten Zugriff auch Unterbereiche einen konkreten
+ Zugriffspfad.
+ RESTful gestaltete Anwendungen bieten diese geforderte Addressierbarkeit,
+ und zwar genau in dem Maße, in dem die Anwendung es möchte.
+ Es ist ohne Weiteres möglich, gezielten Zugriff auf eine Ressource zu unterbind
+en, zum Beispiel durch die Verwendung einer Firewall.
+ Natürlich ließe sich das URL-Prinzip ebenfalls auf SOAP anwenden, aber
+ sobald diese dereferenziert werden, bewegen wir uns wieder in der REST-Welt.
+\end_layout
+
+\begin_layout Subsubsection
+Unterschiedliche Repräsentationen
+\end_layout
+
+\begin_layout Standard
+Von den hinter einer URL bereitgestellten Diensten lassen sich unterschiedliche
+ Darstellungen anfordern, diese bezeichnet man als Repräsentation dieser
+ Ressource.
+ Über die im HTTP-Protokoll enthaltenen Accept- und Content-Type-Header
+ unterstützt das Internet ebenfalls bereits 
+\begin_inset Quotes eld
+\end_inset
+
+von Haus aus
+\begin_inset Quotes erd
+\end_inset
+
+ die Content Negotiation, mit der sich unterschiedliche Repräsentationen
+ ein- und derselben Ressource anzeigen lassen.
+ Hierbei dürfen sich die Clients das Format anfordern, welches am ehesten
+ ihren Bedürfnissen entspricht: Ein Browser zeigt sich meist mit einer HTML-Repr
+äsentation zufrieden, während andere Client - wie der in dieser Arbeit vorgestel
+lte - ist eher an der XML- oder an der JSON-Repräsentation interessiert.
+ Darüber hinaus lassen sich sogar Versionswünsche über die Content Negotiation
+ realisieren und beispielsweise der gewünschte Content nach Belieben in
+ XML 1.1 oder in XML 1.2 geliefert werden.
+\end_layout
+
+\begin_layout Subsubsection
+Zustandslosigkeit
+\end_layout
+
+\begin_layout Standard
+REST ist konzeptual ein zustandsloses Protokoll, somit ist auch jeder RESTful
+ Webservice zustandslos.
+ Weder Server noch der Webservice behalten sich den aktuellen Stand ihres
+ Dialoges, demnach muss jede Nachricht stets alle Informationen beinhalten,
+ die erforderlich sind, diese Nachricht korrekt zu interpretieren und die
+ Anfrage ordnungsgemäß verarbeiten zu können.
+ Da sich weder Server noch Client einen Zustand behalten muss, bezeichnet
+ man das Kommunikationsprotokoll einer REST-konformen Architektur als 
+\shape italic
+zustandslos
+\shape default
+.
+ Durch die Abgeschlossenheit der einzelnen Nachrichten lassen darüber hinaus
+ Lasten sehr leicht auf mehrere Maschinen verteilen, was sich positiv auf
+ die Skalierbarkeit des Webservice auswirkt.
+ In der Praxis wird jedoch auch gerne auf Cookies und andere Techniken zurückgeg
+riffen, um über den Request hinaus an Zustandsinformationen gelangen.
+\end_layout
+
+\begin_layout Subsubsection
+Operationen
+\end_layout
+
+\begin_layout Standard
+Damit die RESTful gestaltete Webservices untereinander kommunizieren können,
+ muss eine gemeinsame Sprache gesprochen werden.
+ Das HTTP-Protokoll kennt unter anderem die Optionen GET, POST, PUT, DELETE,
+ HEAD und OPTIONS.
+ Da jede REST-Ressource die gleichen Operationen nutzen muss, definiert
+ dieser Methodensatz die vom REST-Architekturstil geforderten 
+\shape italic
+wohldefinierten Operationen
+\shape default
+.
+ Durch die Verwendung dieser elementarer Webtechniken wird die Integration
+ und Interaktion der beteiligten Softwarekomponenten deutlich vereinfacht.
+\end_layout
+
+\begin_layout Standard
+Die GET-Methode hat hierbei 
+\begin_inset Quotes eld
+\end_inset
+
+sicher
+\begin_inset Quotes erd
+\end_inset
+
+ zu sein, das bedeutet, in diesem Fall wird nur etwas gelesen, der Client
+ darf jederzeit bedenkenlos ein GET auf eine Ressource anwenden.
+ Weiterhin diktiert die HTTP-Spezifikation die idempotente Implementation
+ von GET, PUT und DELETE.
+ Wird eine dieser Operationen mehrfach ausgeführt, wird stets das gleiche
+ Ergebnis erwartet.
+ Ist sich der Client unsicher, ob sein Request erfolgreich abgearbeitet
+ wurde, sollte er ihn ohne Seiteneffekte wiederholen dürfen.
+ HEAD und OPTIONS finden in REST eher selten Verwendung.
+ Die REST-konforme Verwendung der Methoden in einem kurzen Überblick:
+\end_layout
+
+\begin_layout Description
+GET: Mit GET wird die Repräsentation der Ressource vom Server angefordert.
+\end_layout
+
+\begin_layout Description
+POST: POST fügt eine neue Unterressource zur angegebenen Ressource ein.
+ Da die Unterressource vorher noch nicht existierte, wird die URL zu dieser
+ nun vom Server erzeugt und dem Clienten in der Response zurückgegeben.
+ Über diese Verwendung hinaus kann POST auch für Operationen verwendet werden,
+ die sonst von keiner anderen Methode abgedeckt werden.
+\end_layout
+
+\begin_layout Description
+PUT: Die in PUT enthaltene Ressource wird angelegt.
+ Existiert sie bereits, wird sie, wie im Body angegeben, abgeändert.
+\end_layout
+
+\begin_layout Description
+DELETE: DELETE entfernt die Ressource komplett.
+\end_layout
+
+\begin_layout Description
+HEAD: Die Metadaten einer Ressoure lassen sich mit HEAD abfragen.
+\end_layout
+
+\begin_layout Description
+OPTIONS: Weiß man nicht, welche Methoden auf einer Ressource angewendet
+ werden dürfen, lässt sich dies mit OPTIONS in Erfahrung bringen.
+\end_layout
+
+\begin_layout Standard
+Clientseitig sollte demnach das folgende Protokoll anwendbar sein:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@protocol Resource
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- Resource(URI u)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- Response get()
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- Response post(Request r)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- Response put(Request r)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- Response delete()
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@end
+\end_layout
+
+\begin_layout Standard
+Die (vereinfachte) Implementation der Anlage eines Kundenkontis im Server
+ kann wie folgt aussehen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+class Customers : Resource {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   Response post(Request r){
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      id = createCustomer(r)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      return new Response(201, r)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   }
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout Subsubsection
+Hypermedia
+\end_layout
+
+\begin_layout Standard
+Das Kofferwort Hypermedia ist eine Zusammensetzung aus den Begriffen 
+\begin_inset Quotes eld
+\end_inset
+
+Hypertext
+\begin_inset Quotes erd
+\end_inset
+
+ und 
+\begin_inset Quotes eld
+\end_inset
+
+Multimedia
+\begin_inset Quotes erd
+\end_inset
+
+ und weist auf die Verwendung von Hypertext mit explizitem Akzent auf den
+ multimedialen Gesichtspunkt hin.
+ Repräsentationen enthalten in der Regel neben Informationen selbst wieder
+ Links zu anderen Ressourcen.
+ Das macht das Internet zu dem, was es ist: Eine stark vernetzte Verbindungsstru
+ktur von identifizierbaren Ressourcen über hypermediale Links auf andere
+ identifizierbare Ressourcen.
+ Die standartisierte Adressierung sorgt hierbei dafür, dass sich die verlinkte
+ Ressource in einem anderen Prozess im gleichen System oder auf einem anderen
+ Rechner befinden kann, ganz gleich ob sich dieser im lokalen Netzwerk befindet,
+ an einem beliebigen anderen Ort dieses Planeten oder seit Januar 2010 sogar
+ auf der Raumstation ISS.
+ Hierfür wird auch gerne der Ausdruck 
+\shape italic
+Verbindungshaftigkeit
+\shape default
+ verwendet.
+ Im Optimalfall wird dem Clienten in der angeforderten Repräsentation gleich
+ die nächsten möglichen Übergänge als hypermediale Links mitteilen.
+ Der Wert einer Anwendung ist proportional zur Anzahl der Ressourcen, auf
+ die sie verlinkt.
+ Mit einem Link auf einen REST-konform konzipierten Webservice eines Telekommuni
+kationsunternehmen würden mit wenigen Klicks Millionen von Kundendaten zugreifba
+r gemacht werden.
+ Diese könnten von der Anwendung selbst ausgewertet oder dem Endanwender
+ zur Weiterverarbeitung überlassen werden.
+\end_layout
+
+\begin_layout Subsection
+Beispiel
+\end_layout
+
+\begin_layout Standard
+Wie so oft lässt sich das Prinzip von REST am Besten an einem Bespiel zeigen.
+ Wir betrachten die Schnittstelle für den fiktiven Onlineshop smartphoneseppel.de.
+ Ein Neukunde möchte sich ein Smartphone bestellen und legt sich zu diesem
+ Zweck ein Kundenkonto an.
+ Er wechselt auf die Seite des Onlineshops (
+\shape italic
+GET http://www.smartphoneseppel.de
+\shape default
+) und teilt dem Server des Onlineshops mit einem 
+\shape italic
+POST /customer
+\shape default
+, in dessen Body die Daten stehen, die er für die Registrierung angegeben
+ hat, seine Registrierungsabsicht mit.
+ Der Server bestätigt der Response
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+HTTP/1.1 201 OK
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Content-Type: text/xml;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Content-Length: 44
+\end_layout
+
+\begin_layout LyX-Code
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+http://www.smartphoneseppel.de/customer/1337
+\end_layout
+
+\begin_layout Standard
+die erfolgreiche Anlage des des Kundenkontos mit der Kundennummer.
+ Die Bestandteile einer HTTP-Resonse sind stets der Statuscode - an dieser
+ Stelle weist der Statuscode 201 
+\shape italic
+CREATED
+\shape default
+ darauf hin, dass eine neue Ressource angelegt wurde - , die Art des zurückgelie
+ferten Contents sowie natürlich den Content selbst.
+ Nun kann er mit 
+\shape italic
+GET /customer/1337
+\shape default
+ sein Kundenkonto anzeigen lassen.
+ Eine Änderung ist mit einem 
+\shape italic
+PUT /customer/1337
+\shape default
+ möglich.
+ Möchte er sich nun den Artikel 
+\shape italic
+Samsung Galaxy S3
+\shape default
+ anzeigen lassen kann er das per 
+\shape italic
+GET /article/galaxy_s3
+\shape default
+.
+ Es gefällt ihm und so packt er es sich mit einem 
+\shape italic
+PUT /shoppingcart/1337&article=galaxy_s3
+\shape default
+ in seinen Warenkorb.
+ Zur Sicherheit überprüft er nun dessen Inhalt mit 
+\shape italic
+GET /shoppingcart/1337
+\shape default
+.
+ Die Antwort des Onlineshops könnte wie folgt aussehen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+HTTP/1.1 200 OK
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Content-Type: text/xml
+\end_layout
+
+\begin_layout LyX-Code
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<?xml version="1.0"?>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<shoppingcart xmlns:xlink="http://www.w3.org/1999/xlink">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  <customer xlink:href="http://www.smartphoneseppel.de/customer/1337">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    1337
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  </customer>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  <position pos="1" amount="1">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    <article xlink:href="http://www.smartphoneseppel.de/article="galaxy_s3"
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+       article="galaxy_s3">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <description>Samsung Galaxy S3</description>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    </article>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  </position>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</shoppingcart>
+\end_layout
+
+\begin_layout Standard
+Kunde 1337 ist mit dem Ergebnis einverstanden und sendet mit 
+\shape italic
+POST /shoppingcart/1337
+\shape default
+ seine Bestellung ab, der Server quittiert ihm dies mit einem 
+\shape italic
+/shoppingcart/1337/open
+\shape default
+.
+ Nun erscheint jedoch unerwartet das iPhone 5 und der Kunde überlegt es
+ sich anders.
+ Er überprüft, mit einem
+\shape italic
+ GET /customer/1337/orders
+\shape default
+ seinen Bestellstatus und hat Glück, die Bestellung wurde noch nicht versendet.
+ Er storniert die offene Bestellung mit 
+\shape italic
+DELETE /customer/1337/orders/open/2012-09-11_001
+\shape default
+ und legt sich statt dessen mit 
+\shape italic
+PUT /shoppingcart/1337&article=iphone_5
+\shape default
+ den neuen Artikel in seinen Korb.
+\end_layout
+
+\begin_layout Standard
+Der Onlineshop seinerseite entfernt nach dem Release des iPhone 5 mit 
+\shape italic
+DELETE /article/iphone_4s
+\shape default
+ das iPhone 4S aus deinem System und legt mit 
+\shape italic
+PUT /article
+\shape default
+ das neue Modell an.
+ Der Body könnte wie folgt aussehen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<articles>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  <name>iPhone 5</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  <description>Das beste iPhone, das es je gab.</description>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  <size>64</size>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  <weight>140</weight>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  <price>849</price>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</articles>
+\end_layout
+
+\begin_layout Standard
+Er sendet Kunde 1337 das gewünschte iPhone 5 und verschiebt seine Bestellung
+ vom Status offen nach versendet mit: 
+\shape italic
+DELETE /customer/1337/orders/open/2012-09-12_001
+\shape default
+ und 
+\shape italic
+POST /customer/1337/orders/shipped/2012-09-12_001
+\shape default
+.
+\end_layout
+
+\begin_layout Section
+Das RestKit-Framework (2 - 3 Seiten)
+\end_layout
+
+\begin_layout Subsection
+Beschreibung
+\end_layout
+
+\begin_layout Standard
+Das RestKit-Framework nimmt dem Programmierer viel Arbeit ab bezüglich der
+ Interaktion mit einem RESTful Webservice aus Objective-C heraus.
+ Es kombiniert eine HTTP-Request/-Response-API mit einem Object Mapping
+ System, welches dem dem Programmierer ermöglicht, sich mehr auf das Datenmodell
+ seines Programms konzentrieren zu können und sich weniger Gedanken darüber
+ zu machen, wie genau das Senden von Requests, das Parsen von Responses
+ und das Erstellen von Repräsentationen entfernter Ressourcen im Detail
+ zu implementieren ist.
+ Mit dem RestKit lassen sich Server und Arbeitsumgebung schnell umschalten,
+ indem eine Basis-URL genutzt wird und die relativen Ressourcenpfade verwendet
+ werden können.
+ Die Interpolation von URL-Strings und die Erstellung von NSURL-Objekten
+ aus diesen fällt somit weg.
+ Das Parsen von JSON wird sowohl durch den Parser SBJSON unterstützt als
+ auch durch den Parser YAJL und ist in einem simplen Interface implementiert,
+ um zusätzliche Datenformate transparent behandeln zu können.
+ Das RestKit besteht aus drei Hauptkomponenten:
+\end_layout
+
+\begin_layout Description
+Network stellt eine einfach zu bedienende HTTP-Request/Response-Abstraktion
+ bereit, welche auf NSURLConnection aufsetzt.
+ Sie beinhaltet viele hilfreiche Methoden, mir der sich Dateitypen und Statuscod
+es inspizieren, Formulardaten übertragen oder mehrteilige Vorlagen anfertigen
+ lassen.
+ Eine Basisunterstützung für einen einfachen Streamingupload befindet sich
+ ebenfalls in der API.
+\end_layout
+
+\begin_layout Description
+Object
+\begin_inset space \thinspace{}
+\end_inset
+
+Mapping liefert eine einfache API, die die abgearbeiteten XML- oder JSON-Respons
+es in lokale Cocoa-Objekte überträgt.
+ Dies spart dem Programmierer das Parsen, er kann nun einfach dem Framework
+ die Zielressource mitteilen und anschließend die Ergebnisse aus der 
+\shape italic
+Delegate
+\shape default
+ abrufen.
+ Die Implementation basiert auf Key-Value-Coding und erlaubt eine angenehme
+ Iteration der angelegten Struktur.
+ Zum Ermitteln der Eigenschaftstypen kommen Reflections zum Einsatz, welche
+ das Mappen von Werten ohne direkte Repräsentation in ein Zielformat erlauben,
+ beispielsweise von einem als String kodierten JSON-Zeitstempel in ein NSDate-Ob
+jekt.
+\end_layout
+
+\begin_layout Description
+Core
+\begin_inset space \thinspace{}
+\end_inset
+
+Data setzt auf dem Object Mapping Layer auf und bietet die Integration mit
+ Apples Core Data Framework.
+ Somit wirdermöglicht, bereits geladene Objekte schnell wieder zurück in
+ den lokalen Speicher zu spielen, womit sich ein Caching realisieren lässt.
+ 
+\series bold
+(Ab hier noch Baustelle >>)
+\series default
+ Möglich wäre auch, dies als einen primären Datenspeicher zu nutzen, der
+ periodisch mit einer Cloud synchronisiert wird.
+ RestKit ist in der Lage, die Core Data-Assoziationen zu bestücken, was
+ eine natürliche, eigenschaftsbasierte Traversierung des Datenmodells emöglicht.
+ Darüber hinaus wird eine API auf der Core Data-Primitive bereitgestellt,
+ welche die Confituration und die Abfrage von use cases vereinfacht.
+ Mithilfe des 
+\shape italic
+Core Data Objekt Store
+\shape default
+ lässt sich von einer Kollektion von Dateien automatisch eine Datenbank
+ erstellen, welche sich in des App Bundle integriert.
+ Mit dieser lässt sich die App in den App Store stellen.
+\end_layout
+
+\begin_layout Subsection
+Integration in ein bestehendes XCode-Projekt
+\end_layout
+
+\begin_layout Standard
+Das Wiki, welches ebenfalls auf dem Github-Accounts des RestKits zu finden
+ ist (siehe 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Installing RestKit"
+
+\end_inset
+
+), stellt eine recht einfache Anleitung bereit, mit der sich das Framework
+ einbinden lässt, daher gehe ich an dieser Stelle nur recht kurz darauf
+ ein.
+\end_layout
+
+\begin_layout Standard
+Die Framework-Entwickler empfehlen, ein Submodul dem eigentlichen Projekt
+ hinzuzufügen, hierzu führen wir im Projektverzeichnis folgenden Befehl
+ aus:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+git submodule add git://github.com/RestKit/RestKit.git
+\end_layout
+
+\begin_layout Standard
+Nachdem das Framework in das Projekt geklont wurde, wird die Projektdatei
+ 
+\family typewriter
+\size small
+RestKit.xcodeproj
+\family default
+\size default
+ per Drag'n'Drop in XCode auf unser Projekt gezogen.
+ XCode wird sich darafhin mit dem Projekt vertraut machen.
+ Nun müssen in den Build Settings unseres Projektes bei 
+\shape italic
+Other Linker Flags
+\shape default
+ die Linker-Flags 
+\family typewriter
+\size small
+-ObjC
+\family default
+\size default
+ und 
+\family typewriter
+\size small
+-all_load
+\family default
+\size default
+ sowie bei 
+\shape italic
+Header Search Paths
+\shape default
+ der Pfad 
+\family typewriter
+\size small
+"$(BUILT_PRODUCTS_DIR)/../../Headers"
+\family default
+\size default
+ (inklusive der Anführungszeichen) hinzugefügt werden.
+ Im Tab 
+\shape italic
+Build Phases
+\shape default
+ bei 
+\shape italic
+Target Dependencies
+\shape default
+ selektieren wir beim Hinzufügen für die Entwicklung einer iOS-Anwendung
+ das 
+\family typewriter
+\size small
+RestKit
+\family default
+\size default
+ (das 
+\family typewriter
+\size small
+RestKitFramework
+\family default
+\size default
+ an dieser Stelle ist das Framework für die Entwicklung einer OS X-Anwendung)
+ und unter 
+\shape italic
+Link Binary With Libraries
+\shape default
+ fügen wir die Bibliotheken 
+\family typewriter
+\size small
+libRestKit.a
+\family default
+\size default
+, 
+\family typewriter
+\size small
+CFNetwork.framework
+\family default
+\size default
+, 
+\family typewriter
+\size small
+CoreData.framework
+\family default
+\size default
+, 
+\family typewriter
+\size small
+MobileCoreServices.framework
+\family default
+\size default
+, 
+\family typewriter
+\size small
+Security.framework
+\family default
+\size default
+, 
+\family typewriter
+\size small
+System- Configuration.framework
+\family default
+\size default
+, 
+\family typewriter
+\size small
+QuartzCore.framework
+\family default
+\size default
+ sowie 
+\family typewriter
+\size small
+libxml2.dylib
+\family default
+\size default
+ hinzu.
+\end_layout
+
+\begin_layout Standard
+Zum Testen fügen importieren wir in der 
+\family typewriter
+\size small
+AppDelegate.m
+\family default
+\size default
+ das RestKit:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+#import <RestKit/RestKit.h>
+\end_layout
+
+\begin_layout Standard
+Lässt sich das Projekt nun erfolgreich kompilieren, wurde das Framework
+ fehlerfrei installiert.
+\end_layout
+
+\begin_layout Subsection
+Die Verwendung der Klassen
+\end_layout
+
+\begin_layout Standard
+Im Folgenden sollen nur ein paar Beispielzeilen gezeigt werden, wie sich
+ sich das RestKit verwenden lässt, größeren Beispielcode bezüglich der Implement
+ierung spare ich mir an dieser Stelle, da die exakte Implementierung in
+ einem späteren Kapitel erfolgt.
+\end_layout
+
+\begin_layout Subsubsection*
+RKClient - Senden von Requests und Parsen von Responses
+\end_layout
+
+\begin_layout Standard
+Alle höheren Funktionalitäten von RestKit bauen auf dem Network Layer auf.
+ Dessen Hauptaufgabe ist das Senden von Requests sowie das Parsen von Responses.
+ Alle Requests erfolgen durch die Klasse 
+\shape italic
+RKClient
+\shape default
+, die mit einer Basis-URL initialisiert wird und er erlaubt, eine Konfiguration
+ zu benutzen, die ähnlich der Requests verwendet werden, zum Beispiel wie
+ HTTP-Header und Authentifizierungsinformationen.
+ Auch wenn es natürlich ohne weiteres möglich ist, beliebig viele Instanzen
+ von 
+\shape italic
+RKClient
+\shape default
+ zu initialisieren, existiert eine globale, gemeinsam verwendete
+\shape italic
+ Singleton
+\shape default
+-Instanz.
+ In der Regel ist diese in der Methode 
+\shape italic
+applicationDidFinishLaunching:withOptions:
+\shape default
+ in der Delegate-Datei konfiguriert:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- (void)applicationDidFinishLaunching:(UIApplication*)application withOptions:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+(NSDictionary*)options {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  RKClient* client = [RKClient clientWithBaseURL:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    @"http://www.smartphoneseppel.de"];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout Standard
+In meiner Arbeit benötige ich nicht mehr als eine Instanz eines 
+\shape italic
+RKClient
+\shape default
+.
+ Da der erste, der initialisiert wird, automatisch als Singleton-Instanz
+ angelegt wird, lässt sich auf diese mit der 
+\shape italic
+sharedClient
+\shape default
+ Singleton-Methode zugreifen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+NSLog(@"RKClient Singelton: %@", [RKClient sharedClient]);
+\end_layout
+
+\begin_layout Standard
+Um nun Requests absenden zu können, müssen wir unserer Klasse lediglich
+ mitteilen, dass das 
+\shape italic
+RKRequestDelegate
+\shape default
+-Protokoll implementiert wird und anschließend selbst eine Implementation
+ der 
+\shape italic
+request:didLoadResponse:
+\shape default
+-Methode bereitstellen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response
+ {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  if ([request isGET]) {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    if ([response isOK]) {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      ...
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+RKRequest
+\shape default
+ und 
+\shape italic
+RKResponse
+\shape default
+ stellen einige nützliche Helfermethoden bereit, mit denen sich der Status
+ der Anfrage recht einfach untersuchen lässt.
+ Es zahlt sich aus, sich die bereitgestellten Methoden im Header einmal
+ genauer anzuschauen.
+\end_layout
+
+\begin_layout Subsubsection
+RKObject* - Laden und Umwandeln von entfernten Ressourcen
+\end_layout
+
+\begin_layout Standard
+Object Mapping soll es stark vereinfachen, eine Anfrage an einen entfernten
+ Webservice zu stellen, eine XML- oder JSON-formatierte Antwort zu empfangen,
+ diese zu parsen und die daraus erfassten Werte aus den Payloads in Objekte
+ zu packen.
+ Um diese Anliegen kümmert sich hier die Klasse 
+\shape italic
+RKObjectManager
+\shape default
+, die den Funktionsumfang von 
+\shape italic
+RKClient
+\shape default
+ in sich einschließt.
+ Indem wir das 
+\shape italic
+RKObjectMappable
+\shape default
+-Protoll implementieren, verpflichten wir uns damit die Methode 
+\shape italic
+elementToPropertyMappings
+\shape default
+ zu implementieren mit dem Rückgabetyp 
+\shape italic
+NSDictionary
+\shape default
+, bestehend aus Schlüsselpfaden und einem Eigenschaftennamen.
+ Die Schlüsselpfade sind hierbei Key-Value-Coding-konforme Strings, um auf
+ Daten eines geparsten Dokumentes zugreifen zu können.
+ Der Eigenschaftenname als String ist hier einfach die Klasseneigenschaft,
+ dem die zugegriffenen Daten zugewiesen werden.
+ Schauen wir uns das wieder anhand eines Beispiels an.
+ Eine JSON-Datei mit folgendem Muster wird geparst:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+{
+\begin_inset Quotes eld
+\end_inset
+
+customer-id
+\begin_inset Quotes erd
+\end_inset
+
+: 1337,
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ 
+\begin_inset Quotes eld
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+: 
+\begin_inset Quotes eld
+\end_inset
+
+John Doe
+\begin_inset Quotes erd
+\end_inset
+
+}
+\end_layout
+
+\begin_layout Standard
+Nun wird mit
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@interface Customer : RKObject {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  NSNumber* _nr;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  NSString* _name;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@property (nonatomic, retain) NSNumber* nr;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@property (nonatomic, retain) NSString* name;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@end
+\end_layout
+
+\begin_layout Standard
+sowie
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@implementation Customer
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- (NSDictionary*)elementToPropertyMappings {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  return [NSDictionary dictionaryWithKeysAndObjects:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  @"customer-id_key", @"customer-id_value",
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  @"name_key", @"name_value", nil];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@end
+\end_layout
+
+\begin_layout Standard
+das RKObject vorbereitet und anschließend wie folgt aus dem Payload in unser
+ lokales Objekt gemappt:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- (void)loadCustomer {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  RKObjectManager* manager = [RKObjectManager objectManagerWithBaseURLString:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    @"http://smartphoneseppel.de"];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  [manager loadObjectsAtResourcePath:@"/customer/1337" objectClass:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  [Customer class] delegate:self]
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)obje
+cts {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  Customer* customer = [objects objectAtIndex:0];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)er
+ror {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout Subsubsection
+RKDynamicRouter - Arbeiten mit Pfaden
+\end_layout
+
+\begin_layout Standard
+RestKit ist nicht nur in der Lage, Ressourcen in lokale Objekte zu transferieren
+ sondern erleichtert auch den Rückweg.
+ Mit der Zeile
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+RKDynamicRouter* router = [RKDynamicRouter new];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[router routeClass:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[Contact class] toResourcePath:@"/customer" forMethod:RKRequestMethodPOST];
+\end_layout
+
+\begin_layout Standard
+würde explizit bei einer POST-Operation die Ressource 
+\shape italic
+/customer
+\shape default
+ erstellt werden.
+ Hingegen würde die Zeile 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[router routeClass:[Contact class] toResourcePath:@"/customer/(customer-id_value
+)"];
+\end_layout
+
+\begin_layout Standard
+bei Aufruf einer beliebigen Operation die Ressource 
+\shape italic
+/customer/1337
+\shape default
+ anlegen.
+\end_layout
+
+\begin_layout Section
+JSON
+\end_layout
+
+\begin_layout Standard
+XML ist nicht immer der ideale Weg, um seine Daten zu strukturieren.
+ Das Tag-System bläht kleine Datenbestände schnell auf und das Ansprechen
+ einzelner XML-Nodes ist nicht immer leicht.
+ 
+\shape italic
+JSON
+\shape default
+ - die Kurzform für 
+\shape italic
+Java Script Object Notation
+\shape default
+ - ist XML sehr ähnlich und bietet hier eine leichtgewichtige Alternative.
+ Sie ist ein auch vom Menschen gut lesbares Austauschformat, welches darauf
+ ausgelegt ist, von einer Anwendung leicht erstellt zu werden und sich anschließ
+end - gegebenfalls von einer anderen - auch wieder leicht parsen zu lassen.
+ Für ein sprachenübergreifendes Austauschformat ist es natürlich sinnig,
+ dass man für den Aufbau auf Strukturen zurückgreift, die gängigen Sprachen
+ geläufig sind.
+ Somit kommen in JSON Key/Value-Records und Arrays zum tragen, Strukturen,
+ von denen es undenkbar ist, dass man sie in einer halbwegs modernen Programmier
+sprache nicht in irgendeiner Form wiederfindet.
+ Ein Objekt folgt in JSON 
+\shape italic
+der Syntax { String : Value }
+\shape default
+.
+ Mehrerer Solcher Paare werden durch Kommata voneinander getrennt: 
+\shape italic
+{ String1 : Value1, String2 : Value2, ...
+ }
+\shape default
+.
+ Leerzeichen können zwischen den einzelnen JSON-Elementen der Übersichtlichkeit
+ wegen beliebig gesetzt werden.
+ Wie aus den meisten Programmiersprachen bekannt, kennzeichnet die eckige
+ Klammer ein Array: 
+\shape italic
+[ Value1, Value2, Value3, ...
+ ]
+\shape default
+.
+ Ein Wert kann hierbei ein oben genanntes String/Value-Objekt sein, aber
+ auch Strings, Zahlen oder die boolschen Werte 
+\shape italic
+true
+\shape default
+ und 
+\shape italic
+false
+\shape default
+ sind möglich.
+ Darüber hinaus sind ist auch 
+\shape italic
+null
+\shape default
+ und auch weitere Arrays zulässige Werte.
+ Zeichenketten, bestehend aus 0 bis n Unicode kompatiblen Zeichen, beginnen
+ und enden je mit einem Anführungszeichen und können, ebenfalls wie aus
+ C und Java bekannt, Escape-Sequenzen beinhalten, beginnend mit einem Backslash.
+ Diese sind im Folgenden: 
+\backslash
+
+\shape italic
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\shape default
+, 
+\backslash
+
+\backslash
+ sowie 
+\backslash
+
+\shape italic
+/
+\shape default
+ geben jeweils den Wert hinter 
+\backslash
+ wieder - also 
+\shape italic
+
+\begin_inset Quotes eld
+\end_inset
+
+
+\shape default
+, 
+\backslash
+ und 
+\shape italic
+/
+\shape default
+ - hingegen steht 
+\backslash
+
+\shape italic
+b
+\shape default
+ für ein Backspace, 
+\backslash
+
+\shape italic
+f
+\shape default
+ für einen Seitenumbruch, 
+\backslash
+
+\shape italic
+n
+\shape default
+ kennzeichnet eine neue Zeile, 
+\backslash
+
+\shape italic
+r
+\shape default
+ den Zeilenrücklauf und 
+\backslash
+
+\shape italic
+u
+\shape default
+ einen horizontalen Tabulator.
+ Schließlich kann man noch, beginnend mit 
+\backslash
+
+\shape italic
+u
+\shape default
+, einen vierstelligen Zahlencode eingeben, an dessen Stelle wird dann der
+ Wert an der entsprechenden Stelle der Unicodetabelle zurückgegeben.
+ Die Zahlensyntax ist ebenfalls aus der C-/Java-Welt bekannt mit der Ausnahme,
+ dass JSON weder die Oktal- noch die Hexadezialdarstellung beherrscht.
+ 42 ist ebenso zulässig wie 1.35e-4 oder auch -3.7589E+20.
+\end_layout
+
+\begin_layout Standard
+Ein Beispiel für eine JSON-Datei:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+{
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+customer-id
+\begin_inset Quotes erd
+\end_inset
+
+: 1337,
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+: 
+\begin_inset Quotes eld
+\end_inset
+
+John Doe
+\begin_inset Quotes erd
+\end_inset
+
+,
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+contact
+\begin_inset Quotes erd
+\end_inset
+
+: [
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+       [ 3456,
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         
+\begin_inset Quotes eld
+\end_inset
+
+123-4567
+\begin_inset Quotes erd
 \end_inset
 
 
 \end_layout
 
+\begin_layout LyX-Code
+
+\size footnotesize
+       ], 
+\begin_inset Quotes eld
+\end_inset
+
+john.doe@example.com
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+     ],
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+vip
+\begin_inset Quotes erd
+\end_inset
+
+: true
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  },
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+customer-id
+\begin_inset Quotes erd
+\end_inset
+
+: 1338,
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+: 
+\begin_inset Quotes eld
+\end_inset
+
+Jane Doe
+\begin_inset Quotes erd
+\end_inset
+
+,
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+contact
+\begin_inset Quotes erd
+\end_inset
+
+: null,
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+    
+\begin_inset Quotes eld
+\end_inset
+
+vip
+\begin_inset Quotes erd
+\end_inset
+
+: false
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  }
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout Chapter
+Implementation (10 Seiten)
+\end_layout
+
 \begin_layout Section
-Objective-C
-\end_layout
-
-\begin_layout Subsection
-Grundlegende Unterschiede zu C++
-\end_layout
-
-\begin_layout Subsection
-...
-\end_layout
-
-\begin_layout Section
-REST
-\end_layout
-
-\begin_layout Subsection
-RESTful Web Services
-\end_layout
-
-\begin_layout Subsection
-JSON
-\end_layout
-
-\begin_layout Section
-Implementation
+Struktur
 \end_layout
 
 \begin_layout Standard
@@ -671,7 +2454,7 @@ requestMethod -> ViewController (delegate)
 requestMethod -> ViewController (dataSource)
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Layout
 \end_layout
 
@@ -689,6 +2472,104 @@ http://www.iconfinder.com/icondetails/34206/128/box_red_icon
 
 \begin_layout Standard
 http://www.iconfinder.com/icondetails/34224/128/browser_earth_internet_world_icon
+\end_layout
+
+\begin_layout Section
+Schwierigkeiten
+\end_layout
+
+\begin_layout Description
+Problem: Einzulesende Datentypen müssen RKObject bereits bekannt sein, die
+ Collection muss vordefiniert werden.
+ In einem generischen Client ist das aber eben nicht der Fall.
+\end_layout
+
+\begin_layout Description
+Lösung: Noch keine.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Dissertation Fielding"
+
+\end_inset
+
+Fielding, Roy (2000) Dissertation: Architectural Styles and the Design of
+ Network-based Software Architectures
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Bayer - REST Einführung"
+
+\end_inset
+
+Bayer, Thomas (2002): REST Webservices: Eine Einführung
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "JAXenter"
+
+\end_inset
+
+Tilkov, Stefan (2009); REST - Der bessere Webservice? In: JAXenter, URL:
+ http://it-republik.de/jaxenter/artikel/REST---Der-bessere-Web-Service-2158.html
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Wikipedia - Webservice"
+
+\end_inset
+
+Wikipedia: Web service, URL: http://en.wikipedia.org/wiki/Web_service (letzter
+ Aufruf am 5.9.2012)
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Wikipedia - REST"
+
+\end_inset
+
+http://de.wikipedia.org/wiki/Representational_State_Transfer
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Installing RestKit"
+
+\end_inset
+
+https://github.com/RestKit/RestKit/wiki/Installing-RestKit-in-Xcode-4.x
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Developing RESTful iOS Apps with RestKit"
+
+\end_inset
+
+Watters, Blake (2011); Developing RESTful iOS Apps with RestKit in: mobile
+ tuts+, URL: http://mobile.tutsplus.com/tutorials/iphone/restkit_ios-sdk/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "JSON.org - Einführung in JSON"
+
+\end_inset
+
+Introducing JSON, URL: http://json.org/index.html
 \end_layout
 
 \end_body
