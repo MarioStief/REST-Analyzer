@@ -223,10 +223,7 @@
     [outputSwitch setSelectedSegmentIndex:1];
     if ([response isJSON]) {
         [detectedJSON setHighlighted:YES];
-        // PARSEN !!!
-        //RKJSONParserJSONKit* parser = [[RKJSONParserJSONKit alloc] init];
-        //NSError* error = [[NSError alloc] init];
-        //[parser objectFromString:[response bodyAsString] error:&error];
+        // Parsen from here...
     }
     else if ([response isXML])
         [detectedXML setHighlighted:YES];
@@ -234,6 +231,33 @@
         [detectedHTML setHighlighted:YES];
     else if ([response isXHTML])
         [detectedXHTML setHighlighted:YES];
+    
+    // ... to here:
+    NSError* err = nil;
+    NSArray* array = [NSJSONSerialization JSONObjectWithData:[response body] options:NSJSONReadingMutableContainers error:&err];
+    NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:[response body] options:NSJSONReadingMutableContainers error:&err];
+    
+    if (!array) {
+        NSLog(@"Error parsing JSON: %@", err);
+    } else {
+        for(NSString *item in array) {
+            NSLog(@"Key: %@", item);
+            // ********** Subitems: **********
+            NSString* string = [[NSString alloc] initWithFormat:@"%@",[dic valueForKey:item]];
+            if ([string hasPrefix:@"{"]) {
+                NSLog(@"Subarray detected");
+
+                // Subitems process
+
+            }
+            // *******************************
+            else
+                NSLog(@"Value: %@", string);
+            printf("\n");
+        }
+    }
+    NSLog(@"Number of Entries: %i", [dic count]);
+
 }
 
 @end

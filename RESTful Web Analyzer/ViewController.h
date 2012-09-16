@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "ObjectMapper.h"
-//#import <RestKit/ObjectMapping.h>
 #import <RestKit/RestKit.h>
 #import <RestKit/RKJSONParserJSONKit.h>
+#import <Foundation/NSJSONSerialization.h>
 
 @interface ViewController : UIViewController <UITextFieldDelegate, RKRequestDelegate> {
     NSArray *httpVerbs;

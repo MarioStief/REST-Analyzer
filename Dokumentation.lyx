@@ -2454,6 +2454,15 @@ requestMethod -> ViewController (delegate)
 requestMethod -> ViewController (dataSource)
 \end_layout
 
+\begin_layout Itemize
+...
+\end_layout
+
+\begin_layout Itemize
+Im Storyboard unter dem View Controller ein Text View erzeugt, dieses als
+ Outlet in die ViewController.h gebunden, Text hinzugefügt.
+\end_layout
+
 \begin_layout Section
 Layout
 \end_layout
