@@ -33,7 +33,8 @@
 		AC92022D15E2FF16009B1426 /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022C15E2FF16009B1426 /* Globe.png */; };
 		AC92022F15E30128009B1426 /* webservice.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022E15E30128009B1426 /* webservice.png */; };
 		ACBB001216055E9800340B28 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ACBB000516055E1500340B28 /* libRestKit.a */; };
-		ACF0CD351602BF500019EF61 /* ObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF0CD331602BF240019EF61 /* ObjectMapper.m */; };
+		ACBB001A1605865700340B28 /* Circle_Grey.ico in Resources */ = {isa = PBXBuildFile; fileRef = ACBB00181605865700340B28 /* Circle_Grey.ico */; };
+		ACBB001E1605868E00340B28 /* Circle_Green.ico in Resources */ = {isa = PBXBuildFile; fileRef = ACBB001D1605868E00340B28 /* Circle_Green.ico */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,9 +121,9 @@
 		AC92022915E2FDF9009B1426 /* Box_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Red.png; sourceTree = "<group>"; };
 		AC92022C15E2FF16009B1426 /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
 		AC92022E15E30128009B1426 /* webservice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = webservice.png; path = ../webservice.png; sourceTree = "<group>"; };
+		ACBB00181605865700340B28 /* Circle_Grey.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = Circle_Grey.ico; path = ../../../../../Users/mario/Downloads/Circle_Grey.ico; sourceTree = "<group>"; };
+		ACBB001D1605868E00340B28 /* Circle_Green.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = Circle_Green.ico; path = ../../../../../Users/mario/Downloads/Circle_Green.ico; sourceTree = "<group>"; };
 		ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
-		ACF0CD321602BF240019EF61 /* ObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectMapper.h; sourceTree = "<group>"; };
-		ACF0CD331602BF240019EF61 /* ObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectMapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,8 +205,6 @@
 				AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */,
 				AC8B879015DF646000E12B48 /* ViewController.h */,
 				AC8B879115DF646000E12B48 /* ViewController.m */,
-				ACF0CD321602BF240019EF61 /* ObjectMapper.h */,
-				ACF0CD331602BF240019EF61 /* ObjectMapper.m */,
 				AC8B878215DF646000E12B48 /* Supporting Files */,
 			);
 			path = "RESTful Web Analyzer";
@@ -214,6 +213,8 @@
 		AC8B878215DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ACBB00181605865700340B28 /* Circle_Grey.ico */,
+				ACBB001D1605868E00340B28 /* Circle_Green.ico */,
 				AC92022C15E2FF16009B1426 /* Globe.png */,
 				AC92022915E2FDF9009B1426 /* Box_Red.png */,
 				AC92022815E2FDF9009B1426 /* Box_Green.png */,
@@ -379,6 +380,8 @@
 				AC92022B15E2FDF9009B1426 /* Box_Red.png in Resources */,
 				AC92022D15E2FF16009B1426 /* Globe.png in Resources */,
 				AC92022F15E30128009B1426 /* webservice.png in Resources */,
+				ACBB001A1605865700340B28 /* Circle_Grey.ico in Resources */,
+				ACBB001E1605868E00340B28 /* Circle_Green.ico in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +419,6 @@
 				AC8B878815DF646000E12B48 /* main.m in Sources */,
 				AC8B878C15DF646000E12B48 /* AppDelegate.m in Sources */,
 				AC8B879215DF646000E12B48 /* ViewController.m in Sources */,
-				ACF0CD351602BF500019EF61 /* ObjectMapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

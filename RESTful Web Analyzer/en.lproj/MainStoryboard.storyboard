@@ -15,17 +15,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" id="68F-za-mbJ">
-                                <rect key="frame" x="78" y="175" width="120" height="216"/>
+                                <rect key="frame" x="82" y="158" width="120" height="216"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <outlet property="dataSource" destination="2" id="mGC-al-ClU"/>
                                     <outlet property="delegate" destination="2" id="xek-HK-sDX"/>
                                 </connections>
                             </pickerView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.99999999999999989" contentMode="scaleToFill" id="uOx-u0-hy2">
-                                <rect key="frame" x="72" y="420" width="413" height="401"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="uOx-u0-hy2">
+                                <rect key="frame" x="73" y="399" width="400" height="461"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="NLy-0p-Nih">
+                                        <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="pqN-F7-NCN">
+                                        <rect key="frame" x="97" y="408" width="207" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <segments>
+                                            <segment title="Request"/>
+                                            <segment title="Response"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="outputToggle:" destination="2" eventType="valueChanged" id="3PE-5f-MO6"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
                             </scrollView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://graph.facebook.com/19292868552" borderStyle="roundedRect" minimumFontSize="17" id="BVk-se-5QJ">
                                 <rect key="frame" x="145" y="49" width="466" height="31"/>
@@ -52,51 +71,43 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HTTP Method" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="qWM-1C-Mwy">
-                                <rect key="frame" x="86" y="128" width="107" height="21"/>
+                                <rect key="frame" x="89" y="112" width="107" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="(Authentication)?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="7OC-Dw-b6d">
-                                <rect key="frame" x="302" y="128" width="129" height="21"/>
+                                <rect key="frame" x="301" y="112" width="129" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="username" borderStyle="roundedRect" minimumFontSize="17" id="03B-DX-GBg">
-                                <rect key="frame" x="286" y="175" width="160" height="31"/>
+                                <rect key="frame" x="282" y="158" width="160" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" borderStyle="roundedRect" minimumFontSize="17" id="Ufq-WV-7bd">
-                                <rect key="frame" x="286" y="249" width="160" height="31"/>
+                                <rect key="frame" x="282" y="197" width="160" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9iA-Sg-7rG">
-                                <rect key="frame" x="519" y="175" width="202" height="646"/>
+                                <rect key="frame" x="519" y="158" width="202" height="663"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HTTP Headers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="O6O-ot-SqC">
-                                <rect key="frame" x="563" y="128" width="114" height="21"/>
+                                <rect key="frame" x="566" y="112" width="114" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="pqN-F7-NCN">
-                                <rect key="frame" x="165" y="834" width="207" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Request"/>
-                                    <segment title="Response"/>
-                                </segments>
-                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RRW-dk-CCl">
                                 <rect key="frame" x="519" y="834" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -125,14 +136,76 @@
                                 <rect key="frame" x="73" y="20" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="JSON" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sJz-8a-tk1">
+                                <rect key="frame" x="339" y="283" width="46" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="XML" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="im9-IF-bhM">
+                                <rect key="frame" x="339" y="312" width="46" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HTML" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="dqu-rb-MIQ">
+                                <rect key="frame" x="339" y="341" width="47" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="XHTML" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="S9J-rR-XXn">
+                                <rect key="frame" x="339" y="370" width="58" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Circle_Grey.ico" highlightedImage="Circle_Green.ico" id="DcE-EZ-ngS">
+                                <rect key="frame" x="304" y="286" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Circle_Grey.ico" highlightedImage="Circle_Green.ico" id="2ZM-Yu-mmF">
+                                <rect key="frame" x="304" y="315" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Circle_Grey.ico" highlightedImage="Circle_Green.ico" id="Dih-qh-kiG">
+                                <rect key="frame" x="304" y="344" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Circle_Grey.ico" highlightedImage="Circle_Green.ico" id="baJ-AQ-rkF">
+                                <rect key="frame" x="304" y="373" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="RVV-Fo-5MO">
+                                <rect key="frame" x="259" y="236" width="207" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="None"/>
+                                    <segment title="HTTP"/>
+                                    <segment title="HTTPBasic"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="authentication" destination="RVV-Fo-5MO" id="RiD-cr-x1s"/>
+                        <outlet property="detectedHTML" destination="Dih-qh-kiG" id="YOd-s8-Lz6"/>
+                        <outlet property="detectedJSON" destination="DcE-EZ-ngS" id="Idc-pe-HCA"/>
+                        <outlet property="detectedXHTML" destination="baJ-AQ-rkF" id="UD1-ep-PBW"/>
+                        <outlet property="detectedXML" destination="2ZM-Yu-mmF" id="gKd-09-1dF"/>
                         <outlet property="httpHeaders" destination="9iA-Sg-7rG" id="5zo-Qs-YhZ"/>
+                        <outlet property="outputSwitch" destination="pqN-F7-NCN" id="x73-1n-TZw"/>
+                        <outlet property="password" destination="Ufq-WV-7bd" id="z17-zu-AIK"/>
                         <outlet property="requestMethod" destination="68F-za-mbJ" id="R5h-Ij-QMQ"/>
+                        <outlet property="scrollViewText" destination="NLy-0p-Nih" id="KC6-z2-YKC"/>
                         <outlet property="scrollview" destination="uOx-u0-hy2" id="0XO-Ga-Drc"/>
                         <outlet property="url" destination="BVk-se-5QJ" id="r0i-ln-o9H"/>
+                        <outlet property="username" destination="03B-DX-GBg" id="h63-ID-gfo"/>
                     </connections>
                 </viewController>
             </objects>
@@ -141,6 +214,8 @@
     <resources>
         <image name="Box_Green.png" width="32" height="32"/>
         <image name="Box_Red.png" width="32" height="32"/>
+        <image name="Circle_Green.ico" width="16" height="16"/>
+        <image name="Circle_Grey.ico" width="16" height="16"/>
         <image name="Globe.png" width="64" height="64"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
