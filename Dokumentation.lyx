@@ -2479,13 +2479,23 @@ Schwierigkeiten
 \end_layout
 
 \begin_layout Description
-Problem: Einzulesende Datentypen müssen RKObject bereits bekannt sein, die
- Collection muss vordefiniert werden.
- In einem generischen Client ist das aber eben nicht der Fall.
+Problem: Der RKObjectManager mappt die Werte zu den Keys, die er in seiner
+ Delegierten angegeben hat.
+ In einem generischen Clienten kann man die Schlüssel schlecht bereits vordefini
+eren.
 \end_layout
 
 \begin_layout Description
 Lösung: Noch keine.
+\end_layout
+
+\begin_layout Description
+Problem: Nach vollständigem Durchlauf stürzt das Programm ab, die Methode
+ didFailLoadWithError meldet einen Fehler.
+\end_layout
+
+\begin_layout Description
+Ursache:
 \end_layout
 
 \begin_layout Bibliography

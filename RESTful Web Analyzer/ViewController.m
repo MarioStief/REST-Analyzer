@@ -22,7 +22,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    requestMethods = [[NSArray alloc] initWithObjects:@"GET", @"POST", @"PUT", @"DELETE", @"HEAD", nil];
+    httpVerbs = [[NSArray alloc] initWithObjects:@"GET", @"POST", @"PUT", @"DELETE", @"HEAD", nil];
 }
 
 - (void)viewDidUnload
@@ -56,25 +56,46 @@
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     //set number of rows
-    return requestMethods.count;
+    return httpVerbs.count;
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     //set item per row
-    return [requestMethods objectAtIndex:row];
+    return [httpVerbs objectAtIndex:row];
 }
 
 
 - (IBAction)go:(id)sender {
-    /* if (self.url.beginswith("www.") then "http://" + self.url.text;
-    NSString *self.url.text = ([[NSString alloc] initWithFormat:@"http://%@", self.url.text]);
-     */
-    
-    [self.url resignFirstResponder];    // On-Screen-Tastatur entfernen
-    
-    [mapper setUrl:self.url.text];      // URL an mapper übergeben
-    [mapper splitUrl];                  // aufteilen in Base URL und Resource URL
-    [mapper mapUrl];                    // die Resoure in ein lokales Objekt mappen
+    [self.url resignFirstResponder];        // On-Screen-Tastatur entfernen
+    [self startRequest:[requestMethod selectedRowInComponent:0]]; // den Request starten, die Request-ID mitgeben.
 }
+
+- (void)startRequest:(NSInteger)methodId {
+    switch (methodId) {
+        case 0:
+            // GET
+            mapper = [[ObjectMapper alloc] init];   // Speicher allokieren, Objektinstanz erstellen
+            [mapper setUrl:self.url.text];          // URL an mapper übergeben
+            if ([mapper splitUrl] == 1) {           // aufteilen in Base URL und Resource URL, Abbruch bei invalider URL
+                NSLog(@"Error: URL invalid.");
+                break;
+            }
+            [mapper get];                        // die Resoure in ein lokales Objekt mappen
+            break;
+        case 1:
+            // POST
+            break;
+        case 2:
+            // PUT
+            break;
+        case 3:
+            // DELETE
+            break;
+        case 4:
+            // HEAD
+            break;
+    }
+}
+
 @end

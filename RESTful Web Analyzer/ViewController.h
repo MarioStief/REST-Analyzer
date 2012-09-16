@@ -11,12 +11,14 @@
 #import <RestKit/ObjectMapping.h>
 
 @interface ViewController : UIViewController <UITextFieldDelegate> {
-    NSArray *requestMethods;
+    NSArray *httpVerbs;
     ObjectMapper* mapper;
 }
+
 @property (weak, nonatomic) IBOutlet UITextField *url;
 @property (weak, nonatomic) IBOutlet UIPickerView *requestMethod;
 - (IBAction)go:(id)sender;
+- (void)startRequest:(NSInteger)methodId;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 @property (weak, nonatomic) IBOutlet UITableView *httpHeaders;
 

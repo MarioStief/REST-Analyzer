@@ -8,31 +8,35 @@
 
 #import <Foundation/Foundation.h>
 #import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
 
-@interface ObjectMapper : NSObject <RKObjectMapperDelegate, RKObjectLoaderDelegate> {
-    RKObjectManager* manager;
+@interface ObjectMapper : NSObject <RKRequestDelegate> {
+//<RKObjectMapperDelegate, RKObjectLoaderDelegate> {
     NSString* url;
     NSString* baseUrl;
     NSString* resourcePath;
-    NSString* string1;
-    NSString* string2;
-    NSString* string3;
-    NSString* string4;
-    NSString* string5;
-    NSString* string6;
-    NSString* string7;
-    NSString* string8;
-    NSString* string9;
-    NSString* string10;
-    NSString* string11;
-    NSString* string12;
+    RKResponse* response;
 }
 
-@property (nonatomic, retain) NSArray* array;
+/*
+@property (nonatomic, retain) NSNumber* id;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* first_name;
+@property (nonatomic, retain) NSString* last_name;
+@property (nonatomic, retain) NSURL* link;
+@property (nonatomic, retain) NSString* username;
+@property (nonatomic, retain) NSString* gender;
+@property (nonatomic, retain) NSString* locale;
+ */
 
-- (NSDictionary*)elementToPropertyMappings;
+//- (NSDictionary*)elementToPropertyMappings;
 - (void)setUrl:(NSString*)url;
-- (void)splitUrl;
-- (void)mapUrl;
+- (NSInteger)splitUrl;
+- (void)get;
+- (void)post;
+- (void)put;
+- (void)delete;
+- (void)head;
+- (void)parseJSON:(RKResponse*)response;
 
 @end
