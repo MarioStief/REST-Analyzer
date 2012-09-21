@@ -325,10 +325,10 @@ iPhone Developer
  welches in der Lage ist, die SHA1 Hashes zu überprüfen, welche vom iOS-Kernel
  überprüft werden.
  Dieses Kommandozeilenprogramm kopieren wir – zusammen mit einem Python
- Script - nach /usr/bin/ und tauschen in der Datei /Applications/Xcode.app/Conten
-ts/Developer/Platforms/ iPhoneOS.platform/Developer/Library/Xcode/PrivatePlugIns/
-iPhoneOS Build System Support.xcplugin/Contents/Resources/iPhoneCodeSign.xcspec
- die Zeile 
+ Script - nach /usr/bin/ und tauschen - bei XCode 4.4 - in der Datei /Application
+s/Xcode.app/Contents/Developer/Platforms/ iPhoneOS.platform/Developer/Library/Xcod
+e/PrivatePlugIns/iPhoneOS Build System Support.xcplugin/Contents/Resources/iPhone
+CodeSign.xcspec die Zeile 
 \begin_inset Quotes erd
 \end_inset
 
@@ -337,6 +337,33 @@ CommandLine = /usr/bin/codesign
 \end_inset
 
  mit der Zeile “CommandLine = /usr/bin/ldid3.py” aus.
+ In XCode 4.5 ist die Datei keine Text-Datei mehr.
+ Hier bedienen wir uns eines Hex Editors und öffnen die Datei 
+\begin_inset Quotes eld
+\end_inset
+
+/Applications/Xcode.app/Contents/Developer/ Platforms/iPhoneOS.platform/Developer/
+Library/Xcode/Specifications/iPhone CodeSign.xcspec
+\begin_inset Quotes erd
+\end_inset
+
+, in der wir ebenfalls den Textstring 
+\begin_inset Quotes eld
+\end_inset
+
+/usr/bin/codesign
+\begin_inset Quotes erd
+\end_inset
+
+ mit dem String 
+\begin_inset Quotes erd
+\end_inset
+
+/usr/bin/ldid3.py
+\begin_inset Quotes erd
+\end_inset
+
+ ersetzen.
  Von nun an übernimmt dieses Werkzeug die Signierng unserer Programme.
 \end_layout
 
@@ -484,7 +511,7 @@ wobei das Verzeichnis System jedoch nicht zwingend notwendig ist.
 \end_layout
 
 \begin_layout Standard
-Die Datei control, kann folgende Einträge beinhalten: Package, Name, Version,
+Die Datei control kann folgende Einträge beinhalten: Package, Name, Version,
  Architecture, Description, Homepage, Depiction, Maintainer, Author, Sponsor,
  Section.
  Zwingend vorgeschrieben sind davon jedoch nur Package und Version.
@@ -2472,15 +2499,23 @@ Verwendete Grafiken:
 \end_layout
 
 \begin_layout Standard
-http://www.iconfinder.com/icondetails/34203/128/box_green_square_icon
+http://www.iconfinder.com/icondetails/34203/256/
 \end_layout
 
 \begin_layout Standard
-http://www.iconfinder.com/icondetails/34206/128/box_red_icon
+http://www.iconfinder.com/icondetails/34206/256/
 \end_layout
 
 \begin_layout Standard
-http://www.iconfinder.com/icondetails/34224/128/browser_earth_internet_world_icon
+http://www.iconfinder.com/icondetails/34224/256/browser_earth_internet_world_icon
+\end_layout
+
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/34211/128/
+\end_layout
+
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/34212/128/
 \end_layout
 
 \begin_layout Section

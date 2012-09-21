@@ -28,13 +28,12 @@
 		AC8B87D415DF654E00E12B48 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B87CD15DF654E00E12B48 /* Security.framework */; };
 		AC8B87D515DF654E00E12B48 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B87CE15DF654E00E12B48 /* SystemConfiguration.framework */; };
 		AC8E797315DF715F003DCA88 /* Dokumentation.lyx in Resources */ = {isa = PBXBuildFile; fileRef = AC8E797215DF715F003DCA88 /* Dokumentation.lyx */; };
-		AC92022A15E2FDF9009B1426 /* Box_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022815E2FDF9009B1426 /* Box_Green.png */; };
-		AC92022B15E2FDF9009B1426 /* Box_Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022915E2FDF9009B1426 /* Box_Red.png */; };
-		AC92022D15E2FF16009B1426 /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022C15E2FF16009B1426 /* Globe.png */; };
 		AC92022F15E30128009B1426 /* webservice.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022E15E30128009B1426 /* webservice.png */; };
-		ACBB001216055E9800340B28 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ACBB000516055E1500340B28 /* libRestKit.a */; };
-		ACBB001A1605865700340B28 /* Circle_Grey.ico in Resources */ = {isa = PBXBuildFile; fileRef = ACBB00181605865700340B28 /* Circle_Grey.ico */; };
-		ACBB001E1605868E00340B28 /* Circle_Green.ico in Resources */ = {isa = PBXBuildFile; fileRef = ACBB001D1605868E00340B28 /* Circle_Green.ico */; };
+		AC98D473160B820F0083FB39 /* Circle_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D471160B820F0083FB39 /* Circle_Green.png */; };
+		AC98D474160B820F0083FB39 /* Circle_Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D472160B820F0083FB39 /* Circle_Grey.png */; };
+		AC98D476160B82DC0083FB39 /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D475160B82DC0083FB39 /* Globe.png */; };
+		AC98D479160B835D0083FB39 /* Box_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D477160B835D0083FB39 /* Box_Green.png */; };
+		AC98D47A160B835D0083FB39 /* Box_Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D478160B835D0083FB39 /* Box_Red.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,67 +44,25 @@
 			remoteGlobalIDString = AC8B877615DF645F00E12B48;
 			remoteInfo = "RESTful Web Analyzer";
 		};
-		ACBB000416055E1500340B28 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160D1614564E810060A5C5;
-			remoteInfo = RestKit;
-		};
-		ACBB000616055E1500340B28 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160D2614564E820060A5C5;
-			remoteInfo = RestKitTests;
-		};
-		ACBB000816055E1500340B28 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160E62145651060060A5C5;
-			remoteInfo = RestKitFramework;
-		};
-		ACBB000A16055E1500340B28 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160E78145651060060A5C5;
-			remoteInfo = RestKitFrameworkTests;
-		};
-		ACBB000C16055E1500340B28 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 259C301615128079003066A2;
-			remoteInfo = RestKitResources;
-		};
-		ACBB001016055E8B00340B28 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 25160D1514564E810060A5C5;
-			remoteInfo = RestKit;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AC8B877715DF645F00E12B48 /* RESTful Web Analyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RESTful Web Analyzer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC8B877715DF645F00E12B48 /* REST Analyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REST Analyzer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B877B15DF645F00E12B48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AC8B877D15DF645F00E12B48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AC8B877F15DF645F00E12B48 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		AC8B878315DF646000E12B48 /* RESTful Web Analyzer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RESTful Web Analyzer-Info.plist"; sourceTree = "<group>"; };
+		AC8B878315DF646000E12B48 /* REST Analyzer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "REST Analyzer-Info.plist"; sourceTree = "<group>"; };
 		AC8B878515DF646000E12B48 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AC8B878715DF646000E12B48 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AC8B878915DF646000E12B48 /* RESTful Web Analyzer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RESTful Web Analyzer-Prefix.pch"; sourceTree = "<group>"; };
+		AC8B878915DF646000E12B48 /* REST Analyzer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "REST Analyzer-Prefix.pch"; sourceTree = "<group>"; };
 		AC8B878A15DF646000E12B48 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AC8B878B15DF646000E12B48 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AC8B878E15DF646000E12B48 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		AC8B879015DF646000E12B48 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		AC8B879115DF646000E12B48 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		AC8B879815DF646000E12B48 /* RESTful Web AnalyzerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RESTful Web AnalyzerTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC8B879815DF646000E12B48 /* REST AnalyzerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "REST AnalyzerTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B879915DF646000E12B48 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		AC8B87A115DF646000E12B48 /* RESTful Web AnalyzerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RESTful Web AnalyzerTests-Info.plist"; sourceTree = "<group>"; };
+		AC8B87A115DF646000E12B48 /* REST AnalyzerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "REST AnalyzerTests-Info.plist"; sourceTree = "<group>"; };
 		AC8B87A315DF646000E12B48 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AC8B87A515DF646000E12B48 /* RESTful_Web_AnalyzerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RESTful_Web_AnalyzerTests.h; sourceTree = "<group>"; };
 		AC8B87A615DF646000E12B48 /* RESTful_Web_AnalyzerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RESTful_Web_AnalyzerTests.m; sourceTree = "<group>"; };
@@ -117,13 +74,12 @@
 		AC8B87CD15DF654E00E12B48 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AC8B87CE15DF654E00E12B48 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AC8E797215DF715F003DCA88 /* Dokumentation.lyx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dokumentation.lyx; sourceTree = "<group>"; };
-		AC92022815E2FDF9009B1426 /* Box_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Green.png; sourceTree = "<group>"; };
-		AC92022915E2FDF9009B1426 /* Box_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Red.png; sourceTree = "<group>"; };
-		AC92022C15E2FF16009B1426 /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
 		AC92022E15E30128009B1426 /* webservice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = webservice.png; path = ../webservice.png; sourceTree = "<group>"; };
-		ACBB00181605865700340B28 /* Circle_Grey.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = Circle_Grey.ico; path = ../../../../../Users/mario/Downloads/Circle_Grey.ico; sourceTree = "<group>"; };
-		ACBB001D1605868E00340B28 /* Circle_Green.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = Circle_Green.ico; path = ../../../../../Users/mario/Downloads/Circle_Green.ico; sourceTree = "<group>"; };
-		ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		AC98D471160B820F0083FB39 /* Circle_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Green.png; sourceTree = "<group>"; };
+		AC98D472160B820F0083FB39 /* Circle_Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Grey.png; sourceTree = "<group>"; };
+		AC98D475160B82DC0083FB39 /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
+		AC98D477160B835D0083FB39 /* Box_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Green.png; sourceTree = "<group>"; };
+		AC98D478160B835D0083FB39 /* Box_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Red.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +87,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACBB001216055E9800340B28 /* libRestKit.a in Frameworks */,
 				AC8B87CF15DF654E00E12B48 /* CFNetwork.framework in Frameworks */,
 				AC8B87D015DF654E00E12B48 /* CoreData.framework in Frameworks */,
 				AC8B87D115DF654E00E12B48 /* libxml2.dylib in Frameworks */,
@@ -161,7 +116,6 @@
 		AC8B876C15DF645F00E12B48 = {
 			isa = PBXGroup;
 			children = (
-				ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */,
 				AC8E797215DF715F003DCA88 /* Dokumentation.lyx */,
 				AC8B878115DF646000E12B48 /* RESTful Web Analyzer */,
 				AC8B879F15DF646000E12B48 /* RESTful Web AnalyzerTests */,
@@ -173,8 +127,8 @@
 		AC8B877815DF645F00E12B48 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AC8B877715DF645F00E12B48 /* RESTful Web Analyzer.app */,
-				AC8B879815DF646000E12B48 /* RESTful Web AnalyzerTests.octest */,
+				AC8B877715DF645F00E12B48 /* REST Analyzer.app */,
+				AC8B879815DF646000E12B48 /* REST AnalyzerTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,16 +167,16 @@
 		AC8B878215DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				ACBB00181605865700340B28 /* Circle_Grey.ico */,
-				ACBB001D1605868E00340B28 /* Circle_Green.ico */,
-				AC92022C15E2FF16009B1426 /* Globe.png */,
-				AC92022915E2FDF9009B1426 /* Box_Red.png */,
-				AC92022815E2FDF9009B1426 /* Box_Green.png */,
+				AC98D471160B820F0083FB39 /* Circle_Green.png */,
+				AC98D472160B820F0083FB39 /* Circle_Grey.png */,
+				AC98D477160B835D0083FB39 /* Box_Green.png */,
+				AC98D478160B835D0083FB39 /* Box_Red.png */,
+				AC98D475160B82DC0083FB39 /* Globe.png */,
 				AC92022E15E30128009B1426 /* webservice.png */,
-				AC8B878315DF646000E12B48 /* RESTful Web Analyzer-Info.plist */,
+				AC8B878315DF646000E12B48 /* REST Analyzer-Info.plist */,
 				AC8B878415DF646000E12B48 /* InfoPlist.strings */,
 				AC8B878715DF646000E12B48 /* main.m */,
-				AC8B878915DF646000E12B48 /* RESTful Web Analyzer-Prefix.pch */,
+				AC8B878915DF646000E12B48 /* REST Analyzer-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -240,30 +194,18 @@
 		AC8B87A015DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AC8B87A115DF646000E12B48 /* RESTful Web AnalyzerTests-Info.plist */,
+				AC8B87A115DF646000E12B48 /* REST AnalyzerTests-Info.plist */,
 				AC8B87A215DF646000E12B48 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		ACBBFFFA16055E1500340B28 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ACBB000516055E1500340B28 /* libRestKit.a */,
-				ACBB000716055E1500340B28 /* RestKitTests.octest */,
-				ACBB000916055E1500340B28 /* RestKit.framework */,
-				ACBB000B16055E1500340B28 /* RestKitFrameworkTests.octest */,
-				ACBB000D16055E1500340B28 /* RestKitResources.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AC8B877615DF645F00E12B48 /* RESTful Web Analyzer */ = {
+		AC8B877615DF645F00E12B48 /* REST Analyzer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AC8B87AA15DF646000E12B48 /* Build configuration list for PBXNativeTarget "RESTful Web Analyzer" */;
+			buildConfigurationList = AC8B87AA15DF646000E12B48 /* Build configuration list for PBXNativeTarget "REST Analyzer" */;
 			buildPhases = (
 				AC8B877315DF645F00E12B48 /* Sources */,
 				AC8B877415DF645F00E12B48 /* Frameworks */,
@@ -272,16 +214,15 @@
 			buildRules = (
 			);
 			dependencies = (
-				ACBB001116055E8B00340B28 /* PBXTargetDependency */,
 			);
-			name = "RESTful Web Analyzer";
+			name = "REST Analyzer";
 			productName = "RESTful Web Analyzer";
-			productReference = AC8B877715DF645F00E12B48 /* RESTful Web Analyzer.app */;
+			productReference = AC8B877715DF645F00E12B48 /* REST Analyzer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AC8B879715DF646000E12B48 /* RESTful Web AnalyzerTests */ = {
+		AC8B879715DF646000E12B48 /* REST AnalyzerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AC8B87AD15DF646000E12B48 /* Build configuration list for PBXNativeTarget "RESTful Web AnalyzerTests" */;
+			buildConfigurationList = AC8B87AD15DF646000E12B48 /* Build configuration list for PBXNativeTarget "REST AnalyzerTests" */;
 			buildPhases = (
 				AC8B879315DF646000E12B48 /* Sources */,
 				AC8B879415DF646000E12B48 /* Frameworks */,
@@ -293,9 +234,9 @@
 			dependencies = (
 				AC8B879E15DF646000E12B48 /* PBXTargetDependency */,
 			);
-			name = "RESTful Web AnalyzerTests";
+			name = "REST AnalyzerTests";
 			productName = "RESTful Web AnalyzerTests";
-			productReference = AC8B879815DF646000E12B48 /* RESTful Web AnalyzerTests.octest */;
+			productReference = AC8B879815DF646000E12B48 /* REST AnalyzerTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -306,7 +247,7 @@
 			attributes = {
 				LastUpgradeCheck = 0440;
 			};
-			buildConfigurationList = AC8B877115DF645F00E12B48 /* Build configuration list for PBXProject "RESTful Web Analyzer" */;
+			buildConfigurationList = AC8B877115DF645F00E12B48 /* Build configuration list for PBXProject "REST Analyzer" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -316,57 +257,13 @@
 			mainGroup = AC8B876C15DF645F00E12B48;
 			productRefGroup = AC8B877815DF645F00E12B48 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = ACBBFFFA16055E1500340B28 /* Products */;
-					ProjectRef = ACBBFFF916055E1500340B28 /* RestKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
-				AC8B877615DF645F00E12B48 /* RESTful Web Analyzer */,
-				AC8B879715DF646000E12B48 /* RESTful Web AnalyzerTests */,
+				AC8B877615DF645F00E12B48 /* REST Analyzer */,
+				AC8B879715DF646000E12B48 /* REST AnalyzerTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		ACBB000516055E1500340B28 /* libRestKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRestKit.a;
-			remoteRef = ACBB000416055E1500340B28 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ACBB000716055E1500340B28 /* RestKitTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitTests.octest;
-			remoteRef = ACBB000616055E1500340B28 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ACBB000916055E1500340B28 /* RestKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RestKit.framework;
-			remoteRef = ACBB000816055E1500340B28 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ACBB000B16055E1500340B28 /* RestKitFrameworkTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitFrameworkTests.octest;
-			remoteRef = ACBB000A16055E1500340B28 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ACBB000D16055E1500340B28 /* RestKitResources.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitResources.bundle;
-			remoteRef = ACBB000C16055E1500340B28 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AC8B877515DF645F00E12B48 /* Resources */ = {
@@ -376,12 +273,12 @@
 				AC8B878615DF646000E12B48 /* InfoPlist.strings in Resources */,
 				AC8B878F15DF646000E12B48 /* MainStoryboard.storyboard in Resources */,
 				AC8E797315DF715F003DCA88 /* Dokumentation.lyx in Resources */,
-				AC92022A15E2FDF9009B1426 /* Box_Green.png in Resources */,
-				AC92022B15E2FDF9009B1426 /* Box_Red.png in Resources */,
-				AC92022D15E2FF16009B1426 /* Globe.png in Resources */,
 				AC92022F15E30128009B1426 /* webservice.png in Resources */,
-				ACBB001A1605865700340B28 /* Circle_Grey.ico in Resources */,
-				ACBB001E1605868E00340B28 /* Circle_Green.ico in Resources */,
+				AC98D473160B820F0083FB39 /* Circle_Green.png in Resources */,
+				AC98D474160B820F0083FB39 /* Circle_Grey.png in Resources */,
+				AC98D476160B82DC0083FB39 /* Globe.png in Resources */,
+				AC98D479160B835D0083FB39 /* Box_Green.png in Resources */,
+				AC98D47A160B835D0083FB39 /* Box_Red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,13 +332,8 @@
 /* Begin PBXTargetDependency section */
 		AC8B879E15DF646000E12B48 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AC8B877615DF645F00E12B48 /* RESTful Web Analyzer */;
+			target = AC8B877615DF645F00E12B48 /* REST Analyzer */;
 			targetProxy = AC8B879D15DF646000E12B48 /* PBXContainerItemProxy */;
-		};
-		ACBB001116055E8B00340B28 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RestKit;
-			targetProxy = ACBB001016055E8B00340B28 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -544,15 +436,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RESTful Web Analyzer/RESTful Web Analyzer-Prefix.pch";
+				GCC_PREFIX_HEADER = "RESTful Web Analyzer/REST Analyzer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
-				INFOPLIST_FILE = "RESTful Web Analyzer/RESTful Web Analyzer-Info.plist";
+				INFOPLIST_FILE = "RESTful Web Analyzer/REST Analyzer-Info.plist";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "REST Analyzer";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -561,15 +453,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RESTful Web Analyzer/RESTful Web Analyzer-Prefix.pch";
+				GCC_PREFIX_HEADER = "RESTful Web Analyzer/REST Analyzer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
-				INFOPLIST_FILE = "RESTful Web Analyzer/RESTful Web Analyzer-Info.plist";
+				INFOPLIST_FILE = "RESTful Web Analyzer/REST Analyzer-Info.plist";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "REST Analyzer";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -584,8 +476,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RESTful Web Analyzer/RESTful Web Analyzer-Prefix.pch";
-				INFOPLIST_FILE = "RESTful Web AnalyzerTests/RESTful Web AnalyzerTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "RESTful Web AnalyzerTests/REST AnalyzerTests-Info.plist";
+				PRODUCT_NAME = "REST AnalyzerTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -601,8 +493,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RESTful Web Analyzer/RESTful Web Analyzer-Prefix.pch";
-				INFOPLIST_FILE = "RESTful Web AnalyzerTests/RESTful Web AnalyzerTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "RESTful Web AnalyzerTests/REST AnalyzerTests-Info.plist";
+				PRODUCT_NAME = "REST AnalyzerTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -611,7 +503,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AC8B877115DF645F00E12B48 /* Build configuration list for PBXProject "RESTful Web Analyzer" */ = {
+		AC8B877115DF645F00E12B48 /* Build configuration list for PBXProject "REST Analyzer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC8B87A815DF646000E12B48 /* Debug */,
@@ -620,7 +512,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AC8B87AA15DF646000E12B48 /* Build configuration list for PBXNativeTarget "RESTful Web Analyzer" */ = {
+		AC8B87AA15DF646000E12B48 /* Build configuration list for PBXNativeTarget "REST Analyzer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC8B87AB15DF646000E12B48 /* Debug */,
@@ -629,7 +521,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AC8B87AD15DF646000E12B48 /* Build configuration list for PBXNativeTarget "RESTful Web AnalyzerTests" */ = {
+		AC8B87AD15DF646000E12B48 /* Build configuration list for PBXNativeTarget "REST AnalyzerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AC8B87AE15DF646000E12B48 /* Debug */,
