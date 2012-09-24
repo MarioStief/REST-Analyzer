@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/NSJSONSerialization.h>
 #import <Foundation/NSXMLParser.h>
+#import "ResourcesTableViewController.h"
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate> {
+@interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
     NSArray *httpVerbs;
     NSInteger methodId;
     NSString *urlString;
@@ -26,12 +27,12 @@
     NSHTTPURLResponse *response;
     NSData *bodyData;
     NSMutableArray *foundResources;
+    ResourcesTableViewController *resourceTableViewController;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
 @property (weak, nonatomic) IBOutlet UIPickerView *requestMethod;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UITableView *httpHeaders;
 @property (weak, nonatomic) IBOutlet UITextView *headerScrollViewText;
 @property (weak, nonatomic) IBOutlet UITextView *contentScrollViewText;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *outputSwitch;
@@ -47,8 +48,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *logOutputViewText;
 @property (weak, nonatomic) IBOutlet UITextField *contentType;
 @property (weak, nonatomic) IBOutlet UITextField *encoding;
-@property (weak, nonatomic) IBOutlet UITableView *resourceTableView;
-@property (weak, nonatomic) IBOutlet UITableViewCell *resourceTableViewCell;
 @property (weak, nonatomic) IBOutlet UIButton *showResourcesButton;
 
 - (IBAction)go:(id)sender;

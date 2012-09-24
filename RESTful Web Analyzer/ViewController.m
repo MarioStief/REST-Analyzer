@@ -39,7 +39,6 @@
 {
     [self setRequestMethod:nil];
     [self setScrollView:nil];
-    [self setHttpHeaders:nil];
     [self setDetectedJSON:nil];
     [self setDetectedXML:nil];
     [self setDetectedHTML:nil];
@@ -52,8 +51,6 @@
     [self setLogOutputView:nil];
     [self setLogOutputViewText:nil];
     [self setContentType:nil];
-    [self setResourceTableView:nil];
-    [self setResourceTableViewCell:nil];
     [self setShowResourcesButton:nil];
     [self setHeaderScrollViewText:nil];
     [self setContentScrollViewText:nil];
@@ -63,7 +60,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return NO; // Not yet implemented -> not that impportant.
+    return NO; // Not yet implemented -> not that important.
 }
 
 // ********** Remove the onscreen keyboard after pressing "Go" button: **********
@@ -100,24 +97,29 @@
 // ********** Begin Setup Table View **********
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [foundResources count];
+    return 2; //[foundResources count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"resourceCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2
+    UITableViewCell *resourceTableViewCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (resourceTableViewCell == nil) {
+        resourceTableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2
                                       reuseIdentifier:CellIdentifier];
     }
     
     // Set up the cell...
+    
+    resourceTableViewCell.textLabel.text = @"Cell";
+    resourceTableViewCell.detailTextLabel.text = @"Description";
+    /*
     NSString *cellValue = [foundResources objectAtIndex:indexPath.row];
     cell.textLabel.text = cellValue;
     cell.detailTextLabel.text = [parsedResponseAsDictionary valueForKey:cellValue];
-    return cell;
+    */
+    return resourceTableViewCell;
 }
 
 // ********** End Setup Table View **********
@@ -258,12 +260,13 @@
     
     NSString *string = [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
     NSURL *url = [[NSURL alloc] initWithString:string];
-    NSMutableURLRequest *request = [[[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0] mutableCopy];
-    [request setHTTPMethod:requestMethodString];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    [mutableRequest setHTTPMethod:requestMethodString];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:mutableRequest delegate:self];
     NSLog(@"Sending Request: %@ %@%@ (%@)",requestMethodString,baseUrl,resourcePath,connection);
 
-    // ********** End Request **********INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE
+    // ********** End Request ********** INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE
     
     
     // ********** Begin Filling Header + Body Fields: REQUEST **********
@@ -459,6 +462,7 @@
     // ********** Begin Building TableView ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
     
     // TableView can be built: enable "Show Resources" button
+    resourceTableViewController = [[ResourcesTableViewController alloc] initWithDictionary:parsedResponseAsDictionary];
     [_showResourcesButton setEnabled:YES];
     
     // ********** End Building TableView ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL

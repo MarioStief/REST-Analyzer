@@ -34,6 +34,7 @@
 		AC98D476160B82DC0083FB39 /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D475160B82DC0083FB39 /* Globe.png */; };
 		AC98D479160B835D0083FB39 /* Box_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D477160B835D0083FB39 /* Box_Green.png */; };
 		AC98D47A160B835D0083FB39 /* Box_Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D478160B835D0083FB39 /* Box_Red.png */; };
+		ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		AC98D475160B82DC0083FB39 /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
 		AC98D477160B835D0083FB39 /* Box_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Green.png; sourceTree = "<group>"; };
 		AC98D478160B835D0083FB39 /* Box_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Red.png; sourceTree = "<group>"; };
+		ACBC27A71610EEEF006F982E /* ResourcesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesTableViewController.h; sourceTree = "<group>"; };
+		ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcesTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 				AC8B878A15DF646000E12B48 /* AppDelegate.h */,
 				AC8B878B15DF646000E12B48 /* AppDelegate.m */,
 				AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */,
+				ACBC27A71610EEEF006F982E /* ResourcesTableViewController.h */,
+				ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */,
 				AC8B879015DF646000E12B48 /* ViewController.h */,
 				AC8B879115DF646000E12B48 /* ViewController.m */,
 				AC8B878215DF646000E12B48 /* Supporting Files */,
@@ -316,6 +321,7 @@
 				AC8B878815DF646000E12B48 /* main.m in Sources */,
 				AC8B878C15DF646000E12B48 /* AppDelegate.m in Sources */,
 				AC8B879215DF646000E12B48 /* ViewController.m in Sources */,
+				ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
