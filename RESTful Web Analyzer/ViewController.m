@@ -36,6 +36,7 @@
     numberOfRows = 0;
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
+    [_showResourcesButton setAlpha:0.5]; // appearing inactive
 }
 
 - (void)viewDidUnload
@@ -108,6 +109,7 @@
     return numberOfRows; //[foundResources count];
 }
 
+// ********** Begin set up cell **********
 - (UITableViewCell *)tableView:(UITableView *)headersTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"resourceCell";
@@ -118,32 +120,57 @@
                                       reuseIdentifier:CellIdentifier];
     }
     
-    // Set up the cell...
-    
+    // Does a parsed Response already exists? Colorate the text.
+    if (parsedResponseAsDictionary) {
+        // if there is already a parsed response: key exists in this response: green text.
+        if ([parsedResponseAsDictionary objectForKey:_keyTextField.text] != nil) {
+            resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+            // if key exists AND value the same: also green text
+            NSString *keyTextFieldString = [[NSString alloc] initWithFormat:@"%@",[parsedResponseAsDictionary objectForKey:_keyTextField.text]];
+            if ([keyTextFieldString isEqualToString:_valueTextField.text])
+                resourceTableViewCell.detailTextLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+        }
+        // key doesn't exist: red text then.
+        else
+            resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
+    }
+
+    // Assign the text to the cell and return the cell.
     resourceTableViewCell.textLabel.text = _keyTextField.text;
     resourceTableViewCell.detailTextLabel.text = _valueTextField.text;
-    /*
-    NSString *cellValue = [foundResources objectAtIndex:indexPath.row];
-    cell.textLabel.text = cellValue;
-    cell.detailTextLabel.text = [parsedResponseAsDictionary valueForKey:cellValue];
-    */
     return resourceTableViewCell;
 }
+// ********** End set up cell **********
 
-// ********** Die Selektion verschwinden lassen **********
+
+/*
+// ********** let the TableView selection disappear when clicked outside **********
+// (important to be able to insert a key-value at the end)
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self.headersTableView deselectRowAtIndexPath:[self.headersTableView indexPathForSelectedRow] animated:NO];
+    [self.headersTableView deselectRowAtIndexPath:[self.headersTableView indexPathForSelectedRow] animated:YES];
 }
+ */
+
 
 // ********** "+" button pressed: **********
 - (IBAction)addKeyValue:(id)sender {
-    numberOfRows++;
-    [self.headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]]
-                                 withRowAnimation:UITableViewRowAnimationFade];
+    // Option 1: no cell selected, new cell should be inserted at the end.
+    if (![self.headersTableView indexPathForSelectedRow]) {
+        [self.headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:numberOfRows++ inSection:0]]
+                                     withRowAnimation:UITableViewRowAnimationFade];
+    }
+    // Option 2: there is a cell selected, new cell should be inserted before that cell, selection should be removed afterwards.
+    else {
+        NSIndexPath *path = [self.headersTableView indexPathForSelectedRow];
+        numberOfRows++;
+        [self.headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path]
+                                     withRowAnimation:UITableViewRowAnimationFade];
+        [self.headersTableView deselectRowAtIndexPath:[self.headersTableView indexPathForSelectedRow] animated:YES];
+    }
 }
 
-// ********** Swype cell for deletion **********
+// ********** Swype cell for delete option **********
 -(void)tableView:(UITableView*)headersTableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
@@ -324,6 +351,15 @@
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
     [mutableRequest setHTTPMethod:requestMethodString];
+    
+    // working with different methods
+    switch (methodId) {
+        case 1:
+        case 2:
+            //if method = POST or PUT: building headers dic
+            NSDictionary *headerDic = [[NSDictionary alloc] init];
+            [mutableRequest setValuesForKeysWithDictionary:headerDic];
+    }
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:mutableRequest delegate:self];
     NSLog(@"Sending Request: %@ %@%@ (%@)",requestMethodString,baseUrl,resourcePath,connection);
 
@@ -353,6 +389,27 @@
         // (NSDictionary*):[response allHeaderFields] -> (NSDic -> NSString):description -> (NSString*):responseHeader
 		responseHeader = [[response allHeaderFields] description];
 
+    // Bei erkannten Formaten: zugehöriger Highlighter aktivieren, dann entsprechend parsen
+    if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
+       [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound) {
+        NSLog(@"Valid JSON found."); // Parsing...?
+        // Ist "json" oder "javascript" im Content Type vorhanden, kann auf valides JSON geschlossen werden:
+        // application/json, application/x-javascript, text/javascript, text/x-javascript, text/json, text/x-json
+        [_detectedJSON setHighlighted:YES];
+        }
+        else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
+            NSLog(@"Valid XML found."); // Parsing...?
+            [_detectedXHTML setHighlighted:YES];
+        }
+        else if([[response MIMEType] rangeOfString:@"xhtml"].location != NSNotFound) {
+            NSLog(@"Valid XHTML found."); // Parsing...?
+            [_detectedXHTML setHighlighted:YES];
+        }
+        else if([[response MIMEType] rangeOfString:@"html"].location != NSNotFound) {
+            NSLog(@"Valid HTML found."); // Parsing...?
+            [_detectedHTML setHighlighted:YES];
+        }
+    
     // ********** End Receiving Response Header **********
 }
 
@@ -418,16 +475,11 @@
 - (void)parseResponse {
 
     // ********** Begin Parsing Response **********
-    // Bei erkannten Formaten: zugehöriger Highlighter aktivieren, dann entsprechend parsen
 
     BOOL parsingSuccess = NO;
     
-    if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
-       [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound) {
-        // Ist "json" oder "javascript" im Content Type vorhanden, kann auf valides JSON geschlossen werden:
-        // application/json, application/x-javascript, text/javascript, text/x-javascript, text/json, text/x-json
-        NSLog(@"Valid JSON found. Parsing...");
-        [_detectedJSON setHighlighted:YES];
+    if([_detectedJSON isHighlighted]) {
+        NSLog(@"Parsing JSON...");
         
         // JSON parsen und als Wörterbuch abspeichern
         NSError *err = nil;
@@ -476,23 +528,17 @@
         }
         parsingSuccess = YES;
     }
-    else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
-        
-        NSLog(@"Valid XML found."); // Parsing...?
-        [_detectedXML setHighlighted:YES];
-        
+    else if([_detectedXML isHighlighted]) {
         // Parse XML
-        
-        [parsedText appendString:@"XML parsing not yet implemented."];
-
+        // [parsedText appendString:@"XML parsing not yet implemented."];
     }
-    else if([[response MIMEType] rangeOfString:@"xhtml"].location != NSNotFound) {
-        NSLog(@"Valid XHTML found."); // Parsing...?
-        [_detectedXHTML setHighlighted:YES];
+    else if([_detectedHTML isHighlighted]) {
+        // Parse HTML
+        // [parsedText appendString:@"HTML parsing not yet implemented."];
     }
-    else if([[response MIMEType] rangeOfString:@"html"].location != NSNotFound) {
-        NSLog(@"Valid HTML found."); // Parsing...?
-        [_detectedHTML setHighlighted:YES];
+    else if([_detectedXHTML isHighlighted]) {
+        // Parse XML
+        // [parsedText appendString:@"XHTML parsing not yet implemented."];
     }
     
     // ********** End Parsing Response **********
@@ -527,9 +573,12 @@
     
     // ********** Begin Building TableView ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
     
-    // TableView can be built: enable "Show Resources" button
-    resourceTableViewController = [[ResourcesTableViewController alloc] initWithDictionary:parsedResponseAsDictionary];
-    [_showResourcesButton setEnabled:YES];
+    if ([foundResources count] > 0) {
+        // TableView can be built: enable "Show Resources" button
+        resourceTableViewController = [[ResourcesTableViewController alloc] initWithDictionary:parsedResponseAsDictionary];
+        [_showResourcesButton setAlpha:1];
+        [_showResourcesButton setEnabled:YES];
+    }
     
     // ********** End Building TableView ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
 
