@@ -21,11 +21,11 @@
                                 </connections>
                             </pickerView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Oec-hL-vnC">
-                                <rect key="frame" x="86" y="363" width="373" height="139"/>
+                                <rect key="frame" x="109" y="356" width="373" height="119"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="U6U-gH-3mi" userLabel="Header Text View">
-                                        <rect key="frame" x="0.0" y="-2" width="378" height="141"/>
+                                        <rect key="frame" x="0.0" y="-2" width="378" height="121"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="0.5" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -34,18 +34,18 @@
                                 </subviews>
                             </scrollView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="uOx-u0-hy2">
-                                <rect key="frame" x="73" y="505" width="400" height="435"/>
+                                <rect key="frame" x="98" y="483" width="400" height="415"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="NLy-0p-Nih" userLabel="Content Text View">
-                                        <rect key="frame" x="1" y="0.0" width="400" height="384"/>
+                                        <rect key="frame" x="1" y="0.0" width="400" height="364"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="0.5" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="pqN-F7-NCN">
-                                        <rect key="frame" x="1" y="392" width="399" height="44"/>
+                                        <rect key="frame" x="1" y="372" width="399" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <segments>
                                             <segment title="Request"/>
@@ -106,7 +106,7 @@
                                 <rect key="frame" x="308" y="169" width="140" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HTTP Headers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="O6O-ot-SqC">
                                 <rect key="frame" x="560" y="72" width="114" height="21"/>
@@ -115,29 +115,20 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RRW-dk-CCl">
-                                <rect key="frame" x="544" y="835" width="32" height="32"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" id="RRW-dk-CCl">
+                                <rect key="frame" x="602" y="956" width="29" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <state key="normal" title="+" backgroundImage="Box_Green.png">
+                                <state key="normal">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="E9p-1q-szO">
-                                <rect key="frame" x="588" y="835" width="32" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <state key="normal" title="–" backgroundImage="Box_Red.png">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <connections>
+                                    <action selector="addKeyValue:" destination="2" eventType="touchUpInside" id="Ohl-Ip-4X9"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Globe.png" id="9Ks-XS-tdQ">
                                 <rect key="frame" x="73" y="0.0" width="64" height="64"/>
@@ -210,7 +201,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gSH-GF-QoG">
-                                <rect key="frame" x="75" y="948" width="181" height="44"/>
+                                <rect key="frame" x="98" y="941" width="181" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Show Logging Output">
@@ -253,7 +244,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WeS-qd-i1L">
-                                <rect key="frame" x="292" y="948" width="181" height="44"/>
+                                <rect key="frame" x="315" y="941" width="181" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Show Resources">
@@ -270,21 +261,28 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Body" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rxm-wA-NLU">
-                                <rect key="frame" x="22" y="703" width="39" height="21"/>
+                                <rect key="frame" x="22" y="655" width="39" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Font Size:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x4j-xT-QS2">
+                                <rect key="frame" x="98" y="911" width="77" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Header" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ytu-TE-14j">
-                                <rect key="frame" x="22" y="422" width="56" height="21"/>
+                                <rect key="frame" x="22" y="415" width="56" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gbb-A9-fgC">
-                                <rect key="frame" x="511" y="100" width="210" height="438"/>
+                                <rect key="frame" x="511" y="100" width="210" height="732"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -292,6 +290,31 @@
                                     <outlet property="delegate" destination="2" id="QAL-Px-vNT"/>
                                 </connections>
                             </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="key" borderStyle="roundedRect" minimumFontSize="17" id="CCa-6c-H9S">
+                                <rect key="frame" x="511" y="860" width="210" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="value" borderStyle="roundedRect" minimumFontSize="17" id="IB4-zE-VlC">
+                                <rect key="frame" x="511" y="910" width="210" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="12" minValue="8" maxValue="40" id="HPZ-t3-c47">
+                                <rect key="frame" x="221" y="911" width="277" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="fontSizeSliderMove:" destination="2" eventType="valueChanged" id="da6-QW-vuK"/>
+                                </connections>
+                            </slider>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12" minimumFontSize="17" id="921-Wr-2vn">
+                                <rect key="frame" x="183" y="907" width="27" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -305,7 +328,11 @@
                         <outlet property="detectedXHTML" destination="baJ-AQ-rkF" id="UD1-ep-PBW"/>
                         <outlet property="detectedXML" destination="2ZM-Yu-mmF" id="gKd-09-1dF"/>
                         <outlet property="encoding" destination="RZ8-WN-niT" id="4ac-rX-dgL"/>
+                        <outlet property="fontSize" destination="921-Wr-2vn" id="IeM-gL-jNp"/>
+                        <outlet property="fontSizeSlider" destination="HPZ-t3-c47" id="KLu-A1-xAd"/>
                         <outlet property="headerScrollViewText" destination="U6U-gH-3mi" id="uBu-2p-n9d"/>
+                        <outlet property="headersTableView" destination="gbb-A9-fgC" id="IqW-RB-w51"/>
+                        <outlet property="keyTextField" destination="CCa-6c-H9S" id="H6L-Fa-g1L"/>
                         <outlet property="outputSwitch" destination="pqN-F7-NCN" id="x73-1n-TZw"/>
                         <outlet property="password" destination="Ufq-WV-7bd" id="z17-zu-AIK"/>
                         <outlet property="requestMethod" destination="68F-za-mbJ" id="R5h-Ij-QMQ"/>
@@ -314,6 +341,7 @@
                         <outlet property="statusCode" destination="JhP-DY-rfi" id="d4g-6n-akX"/>
                         <outlet property="url" destination="BVk-se-5QJ" id="r0i-ln-o9H"/>
                         <outlet property="username" destination="03B-DX-GBg" id="h63-ID-gfo"/>
+                        <outlet property="valueTextField" destination="IB4-zE-VlC" id="nsr-CW-eNd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
@@ -402,8 +430,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Box_Green.png" width="256" height="256"/>
-        <image name="Box_Red.png" width="256" height="256"/>
         <image name="Circle_Green.png" width="128" height="128"/>
         <image name="Circle_Grey.png" width="128" height="128"/>
         <image name="Globe.png" width="256" height="256"/>
@@ -415,6 +441,8 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addKeyValue:"/>
+                <relationship kind="action" name="fontSizeSliderMove:"/>
                 <relationship kind="action" name="go:"/>
                 <relationship kind="action" name="logClearButton:"/>
                 <relationship kind="action" name="logRefreshButton:"/>
@@ -427,7 +455,11 @@
                 <relationship kind="outlet" name="detectedXHTML" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="detectedXML" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="encoding" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="fontSize" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="fontSizeSlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="headerScrollViewText" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="headersTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="keyTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="logOutputView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="logOutputViewText" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="outputSwitch" candidateClass="UISegmentedControl"/>
@@ -438,6 +470,7 @@
                 <relationship kind="outlet" name="statusCode" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="url" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="username" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="valueTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
     </classes>

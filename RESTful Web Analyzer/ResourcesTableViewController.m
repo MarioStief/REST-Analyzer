@@ -13,8 +13,8 @@
 
 - (id)initWithDictionary:(NSDictionary*)dic {
     if (self = [super init])
-        [self setResourcesAsDictionary:dic];
-    NSLog(@"resource table created with %i entries.",[_resourcesAsDictionary count]);
+        resourcesAsDictionary = [[NSDictionary alloc] initWithDictionary:dic];
+    NSLog(@"resource table created with %i entries.",[resourcesAsDictionary count]);
     return self;
 }
 
@@ -57,8 +57,8 @@
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    NSLog(@"Now: %i entries.",[_resourcesAsDictionary count]);
-    return [_resourcesAsDictionary count];
+    NSLog(@"Now: %i entries.",[resourcesAsDictionary count]);
+    return [resourcesAsDictionary count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -71,7 +71,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2
                                       reuseIdentifier:CellIdentifier];
     }
-    
+
     // Configure the cell...
     
     cell.textLabel.text = @"Cell";

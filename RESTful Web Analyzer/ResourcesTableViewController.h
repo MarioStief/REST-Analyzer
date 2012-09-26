@@ -9,10 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ResourcesTableViewController : UITableViewController {
-    //NSDictionary *_resourcesAsDictionary;
+    NSDictionary *resourcesAsDictionary;
 }
-
-@property(nonatomic,retain)NSDictionary *resourcesAsDictionary;
 
 - (id)initWithDictionary:(NSDictionary*)dic;
 

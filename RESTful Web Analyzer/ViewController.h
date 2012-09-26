@@ -27,6 +27,8 @@
     NSHTTPURLResponse *response;
     NSData *bodyData;
     NSMutableArray *foundResources;
+    NSIndexPath *indexPath;
+    NSInteger numberOfRows;
     ResourcesTableViewController *resourceTableViewController;
 }
 
@@ -49,13 +51,21 @@
 @property (weak, nonatomic) IBOutlet UITextField *contentType;
 @property (weak, nonatomic) IBOutlet UITextField *encoding;
 @property (weak, nonatomic) IBOutlet UIButton *showResourcesButton;
+@property (weak, nonatomic) IBOutlet UITableView *headersTableView;
+@property (weak, nonatomic) IBOutlet UITextField *keyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *valueTextField;
+@property (weak, nonatomic) IBOutlet UISlider *fontSizeSlider;
+@property (weak, nonatomic) IBOutlet UITextField *fontSize;
 
 - (IBAction)go:(id)sender;
 - (IBAction)outputToggle:(id)sender;
 - (IBAction)logRefreshButton:(id)sender;
 - (IBAction)logClearButton:(id)sender;
+- (IBAction)addKeyValue:(id)sender;
 - (void)startRequest:(NSString*)requestMethodString;
 - (void)parseResponse;
 - (void)checkStatusCode:(NSInteger)code;
+- (IBAction)fontSizeSliderMove:(id)sender;
+- (void)switchSegmentIndex;
 
 @end

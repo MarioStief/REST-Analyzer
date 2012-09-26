@@ -33,6 +33,9 @@
     [_outputSwitch setEnabled:NO forSegmentAtIndex:1]; // da sonst das Feld permanent
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2]; // ausgeschaltet ist.
     [_showResourcesButton setEnabled:NO];
+    numberOfRows = 0;
+    indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
 }
 
 - (void)viewDidUnload
@@ -55,6 +58,11 @@
     [self setHeaderScrollViewText:nil];
     [self setContentScrollViewText:nil];
     [self setEncoding:nil];
+    [self setHeadersTableView:nil];
+    [self setKeyTextField:nil];
+    [self setValueTextField:nil];
+    [self setFontSizeSlider:nil];
+    [self setFontSize:nil];
     [super viewDidUnload];
 }
 
@@ -96,24 +104,24 @@
 
 // ********** Begin Setup Table View **********
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2; //[foundResources count];
+- (NSInteger)tableView:(UITableView *)headersTableView numberOfRowsInSection:(NSInteger)section {
+    return numberOfRows; //[foundResources count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)headersTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"resourceCell";
     
-    UITableViewCell *resourceTableViewCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *resourceTableViewCell = [headersTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (resourceTableViewCell == nil) {
-        resourceTableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2
+        resourceTableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
     }
     
     // Set up the cell...
     
-    resourceTableViewCell.textLabel.text = @"Cell";
-    resourceTableViewCell.detailTextLabel.text = @"Description";
+    resourceTableViewCell.textLabel.text = _keyTextField.text;
+    resourceTableViewCell.detailTextLabel.text = _valueTextField.text;
     /*
     NSString *cellValue = [foundResources objectAtIndex:indexPath.row];
     cell.textLabel.text = cellValue;
@@ -122,11 +130,40 @@
     return resourceTableViewCell;
 }
 
+// ********** Die Selektion verschwinden lassen **********
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.headersTableView deselectRowAtIndexPath:[self.headersTableView indexPathForSelectedRow] animated:NO];
+}
+
+// ********** "+" button pressed: **********
+- (IBAction)addKeyValue:(id)sender {
+    numberOfRows++;
+    [self.headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]]
+                                 withRowAnimation:UITableViewRowAnimationFade];
+}
+
+// ********** Swype cell for deletion **********
+-(void)tableView:(UITableView*)headersTableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+}
+
+// ********** Process swype deletion **********
+- (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        numberOfRows--;
+        [self.headersTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
 // ********** End Setup Table View **********
 
 
-// ********** Using the Request/Response/Parsed output toggle: **********
-- (IBAction)outputToggle:(id)sender {
+// ********** Begin change selected segment index (and refresh text) **********
+
+// outsourced method because it's code is used in "outputToggle" and in "fontSizeSliderMove":
+- (void)switchSegmentIndex {
     switch ([_outputSwitch selectedSegmentIndex]) {
         case 0:
             _headerScrollViewText.text = requestHeader;
@@ -141,6 +178,30 @@
             _contentScrollViewText.text = parsedText;
     }
 }
+// ********** End change selected segment index (and refresh text) **********
+
+
+// ********** Start using the Request/Response/Parsed output toggle: **********
+
+- (IBAction)outputToggle:(id)sender {
+    [self switchSegmentIndex]; // used for the toggle
+}
+
+// ********** End using the Request/Response/Parsed output toggle: **********
+
+
+// ********** Begin use font slider to change text field size **********
+
+- (IBAction)fontSizeSliderMove:(id)sender {
+    _headerScrollViewText.font = [UIFont systemFontOfSize:_fontSizeSlider.value];
+    _contentScrollViewText.font = [UIFont systemFontOfSize:_fontSizeSlider.value];
+    _fontSize.text = [[NSString alloc] initWithFormat:@"%i",(int)_fontSizeSlider.value];
+    [self switchSegmentIndex]; // used for the text refresh
+}
+
+// ********** End use font slider to change text field size **********
+
+
 
 // ********** "Show Logging Output" -> "Refresh" button pressed: **********
 - (IBAction)logRefreshButton:(id)sender {
@@ -156,7 +217,7 @@
     _logOutputViewText.text = @"File emptied.";
 }
 
-// ********** GO Button Pressed: **********
+// ********** GO button pressed: **********
 - (IBAction)go:(id)sender {
     
     // ********** Remove Keyboard **********
@@ -325,6 +386,7 @@
     
     if ([response statusCode] < 400) {
         
+        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:0.1];
         switch (methodId) {
             case 0:
                 // GET
@@ -345,6 +407,10 @@
                 break;
         }
     }
+
+    else
+        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
+
     // ********** End Looking at Response **********
 
 }
