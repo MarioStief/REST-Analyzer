@@ -63,7 +63,7 @@
 - (IBAction)logClearButton:(id)sender;
 - (IBAction)addKeyValue:(id)sender;
 - (void)startRequest:(NSString*)requestMethodString;
-- (void)parseResponse;
+//- (void)parseResponse;
 - (void)checkStatusCode:(NSInteger)code;
 - (IBAction)fontSizeSliderMove:(id)sender;
 - (void)switchSegmentIndex;

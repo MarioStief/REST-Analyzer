@@ -78,43 +78,168 @@ Einleitung (3 Seiten)
 \end_layout
 
 \begin_layout Chapter
-Projektvorbereitung
+Die Entwicklungsumgebung (10 Seiten)
 \end_layout
 
 \begin_layout Section
-XCode
+Sprache: Objective-C (2 - 3 Seiten)
 \end_layout
 
-\begin_layout Itemize
-Installation von Xcode 4.4
+\begin_layout Subsection*
+Singleton
 \end_layout
 
-\begin_layout Itemize
-Anlegen eines neuen Projektes
+\begin_layout Subsection*
+Delegate
 \end_layout
 
-\begin_layout Description
-Template: Single View Application
+\begin_layout Section
+API: Cocoa Touch (2 - 3 Seiten)
 \end_layout
 
-\begin_layout Description
-Name: RESTful Web Analyzer
+\begin_layout Section
+IDE: XCode 4 (5 - 6 Seiten)
 \end_layout
 
-\begin_layout Description
-Company
-\begin_inset space \thinspace{}
+\begin_layout Standard
+XCode ist Apples integrierte Entwicklungsumgebung und steht aktuell in der
+ Version 4.5 zur Verfügung.
+ Seit der Version 4.1 lässt sich XCode für jedermann zugänglich kostenlos
+ im App Store herunterladen.
+ In der Version 4.4 sind die SDKs für OS X 10.8 sowie für iOS 5.1 enthalten,
+ Xcode 4.5 bringt die SDK für das neue iOS 6 mit.
+ Beide benötigen mindestens OS X in der Version 10.7.4 Lion oder 10.8 Mountain
+ Lion.
+ Mit Hilfe von XCode lassen sich OS X- oder iOS-Anwendungen entwickeln,
+ wobei OS X-Anwendungen auf der 
+\shape italic
+Cocoa
+\shape default
+-API basieren; möchte man eine iOS-Anwendung entwickeln, stellt Apple hierfür
+ die API Cocoa Touch bereit.
+\end_layout
+
+\begin_layout Section
+Entwicklerlizenz
+\end_layout
+
+\begin_layout Standard
+Grundsätzlich lässt sich eine App auch ohne Lizenz entwickeln und auf dem
+ eingebauten 
+\shape italic
+iOS Simulator
+\shape default
+ des seit der Version 4.1 für jedermann verfügbaren XCode testen.
+ Möchte man jedoch die App auf einem 
+\begin_inset Quotes eld
 \end_inset
 
-Identifier: Mario Stief
-\end_layout
-
-\begin_layout Description
-Bundle
-\begin_inset space \thinspace{}
+echten
+\begin_inset Quotes erd
 \end_inset
 
-Identifier: Mario-Stief.RESTful-Web-Analyzer
+ Gerät zur Ausführung bringen und später einmal in den App Store stellen,
+ benötigt man eine Entwicklerlizenz von Apple.
+ Diese kostet derzeit 99 USD bzw.
+ 80 EUR und ist für genau ein Jahr gültig.
+ Mit einem Entwickleraccount hat man Zugriff auf 
+\shape italic
+itunes Connect
+\shape default
+, mit dem sich der eigene Account, die verfügbaren iOS-Geräte sowie die
+ eingestellten Apps verwalten lassen.
+\end_layout
+
+\begin_layout Standard
+Der erste Schritt ist es, die User anzulegen, welche an der Entwicklung
+ und Distribution der Software beteiligt sind.
+ Hier stehen die vordefinierten Rollen 
+\shape italic
+Admin
+\shape default
+, 
+\shape italic
+Technical
+\shape default
+, 
+\shape italic
+Finance
+\shape default
+ sowie 
+\shape italic
+Sales
+\shape default
+ zur Verfügung.
+ Während der 
+\shape italic
+Technical
+\shape default
+ Rechte für die Verwaltung der Apps bekommt, stehen dem 
+\shape italic
+Finance
+\shape default
+ weitergehend verschiedene Rechte im Bereich Finanzwesen, Analyse und Vertrieb
+ bereit, die der 
+\shape italic
+Technican
+\shape default
+ eher nicht benötigt.
+ Auf die Verwaltung der Apps hat er nur lesenden Zugriff, so kommen sich
+ die Beiden nicht in die Quere.
+ Der Rolle 
+\shape italic
+Sales
+\shape default
+ letztendlich steht nur der Verkaufs und die Verkaufsanalyse offen.
+\end_layout
+
+\begin_layout Standard
+Abhängig vom Vertriebsmodell müssen wir in 
+\shape italic
+iTunes Connect
+\shape default
+ nun weitere Angaben machen.
+ Für unentgeltliche Apps ist es weder notwendig, einen Vertrag zu akzeptieren,
+ noch müssen wir Bankdaten hinterlegen.
+ Mochten wir jedoch mit unseren Apps Geld verdienen, stehen uns die Vertragstype
+n 
+\shape italic
+iOS Paid Applications
+\shape default
+ sowie für in-App-Werbung 
+\shape italic
+iAd Network
+\shape default
+ zur Verfügung.
+ Hier sind die ensprechenden Vertragsbedingungen zu akzeptieren, Kontaktinformat
+ionen anzugeben, Landesangaben zur Versteuerung zu machen und natürlich
+ die Bankdaten für den zu erwartenden, eingehenden Zahlungsverkehr zu hinterlege
+n.
+\end_layout
+
+\begin_layout Standard
+Um eine App direkt auf unserem Gerät ausführen zu können, benötigen wir
+ ein Development Certificate.
+ Hierzu schließen wir das Gerät, das wir hinzufügen möchten, an den Mac
+ an und wechseln in XCode in den Organizer.
+ Hier können wir das angeschlossene Gerät unserem Entwickleraccount zuordnen.
+ Beim ersten Mal wird uns XCode mitteilen, dass kein 
+\shape italic
+iOS Development Certificate
+\shape default
+ vorhanden ist und bietet an, einen solchen von Apple anzufordern.
+ Anschließend fügt er diesen automatisch der Schlüsselverwaltung hinzu und
+ bietet an, das Entwicklerprofil für den Einsatz auf anderen Macs zu exportieren.
+ In den 
+\shape italic
+Build Settings
+\shape default
+ unserer App stellen wir nun die 
+\shape italic
+Code Signing Identity
+\shape default
+ auf das neu erzeugte Zertifikat um und sind nun in der Lage, das angeschlossene
+ iOS-Gerät statt des Simulators für die Entwicklung zu benutzen.
 \end_layout
 
 \begin_layout Section
@@ -199,424 +324,6 @@ git submodule add git://github.com/RestKit/RestKit.git
 
 \begin_layout Itemize
 Initial Commit.
-\end_layout
-
-\begin_layout Section
-Testen ohne Entwicklerlizenz
-\end_layout
-
-\begin_layout Subsubsection
-Vom Code zur APP
-\end_layout
-
-\begin_layout Standard
-Problem: Wenn wir versuchen, die Ausgabe vom Simulator auf das iOS Device
- umzustellen, um eine Ausgabedatei zu erzeugen, welche sich auf das Zielgerät
- transferieren lässt, quittiert XCode dies mit der Fehlermeldung:
-\end_layout
-
-\begin_layout Standard
-
-\size small
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-Code Sign error: The identity 'iPhone Developer' doesn't
-\end_layout
-
-\begin_layout Plain Layout
-
-match any valid, non-expired certificate/private key pair
-\end_layout
-
-\begin_layout Plain Layout
-
-in your keychains
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-XCode verlangt einen Developer-Account für das Bereitstellen der compilierten
- Apps.
-\end_layout
-
-\begin_layout Standard
-Eine einfache Möglichkeit wäre es, in der Preferences-Datei 
-\family typewriter
-\size small
-Xcode.app/.../ iPhoneOS5.1.sdk/SDKSettings.plist
-\family default
-\size default
- den Schlüssel 
-\family typewriter
-\size small
-CODE_SIGNING_REQUIRED
-\family default
-\size default
- von 
-\family typewriter
-\size small
-YES
-\family default
-\size default
- auf 
-\family typewriter
-\size small
-NO
-\family default
-\size default
- zu setzen sowie in den 
-\shape italic
-Build Settings
-\shape default
- des Projektes die 
-\shape italic
-Code Signing Identity
-\shape default
- auf 
-\shape italic
-Don't Code Sign
-\shape default
- anzuändern.
- Auf diese Art und Weise komme ich zwar an die App-Dateien, jedoch verweigert
- selbst ein gejailbreaktes iPad deren Ausführung.
- Wir benötigen also eine Signierung ohne dass wir über einen gültigen Developer-
-Account verfügen.
-\end_layout
-
-\begin_layout Standard
-Hierfür erstellen wir uns in der Keychain ein selbstsigniertes Zertifikat
- des Typs 
-\begin_inset Quotes eld
-\end_inset
-
-Code Signing
-\begin_inset Quotes erd
-\end_inset
-
-mit dem Namen 
-\begin_inset Quotes eld
-\end_inset
-
-iPhone Developer
-\begin_inset Quotes erd
-\end_inset
-
-.
- Statt auf 
-\shape italic
-Don't Code Sign
-\shape default
- stellen wir die Signings Identity auf den eben erstellten 
-\shape italic
-iPhone Developer
-\shape default
- und ändern in der Datei /Applications/Xcode.app/Contents/Developer/Platforms/
- iPhoneOS.platform/Info.plist alle Vorkommen von XCiPhoneOSCodeSignContext
- in XCCodeSignContext ab.
- Der Entwickler von Cydia hat ein Werkzeug mit dem Namen ldid bereitgestellt,
- welches in der Lage ist, die SHA1 Hashes zu überprüfen, welche vom iOS-Kernel
- überprüft werden.
- Dieses Kommandozeilenprogramm kopieren wir – zusammen mit einem Python
- Script - nach /usr/bin/ und tauschen - bei XCode 4.4 - in der Datei /Application
-s/Xcode.app/Contents/Developer/Platforms/ iPhoneOS.platform/Developer/Library/Xcod
-e/PrivatePlugIns/iPhoneOS Build System Support.xcplugin/Contents/Resources/iPhone
-CodeSign.xcspec die Zeile 
-\begin_inset Quotes erd
-\end_inset
-
-CommandLine = /usr/bin/codesign
-\begin_inset Quotes erd
-\end_inset
-
- mit der Zeile “CommandLine = /usr/bin/ldid3.py” aus.
- In XCode 4.5 ist die Datei keine Text-Datei mehr.
- Hier bedienen wir uns eines Hex Editors und öffnen die Datei 
-\begin_inset Quotes eld
-\end_inset
-
-/Applications/Xcode.app/Contents/Developer/ Platforms/iPhoneOS.platform/Developer/
-Library/Xcode/Specifications/iPhone CodeSign.xcspec
-\begin_inset Quotes erd
-\end_inset
-
-, in der wir ebenfalls den Textstring 
-\begin_inset Quotes eld
-\end_inset
-
-/usr/bin/codesign
-\begin_inset Quotes erd
-\end_inset
-
- mit dem String 
-\begin_inset Quotes erd
-\end_inset
-
-/usr/bin/ldid3.py
-\begin_inset Quotes erd
-\end_inset
-
- ersetzen.
- Von nun an übernimmt dieses Werkzeug die Signierng unserer Programme.
-\end_layout
-
-\begin_layout Standard
-Nachdem wir nun die Ausgabe vom Simulator auf das iOS Device abändern finden
- wir nach dem Übersetzen in XCode im Verzeichnis Products die gewünschte
- und signierte APP-Datei.
-\end_layout
-
-\begin_layout Description
-Quelle: http://iklive.org/objective-c-compiling-ios-5-software-without-developer-
-program/
-\end_layout
-
-\begin_layout Subsubsection
-Von der APP zum DEB-Paket
-\end_layout
-
-\begin_layout Standard
-Um unsere erstellten APP-Dateien in ein DEB-Paket umzuwandeln, bedienen
- uns bequem des Programmes MacPorts, welches – ähnlich Fink – eine Paketverwaltu
-ng für freie und quelloffene Software für OS X ist.
-\end_layout
-
-\begin_layout Description
-Quelle: http://www.macports.org/
-\end_layout
-
-\begin_layout Standard
-Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
- Verzeichnis unserem Pfad hinzu:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-\end_layout
-
-\begin_layout Standard
-Nun folgt ein Update dessen Paketquellen:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-sudo port selfupdate
-\end_layout
-
-\begin_layout Standard
-und die Installation des gewünschten Paketes dpkg:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-sudo port install dpkg
-\end_layout
-
-\begin_layout Standard
-welche den gewünschten Befehl dkgp-deb bereitstellt.
- Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repo-konforme
- DEB-Pakete zu erstellen.
-\end_layout
-
-\begin_layout Standard
-Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
- welche sich wie folgt aufbaut:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-+- MyProgram
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   +- Applications
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |  +- MyProgram.app
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |     +- Info.plist
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |     +- MyProgram
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |     +- icon.png
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   +- DEBIAN
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |  +- control
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   +- System
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-      +- Library
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-         +- LaunchDaemons
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-            +- com.identifier.MyProgram.plist
-\end_layout
-
-\begin_layout Standard
-wobei das Verzeichnis System jedoch nicht zwingend notwendig ist.
-\end_layout
-
-\begin_layout Standard
-Die Datei control kann folgende Einträge beinhalten: Package, Name, Version,
- Architecture, Description, Homepage, Depiction, Maintainer, Author, Sponsor,
- Section.
- Zwingend vorgeschrieben sind davon jedoch nur Package und Version.
-\end_layout
-
-\begin_layout Standard
-Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
- Teil der internen Struktur eines Debian-Paketes darstellen – einige ._*-Dateien,
- welche zusätzliche Informationen enthalten.
- Diese zusätzlichen Dateien würden zusammen mit dem Paket installiert werden
- und Konflikte mit anderen Paketen erzeugen (abgesehen davon, dass diese
- Dateien einfach nicht in unser Paket gehören).
- Um dieses Feature zu deaktivieren werden folgende Umgebungsvariablen exportiert
-:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-export COPYFILE_DISABLE
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-export COPY_EXTENDED_ATTRIBUTES_DISABLE
-\end_layout
-
-\begin_layout Standard
-Sind wir nun soweit wechseln im Terminal ins Verzeichnis 
-\begin_inset Quotes eld
-\end_inset
-
-MyProgramm
-\begin_inset Quotes erd
-\end_inset
-
- und erzeuen unser DEB-Paket mittels:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-dpkg-deb -b MyProgram
-\end_layout
-
-\begin_layout Description
-Quelle: http://www.saURLk.com/id/7
-\end_layout
-
-\begin_layout Subsubsection
-Vom DEB-Paket aufs Device
-\end_layout
-
-\begin_layout Standard
-Um die nun fertige DEB-Datei auf das iPad zu bekommen, benötigen wir ein
- Cydia-kompatible Repository.
- Hierfür habe ich auf das kostenlose Angebot von MyRepoSpace zurückgegriffen,
- in dem man die fertigen Pakete komfortabel über ein Webinterface in die
- Source lädt.
- Die im Cydia Store eingebundene Paketquelle lautet:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-http://cydia.myrepospace.com/RaveAngel/
-\end_layout
-
-\begin_layout Chapter
-Die Entwicklungsumgebung (10 Seiten)
-\end_layout
-
-\begin_layout Section
-Sprache: Objective-C (2 - 3 Seiten)
-\end_layout
-
-\begin_layout Subsection*
-Singleton
-\end_layout
-
-\begin_layout Subsection*
-Delegate
-\end_layout
-
-\begin_layout Section
-API: Cocoa Touch (2 - 3 Seiten)
-\end_layout
-
-\begin_layout Section
-IDE: XCode 4 (5 - 6 Seiten)
-\end_layout
-
-\begin_layout Standard
-XCode ist Apples integrierte Entwicklungsumgebung und steht aktuell in der
- Version 4.4.1 bereit.
- Seit der Version 4.1 steht XCode jedermann zugänglich kostenlos im App Store
- bereit, ab dieser Version ist die OS X-Version 10.7 Lion erforderlich.
- Mit Hilfe von XCode lassen sich OS X- oder iOS-Anwendungen entwicklen,
- wobei für OS X-Anwendungen auf die 
-\shape italic
-Cocoa
-\shape default
--API basieren, mochte man eine iOS-Anwendung entwickeln, stellt Apple hierfür
- die API Cocoa Touch bereit.
 \end_layout
 
 \begin_layout Chapter
@@ -2399,6 +2106,34 @@ Implementation (10 Seiten)
 \end_layout
 
 \begin_layout Section
+Daten
+\end_layout
+
+\begin_layout Description
+Template: Single View Application
+\end_layout
+
+\begin_layout Description
+Name: RESTful Web Analyzer
+\end_layout
+
+\begin_layout Description
+Company
+\begin_inset space \thinspace{}
+\end_inset
+
+Identifier: Mario Stief
+\end_layout
+
+\begin_layout Description
+Bundle
+\begin_inset space \thinspace{}
+\end_inset
+
+Identifier: Mario-Stief.RESTful-Web-Analyzer
+\end_layout
+
+\begin_layout Section
 Struktur
 \end_layout
 
@@ -2540,6 +2275,438 @@ Problem: Nach vollständigem Durchlauf stürzt das Programm ab, die Methode
 
 \begin_layout Description
 Ursache:
+\end_layout
+
+\begin_layout Chapter
+Distribution
+\end_layout
+
+\begin_layout Section
+App Store
+\end_layout
+
+\begin_layout Section
+Die Alternative: Cydia Store
+\end_layout
+
+\begin_layout Standard
+Zum offiziellen Vertriebsweg über den Apple App Store gibt es eine Alternative,
+ über die man jedoch nur freigeschaltete 
+\begin_inset Quotes eld
+\end_inset
+
+gejailbreakte
+\begin_inset Quotes erd
+\end_inset
+
+ Geräte Zugriff haben: Mit dem 
+\shape italic
+Cydia Store
+\shape default
+, der standardmäßig bei jedem Jailbreak gleich mitinstalliert wird.
+ Mit diesem kann man sich, wie unter Linuxsystemen bekannt, mit verschiedenen
+ Repositories verbinden und auf deren Angebot zugreifen.
+ Hierbei ist der 
+\shape italic
+Cydia Store
+\shape default
+ nicht als ein Distributionssystem für raubkopierte Software zu verstehen,
+ denn er implementiert ebenfalls ein Bezahlsystem, mit dem Entwickler in
+ der Lage sind, ihre Anwendungen entgeltlich anzubieten.
+ Interessant wird diese Vertriebsmethode, wenn man eine App entwickeln möchte,
+ die die Rechte, die Apple einer solchen Anwendung zugesteht, bei weitem
+ überschreitet.
+ Ein sehr schönes Beispiel für eine solche Anwendung ist der Windowmanager
+ 
+\shape italic
+Quasar
+\shape default
+, der eine Alternative bietet zu Apples Zwangvorschrift, jede Anwendung
+ im Vollbild betreiben zu müssen.
+ Vor allem auf dem iPad der dritten Generation kann es durchaus eine wünschenswe
+rte Option sein, zwei oder mehr Fenster nebeneinander betreiben zu können.
+ So könnte man beispielsweise auf der einen Seite ein Textverarbeitungsprogramm
+ laufen haben, während auf der anderen Bildschirmhälfte ein Internetbrowser
+ geöffnet ist.
+\end_layout
+
+\begin_layout Subsubsection
+Vom Code zur APP
+\end_layout
+
+\begin_layout Standard
+Entscheiden wir uns für diesen Weg, müssen wir unserem Gerät dennoch eine
+ signierte App zur Verfügung stellen.
+ Dies ist zum einen mit einer Entwicklerlizenz von Apple möglich, mit der
+ wir unser fertiges Programm signieren.
+ Verfügen wir nicht über eine solche Entwicklerlizenz bekommen wir bei dem
+ Versuch, die Ausgabe vom Simulator auf das iOS Device umzustellen, um eine
+ transferierbare Ausgabedatei zu erzeugen, die Meldung:
+\end_layout
+
+\begin_layout LyX-Code
+Code Sign error: The identity 'iPhone Developer' doesn't
+\end_layout
+
+\begin_layout LyX-Code
+match any valid, non-expired certificate/private key pair
+\end_layout
+
+\begin_layout LyX-Code
+in your keychains
+\end_layout
+
+\begin_layout Standard
+oder
+\end_layout
+
+\begin_layout LyX-Code
+Code Sign error: A valid provisioning profile matching the
+\end_layout
+
+\begin_layout LyX-Code
+application's Identifier 'Mario-Stief.REST-Analyzer' could
+\end_layout
+
+\begin_layout LyX-Code
+not be found
+\end_layout
+
+\begin_layout Standard
+Eine einfache Möglichkeit wäre es, in der Preferences-Datei 
+\family typewriter
+\size small
+SDKSettings.plist
+\family default
+\size default
+ der entsprechenden SDK in der 
+\family typewriter
+XCode.app
+\family default
+ den Schlüssel 
+\family typewriter
+\size small
+CODE_SIGNING_REQUIRED
+\family default
+\size default
+ von 
+\family typewriter
+\size small
+YES
+\family default
+\size default
+ auf 
+\family typewriter
+\size small
+NO
+\family default
+\size default
+ zu setzen sowie in den 
+\shape italic
+Build Settings
+\shape default
+ des Projektes die 
+\shape italic
+Code Signing Identity
+\shape default
+ auf 
+\shape italic
+Don't Code Sign
+\shape default
+ anzuändern.
+ Auf diese Art und Weise kommt man zwar an die App-Dateien, jedoch verweigert
+ selbst ein gejailbreaktes iPad deren Ausführung.
+ Wir benötigen also eine gültige Signierung.
+\end_layout
+
+\begin_layout Standard
+Hierfür erstellen wir uns in der Keychain ein selbstsigniertes Zertifikat
+ des Typs 
+\begin_inset Quotes eld
+\end_inset
+
+Code Signing
+\begin_inset Quotes erd
+\end_inset
+
+mit dem Namen 
+\begin_inset Quotes eld
+\end_inset
+
+iPhone Developer
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Statt auf 
+\shape italic
+Don't Code Sign
+\shape default
+ stellen wir die Signings Identity auf den eben erstellten 
+\shape italic
+iPhone Developer
+\shape default
+ und ändern in der Datei /Applications/Xcode.app/Contents/Developer/Platforms/
+ iPhoneOS.platform/Info.plist alle Vorkommen von XCiPhoneOSCodeSignContext
+ in XCCodeSignContext ab.
+ Der Entwickler von Cydia hat ein Werkzeug mit dem Namen ldid bereitgestellt,
+ welches in der Lage ist, die SHA1 Hashes zu überprüfen, welche vom iOS-Kernel
+ überprüft werden.
+ Dieses Kommandozeilenprogramm kopieren wir – zusammen mit einem Python
+ Script - nach /usr/bin/ und tauschen - bei XCode 4.4 - in der Datei /Application
+s/Xcode.app/Contents/Developer/Platforms/ iPhoneOS.platform/Developer/Library/Xcod
+e/PrivatePlugIns/iPhoneOS Build System Support.xcplugin/Contents/Resources/iPhone
+CodeSign.xcspec die Zeile 
+\begin_inset Quotes erd
+\end_inset
+
+CommandLine = /usr/bin/codesign
+\begin_inset Quotes erd
+\end_inset
+
+ mit der Zeile “CommandLine = /usr/bin/ldid3.py” aus.
+ In XCode 4.5 ist die Datei keine Text-Datei mehr.
+ Hier bedienen wir uns eines Hex Editors und öffnen die Datei 
+\begin_inset Quotes eld
+\end_inset
+
+/Applications/Xcode.app/Contents/Developer/ Platforms/iPhoneOS.platform/Developer/
+Library/Xcode/Specifications/iPhone CodeSign.xcspec
+\begin_inset Quotes erd
+\end_inset
+
+, in der wir ebenfalls den Textstring 
+\begin_inset Quotes eld
+\end_inset
+
+/usr/bin/codesign
+\begin_inset Quotes erd
+\end_inset
+
+ mit dem String 
+\begin_inset Quotes erd
+\end_inset
+
+/usr/bin/ldid3.py
+\begin_inset Quotes erd
+\end_inset
+
+ ersetzen.
+ Von nun an übernimmt dieses Werkzeug die Signierng unserer Programme.
+\end_layout
+
+\begin_layout Standard
+Nachdem wir nun die Ausgabe vom Simulator auf das iOS Device abändern finden
+ wir nach dem Übersetzen in XCode im Verzeichnis Products die gewünschte
+ und signierte APP-Datei.
+\end_layout
+
+\begin_layout Description
+Quelle: http://iklive.org/objective-c-compiling-ios-5-software-without-developer-
+program/
+\end_layout
+
+\begin_layout Subsubsection
+Von der APP zum DEB-Paket
+\end_layout
+
+\begin_layout Standard
+Um unsere erstellten APP-Dateien in ein DEB-Paket umzuwandeln, bedienen
+ uns bequem des Programmes MacPorts, welches – ähnlich Fink – eine Paketverwaltu
+ng für freie und quelloffene Software für OS X ist.
+\end_layout
+
+\begin_layout Description
+Quelle: http://www.macports.org/
+\end_layout
+
+\begin_layout Standard
+Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
+ Verzeichnis unserem Pfad hinzu:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+\end_layout
+
+\begin_layout Standard
+Nun folgt ein Update dessen Paketquellen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+sudo port selfupdate
+\end_layout
+
+\begin_layout Standard
+und die Installation des gewünschten Paketes dpkg:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+sudo port install dpkg
+\end_layout
+
+\begin_layout Standard
+welche den gewünschten Befehl dkgp-deb bereitstellt.
+ Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repo-konforme
+ DEB-Pakete zu erstellen.
+\end_layout
+
+\begin_layout Standard
+Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
+ welche sich wie folgt aufbaut:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
++- MyProgram
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   +- Applications
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |  +- MyProgram.app
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |     +- Info.plist
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |     +- MyProgram
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |     +- icon.png
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   +- DEBIAN
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |  +- control
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   +- System
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      +- Library
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+         +- LaunchDaemons
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+            +- com.identifier.MyProgram.plist
+\end_layout
+
+\begin_layout Standard
+wobei das Verzeichnis System jedoch nicht zwingend notwendig ist.
+\end_layout
+
+\begin_layout Standard
+Die Datei control kann folgende Einträge beinhalten: Package, Name, Version,
+ Architecture, Description, Homepage, Depiction, Maintainer, Author, Sponsor,
+ Section.
+ Zwingend vorgeschrieben sind davon jedoch nur Package und Version.
+\end_layout
+
+\begin_layout Standard
+Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
+ Teil der internen Struktur eines Debian-Paketes darstellen – einige ._*-Dateien,
+ welche zusätzliche Informationen enthalten.
+ Diese zusätzlichen Dateien würden zusammen mit dem Paket installiert werden
+ und Konflikte mit anderen Paketen erzeugen (abgesehen davon, dass diese
+ Dateien einfach nicht in unser Paket gehören).
+ Um dieses Feature zu deaktivieren werden folgende Umgebungsvariablen exportiert
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+export COPYFILE_DISABLE
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+export COPY_EXTENDED_ATTRIBUTES_DISABLE
+\end_layout
+
+\begin_layout Standard
+Sind wir nun soweit wechseln im Terminal ins Verzeichnis 
+\begin_inset Quotes eld
+\end_inset
+
+MyProgramm
+\begin_inset Quotes erd
+\end_inset
+
+ und erzeuen unser DEB-Paket mittels:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+dpkg-deb -b MyProgram
+\end_layout
+
+\begin_layout Description
+Quelle: http://www.saURLk.com/id/7
+\end_layout
+
+\begin_layout Subsubsection
+Vom DEB-Paket aufs Device
+\end_layout
+
+\begin_layout Standard
+Um die nun fertige DEB-Datei auf das iPad zu bekommen, benötigen wir ein
+ Cydia-kompatible Repository.
+ Hierfür habe ich auf das kostenlose Angebot von MyRepoSpace zurückgegriffen,
+ in dem man die fertigen Pakete komfortabel über ein Webinterface in die
+ Source lädt.
+ Die im Cydia Store eingebundene Paketquelle lautet:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+http://cydia.myrepospace.com/RaveAngel/
 \end_layout
 
 \begin_layout Bibliography

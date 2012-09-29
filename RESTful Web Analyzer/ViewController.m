@@ -37,6 +37,9 @@
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
     [_showResourcesButton setAlpha:0.5]; // appearing inactive
+    requestBody = @"{\"key\":\"value\"}";
+    _contentScrollViewText.text = requestBody;
+
 }
 
 - (void)viewDidUnload
@@ -120,20 +123,23 @@
                                       reuseIdentifier:CellIdentifier];
     }
     
-    // Does a parsed Response already exists? Colorate the text.
-    if (parsedResponseAsDictionary) {
-        // if there is already a parsed response: key exists in this response: green text.
-        if ([parsedResponseAsDictionary objectForKey:_keyTextField.text] != nil) {
-            resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-            // if key exists AND value the same: also green text
-            NSString *keyTextFieldString = [[NSString alloc] initWithFormat:@"%@",[parsedResponseAsDictionary objectForKey:_keyTextField.text]];
-            if ([keyTextFieldString isEqualToString:_valueTextField.text])
-                resourceTableViewCell.detailTextLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-        }
-        // key doesn't exist: red text then.
-        else
-            resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
-    }
+    // Colorate the HTTP Headers
+    // entered header is a valid request header: color green text.
+    NSArray *generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
+    NSArray *requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
+    if ([generalHeaders containsObject:_keyTextField.text])
+        resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+    else if ([requestHeaders containsObject:_keyTextField.text])
+        resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:1];
+        // if key exists AND value the same: also green text
+        /*
+        NSString *keyTextFieldString = [[NSString alloc] initWithFormat:@"%@",[parsedResponseAsDictionary objectForKey:_keyTextField.text]];
+        if ([keyTextFieldString isEqualToString:_valueTextField.text])
+            resourceTableViewCell.detailTextLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+         */
+    // if not: red text then.
+    else
+        resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
 
     // Assign the text to the cell and return the cell.
     resourceTableViewCell.textLabel.text = _keyTextField.text;
@@ -156,17 +162,17 @@
 // ********** "+" button pressed: **********
 - (IBAction)addKeyValue:(id)sender {
     // Option 1: no cell selected, new cell should be inserted at the end.
-    if (![self.headersTableView indexPathForSelectedRow]) {
-        [self.headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:numberOfRows++ inSection:0]]
+    if (![_headersTableView indexPathForSelectedRow]) {
+        [_headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:numberOfRows++ inSection:0]]
                                      withRowAnimation:UITableViewRowAnimationFade];
     }
     // Option 2: there is a cell selected, new cell should be inserted before that cell, selection should be removed afterwards.
     else {
-        NSIndexPath *path = [self.headersTableView indexPathForSelectedRow];
+        NSIndexPath *path = [_headersTableView indexPathForSelectedRow];
         numberOfRows++;
-        [self.headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path]
+        [_headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path]
                                      withRowAnimation:UITableViewRowAnimationFade];
-        [self.headersTableView deselectRowAtIndexPath:[self.headersTableView indexPathForSelectedRow] animated:YES];
+        [_headersTableView deselectRowAtIndexPath:[_headersTableView indexPathForSelectedRow] animated:YES];
     }
 }
 
@@ -180,7 +186,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         numberOfRows--;
-        [self.headersTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
+        [_headersTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
@@ -258,17 +264,22 @@
     [_detectedXML setHighlighted:NO];
     [_detectedHTML setHighlighted:NO];
     [_detectedXHTML setHighlighted:NO];
+    _contentType.text = [[NSString alloc] init];
+    _encoding.text = [[NSString alloc] init];
     [_outputSwitch setSelectedSegmentIndex:0];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:0];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:1];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2];
     baseUrl = [[NSString alloc] init];
     resourcePath = [[NSString alloc] init];
+    requestBody = _contentScrollViewText.text; // saving writen text field in String
     _contentScrollViewText.text = [[NSString alloc] init];
     _headerScrollViewText.text = [[NSString alloc] init];
-    requestBody = [[NSString alloc] init];
     responseBody = [[NSString alloc] init];
     parsedText = [[NSMutableString alloc] init];
+    foundResources = [[NSMutableArray alloc] init];
+    [_showResourcesButton setAlpha:0.5];
+    [_showResourcesButton setEnabled:NO];
     
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -348,20 +359,49 @@
     
     NSString *string = [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
     NSURL *url = [[NSURL alloc] initWithString:string];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    NSMutableURLRequest *mutableRequest = [request mutableCopy];
-    [mutableRequest setHTTPMethod:requestMethodString];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    [request setMainDocumentURL:[[NSURL alloc]initWithString:baseUrl]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
+    [request setHTTPMethod:requestMethodString];
+    
+    // ********** Begin Changing HTTP Headers **********
+    
+    for (int i = 0; i < numberOfRows; i++) {
+        NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
+        UITableViewCell *cell = [_headersTableView cellForRowAtIndexPath:path];
+        NSLog(@"adding header: %@:%@",cell.textLabel.text,cell.detailTextLabel.text);
+        [request setValue:cell.detailTextLabel.text forHTTPHeaderField:cell.textLabel.text];
+    }
+
+    // ********** End Changing HTTP Headers **********
+
     
     // working with different methods
+
     switch (methodId) {
-        case 1:
-        case 2:
-            //if method = POST or PUT: building headers dic
-            NSDictionary *headerDic = [[NSDictionary alloc] init];
-            [mutableRequest setValuesForKeysWithDictionary:headerDic];
+            // GET:
+            // On Collection URI: List the URIs and perhaps other details of the collection's members.
+            // On Element URI: Retrieve a representation of the addressed member of the collection, expressed in an appropriate Internet media type.
+            // DELETE:
+            // On Collection URI: Delete the entire collection.
+            // On Element URI: Delete the addressed member of the collection.
+            // HEAD:
+            // On Collection URI: Retrieve Header.
+            // On Element URI: Retrieve Header.
+            
+        case 1: // POST
+            // On Collection URI: Replace the entire collection with another collection.
+            // On Element URI: Replace the addressed member of the collection, or if it doesn't exist, create it.
+        case 2: // PUT
+            // On Collection URI: Create a new entry in the collection. The new entry's URL is assigned automatically and is usually returned by the operation.
+            // On Element URI: Treat the addressed member as a collection in its own right and create a new entry in it.
+            
+            // Case POST and PUT: Add Body.
+            [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
+            NSLog(@"using body: %@",[request HTTPBody]);
+            
     }
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:mutableRequest delegate:self];
-    NSLog(@"Sending Request: %@ %@%@ (%@)",requestMethodString,baseUrl,resourcePath,connection);
+    NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
+    NSLog(@"sending request: %@ %@%@ (%@)",requestMethodString,baseUrl,resourcePath,connection);
 
     // ********** End Request ********** INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE
     
@@ -369,9 +409,9 @@
     // ********** Begin Filling Header + Body Fields: REQUEST **********
     
     requestHeader = [[NSString alloc] initWithFormat:@"%@",[[request allHTTPHeaderFields] description]];
-    requestBody = [[NSString alloc] initWithFormat:@"%@",[request HTTPBody]];
+//    requestBody = [[NSString alloc] initWithFormat:@"%@",[request HTTPBody]];
     _headerScrollViewText.text = requestHeader;
-    _contentScrollViewText.text = requestBody;
+//    _contentScrollViewText.text = requestBody;
     [_outputSwitch setEnabled:YES forSegmentAtIndex:0]; // Request-Tab einschalten
     
     // ********** End Filling Header + Body Fields: REQUEST **********
@@ -383,11 +423,23 @@
     // ********** Begin Receiving Response Header **********
     
     response = _response;
-    NSLog(@"receiving: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
+    _contentType.text = [response MIMEType]; // Content Type-Feld setzen
+    _encoding.text = [response textEncodingName]; // Encodingfeld setzen
+    [self checkStatusCode:[response statusCode]]; // Statuscode aktualisieren
+    if ([response statusCode] < 400) // color status code field
+        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:0.1];
+    else
+        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
+
+    NSLog(@"receiving response: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
     
-	if ([response respondsToSelector:@selector(allHeaderFields)])
-        // (NSDictionary*):[response allHeaderFields] -> (NSDic -> NSString):description -> (NSString*):responseHeader
+//	if ([response respondsToSelector:@selector(allHeaderFields)]) {
+        // header is fine, filling header field
 		responseHeader = [[response allHeaderFields] description];
+        _headerScrollViewText.text = responseHeader;
+        [_outputSwitch setSelectedSegmentIndex:1]; // zum Response-Tab wechseln
+        [_outputSwitch setEnabled:YES forSegmentAtIndex:1]; // Request-Tab einschalten
+//    }
 
     // Bei erkannten Formaten: zugehöriger Highlighter aktivieren, dann entsprechend parsen
     if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
@@ -396,19 +448,19 @@
         // Ist "json" oder "javascript" im Content Type vorhanden, kann auf valides JSON geschlossen werden:
         // application/json, application/x-javascript, text/javascript, text/x-javascript, text/json, text/x-json
         [_detectedJSON setHighlighted:YES];
-        }
-        else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
-            NSLog(@"Valid XML found."); // Parsing...?
-            [_detectedXHTML setHighlighted:YES];
-        }
-        else if([[response MIMEType] rangeOfString:@"xhtml"].location != NSNotFound) {
-            NSLog(@"Valid XHTML found."); // Parsing...?
-            [_detectedXHTML setHighlighted:YES];
-        }
-        else if([[response MIMEType] rangeOfString:@"html"].location != NSNotFound) {
-            NSLog(@"Valid HTML found."); // Parsing...?
-            [_detectedHTML setHighlighted:YES];
-        }
+    }
+    else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
+        NSLog(@"Valid XML found."); // Parsing...?
+        [_detectedXHTML setHighlighted:YES];
+    }
+    else if([[response MIMEType] rangeOfString:@"xhtml"].location != NSNotFound) {
+        NSLog(@"Valid XHTML found."); // Parsing...?
+        [_detectedXHTML setHighlighted:YES];
+    }
+    else if([[response MIMEType] rangeOfString:@"html"].location != NSNotFound) {
+        NSLog(@"Valid HTML found."); // Parsing...?
+        [_detectedHTML setHighlighted:YES];
+    }
     
     // ********** End Receiving Response Header **********
 }
@@ -418,61 +470,17 @@
     
     // ********** Begin Receiving Response Body **********
     
-    NSLog(@"processing: %@",[response description]);
+    NSLog(@"processing package: %@",[response description]);
 
     bodyData = _bodyData;
-    _contentType.text = [response MIMEType]; // Content Type-Feld setzen
-    _encoding.text = [response textEncodingName]; // Encodingfeld setzen
-    [self checkStatusCode:[response statusCode]]; // Statuscode aktualisieren
     responseBody = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
 
     // ********** End Receiving Response Body **********
     
     
-    // ********** Begin Filling Header + Body Fields: RESPONSE **********
-    
-    _headerScrollViewText.text = responseHeader;
+    // ********** Filling Body Field: RESPONSE **********
     _contentScrollViewText.text = responseBody;
-    [_outputSwitch setSelectedSegmentIndex:1]; // zum Response-Tab wechseln
-    [_outputSwitch setEnabled:YES forSegmentAtIndex:1]; // Request-Tab einschalten
-    
-    // ********** End Filling Header + Body Fields: RESPONSE **********
 
-
-    // ********** Begin Looking at Response **********
-    
-    if ([response statusCode] < 400) {
-        
-        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:0.1];
-        switch (methodId) {
-            case 0:
-                // GET
-                [self parseResponse];
-                break;
-            case 1:
-                // POST
-                //requestBody = [[NSString alloc] initWithFormat:@"%@",[self post]];
-                break;
-            case 2:
-                // PUT
-                break;
-            case 3:
-                // DELETE
-                break;
-            case 4:
-                // HEAD
-                break;
-        }
-    }
-
-    else
-        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
-
-    // ********** End Looking at Response **********
-
-}
-
-- (void)parseResponse {
 
     // ********** Begin Parsing Response **********
 
