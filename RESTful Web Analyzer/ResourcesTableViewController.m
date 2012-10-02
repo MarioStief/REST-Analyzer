@@ -11,15 +11,17 @@
 
 @implementation ResourcesTableViewController
 
+/*
 - (id)initWithDictionary:(NSDictionary*)dic {
     if (self = [super init])
-        resourcesAsDictionary = [[NSDictionary alloc] initWithDictionary:dic];
+        //resourcesAsDictionary = [[NSDictionary alloc] initWithDictionary:dic];
+        resourcesAsDictionary = [dic copy];
     NSLog(@"resource table created with %i entries.",[resourcesAsDictionary count]);
     return self;
 }
+ */
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -27,42 +29,87 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    resourcesAsArray = [self.resourcesAsDictionary allKeys];
+    //NSLog(@"resourcesAsDictionary count: %i",[self.resourcesAsDictionary count]);
+    //NSLog(@"resourcesAsArray count: %i", [resourcesAsArray count]);
+    //NSLog(@"resourcesAsDictionary: %@", self.resourcesAsDictionary);
+    //NSLog(@"resourcesAsArray: %@", resourcesAsArray);
+
+# pragma mark dissecting url in baseUrl and resource
+    /*
+    for (int i = 0; i < [resourcesAsArray count]; i++) {
+        NSString *key = [[NSString alloc] initWithString:[resourcesAsArray objectAtIndex:i]];
+        NSLog(@"key %i: %@",i, key);
+        NSString *value = [[NSString alloc] initWithString:[self.resourcesAsDictionary valueForKey:key]];
+        NSLog(@"value %i: %@",i, value);
+        NSArray *array = [self dissectURL:value];
+        NSLog(@"array %i: %@",i, array);
+        //NSLog(@"%@",array);
+    }
+     */
+    
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (NSArray *)dissectURL:(NSString *)urlString {
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSString *resourcePath;
+    // ********** Begin URL Processing **********
+    
+    // URL beginnt weder mit "http://" noch "https://" -> hänge "http://" davor.
+    if (![urlString hasPrefix:@"http://"] && ![urlString hasPrefix:@"https://"])
+        urlString = ([[NSString alloc] initWithFormat:@"http://%@", urlString]);
+    
+    // URL endet mit "/" -> weg damit.
+    if ([urlString hasSuffix:@"/"])
+        urlString = [urlString substringToIndex:[urlString length]-1];
+    
+    // Trennung in BaseURL und ResourceURL
+    NSArray *urlComponents = [[NSArray alloc] initWithArray:[urlString pathComponents]];
+    [array addObject:[NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]]];
+    if ([urlComponents count] > 2) {
+        resourcePath = @"";
+        for (int i = 2; i < [urlComponents count]; i++)
+            resourcePath = [NSString stringWithFormat:@"%@/%@",resourcePath,[urlComponents objectAtIndex:i]];
+    }
+    [array addObject:resourcePath];
+    
+    // ********** End URL Processing **********
+
+    return array;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+}
+
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
 //#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    NSLog(@"Now: %i entries.",[resourcesAsDictionary count]);
-    return [resourcesAsDictionary count];
+    return [self.resourcesAsDictionary count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -73,9 +120,10 @@
     }
 
     // Configure the cell...
-    
-    cell.textLabel.text = @"Cell";
-    cell.detailTextLabel.text = @"Description";
+    NSString *key = [[NSString alloc] initWithString:[resourcesAsArray objectAtIndex:[indexPath item]]];
+    cell.textLabel.text = key;
+    cell.detailTextLabel.text = [self.resourcesAsDictionary valueForKey:key];
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }
@@ -121,8 +169,7 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -130,6 +177,33 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    NSString *key = [resourcesAsArray objectAtIndex:indexPath.row];
+    NSString *resource = [self.resourcesAsDictionary valueForKey:key];
+    
+    // passing resource to url text field in the main view
+    if ([resource hasPrefix:@"http://"])
+        // Is a URL. Passing to main controller.
+        _referenceToUrl.text = resource;
+    else if ([resource hasPrefix:@"/"])
+        // It's just the resource. Use the former base URL in combination with that.
+        _referenceToUrl.text = [[NSString alloc] initWithFormat:@"%@%@",_referenceToBaseUrl,resource];
+    else
+        // Neither url nor resource. Should not be possible to land here. But in case... 
+        NSLog(@"This shouldn't be happening.");
+    
+    // Use the passed reference to the popover cntroller to dismiss this view.
+        [_referenceToPopoverController dismissPopoverAnimated:YES];
 }
 
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    //or better yet
+    [self dismissModalViewControllerAnimated:YES];
+    //the latter works fine for Modal segues
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+}
 @end

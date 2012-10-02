@@ -10,8 +10,7 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     // ********** Begin redirect logging output to file **********
@@ -39,11 +38,11 @@
     [_showResourcesButton setAlpha:0.5]; // appearing inactive
     requestBody = @"{\"key\":\"value\"}";
     _contentScrollViewText.text = requestBody;
+    parsedResponseAsDictionary = [[NSDictionary alloc] init];
 
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [self setRequestMethod:nil];
     [self setScrollView:nil];
     [self setDetectedJSON:nil];
@@ -67,11 +66,11 @@
     [self setValueTextField:nil];
     [self setFontSizeSlider:nil];
     [self setFontSize:nil];
+    [self setAuthentication:nil];
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return NO; // Not yet implemented -> not that important.
 }
 
@@ -85,20 +84,17 @@
 
 // ********** Begin Setup Picker View **********
 
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     //One column
     return 1;
 }
 
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     //set number of rows
     return [httpVerbs count];
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     //set item per row
     return [httpVerbs objectAtIndex:row];
 }
@@ -181,10 +177,8 @@
 }
 
 // ********** Process swype deletion **********
-- (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
+- (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path {
+    if (editingStyle == UITableViewCellEditingStyleDelete)     {
         numberOfRows--;
         [_headersTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -220,6 +214,10 @@
     [self switchSegmentIndex]; // used for the toggle
 }
 
+- (IBAction)loggingOutput:(id)sender {
+    [self.navigationController pushViewController:self animated:YES];
+}
+
 // ********** End using the Request/Response/Parsed output toggle: **********
 
 
@@ -252,6 +250,7 @@
 
 // ********** GO button pressed: **********
 - (IBAction)go:(id)sender {
+//    NSLog(@"ViewController.go: %@: %@", resourceTableViewController, [resourceTableViewController resourcesAsDictionary]);
     
     // ********** Remove Keyboard **********
     [self.url resignFirstResponder];
@@ -290,38 +289,36 @@
     [self startRequest:calledMethodString];
 }
 
+// receiving a authentication challenge:
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+    // NSURLCredential supports HTTP Basic Authentication and HTTP Digest Authentication with username and password.
+    // Client Certificate Authentication and Server Trust Authentication not implemented. Maybe later.
     
     // ********** Begin Authentication **********
     
-    /*
-     switch ([_authentication selectedSegmentIndex]) {
-     case 0:
-     [RKClient sharedClient].authenticationType = RKRequestAuthenticationTypeNone;
-     break;
-     case 1:
-     [RKClient sharedClient].authenticationType = RKRequestAuthenticationTypeHTTP;
-     break;
-     case 2:
-     [RKClient sharedClient].authenticationType = RKRequestAuthenticationTypeHTTPBasic;
-     break;
-     case 3:
-     // Not implemented (yet)
-     break;
-     }
-     */
+    // setting the authentication text field
+    _authentication.text = [challenge description];
+    NSLog(@"%@ challenge received.",_authentication.text);
     
     if ([challenge previousFailureCount] == 0) {
-        NSLog(@"received authentication challenge");
-        NSURLCredential *newCredential = [NSURLCredential credentialWithUser:_username.text
-                                                                    password:_password.text
-                                                                 persistence:NSURLCredentialPersistenceForSession];
-        NSLog(@"credential created");
-        [[challenge sender] useCredential:newCredential forAuthenticationChallenge:challenge];
-        NSLog(@"responded to authentication challenge");
-    }
-    else {
-        NSLog(@"previous authentication failure");
+        NSURLCredential *credential = [NSURLCredential credentialWithUser:_username.text
+                                                                 password:_password.text
+                                                              persistence:NSURLCredentialPersistenceNone];
+        // Implement Client Certificate Authentication:
+        // NSURLCredential *credential = [NSURLCredential credentialWithIdentity:(SecIdentityRef) certificates:(NSArray *) persistence:(NSURLCredentialPersistence)];
+        // Implement Server Trust Authentication:
+        // NSURLCredential *credential = [NSURLCredential credentialForTrust:(SecTrustRef)];
+        [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+    } else {
+        [[challenge sender] cancelAuthenticationChallenge:challenge];
+        // inform the user that the user name and password
+        // in the preferences are incorrect
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message: @"Authentication incorrect."
+                                                            delegate:self
+                                                   cancelButtonTitle:@"Close"
+                                                   otherButtonTitles:nil];
+        [alert show];
     }
     
     // ********** End Authentication **********
@@ -451,7 +448,7 @@
     }
     else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
         NSLog(@"Valid XML found."); // Parsing...?
-        [_detectedXHTML setHighlighted:YES];
+        [_detectedXML setHighlighted:YES];
     }
     else if([[response MIMEType] rangeOfString:@"xhtml"].location != NSNotFound) {
         NSLog(@"Valid XHTML found."); // Parsing...?
@@ -522,7 +519,7 @@
                     [parsedText appendString:string];
                     NSURL *link = [[NSURL alloc] initWithString:string];
                     if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"]) {
-                        [parsedText appendString:@" -> URL\n"];
+                        [parsedText appendString:@"\n"];
                         [foundResources addObject:item]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
                     }
                     else if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]) {
@@ -539,6 +536,64 @@
     else if([_detectedXML isHighlighted]) {
         // Parse XML
         // [parsedText appendString:@"XML parsing not yet implemented."];
+        
+        
+        
+        
+        
+        
+        NSLog(@"Parsing XML...");
+        
+        // JSON parsen und als Wörterbuch abspeichern
+        NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:bodyData];
+        XMLParser *xmlParser = [[XMLParser alloc] initXMLParser];
+        [nsXmlParser setDelegate:xmlParser];
+        BOOL success = [nsXmlParser parse];
+        
+        if (success) {
+            parsingSuccess = YES;
+            NSLog(@"No errors - elements count : %i", [[xmlParser parsedElementsAsArray] count]);
+            // get array of users here
+            //  NSMutableArray *users = [parser users];
+        } else {
+            NSLog(@"Error parsing document!");
+        }
+        /*
+        if (!parsedResponseAsDictionary) {
+            [parsedText appendString:@"Error in parsing response."];
+        } else {
+            
+            // Parse die einzelnen Einträge und sortiere nach Key und Value:
+            
+            for(NSString *item in parsedResponseAsDictionary) {
+                [parsedText appendString:item];
+                [parsedText appendString:@": "];
+                
+                NSString *string = [[NSString alloc] initWithFormat:@"%@",[parsedResponseAsDictionary valueForKey:item]];
+                [parsedText appendString:string];
+                NSURL *link = [[NSURL alloc] initWithString:string];
+                if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"]) {
+                    [parsedText appendString:@"\n"];
+                    [foundResources addObject:item]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
+                }
+                else if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]) {
+                    [parsedText appendString:@" -> Path\n"];
+                    [foundResources addObject:item];
+                }
+                else
+                    [parsedText appendString:@"\n"];
+            }
+        }
+        */
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     else if([_detectedHTML isHighlighted]) {
         // Parse HTML
@@ -579,18 +634,41 @@
     // ********** Begin Console Output: Found Resources **********
     
     
-    // ********** Begin Building TableView ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
+    // ********** Begin Building TableView **********
     
     if ([foundResources count] > 0) {
-        // TableView can be built: enable "Show Resources" button
-        resourceTableViewController = [[ResourcesTableViewController alloc] initWithDictionary:parsedResponseAsDictionary];
+        // TableView can now be built: enable "Resources" button
         [_showResourcesButton setAlpha:1];
         [_showResourcesButton setEnabled:YES];
+        // when the button "Resources" is pressed, the overwritten method prepareForSegue:sender is called
     }
     
-    // ********** End Building TableView ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
+    // ********** End Building TableView **********
 
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"resourcesTableViewPopover"])
+    {
+        // Get reference to the destination view controller
+        ResourcesTableViewController *resourceTableViewController = [segue destinationViewController];
+        
+        // Passing the found resources to the storyboard instance
+        NSDictionary *foundResourcesAsDic = [parsedResponseAsDictionary dictionaryWithValuesForKeys:foundResources];
+        [resourceTableViewController setResourcesAsDictionary:foundResourcesAsDic];
+        
+        // pass the Table View Controller the reference to the url text field so that it can pass the returning url
+        [resourceTableViewController setReferenceToUrl:_url];
+        // now pass reference to the popover controller for being able to dismiss it programmatically again
+        UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
+        [resourceTableViewController setReferenceToPopoverController:[popoverSegue popoverController]];
+        // passing the baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
+        // and the foll url needs to be built
+        [resourceTableViewController setReferenceToBaseUrl:baseUrl];
+    }
+}
+
+
 
 - (void)checkStatusCode:(NSInteger)code {
     

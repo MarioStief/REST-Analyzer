@@ -9,9 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface ResourcesTableViewController : UITableViewController {
-    NSDictionary *resourcesAsDictionary;
+    NSArray *resourcesAsArray;
 }
 
-- (id)initWithDictionary:(NSDictionary*)dic;
+@property (nonatomic, strong) NSDictionary *resourcesAsDictionary;
+// passed references to work with the underlying view
+@property (nonatomic, strong) UITextField *referenceToUrl;
+@property (nonatomic, strong) UIPopoverController *referenceToPopoverController;
+@property (nonatomic, strong) NSString *referenceToBaseUrl;
+
+- (NSArray *)dissectURL:(NSString *)urlString;
 
 @end

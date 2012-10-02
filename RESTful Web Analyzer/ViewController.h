@@ -10,6 +10,7 @@
 #import <Foundation/NSJSONSerialization.h>
 #import <Foundation/NSXMLParser.h>
 #import "ResourcesTableViewController.h"
+#import "XMLParser.h"
 
 @interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
     NSArray *httpVerbs;
@@ -29,7 +30,6 @@
     NSMutableArray *foundResources;
     NSIndexPath *indexPath;
     NSInteger numberOfRows;
-    ResourcesTableViewController *resourceTableViewController;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
@@ -42,12 +42,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *detectedXML;
 @property (weak, nonatomic) IBOutlet UIImageView *detectedHTML;
 @property (weak, nonatomic) IBOutlet UIImageView *detectedXHTML;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *authentication;
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UITextField *statusCode;
 @property (weak, nonatomic) IBOutlet UIScrollView *logOutputView;
 @property (weak, nonatomic) IBOutlet UITextView *logOutputViewText;
+@property (weak, nonatomic) IBOutlet UITextField *authentication;
 @property (weak, nonatomic) IBOutlet UITextField *contentType;
 @property (weak, nonatomic) IBOutlet UITextField *encoding;
 @property (weak, nonatomic) IBOutlet UIButton *showResourcesButton;
@@ -59,6 +59,7 @@
 
 - (IBAction)go:(id)sender;
 - (IBAction)outputToggle:(id)sender;
+- (IBAction)loggingOutput:(id)sender;
 - (IBAction)logRefreshButton:(id)sender;
 - (IBAction)logClearButton:(id)sender;
 - (IBAction)addKeyValue:(id)sender;

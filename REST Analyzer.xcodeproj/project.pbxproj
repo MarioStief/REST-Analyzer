@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC4A6B95161B1961000C9BBE /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4A6B94161B1961000C9BBE /* XMLParser.m */; };
 		AC8B877C15DF645F00E12B48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877B15DF645F00E12B48 /* UIKit.framework */; };
 		AC8B877E15DF645F00E12B48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877D15DF645F00E12B48 /* Foundation.framework */; };
 		AC8B878015DF645F00E12B48 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877F15DF645F00E12B48 /* CoreGraphics.framework */; };
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC4A6B93161B1961000C9BBE /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
+		AC4A6B94161B1961000C9BBE /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
 		AC8B877715DF645F00E12B48 /* REST Analyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REST Analyzer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B877B15DF645F00E12B48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AC8B877D15DF645F00E12B48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -164,6 +167,8 @@
 				ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */,
 				AC8B879015DF646000E12B48 /* ViewController.h */,
 				AC8B879115DF646000E12B48 /* ViewController.m */,
+				AC4A6B93161B1961000C9BBE /* XMLParser.h */,
+				AC4A6B94161B1961000C9BBE /* XMLParser.m */,
 				AC8B878215DF646000E12B48 /* Supporting Files */,
 			);
 			path = "RESTful Web Analyzer";
@@ -322,6 +327,7 @@
 				AC8B878C15DF646000E12B48 /* AppDelegate.m in Sources */,
 				AC8B879215DF646000E12B48 /* ViewController.m in Sources */,
 				ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */,
+				AC4A6B95161B1961000C9BBE /* XMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
