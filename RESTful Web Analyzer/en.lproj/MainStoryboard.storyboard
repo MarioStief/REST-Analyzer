@@ -380,7 +380,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bcc-IY-xZ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2304" y="930"/>
+            <point key="canvasLocation" x="964" y="534"/>
         </scene>
         <!--View Controller - Logging Output-->
         <scene sceneID="XXh-r7-NJt">
@@ -443,7 +443,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pEE-WP-bMJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2312" y="-282"/>
+            <point key="canvasLocation" x="924" y="-826"/>
         </scene>
     </scenes>
     <resources>
@@ -451,47 +451,6 @@
         <image name="Circle_Grey.png" width="128" height="128"/>
         <image name="Globe.png" width="256" height="256"/>
     </resources>
-    <classes>
-        <class className="ResourcesTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ResourcesTableViewController.h"/>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addKeyValue:"/>
-                <relationship kind="action" name="fontSizeSliderMove:"/>
-                <relationship kind="action" name="go:"/>
-                <relationship kind="action" name="logClearButton:"/>
-                <relationship kind="action" name="logRefreshButton:"/>
-                <relationship kind="action" name="loggingOutput:"/>
-                <relationship kind="action" name="outputToggle:"/>
-                <relationship kind="outlet" name="authentication" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="contentScrollViewText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="contentType" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="detectedHTML" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="detectedJSON" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="detectedXHTML" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="detectedXML" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="encoding" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="fontSize" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="fontSizeSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="headerScrollViewText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="headersTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="keyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="logOutputView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="logOutputViewText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="outputSwitch" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="requestMethod" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="showResourcesButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="statusCode" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="url" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="username" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="valueTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

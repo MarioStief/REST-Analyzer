@@ -279,6 +279,7 @@
     foundResources = [[NSMutableArray alloc] init];
     [_showResourcesButton setAlpha:0.5];
     [_showResourcesButton setEnabled:NO];
+    _authentication.textColor = [UIColor blackColor];
     
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -309,6 +310,7 @@
         // Implement Server Trust Authentication:
         // NSURLCredential *credential = [NSURLCredential credentialForTrust:(SecTrustRef)];
         [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+        _authentication.textColor = [[UIColor alloc] initWithRed:0.75 green:0 blue:0 alpha:1];
     } else {
         [[challenge sender] cancelAuthenticationChallenge:challenge];
         // inform the user that the user name and password
@@ -319,6 +321,7 @@
                                                    cancelButtonTitle:@"Close"
                                                    otherButtonTitles:nil];
         [alert show];
+        _authentication.textColor = [[UIColor alloc] initWithRed:0 green:0.75 blue:0 alpha:1];
     }
     
     // ********** End Authentication **********
