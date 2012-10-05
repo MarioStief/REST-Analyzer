@@ -2253,6 +2253,18 @@ http://www.iconfinder.com/icondetails/34211/128/
 http://www.iconfinder.com/icondetails/34212/128/
 \end_layout
 
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/49232/256/arrow_left_icon
+\end_layout
+
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/49243/256/
+\end_layout
+
+\begin_layout Standard
+http://www.iconfinder.com/icondetails/49243/256/
+\end_layout
+
 \begin_layout Section
 Schwierigkeiten
 \end_layout
@@ -2265,16 +2277,96 @@ eren.
 \end_layout
 
 \begin_layout Description
-Lösung: Noch keine.
+Lösung: Selbst parsen und mappen.
+ Parser aus dem Apple-Framework verwenden.
 \end_layout
 
 \begin_layout Description
-Problem: Nach vollständigem Durchlauf stürzt das Programm ab, die Methode
- didFailLoadWithError meldet einen Fehler.
+Problem: RKClient kann kein HEAD.
 \end_layout
 
 \begin_layout Description
-Ursache:
+Lösung: Selbst eine Verbindung aufbauen.
+ Framework obsolet.
+\end_layout
+
+\begin_layout Description
+Problem: In Storyboard erzeugter Table View Controller erzeugt eigene Instanz
+ der View, Inizialisierung programatisch im Code erzeugt wieder eine eigene.
+\end_layout
+
+\begin_layout Description
+Lösung: Der Storyboard-Segue einen Identifier zuweisen und mit der Methode
+ prepareForSegue der Zielinstanz die Variable übergeben.
+\end_layout
+
+\begin_layout Description
+Problem: URL soll zur 
+\begin_inset Quotes eld
+\end_inset
+
+darunterliegenden
+\begin_inset Quotes erd
+\end_inset
+
+ View übergeben werden und die View geschlossen.
+\end_layout
+
+\begin_layout Description
+Lösung: Referenzen weiterreichen.
+ Zum Schließen der View die Referenz des PopoverControllers weiterleiten,
+ dann kann die View 
+\begin_inset Quotes eld
+\end_inset
+
+von oben
+\begin_inset Quotes erd
+\end_inset
+
+ geschlossen werden.
+\end_layout
+
+\begin_layout Description
+Problem: Nachdem das Programm auf iOS 6 problemlos läuft, stürzt es unter
+ 5.1.1 ab.
+\end_layout
+
+\begin_layout Description
+Ursache: Unter iOS 6 wird, wenn ein 
+\begin_inset Quotes eld
+\end_inset
+
+prepareForSegue
+\begin_inset Quotes erd
+\end_inset
+
+ erkannt wird, der Aufbau der View verzögert, bis die Methode abgearbeitet
+ wurde.
+ Unter iOS 5.1.1 ist das nicht der Fall, die View wird sofort angelegt.
+ Das Dictionary, das in der viewDidLoad in ein Array gefüllt wird, ist noch
+ nicht vorhanden, alle Zellen werden (null).
+ 
+\end_layout
+
+\begin_layout Description
+Lösung: die Initialisierung des Arrays verschieben von viewDidLoad nach
+ viewDidAppear.
+\end_layout
+
+\begin_layout Description
+Problem: Parsen von großen Inhalten schlägt fehl und die Anzeige im Body
+ ist defekt.
+\end_layout
+
+\begin_layout Description
+Ursache: Jeder Body wurde einzeln abgearbeitet und versucht, zu parsen.
+ Fragmente, die demnach falsch anfingen, verursachten einen Fehler.
+\end_layout
+
+\begin_layout Description
+Lösung: Auslesen der Content Length und abwarten, bis alls Responses eingetroffe
+n sind.
+ Erst dann parsen.
 \end_layout
 
 \begin_layout Chapter

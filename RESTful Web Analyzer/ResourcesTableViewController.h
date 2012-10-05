@@ -12,7 +12,8 @@
     NSArray *resourcesAsArray;
 }
 
-@property (nonatomic, strong) NSDictionary *resourcesAsDictionary;
+@property (nonatomic, strong) NSArray *keys;
+@property (nonatomic, strong) NSArray *values;
 // passed references to work with the underlying view
 @property (nonatomic, strong) UITextField *referenceToUrl;
 @property (nonatomic, strong) UIPopoverController *referenceToPopoverController;

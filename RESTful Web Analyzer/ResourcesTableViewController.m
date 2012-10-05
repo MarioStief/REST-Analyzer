@@ -36,7 +36,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    resourcesAsArray = [self.resourcesAsDictionary allKeys];
+
     //NSLog(@"resourcesAsDictionary count: %i",[self.resourcesAsDictionary count]);
     //NSLog(@"resourcesAsArray count: %i", [resourcesAsArray count]);
     //NSLog(@"resourcesAsDictionary: %@", self.resourcesAsDictionary);
@@ -86,8 +86,11 @@
     return array;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+/*
+ - (void)viewWillAppear:(BOOL)animated {
+//    _keys = [[NSArray alloc] initWithArray:[_resourcesAsDictionary allKeys]];
 }
+ */
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -106,7 +109,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.resourcesAsDictionary count];
+    return [_keys count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -120,9 +123,13 @@
     }
 
     // Configure the cell...
-    NSString *key = [[NSString alloc] initWithString:[resourcesAsArray objectAtIndex:[indexPath item]]];
+/*
+    NSLog(@"indexPath row: %d",[indexPath row]);
+    NSLog(@"objectAtIndex:[indexPath row]: %@",[resourcesAsArray objectAtIndex:[indexPath row]]);
+*/
+    NSString *key = [[NSString alloc] initWithFormat:@"%@",[_keys objectAtIndex:[indexPath row]]]; // stürzt nicht ab im Gegensatz zu InitWithString wenn nil
     cell.textLabel.text = key;
-    cell.detailTextLabel.text = [self.resourcesAsDictionary valueForKey:key];
+    cell.detailTextLabel.text = [_values objectAtIndex:[indexPath row]];
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
@@ -172,13 +179,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
     /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     DetailViewController *detailViewController = [[DetailViewController alloc] initWithNibName:@"Nib name" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
-    NSString *key = [resourcesAsArray objectAtIndex:indexPath.row];
-    NSString *resource = [self.resourcesAsDictionary valueForKey:key];
+    NSString *resource = [_values objectAtIndex:[indexPath row]];
     
     // passing resource to url text field in the main view
     if ([resource hasPrefix:@"http://"])
@@ -192,7 +198,7 @@
         NSLog(@"This shouldn't be happening.");
     
     // Use the passed reference to the popover cntroller to dismiss this view.
-        [_referenceToPopoverController dismissPopoverAnimated:YES];
+    [_referenceToPopoverController dismissPopoverAnimated:YES];
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion

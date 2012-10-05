@@ -22,7 +22,8 @@
 
 //@property (nonatomic, retain) User *user;
 //@property (nonatomic, retain) NSMutableArray *parsedElementsAsArray;
-@property (nonatomic, retain) NSMutableDictionary *parsedElementsAsDictionary;
+@property (nonatomic, retain) NSMutableArray *keyArray;
+@property (nonatomic, retain) NSMutableArray *valueArray;
 
 - (XMLParser *) initXMLParser;
 

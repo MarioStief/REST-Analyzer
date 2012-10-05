@@ -25,13 +25,19 @@
     NSString *responseBody;
     NSMutableString *parsedText;
     NSString *logPath;
-    NSDictionary *parsedResponseAsDictionary;
+    NSArray *keyArray;
+    NSArray *valueArray;
     NSHTTPURLResponse *response;
-    NSData *bodyData;
-    NSMutableArray *foundResources;
+    NSMutableData *responseBodyData;
+    NSMutableArray *foundResourceKeys;
+    NSMutableArray *foundResourceValues;
     NSIndexPath *indexPath;
     NSInteger numberOfRows;
     HistoryElement *historyElement;
+    NSArray *generalHeaders;
+    NSArray *requestHeaders;
+    NSInteger responseLength;
+    NSTimer *awaitingResponse;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
@@ -69,12 +75,13 @@
 - (IBAction)logClearButton:(id)sender;
 - (IBAction)addKeyValue:(id)sender;
 - (void)startRequest:(NSString*)requestMethodString;
-//- (void)parseResponse;
+- (void)parseResponse;
 - (void)checkStatusCode:(NSInteger)code;
 - (IBAction)fontSizeSliderMove:(id)sender;
 - (void)switchSegmentIndex;
 - (IBAction)backButton:(id)sender;
 - (IBAction)baseUrlButton:(id)sender;
 - (IBAction)forwardButton:(id)sender;
+- (IBAction)headerInfo:(id)sender;
 
 @end

@@ -27,7 +27,8 @@
 	// Do any additional setup after loading the view, typically from a nib.
     httpVerbs = [[NSArray alloc] initWithObjects:@"GET", @"POST", @"PUT", @"DELETE", @"HEAD", nil];
     parsedText = [[NSMutableString alloc] init];
-    foundResources = [[NSMutableArray alloc] init];
+    foundResourceKeys = [[NSMutableArray alloc] init];
+    foundResourceValues = [[NSMutableArray alloc] init];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:0]; // Muss einzeln durchgeführt werden,
     [_outputSwitch setEnabled:NO forSegmentAtIndex:1]; // da sonst das Feld permanent
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2]; // ausgeschaltet ist.
@@ -41,8 +42,8 @@
     [_forwardButton setEnabled:NO]; // appearing inactive
     requestBody = @"{\"key\":\"value\"}";
     _contentScrollViewText.text = requestBody;
-    parsedResponseAsDictionary = [[NSDictionary alloc] init];
-
+    generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
+    requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
 }
 
 - (void)viewDidUnload {
@@ -128,8 +129,6 @@
     
     // Colorate the HTTP Headers
     // entered header is a valid request header: color green text.
-    NSArray *generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
-    NSArray *requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
     if ([generalHeaders containsObject:_keyTextField.text])
         resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
     else if ([requestHeaders containsObject:_keyTextField.text])
@@ -150,6 +149,21 @@
     return resourceTableViewCell;
 }
 // ********** End set up cell **********
+
+
+// ********** Begin header key info button **********
+
+- (IBAction)headerInfo:(id)sender {
+    NSString *string = [[NSMutableString alloc] initWithFormat:@"General Headers: %@\nRequest Headers: %@",generalHeaders,requestHeaders];
+    //NSMutableString *requestHeaders = [[NSMutableString alloc] initWithString:@"Request Headers: "];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Header Keys"
+                                                        message:string
+                                                       delegate:self cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+
+// ********** Begin header key info button **********
 
 
 /*
@@ -285,12 +299,14 @@
     _headerScrollViewText.text = [[NSString alloc] init];
     responseBody = [[NSString alloc] init];
     parsedText = [[NSMutableString alloc] init];
-    foundResources = [[NSMutableArray alloc] init];
+    foundResourceKeys = [[NSMutableArray alloc] init];
+    foundResourceValues = [[NSMutableArray alloc] init];
     [_showResourcesButton setAlpha:0.5];
     [_showResourcesButton setEnabled:NO];
     _authentication.textColor = [UIColor blackColor];
     _statusCode.text = [[NSString alloc] init];
     _statusCode.backgroundColor = [UIColor whiteColor];
+    responseBodyData = [[NSMutableData alloc] init];
     
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -327,10 +343,10 @@
         // inform the user that the user name and password
         // in the preferences are incorrect
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                             message: @"Authentication incorrect."
-                                                            delegate:self
-                                                   cancelButtonTitle:@"Close"
-                                                   otherButtonTitles:nil];
+                                                        message: @"Authentication incorrect."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Close"
+                                              otherButtonTitles:nil];
         [alert show];
         _authentication.textColor = [[UIColor alloc] initWithRed:0 green:0.75 blue:0 alpha:1];
     }
@@ -438,8 +454,11 @@
             // On Element URI: Treat the addressed member as a collection in its own right and create a new entry in it.
             
             // Case POST and PUT: Add Body.
+            [request setValue:[NSString stringWithFormat:@"%d", [requestBody length]] forHTTPHeaderField:@"Content-Length"];
+            //[request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
+
+            // attaching the bodystring encoded as data
             [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
-            NSLog(@"using body: %@",[request HTTPBody]);
             
     }
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
@@ -462,7 +481,10 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSString *errorLocalizedDescription = [[NSString alloc] initWithFormat:@"%@",[error localizedDescription]];
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorLocalizedDescription delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:errorLocalizedDescription
+                                                       delegate:self cancelButtonTitle:@"Ok"
+                                              otherButtonTitles: nil];
     [alertView show];
     NSLog(@"%@",error);
 }
@@ -474,6 +496,7 @@
     response = _response;
     _contentType.text = [response MIMEType]; // Content Type-Feld setzen
     _encoding.text = [response textEncodingName]; // Encodingfeld setzen
+    responseLength = [response expectedContentLength];
     [self checkStatusCode:[response statusCode]]; // Statuscode aktualisieren
     if ([response statusCode] < 400) // color status code field
         _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:0.1];
@@ -490,27 +513,6 @@
         [_outputSwitch setEnabled:YES forSegmentAtIndex:1]; // Request-Tab einschalten
 //    }
 
-    // Bei erkannten Formaten: zugehöriger Highlighter aktivieren, dann entsprechend parsen
-    if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
-       [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound) {
-        NSLog(@"Valid JSON found."); // Parsing...?
-        // Ist "json" oder "javascript" im Content Type vorhanden, kann auf valides JSON geschlossen werden:
-        // application/json, application/x-javascript, text/javascript, text/x-javascript, text/json, text/x-json
-        [_detectedJSON setHighlighted:YES];
-    }
-    else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
-        NSLog(@"Valid XML found."); // Parsing...?
-        [_detectedXML setHighlighted:YES];
-    }
-    else if([[response MIMEType] rangeOfString:@"xhtml"].location != NSNotFound) {
-        NSLog(@"Valid XHTML found."); // Parsing...?
-        [_detectedXHTML setHighlighted:YES];
-    }
-    else if([[response MIMEType] rangeOfString:@"html"].location != NSNotFound) {
-        NSLog(@"Valid HTML found."); // Parsing...?
-        [_detectedHTML setHighlighted:YES];
-    }
-    
     // ********** End Receiving Response Header **********
     
     
@@ -543,62 +545,97 @@
     // ********** End actualize history **********
 }
 
-
--   (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)_bodyData {
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)_bodyData {
     
     // ********** Begin Receiving Response Body **********
     
-    NSLog(@"processing package: %@",[response description]);
+    BOOL responseComplete = NO;
+    [responseBodyData appendData:_bodyData];
+    if (responseLength > -1 ) {
+        NSLog(@"%i/%i bytes received.",[responseBodyData length]+[_bodyData length],responseLength);
+        if ([responseBodyData length] >= responseLength)
+            responseComplete = YES;
+    } else {
+        if (!awaitingResponse)
+            NSLog(@"No content length is specified. Starting timer. If there is no answer for 3 seconds the transmission is assumed to be completed.");
+        NSLog(@"%i bytes received.",[responseBodyData length]+[_bodyData length]);
+        [awaitingResponse invalidate];
+        awaitingResponse = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(responseComplete:) userInfo:nil repeats:NO];
+    }
+        
+    if (responseComplete) {
 
-    bodyData = _bodyData;
-    responseBody = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+        // ********** Filling Body Field: RESPONSE **********
+        _contentScrollViewText.text = responseBody;
+        
+        // response received -> parsing now if possible.
+        [self parseResponse];
+    }
+}
 
-    // ********** End Receiving Response Body **********
-    
-    
-    // ********** Filling Body Field: RESPONSE **********
+- (void)responseComplete:(NSTimer *)timer {
+    NSLog(@"3 seconds no incoming response - finishing.");
     _contentScrollViewText.text = responseBody;
+    // big strings needs too long for assigning them to the contentScrollViewText that fast. giving them 1 sec...
+    awaitingResponse = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(parseResponse:) userInfo:nil repeats:NO];
+}
 
+// ********** End Receiving Response Body **********
 
+- (void)parseResponse:(NSTimer *)timer {
+    [self parseResponse];
+}
+
+- (void)parseResponse {
+
+    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
+    keyArray = [[NSArray alloc] init];
+    valueArray = [[NSArray alloc] init];
+    
     // ********** Begin Parsing Response **********
 
     BOOL parsingSuccess = NO;
+    NSDictionary *parsedResponseAsDictionary = [[NSDictionary alloc] init];
+
     
-    if([_detectedJSON isHighlighted]) {
+    
+    // Bei erkannten Formaten: zugehöriger Highlighter aktivieren, dann entsprechend parsen
+    if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
+       [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound) {
+        // Ist "json" oder "javascript" im Content Type vorhanden, kann auf valides JSON geschlossen werden:
+        // application/json, application/x-javascript, text/javascript, text/x-javascript, text/json, text/x-json
         NSLog(@"Parsing JSON...");
         
         // JSON parsen und als Wörterbuch abspeichern
         NSError *err = nil;
-        parsedResponseAsDictionary = [NSJSONSerialization JSONObjectWithData:bodyData options:NSJSONWritingPrettyPrinted error:&err];
+        parsedResponseAsDictionary = [NSJSONSerialization JSONObjectWithData:responseBodyData options:NSJSONWritingPrettyPrinted error:&err];
+        
         if ([parsedResponseAsDictionary count] > 0) {
+            keyArray = [[NSArray alloc] initWithArray:[parsedResponseAsDictionary allKeys]];
+            valueArray = [[NSArray alloc] initWithArray:[parsedResponseAsDictionary allValues]];
+            NSLog(@"JSON parsing success. Elements count: %i", [keyArray count]);
             parsingSuccess = YES;
+        } else {
+            NSLog(@"Sorry, the JSON parser returned an error.");
         }
-    }
-    else if([_detectedXML isHighlighted]) {
+    } else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
         // Parse XML
         // [parsedText appendString:@"XML parsing not yet implemented."];
         NSLog(@"Parsing XML...");
         
-        // XML parsen und als Wörterbuch abspeichern
-        NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:bodyData];
+        // parse XML and save as dictionary
+        NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseBodyData];
         XMLParser *xmlParser = [[XMLParser alloc] initXMLParser];
         [nsXmlParser setDelegate:xmlParser];
         parsingSuccess = [nsXmlParser parse];
         
         if (parsingSuccess) {
-            NSLog(@"XML parsing success. Elements count: %i", [[xmlParser parsedElementsAsDictionary] count]);
-            parsedResponseAsDictionary = [[NSDictionary alloc] initWithDictionary:[xmlParser parsedElementsAsDictionary]];
+            keyArray = [[NSArray alloc] initWithArray:[xmlParser keyArray]];
+            valueArray = [[NSArray alloc] initWithArray:[xmlParser valueArray]];
+            NSLog(@"XML parsing success. Elements count: %i", [keyArray count]);
         } else {
             NSLog(@"Sorry, the XML parser returned an error.");
         }
-    }
-    else if([_detectedHTML isHighlighted]) {
-        // Parse HTML
-        // [parsedText appendString:@"HTML parsing not yet implemented."];
-    }
-    else if([_detectedXHTML isHighlighted]) {
-        // Parse XML
-        // [parsedText appendString:@"XHTML parsing not yet implemented."];
     }
     
     // ********** End Parsing Response **********
@@ -607,47 +644,52 @@
     // ********** Begin Filling Header + Body Fields: PARSED **********
     
     if (parsingSuccess) {
-        if (!parsedResponseAsDictionary) {
-            [parsedText appendString:@"Error in parsing response."];
-        } else {
+        
+        // process key and values:
+        
+        for(int i = 0; i < [keyArray count]; i++) {
+            NSString *key = [[NSString alloc] initWithString:[keyArray objectAtIndex:i]];
+            NSString *value = [[NSString alloc] initWithFormat:@"%@",[valueArray objectAtIndex:i]];
+            [parsedText appendString:key];
+            [parsedText appendString:@": "];
             
-            // Parse die einzelnen Einträge und sortiere nach Key und Value:
-            
-            for(NSString *item in parsedResponseAsDictionary) {
-                [parsedText appendString:item];
-                [parsedText appendString:@": "];
+            // ********** Arrays: **********
+            NSString *string = [[NSString alloc] initWithFormat:@"%@",value];
+            if ([string hasPrefix:@"{"]) {
                 
-                // ********** Arrays: **********
-                NSString *string = [[NSString alloc] initWithFormat:@"%@",[parsedResponseAsDictionary valueForKey:item]];
-                if ([string hasPrefix:@"{"]) {
-                    
-                    // Array process
-                    [parsedText appendString:string];
-                    
-                    // ********** Begin Processing Array ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
-                    
-                    //
-                    
-                    // ********** End Processing Array ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
-                    
-                }
-                // *******************************
-                else {
-                    [parsedText appendString:string];
-                    NSURL *link = [[NSURL alloc] initWithString:string];
-                    if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"]) {
-                        [parsedText appendString:@"\n"];
-                        [foundResources addObject:item]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
-                    }
-                    else if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]) {
-                        [parsedText appendString:@" -> Path\n"];
-                        [foundResources addObject:item];
-                    }
-                    else
-                        [parsedText appendString:@"\n"];
+                // Array process
+                [parsedText appendString:string];
+                
+                // ********** Begin Processing Array ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
+                
+                //
+                
+                // ********** End Processing Array ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
+                
+            }
+            // *******************************
+            else {
+                [parsedText appendString:string];
+                NSURL *link = [[NSURL alloc] initWithString:string];
+                BOOL isValidResource = ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"] ||
+                                        [[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]);
+                if (isValidResource) {
+                    [foundResourceKeys addObject:key]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
+                    [foundResourceValues addObject:string];
                 }
             }
+            [parsedText appendString:@"\n"];
         }
+        
+        if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
+           [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound)
+            [_detectedJSON setHighlighted:YES];
+        else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound)
+            [_detectedXML setHighlighted:YES];
+        
+    }
+    if ([foundResourceKeys count] > 0) {
+        
         _contentScrollViewText.text = parsedText;
         [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
         [_outputSwitch setSelectedSegmentIndex:2];   // auf Parsed-Tab wechseln
@@ -658,14 +700,12 @@
     
     // ********** Begin Console Output: Found Resources **********
     
-    NSLog(@"Found Resources: %i",[foundResources count]);
-    for (int i = 0; i < [foundResources count]; i++) {
-        NSString *key = [[NSString alloc] init];
-        key = [foundResources objectAtIndex:i];
-        NSString *resource = [[NSString alloc] init];
-        resource = [parsedResponseAsDictionary valueForKey:key];
-        NSLog(@"Key: \"%@\", Value: \"%@\"",key,resource);
-        if (resource == urlString)
+    NSLog(@"Found Resources: %i",[foundResourceKeys count]);
+    for (int i = 0; i < [foundResourceKeys count]; i++) {
+        NSString *key = [[NSString alloc] initWithString:[foundResourceKeys objectAtIndex:i]];
+        NSString *value = [[NSString alloc] initWithString:[foundResourceValues objectAtIndex:i]];
+        NSLog(@"Key: \"%@\", Value: \"%@\"",key,value);
+        if (value == urlString)
             NSLog(@"This resource.");
     }
     
@@ -674,7 +714,7 @@
     
     // ********** Begin Building TableView **********
     
-    if ([foundResources count] > 0) {
+    if ([foundResourceKeys count] > 0) {
         // TableView can now be built: enable "Resources" button
         [_showResourcesButton setAlpha:1];
         [_showResourcesButton setEnabled:YES];
@@ -692,20 +732,20 @@
         ResourcesTableViewController *resourceTableViewController = [segue destinationViewController];
         
         // Passing the found resources to the storyboard instance
-        NSDictionary *foundResourcesAsDic = [parsedResponseAsDictionary dictionaryWithValuesForKeys:foundResources];
-        [resourceTableViewController setResourcesAsDictionary:foundResourcesAsDic];
-        
-        // pass the Table View Controller the reference to the url text field so that it can pass the returning url
+        [resourceTableViewController setKeys:foundResourceKeys];
+        [resourceTableViewController setValues:foundResourceValues];
+
+        // pass the Table View Controller the references for communicating with this view
+        // url text field, button, method, so that it can pass the returning url
         [resourceTableViewController setReferenceToUrl:_url];
-        // now pass reference to the popover controller for being able to dismiss it programmatically again
+        // the popover controller for being able to dismiss it programmatically again
         UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
         [resourceTableViewController setReferenceToPopoverController:[popoverSegue popoverController]];
-        // passing the baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
+        // baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
         // and the foll url needs to be built
         [resourceTableViewController setReferenceToBaseUrl:baseUrl];
     }
 }
-
 
 
 - (void)checkStatusCode:(NSInteger)code {

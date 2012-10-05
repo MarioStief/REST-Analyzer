@@ -13,7 +13,8 @@
 - (XMLParser *) initXMLParser {
     self = [super init];
     // init array of elements
-    _parsedElementsAsDictionary = [[NSMutableDictionary alloc] init];
+    _keyArray = [[NSMutableArray alloc] init];
+    _valueArray = [[NSMutableArray alloc] init];
     return self;
 }
 
@@ -26,32 +27,27 @@ didStartElement:(NSString *)elementName
     NSLog(@"processing start element: %@", elementName);
     actualElement = elementName;
  
-    NSArray *keyArray = [attributeDict allKeys];
-    NSArray *valueArray = [attributeDict allValues];
-    for (int i = 0; i < [keyArray count]; i++) {
-        NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keyArray objectAtIndex:i], [valueArray objectAtIndex:i]);
-        NSString *key = [[NSString alloc] initWithFormat:@"%@: %@", elementName, [keyArray objectAtIndex:i]];
-        [_parsedElementsAsDictionary setValue:[valueArray objectAtIndex:i] forKey:key];
+//    [_keyArray addObjectsFromArray:[attributeDict allKeys]];
+    [_valueArray addObjectsFromArray:[attributeDict allValues]];
+    NSArray *keys = [attributeDict allKeys];
+//    NSArray *values = [attributeDict allValues];
+    for (int i = 0; i < [keys count]; i++) {
+        NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [_valueArray objectAtIndex:i]);
+        NSString *key = [[NSString alloc] initWithFormat:@"%@ -> %@", elementName, [keys objectAtIndex:i]];
+        [_keyArray addObject:key];
+        [_valueArray addObject:[_valueArray objectAtIndex:i]];
     }
+
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    /*
-    if (!currentElementValue) {
-        // init the ad hoc string with the value
-        currentElementValue = [[NSMutableString alloc] initWithString:string];
-    } else {
-        // append value to the ad hoc string
-        [currentElementValue appendString:string];
-    }
-    */
-    
-    // 
+
     if (![string hasPrefix:@"\n"]) {
-        [_parsedElementsAsDictionary setValue:string forKey:actualElement];
+        [_keyArray addObject:actualElement];
+        [_valueArray addObject:string];
+//        [_parsedElementsAsDictionary setValue:string forKey:actualElement];
         NSLog(@"add value: \"%@ = %@\"", actualElement, string);
     }
-
 }
 
 /*
