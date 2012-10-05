@@ -24,18 +24,32 @@ didStartElement:(NSString *)elementName
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict {
 	
-    NSLog(@"processing start element: %@", elementName);
+    //NSLog(@"processing start element: %@", elementName);
     actualElement = elementName;
  
-//    [_keyArray addObjectsFromArray:[attributeDict allKeys]];
-    [_valueArray addObjectsFromArray:[attributeDict allValues]];
     NSArray *keys = [attributeDict allKeys];
-//    NSArray *values = [attributeDict allValues];
+    NSArray *values = [attributeDict allValues];
     for (int i = 0; i < [keys count]; i++) {
-        NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [_valueArray objectAtIndex:i]);
-        NSString *key = [[NSString alloc] initWithFormat:@"%@ -> %@", elementName, [keys objectAtIndex:i]];
-        [_keyArray addObject:key];
-        [_valueArray addObject:[_valueArray objectAtIndex:i]];
+        //NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [values objectAtIndex:i]);
+        
+        // Alt: Anzeige mit Attribut
+        //        NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
+        
+        // Neu: ID
+        
+        NSArray *urlComponents = [[NSArray alloc] initWithArray:[[values objectAtIndex:i] pathComponents]];
+        NSInteger lastElement;
+        if ([[values objectAtIndex:i] hasSuffix:@"/"])
+            lastElement = [urlComponents count]-2;
+        else
+             lastElement = [urlComponents count]-1;
+        NSString *lastPathEntry = [[NSString alloc] initWithString:[urlComponents objectAtIndex:lastElement]];
+        NSLog(@"%@",lastPathEntry);
+        [_keyArray addObject:[[NSString alloc] initWithFormat:@"%@ /%@", elementName, lastPathEntry]];
+        
+        // End Neu Key
+        
+        [_valueArray addObject:[values objectAtIndex:i]];
     }
 
 }
@@ -46,7 +60,7 @@ didStartElement:(NSString *)elementName
         [_keyArray addObject:actualElement];
         [_valueArray addObject:string];
 //        [_parsedElementsAsDictionary setValue:string forKey:actualElement];
-        NSLog(@"add value: \"%@ = %@\"", actualElement, string);
+        //NSLog(@"add value: \"%@ = %@\"", actualElement, string);
     }
 }
 

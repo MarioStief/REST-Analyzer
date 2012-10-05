@@ -67,6 +67,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *baseUrlButton;
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
+@property (weak, nonatomic) IBOutlet UIProgressView *loadProgressBar;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicatorView;
 
 - (IBAction)go:(id)sender;
 - (IBAction)outputToggle:(id)sender;
@@ -83,5 +85,6 @@
 - (IBAction)baseUrlButton:(id)sender;
 - (IBAction)forwardButton:(id)sender;
 - (IBAction)headerInfo:(id)sender;
+- (IBAction)clearUrlField:(id)sender;
 
 @end

@@ -44,6 +44,9 @@
     _contentScrollViewText.text = requestBody;
     generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
     requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
+    // [_loadProgressBar setHidden:YES]; // storyboard
+    // [_loadIndicatorView setHidesWhenStopped:YES]; // storyboard
+    //[_loadIndicatorView stopAnimating];
 }
 
 - (void)viewDidUnload {
@@ -75,6 +78,8 @@
     [self setBackButton:nil];
     [self setBaseUrlButton:nil];
     [self setForwardButton:nil];
+    [self setLoadProgressBar:nil];
+    [self setLoadIndicatorView:nil];
     [super viewDidUnload];
 }
 
@@ -124,7 +129,7 @@
     UITableViewCell *resourceTableViewCell = [headersTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (resourceTableViewCell == nil) {
         resourceTableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                      reuseIdentifier:CellIdentifier];
+                                                       reuseIdentifier:CellIdentifier];
     }
     
     // Colorate the HTTP Headers
@@ -161,6 +166,10 @@
                                                        delegate:self cancelButtonTitle:@"Ok"
                                               otherButtonTitles:nil];
     [alertView show];
+}
+
+- (IBAction)clearUrlField:(id)sender {
+    _url.text = @"";
 }
 
 // ********** Begin header key info button **********
@@ -294,8 +303,6 @@
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2];
     baseUrl = [[NSString alloc] init];
     resourcePath = [[NSString alloc] init];
-    requestBody = _contentScrollViewText.text; // saving writen text field in String
-    _contentScrollViewText.text = [[NSString alloc] init];
     _headerScrollViewText.text = [[NSString alloc] init];
     responseBody = [[NSString alloc] init];
     parsedText = [[NSMutableString alloc] init];
@@ -307,6 +314,7 @@
     _statusCode.text = [[NSString alloc] init];
     _statusCode.backgroundColor = [UIColor whiteColor];
     responseBodyData = [[NSMutableData alloc] init];
+
     
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -412,7 +420,7 @@
     NSLog(@"********** New Request **********");
     NSLog(@"%@ -> Base URL: \"%@\", Resource Path: \"%@\"",_url.text,baseUrl,resourcePath);
     
-    // ********** Begin Request ********** INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE
+    // ********** Begin Request **********
     // -> Implement POST, PUT, DELETE, HEAD
     
     NSString *string = [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
@@ -432,7 +440,6 @@
 
     // ********** End Changing HTTP Headers **********
 
-    
     // working with different methods
 
     switch (methodId) {
@@ -452,8 +459,11 @@
         case 2: // PUT
             // On Collection URI: Create a new entry in the collection. The new entry's URL is assigned automatically and is usually returned by the operation.
             // On Element URI: Treat the addressed member as a collection in its own right and create a new entry in it.
-            
-            // Case POST and PUT: Add Body.
+
+            // Case POST and PUT:
+            // saving writen text field in String
+            requestBody = _contentScrollViewText.text;
+            // Add Body.
             [request setValue:[NSString stringWithFormat:@"%d", [requestBody length]] forHTTPHeaderField:@"Content-Length"];
             //[request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
 
@@ -464,7 +474,7 @@
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
     NSLog(@"sending request: %@ %@%@ (%@)",requestMethodString,baseUrl,resourcePath,connection);
 
-    // ********** End Request ********** INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE * INCOMPLETE
+    // ********** End Request **********
     
     
     // ********** Begin Filling Header + Body Fields: REQUEST **********
@@ -552,20 +562,27 @@
     BOOL responseComplete = NO;
     [responseBodyData appendData:_bodyData];
     if (responseLength > -1 ) {
-        NSLog(@"%i/%i bytes received.",[responseBodyData length]+[_bodyData length],responseLength);
+        [_loadProgressBar setHidden:NO];
+        float progress = 1.00*[responseBodyData length]/responseLength;
+        [_loadProgressBar setProgress:progress animated:NO];
+        NSLog(@"%i/%i bytes received.",[responseBodyData length],responseLength);
         if ([responseBodyData length] >= responseLength)
             responseComplete = YES;
     } else {
         if (!awaitingResponse)
             NSLog(@"No content length is specified. Starting timer. If there is no answer for 3 seconds the transmission is assumed to be completed.");
+        [_loadIndicatorView startAnimating];
         NSLog(@"%i bytes received.",[responseBodyData length]+[_bodyData length]);
         [awaitingResponse invalidate];
         awaitingResponse = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(responseComplete:) userInfo:nil repeats:NO];
     }
-        
+
     if (responseComplete) {
+        
+        [_loadProgressBar setHidden:YES];
 
         // ********** Filling Body Field: RESPONSE **********
+        responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
         _contentScrollViewText.text = responseBody;
         
         // response received -> parsing now if possible.
@@ -574,17 +591,14 @@
 }
 
 - (void)responseComplete:(NSTimer *)timer {
+    [_loadIndicatorView stopAnimating];
     NSLog(@"3 seconds no incoming response - finishing.");
+    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
     _contentScrollViewText.text = responseBody;
-    // big strings needs too long for assigning them to the contentScrollViewText that fast. giving them 1 sec...
-    awaitingResponse = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(parseResponse:) userInfo:nil repeats:NO];
+    [self parseResponse];
 }
 
 // ********** End Receiving Response Body **********
-
-- (void)parseResponse:(NSTimer *)timer {
-    [self parseResponse];
-}
 
 - (void)parseResponse {
 
@@ -700,6 +714,7 @@
     
     // ********** Begin Console Output: Found Resources **********
     
+    /*
     NSLog(@"Found Resources: %i",[foundResourceKeys count]);
     for (int i = 0; i < [foundResourceKeys count]; i++) {
         NSString *key = [[NSString alloc] initWithString:[foundResourceKeys objectAtIndex:i]];
@@ -708,6 +723,7 @@
         if (value == urlString)
             NSLog(@"This resource.");
     }
+    */
     
     // ********** Begin Console Output: Found Resources **********
     
