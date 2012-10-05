@@ -36,6 +36,9 @@
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
     [_showResourcesButton setAlpha:0.5]; // appearing inactive
+    [_backButton setEnabled:NO]; // appearing inactive
+    [_baseUrlButton setEnabled:NO]; // appearing inactive
+    [_forwardButton setEnabled:NO]; // appearing inactive
     requestBody = @"{\"key\":\"value\"}";
     _contentScrollViewText.text = requestBody;
     parsedResponseAsDictionary = [[NSDictionary alloc] init];
@@ -67,6 +70,10 @@
     [self setFontSizeSlider:nil];
     [self setFontSize:nil];
     [self setAuthentication:nil];
+    [self setBaseUrlButton:nil];
+    [self setBackButton:nil];
+    [self setBaseUrlButton:nil];
+    [self setForwardButton:nil];
     [super viewDidUnload];
 }
 
@@ -205,6 +212,8 @@
             _contentScrollViewText.text = parsedText;
     }
 }
+
+
 // ********** End change selected segment index (and refresh text) **********
 
 
@@ -280,6 +289,8 @@
     [_showResourcesButton setAlpha:0.5];
     [_showResourcesButton setEnabled:NO];
     _authentication.textColor = [UIColor blackColor];
+    _statusCode.text = [[NSString alloc] init];
+    _statusCode.backgroundColor = [UIColor whiteColor];
     
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -328,6 +339,36 @@
 
 }
 
+
+// ********** Begin set up navigation buttons **********
+
+- (IBAction)backButton:(id)sender {
+    if ([_backButton isEnabled]) {
+        historyElement = [historyElement previous];
+        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
+        [_forwardButton setEnabled:YES];
+        if ([historyElement previous] == nil)
+            [_backButton setEnabled:NO];
+    }
+}
+
+- (IBAction)baseUrlButton:(id)sender {
+    _url.text = baseUrl;
+}
+
+- (IBAction)forwardButton:(id)sender {
+    if ([_forwardButton isEnabled]) {
+        historyElement = [historyElement next];
+        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
+        [_backButton setEnabled:YES];
+        if ([historyElement next] == nil)
+            [_forwardButton setEnabled:NO];
+    }
+}
+
+// ********** End set up navigation buttons **********
+
+
 - (void)startRequest:(NSString*)requestMethodString {
         
     // ********** Begin URL Processing **********
@@ -350,6 +391,7 @@
     }
     
     // ********** End URL Processing **********
+    
     
     NSLog(@"********** New Request **********");
     NSLog(@"%@ -> Base URL: \"%@\", Resource Path: \"%@\"",_url.text,baseUrl,resourcePath);
@@ -418,7 +460,14 @@
 
 }
 
--   (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)_response {
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSString *errorLocalizedDescription = [[NSString alloc] initWithFormat:@"%@",[error localizedDescription]];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorLocalizedDescription delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+    [alertView show];
+    NSLog(@"%@",error);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)_response {
 
     // ********** Begin Receiving Response Header **********
     
@@ -463,6 +512,35 @@
     }
     
     // ********** End Receiving Response Header **********
+    
+    
+    // ********** Begin actualize history **********
+    if ([response statusCode] < 400) {
+        // if the slash had been cut off: still the same url
+        BOOL urlIsTheSame = ([_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]]] ||
+                             [_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@%@/",[historyElement baseUrl],[historyElement resource]]]);
+        if (!historyElement) {
+            // new history: initialize
+            historyElement = [[HistoryElement alloc] init];
+        } else if (!urlIsTheSame) {
+            // history exists, and entry is new: initialize new element and connect each other
+            HistoryElement *oldElement = historyElement;
+            historyElement = [[HistoryElement alloc] init];
+            [historyElement setPrevious:oldElement];
+            [_backButton setEnabled:YES];
+            [historyElement setNext:nil];
+            [_forwardButton setEnabled:NO];
+            [oldElement setNext:historyElement];
+        }
+        if (!urlIsTheSame) {
+            // if URL is different: set new ones.
+            [historyElement setBaseUrl:baseUrl];
+            [_baseUrlButton setEnabled:YES];
+            [historyElement setResource:resourcePath];
+        }
+    }
+    
+    // ********** End actualize history **********
 }
 
 
@@ -492,7 +570,43 @@
         // JSON parsen und als Wörterbuch abspeichern
         NSError *err = nil;
         parsedResponseAsDictionary = [NSJSONSerialization JSONObjectWithData:bodyData options:NSJSONWritingPrettyPrinted error:&err];
+        if ([parsedResponseAsDictionary count] > 0) {
+            parsingSuccess = YES;
+        }
+    }
+    else if([_detectedXML isHighlighted]) {
+        // Parse XML
+        // [parsedText appendString:@"XML parsing not yet implemented."];
+        NSLog(@"Parsing XML...");
         
+        // XML parsen und als Wörterbuch abspeichern
+        NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:bodyData];
+        XMLParser *xmlParser = [[XMLParser alloc] initXMLParser];
+        [nsXmlParser setDelegate:xmlParser];
+        parsingSuccess = [nsXmlParser parse];
+        
+        if (parsingSuccess) {
+            NSLog(@"XML parsing success. Elements count: %i", [[xmlParser parsedElementsAsDictionary] count]);
+            parsedResponseAsDictionary = [[NSDictionary alloc] initWithDictionary:[xmlParser parsedElementsAsDictionary]];
+        } else {
+            NSLog(@"Sorry, the XML parser returned an error.");
+        }
+    }
+    else if([_detectedHTML isHighlighted]) {
+        // Parse HTML
+        // [parsedText appendString:@"HTML parsing not yet implemented."];
+    }
+    else if([_detectedXHTML isHighlighted]) {
+        // Parse XML
+        // [parsedText appendString:@"XHTML parsing not yet implemented."];
+    }
+    
+    // ********** End Parsing Response **********
+    
+    
+    // ********** Begin Filling Header + Body Fields: PARSED **********
+    
+    if (parsingSuccess) {
         if (!parsedResponseAsDictionary) {
             [parsedText appendString:@"Error in parsing response."];
         } else {
@@ -534,85 +648,6 @@
                 }
             }
         }
-        parsingSuccess = YES;
-    }
-    else if([_detectedXML isHighlighted]) {
-        // Parse XML
-        // [parsedText appendString:@"XML parsing not yet implemented."];
-        
-        
-        
-        
-        
-        
-        NSLog(@"Parsing XML...");
-        
-        // JSON parsen und als Wörterbuch abspeichern
-        NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:bodyData];
-        XMLParser *xmlParser = [[XMLParser alloc] initXMLParser];
-        [nsXmlParser setDelegate:xmlParser];
-        BOOL success = [nsXmlParser parse];
-        
-        if (success) {
-            parsingSuccess = YES;
-            NSLog(@"No errors - elements count : %i", [[xmlParser parsedElementsAsArray] count]);
-            // get array of users here
-            //  NSMutableArray *users = [parser users];
-        } else {
-            NSLog(@"Error parsing document!");
-        }
-        /*
-        if (!parsedResponseAsDictionary) {
-            [parsedText appendString:@"Error in parsing response."];
-        } else {
-            
-            // Parse die einzelnen Einträge und sortiere nach Key und Value:
-            
-            for(NSString *item in parsedResponseAsDictionary) {
-                [parsedText appendString:item];
-                [parsedText appendString:@": "];
-                
-                NSString *string = [[NSString alloc] initWithFormat:@"%@",[parsedResponseAsDictionary valueForKey:item]];
-                [parsedText appendString:string];
-                NSURL *link = [[NSURL alloc] initWithString:string];
-                if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"]) {
-                    [parsedText appendString:@"\n"];
-                    [foundResources addObject:item]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
-                }
-                else if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]) {
-                    [parsedText appendString:@" -> Path\n"];
-                    [foundResources addObject:item];
-                }
-                else
-                    [parsedText appendString:@"\n"];
-            }
-        }
-        */
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-    else if([_detectedHTML isHighlighted]) {
-        // Parse HTML
-        // [parsedText appendString:@"HTML parsing not yet implemented."];
-    }
-    else if([_detectedXHTML isHighlighted]) {
-        // Parse XML
-        // [parsedText appendString:@"XHTML parsing not yet implemented."];
-    }
-    
-    // ********** End Parsing Response **********
-    
-    
-    // ********** End Filling Header + Body Fields: PARSED **********
-    
-    if (parsingSuccess) {
         _contentScrollViewText.text = parsedText;
         [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
         [_outputSwitch setSelectedSegmentIndex:2];   // auf Parsed-Tab wechseln

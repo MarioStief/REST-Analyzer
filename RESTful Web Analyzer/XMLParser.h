@@ -8,18 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class User;
+// @class User;
 
 @interface XMLParser : NSObject <NSXMLParserDelegate> {
     // an ad hoc string to hold element value
-    NSMutableString *currentElementValue;
+//    NSMutableString *currentElementValue;
+    NSString *actualElement;
+//    NSMutableArray *parsedElementsAsArray;
     // user object
     // array of user objects
 //    NSMutableArray *parsedElementsAsArray;
 }
 
 //@property (nonatomic, retain) User *user;
-@property (nonatomic, retain) NSMutableArray *parsedElementsAsArray;
+//@property (nonatomic, retain) NSMutableArray *parsedElementsAsArray;
+@property (nonatomic, retain) NSMutableDictionary *parsedElementsAsDictionary;
 
 - (XMLParser *) initXMLParser;
 

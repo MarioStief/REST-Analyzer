@@ -11,6 +11,7 @@
 #import <Foundation/NSXMLParser.h>
 #import "ResourcesTableViewController.h"
 #import "XMLParser.h"
+#import "HistoryElement.h"
 
 @interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
     NSArray *httpVerbs;
@@ -30,6 +31,7 @@
     NSMutableArray *foundResources;
     NSIndexPath *indexPath;
     NSInteger numberOfRows;
+    HistoryElement *historyElement;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
@@ -56,6 +58,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
 @property (weak, nonatomic) IBOutlet UISlider *fontSizeSlider;
 @property (weak, nonatomic) IBOutlet UITextField *fontSize;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *baseUrlButton;
+@property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 
 - (IBAction)go:(id)sender;
 - (IBAction)outputToggle:(id)sender;
@@ -68,5 +73,8 @@
 - (void)checkStatusCode:(NSInteger)code;
 - (IBAction)fontSizeSliderMove:(id)sender;
 - (void)switchSegmentIndex;
+- (IBAction)backButton:(id)sender;
+- (IBAction)baseUrlButton:(id)sender;
+- (IBAction)forwardButton:(id)sender;
 
 @end
