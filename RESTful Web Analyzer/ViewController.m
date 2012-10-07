@@ -15,12 +15,11 @@
     
     // ********** Begin redirect logging output to file **********
     
-    /*
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     logPath = [documentsDirectory stringByAppendingPathComponent:@"console.log"];
-    freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
-     */
+    NSLog(@"Log to file: %@",logPath);
+    //freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 
     // ********** End redirect logging output to file **********
 
@@ -47,6 +46,10 @@
     // [_loadProgressBar setHidden:YES]; // storyboard
     // [_loadIndicatorView setHidesWhenStopped:YES]; // storyboard
     //[_loadIndicatorView stopAnimating];
+    
+#warning: Todo: finding data
+//    _url.text = @"http://chat.blanke.brief-huellen.de:5222";
+    
 }
 
 - (void)viewDidUnload {
@@ -54,15 +57,11 @@
     [self setScrollView:nil];
     [self setDetectedJSON:nil];
     [self setDetectedXML:nil];
-    [self setDetectedHTML:nil];
-    [self setDetectedXHTML:nil];
     [self setOutputSwitch:nil];
     [self setUsername:nil];
     [self setPassword:nil];
     [self setAuthentication:nil];
     [self setStatusCode:nil];
-    [self setLogOutputView:nil];
-    [self setLogOutputViewText:nil];
     [self setContentType:nil];
     [self setShowResourcesButton:nil];
     [self setHeaderScrollViewText:nil];
@@ -91,6 +90,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.url) {
         [textField resignFirstResponder];
+        [self go:nil];
     }
     return YES;
 }
@@ -265,21 +265,6 @@
 // ********** End use font slider to change text field size **********
 
 
-
-// ********** "Show Logging Output" -> "Refresh" button pressed: **********
-- (IBAction)logRefreshButton:(id)sender {
-    // reading log from file
-    NSError *err;
-    _logOutputViewText.text = [[NSString alloc] initWithContentsOfFile:logPath encoding:NSASCIIStringEncoding error:&err];
-}
-
-// ********** "Show Logging Output" -> "Clear" button pressed: **********
-- (IBAction)logClearButton:(id)sender {
-    // empty log file
-    freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"w+",stderr);
-    _logOutputViewText.text = @"File emptied.";
-}
-
 // ********** GO button pressed: **********
 - (IBAction)go:(id)sender {
 //    NSLog(@"ViewController.go: %@: %@", resourceTableViewController, [resourceTableViewController resourcesAsDictionary]);
@@ -287,14 +272,9 @@
     // ********** Remove Keyboard **********
     [self.url resignFirstResponder];
     
-    // ********** Reading URL **********
-    urlString = _url.text;
-    
     // ********** New Request started: Do a full reset to avoid side effects **********
     [_detectedJSON setHighlighted:NO];
     [_detectedXML setHighlighted:NO];
-    [_detectedHTML setHighlighted:NO];
-    [_detectedXHTML setHighlighted:NO];
     _contentType.text = [[NSString alloc] init];
     _encoding.text = [[NSString alloc] init];
     [_outputSwitch setSelectedSegmentIndex:0];
@@ -302,7 +282,6 @@
     [_outputSwitch setEnabled:NO forSegmentAtIndex:1];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2];
     baseUrl = [[NSString alloc] init];
-    resourcePath = [[NSString alloc] init];
     _headerScrollViewText.text = [[NSString alloc] init];
     responseBody = [[NSString alloc] init];
     parsedText = [[NSMutableString alloc] init];
@@ -311,6 +290,7 @@
     [_showResourcesButton setAlpha:0.5];
     [_showResourcesButton setEnabled:NO];
     _authentication.textColor = [UIColor blackColor];
+    _authentication.text = @"No challenge received.";
     _statusCode.text = [[NSString alloc] init];
     _statusCode.backgroundColor = [UIColor whiteColor];
     responseBodyData = [[NSMutableData alloc] init];
@@ -377,7 +357,7 @@
 }
 
 - (IBAction)baseUrlButton:(id)sender {
-    _url.text = baseUrl;
+    _url.text = [self urlPart:_url.text definePart:@"prevPath"];
 }
 
 - (IBAction)forwardButton:(id)sender {
@@ -393,9 +373,10 @@
 // ********** End set up navigation buttons **********
 
 
-- (void)startRequest:(NSString*)requestMethodString {
-        
-    // ********** Begin URL Processing **********
+// ********** Begin URL Processing **********
+
+- (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part {
+    
     
     // URL beginnt weder mit "http://" noch "https://" -> hänge "http://" davor.
     if (![urlString hasPrefix:@"http://"] && ![urlString hasPrefix:@"https://"])
@@ -408,23 +389,47 @@
     // Trennung in BaseURL und ResourceURL
     NSArray *urlComponents = [[NSArray alloc] initWithArray:[urlString pathComponents]];
     baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
-    if ([urlComponents count] > 2) {
-        resourcePath = @"";
-        for (int i = 2; i < [urlComponents count]; i++)
-            resourcePath = [NSString stringWithFormat:@"%@/%@",resourcePath,[urlComponents objectAtIndex:i]];
+    
+    if ([part isEqualToString:@"baseUrl"]) {
+        // only base url is requested; job done.
+        return [[NSString alloc] initWithFormat:@"%@/",baseUrl];
     }
     
-    // ********** End URL Processing **********
-    
-    
+    if ([urlComponents count] > 2) {
+        //
+        resourcePath = [[NSMutableString alloc] init];
+        int i = 2; // while instead of for: i will be needed outside this loop.
+        while (i < [urlComponents count]-1) {
+            [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
+            i++;
+        }
+        if ([part isEqualToString:@"prevPath"]) {
+            // previous Path requested. This is it.
+            if ([resourcePath isEqualToString:[[NSString alloc] init]])
+                // resource ath is empty, prevPath is base url. return with / at the end
+                return [[NSString alloc] initWithFormat:@"%@/",baseUrl];
+            else
+                // longer then base url
+                return [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
+        }
+        // else: full Path requested. Add last url component.
+        [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
+    }
+    return [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
+}
+
+// ********** End URL Processing **********
+
+
+- (void)startRequest:(NSString*)requestMethodString {
+        
     NSLog(@"********** New Request **********");
-    NSLog(@"%@ -> Base URL: \"%@\", Resource Path: \"%@\"",_url.text,baseUrl,resourcePath);
     
     // ********** Begin Request **********
     // -> Implement POST, PUT, DELETE, HEAD
     
-    NSString *string = [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
-    NSURL *url = [[NSURL alloc] initWithString:string];
+    NSString *urlString = [[NSString alloc] initWithString:[self urlPart:_url.text definePart:@"fullPath"]];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [request setMainDocumentURL:[[NSURL alloc]initWithString:baseUrl]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
     [request setHTTPMethod:requestMethodString];
@@ -471,6 +476,9 @@
             [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
             
     }
+    // and empty the contentScrollViewText;
+    _contentScrollViewText.text = [[NSString alloc] init];
+
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
     NSLog(@"sending request: %@ %@%@ (%@)",requestMethodString,baseUrl,resourcePath,connection);
 
@@ -504,8 +512,14 @@
     // ********** Begin Receiving Response Header **********
     
     response = _response;
-    _contentType.text = [response MIMEType]; // Content Type-Feld setzen
-    _encoding.text = [response textEncodingName]; // Encodingfeld setzen
+    if (![response MIMEType])
+        _contentType.text = @"unknown";
+    else
+        _contentType.text = [response MIMEType]; // Content Type-Feld setzen
+    if (![response textEncodingName])
+        _encoding.text = @"unknown";
+    else
+        _encoding.text = [response textEncodingName]; // Content Type-Feld setzen
     responseLength = [response expectedContentLength];
     [self checkStatusCode:[response statusCode]]; // Statuscode aktualisieren
     if ([response statusCode] < 400) // color status code field
@@ -514,7 +528,7 @@
         _statusCode.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
 
     NSLog(@"receiving response: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
-    
+
 //	if ([response respondsToSelector:@selector(allHeaderFields)]) {
         // header is fine, filling header field
 		responseHeader = [[response allHeaderFields] description];
@@ -569,27 +583,36 @@
         if ([responseBodyData length] >= responseLength)
             responseComplete = YES;
     } else {
+/*
         if (!awaitingResponse)
             NSLog(@"No content length is specified. Starting timer. If there is no answer for 3 seconds the transmission is assumed to be completed.");
+ */
         [_loadIndicatorView startAnimating];
         NSLog(@"%i bytes received.",[responseBodyData length]+[_bodyData length]);
+/*
         [awaitingResponse invalidate];
         awaitingResponse = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(responseComplete:) userInfo:nil repeats:NO];
+ */
     }
 
-    if (responseComplete) {
-        
-        [_loadProgressBar setHidden:YES];
 
-        // ********** Filling Body Field: RESPONSE **********
-        responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
-        _contentScrollViewText.text = responseBody;
-        
-        // response received -> parsing now if possible.
-        [self parseResponse];
-    }
 }
 
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // Connection succeeded in downloading the request.
+    NSLog(@"Finished receive.");
+    [_loadProgressBar setHidden:YES];
+    [_loadIndicatorView stopAnimating];
+    
+    // ********** Filling Body Field: RESPONSE **********
+    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
+    _contentScrollViewText.text = responseBody;
+    
+    // response received -> parsing now if possible.
+    [self parseResponse];
+}
+
+/*
 - (void)responseComplete:(NSTimer *)timer {
     [_loadIndicatorView stopAnimating];
     NSLog(@"3 seconds no incoming response - finishing.");
@@ -597,6 +620,7 @@
     _contentScrollViewText.text = responseBody;
     [self parseResponse];
 }
+*/
 
 // ********** End Receiving Response Body **********
 
@@ -742,8 +766,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"resourcesTableViewPopover"])
-    {
+    if ([[segue identifier] isEqualToString:@"resourcesTableViewPopover"]) {
         // Get reference to the destination view controller
         ResourcesTableViewController *resourceTableViewController = [segue destinationViewController];
         
@@ -759,7 +782,12 @@
         [resourceTableViewController setReferenceToPopoverController:[popoverSegue popoverController]];
         // baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
         // and the foll url needs to be built
-        [resourceTableViewController setReferenceToBaseUrl:baseUrl];
+        [resourceTableViewController setReferenceToBaseUrl:[self urlPart:_url.text definePart:@"baseUrl"]];
+    } else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"]) {
+        // Get reference to the destination view controller again
+        LogOutputViewController *logOutputViewController = [segue destinationViewController];
+        // passing the logPath
+        [logOutputViewController setReferenceToLogPath:logPath];
     }
 }
 

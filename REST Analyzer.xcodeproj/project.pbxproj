@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC0BD30C1621C8F900C5A913 /* LogOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0BD30B1621C8F900C5A913 /* LogOutputViewController.m */; };
 		AC263D21161E5E0900173788 /* Arrow-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D1E161E5E0900173788 /* Arrow-Left.png */; };
 		AC263D22161E5E0900173788 /* Arrow-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D1F161E5E0900173788 /* Arrow-Right.png */; };
 		AC263D23161E5E0900173788 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D20161E5E0900173788 /* Home.png */; };
@@ -53,6 +54,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC0BD30A1621C8F900C5A913 /* LogOutputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogOutputViewController.h; path = ../LogOutputViewController.h; sourceTree = "<group>"; };
+		AC0BD30B1621C8F900C5A913 /* LogOutputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogOutputViewController.m; path = ../LogOutputViewController.m; sourceTree = "<group>"; };
 		AC263D1E161E5E0900173788 /* Arrow-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Left.png"; sourceTree = "<group>"; };
 		AC263D1F161E5E0900173788 /* Arrow-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Right.png"; sourceTree = "<group>"; };
 		AC263D20161E5E0900173788 /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
@@ -169,6 +172,8 @@
 		AC8B878115DF646000E12B48 /* RESTful Web Analyzer */ = {
 			isa = PBXGroup;
 			children = (
+				AC0BD30A1621C8F900C5A913 /* LogOutputViewController.h */,
+				AC0BD30B1621C8F900C5A913 /* LogOutputViewController.m */,
 				AC8B878A15DF646000E12B48 /* AppDelegate.h */,
 				AC8B878B15DF646000E12B48 /* AppDelegate.m */,
 				AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */,
@@ -346,6 +351,7 @@
 				ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */,
 				AC4A6B95161B1961000C9BBE /* XMLParser.m in Sources */,
 				AC263D29161E630100173788 /* HistoryElement.m in Sources */,
+				AC0BD30C1621C8F900C5A913 /* LogOutputViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

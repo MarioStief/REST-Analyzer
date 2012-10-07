@@ -33,10 +33,13 @@ didStartElement:(NSString *)elementName
         //NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [values objectAtIndex:i]);
         
         // Alt: Anzeige mit Attribut
-        //        NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
+        NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
+        [_keyArray addObject:key];
+
         
         // Neu: ID
         
+        /*
         NSArray *urlComponents = [[NSArray alloc] initWithArray:[[values objectAtIndex:i] pathComponents]];
         NSInteger lastElement;
         if ([[values objectAtIndex:i] hasSuffix:@"/"])
@@ -44,9 +47,10 @@ didStartElement:(NSString *)elementName
         else
              lastElement = [urlComponents count]-1;
         NSString *lastPathEntry = [[NSString alloc] initWithString:[urlComponents objectAtIndex:lastElement]];
-        NSLog(@"%@",lastPathEntry);
+        //NSLog(@"%@",lastPathEntry);
         [_keyArray addObject:[[NSString alloc] initWithFormat:@"%@ /%@", elementName, lastPathEntry]];
         
+         */
         // End Neu Key
         
         [_valueArray addObject:[values objectAtIndex:i]];
