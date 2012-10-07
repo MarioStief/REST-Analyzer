@@ -128,7 +128,6 @@
     NSString *key = [[NSString alloc] initWithFormat:@"%@",[_keys objectAtIndex:[indexPath row]]]; // stürzt nicht ab im Gegensatz zu InitWithString wenn nil
     cell.textLabel.text = key;
     cell.detailTextLabel.text = [_values objectAtIndex:[indexPath row]];
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }

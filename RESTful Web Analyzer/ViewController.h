@@ -17,8 +17,8 @@
 @interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
     NSArray *httpVerbs;
     NSInteger methodId;
-    NSString *baseUrl;
-    NSMutableString *resourcePath;
+//    NSString *baseUrl;
+//    NSMutableString *resourcePath;
     NSString *requestHeader;
     NSString *responseHeader;
     NSString *requestBody;
@@ -65,6 +65,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *loadProgressBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicatorView;
+@property (weak, nonatomic) IBOutlet UITextField *addMethodTextField;
 
 - (IBAction)go:(id)sender;
 - (IBAction)outputToggle:(id)sender;
@@ -81,5 +82,6 @@
 - (IBAction)headerInfo:(id)sender;
 - (IBAction)clearUrlField:(id)sender;
 - (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part;
+- (IBAction)addMethodButton:(id)sender;
 
 @end

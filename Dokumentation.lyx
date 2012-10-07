@@ -2364,9 +2364,29 @@ Ursache: Jeder Body wurde einzeln abgearbeitet und versucht, zu parsen.
 \end_layout
 
 \begin_layout Description
-Lösung: Auslesen der Content Length und abwarten, bis alls Responses eingetroffe
+Lösung: Auslesen der Content Length und abwarten, bis alle Responses eingetroffe
 n sind.
  Erst dann parsen.
+\end_layout
+
+\begin_layout Description
+Problem: Beim Öffnen der Logging View muss erst ein Refresh-Button betätigt
+ werden, damit der Log angezeigt wird.
+\end_layout
+
+\begin_layout Description
+Ursache: Nach dem Anzeigen der View muss das Textfeld aktualisiert werden,
+ mit einer Segue lässt sich das so nicht realisieren, das Textfeld müsste
+ in einer viewDidAppear ausgeführt werden.
+\end_layout
+
+\begin_layout Description
+Lösung: Die Output View in eine eigene Klasse auslagern, die eine Methode
+ ViewDidAppear besitzt.
+\end_layout
+
+\begin_layout Part
+Problem: 
 \end_layout
 
 \begin_layout Chapter

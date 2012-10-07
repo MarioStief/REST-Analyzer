@@ -37,7 +37,6 @@
     [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
     [_showResourcesButton setAlpha:0.5]; // appearing inactive
     [_backButton setEnabled:NO]; // appearing inactive
-    [_baseUrlButton setEnabled:NO]; // appearing inactive
     [_forwardButton setEnabled:NO]; // appearing inactive
     requestBody = @"{\"key\":\"value\"}";
     _contentScrollViewText.text = requestBody;
@@ -47,8 +46,8 @@
     // [_loadIndicatorView setHidesWhenStopped:YES]; // storyboard
     //[_loadIndicatorView stopAnimating];
     
-#warning: Todo: finding data
-//    _url.text = @"http://chat.blanke.brief-huellen.de:5222";
+// Todo: finding data
+//    _url.text = @"http://jabber.ccc.de:5222/";
     
 }
 
@@ -79,6 +78,7 @@
     [self setForwardButton:nil];
     [self setLoadProgressBar:nil];
     [self setLoadIndicatorView:nil];
+    [self setAddMethodTextField:nil];
     [super viewDidUnload];
 }
 
@@ -88,8 +88,8 @@
 
 // ********** Remove the onscreen keyboard after pressing "Go" button: **********
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
     if (textField == self.url) {
-        [textField resignFirstResponder];
         [self go:nil];
     }
     return YES;
@@ -170,6 +170,7 @@
 
 - (IBAction)clearUrlField:(id)sender {
     _url.text = @"";
+    [self.url becomeFirstResponder];
 }
 
 // ********** Begin header key info button **********
@@ -265,6 +266,35 @@
 // ********** End use font slider to change text field size **********
 
 
+// ********** Begin set up navigation buttons **********
+
+- (IBAction)backButton:(id)sender {
+    if ([_backButton isEnabled]) {
+        historyElement = [historyElement previous];
+        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
+        [_forwardButton setEnabled:YES];
+        if ([historyElement previous] == nil)
+            [_backButton setEnabled:NO];
+    }
+}
+
+- (IBAction)baseUrlButton:(id)sender {
+    _url.text = [self urlPart:_url.text definePart:@"prevPath"];
+}
+
+- (IBAction)forwardButton:(id)sender {
+    if ([_forwardButton isEnabled]) {
+        historyElement = [historyElement next];
+        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
+        [_backButton setEnabled:YES];
+        if ([historyElement next] == nil)
+            [_forwardButton setEnabled:NO];
+    }
+}
+
+// ********** End set up navigation buttons **********
+
+
 // ********** GO button pressed: **********
 - (IBAction)go:(id)sender {
 //    NSLog(@"ViewController.go: %@: %@", resourceTableViewController, [resourceTableViewController resourcesAsDictionary]);
@@ -281,7 +311,7 @@
     [_outputSwitch setEnabled:NO forSegmentAtIndex:0];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:1];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2];
-    baseUrl = [[NSString alloc] init];
+//    baseUrl = [[NSString alloc] init];
     _headerScrollViewText.text = [[NSString alloc] init];
     responseBody = [[NSString alloc] init];
     parsedText = [[NSMutableString alloc] init];
@@ -344,35 +374,6 @@
 }
 
 
-// ********** Begin set up navigation buttons **********
-
-- (IBAction)backButton:(id)sender {
-    if ([_backButton isEnabled]) {
-        historyElement = [historyElement previous];
-        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
-        [_forwardButton setEnabled:YES];
-        if ([historyElement previous] == nil)
-            [_backButton setEnabled:NO];
-    }
-}
-
-- (IBAction)baseUrlButton:(id)sender {
-    _url.text = [self urlPart:_url.text definePart:@"prevPath"];
-}
-
-- (IBAction)forwardButton:(id)sender {
-    if ([_forwardButton isEnabled]) {
-        historyElement = [historyElement next];
-        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
-        [_backButton setEnabled:YES];
-        if ([historyElement next] == nil)
-            [_forwardButton setEnabled:NO];
-    }
-}
-
-// ********** End set up navigation buttons **********
-
-
 // ********** Begin URL Processing **********
 
 - (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part {
@@ -388,7 +389,7 @@
     
     // Trennung in BaseURL und ResourceURL
     NSArray *urlComponents = [[NSArray alloc] initWithArray:[urlString pathComponents]];
-    baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
+    NSString *baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
     
     if ([part isEqualToString:@"baseUrl"]) {
         // only base url is requested; job done.
@@ -397,7 +398,7 @@
     
     if ([urlComponents count] > 2) {
         //
-        resourcePath = [[NSMutableString alloc] init];
+        NSMutableString *resourcePath = [[NSMutableString alloc] init];
         int i = 2; // while instead of for: i will be needed outside this loop.
         while (i < [urlComponents count]-1) {
             [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
@@ -415,7 +416,14 @@
         // else: full Path requested. Add last url component.
         [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
     }
-    return [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
+    return [[NSString alloc] initWithFormat:@"%@",urlString];
+}
+
+- (IBAction)addMethodButton:(id)sender {
+    NSMutableArray *newHttpVerbs = [[NSMutableArray alloc] initWithArray:httpVerbs];
+    [newHttpVerbs replaceObjectAtIndex:[httpVerbs count]-1 withObject:_addMethodTextField.text];
+    httpVerbs = [[NSArray alloc] initWithArray:newHttpVerbs];
+
 }
 
 // ********** End URL Processing **********
@@ -431,7 +439,7 @@
     NSString *urlString = [[NSString alloc] initWithString:[self urlPart:_url.text definePart:@"fullPath"]];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    [request setMainDocumentURL:[[NSURL alloc]initWithString:baseUrl]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
+    [request setMainDocumentURL:[[NSURL alloc]initWithString:[self urlPart:_url.text definePart:@"baseUrl"]]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
     [request setHTTPMethod:requestMethodString];
     
     // ********** Begin Changing HTTP Headers **********
@@ -473,14 +481,14 @@
             //[request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
 
             // attaching the bodystring encoded as data
-            [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
+            [request setHTTPBody:[requestBody dataUsingEncoding:NSASCIIStringEncoding]];
             
     }
     // and empty the contentScrollViewText;
     _contentScrollViewText.text = [[NSString alloc] init];
 
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
-    NSLog(@"sending request: %@ %@%@ (%@)",requestMethodString,baseUrl,resourcePath,connection);
+    NSLog(@"sending request: %@ %@ (%@)",requestMethodString,urlString,connection);
 
     // ********** End Request **********
     
@@ -560,9 +568,9 @@
         }
         if (!urlIsTheSame) {
             // if URL is different: set new ones.
-            [historyElement setBaseUrl:baseUrl];
+            [historyElement setBaseUrl:[self urlPart:_url.text definePart:@"baseUrl"]];
             [_baseUrlButton setEnabled:YES];
-            [historyElement setResource:resourcePath];
+            [historyElement setResource:[self urlPart:_url.text definePart:@"fullPath"]];
         }
     }
     
@@ -605,7 +613,7 @@
     [_loadIndicatorView stopAnimating];
     
     // ********** Filling Body Field: RESPONSE **********
-    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
+    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSASCIIStringEncoding];
     _contentScrollViewText.text = responseBody;
     
     // response received -> parsing now if possible.
@@ -626,7 +634,7 @@
 
 - (void)parseResponse {
 
-    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
+    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSASCIIStringEncoding];
     keyArray = [[NSArray alloc] init];
     valueArray = [[NSArray alloc] init];
     
