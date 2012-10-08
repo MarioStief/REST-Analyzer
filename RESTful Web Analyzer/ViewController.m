@@ -463,6 +463,28 @@
      }
 }
 
+- (IBAction)Impressum:(id)sender {
+    NSString *string = [[NSMutableString alloc] initWithFormat:@"Copyright © 2012 Mario Stief\n"
+                        "\n"
+                        "Generic Client for\n"
+                        "RESTful Web Services\n"
+                        "\n"
+                        "• Testing HTTP Method results\n"
+                        "• Parsing XML and JSON\n"
+                        "• Analyzing results\n"
+                        "\n"
+                        "Using free icons from:\n"
+                        "• www.vistaico.com\n"
+                        "• www.icons-land.com"];
+    //NSMutableString *requestHeaders = [[NSMutableString alloc] initWithString:@"Request Headers: "];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Impressum"
+                                                        message:string
+                                                       delegate:self
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+
 // ********** End log to file **********
 
 

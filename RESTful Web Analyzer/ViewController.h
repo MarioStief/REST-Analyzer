@@ -87,5 +87,6 @@
 - (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part;
 - (IBAction)addMethodButton:(id)sender;
 - (IBAction)logToFileSwitch:(id)sender;
+- (IBAction)Impressum:(id)sender;
 
 @end
