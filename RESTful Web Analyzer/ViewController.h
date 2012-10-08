@@ -13,6 +13,7 @@
 #import "XMLParser.h"
 #import "HistoryElement.h"
 #import "LogOutputViewController.h"
+#import "HeaderKeysViewController.h"
 
 @interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
     NSArray *httpVerbs;

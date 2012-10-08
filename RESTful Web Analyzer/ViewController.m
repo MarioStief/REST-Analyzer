@@ -103,7 +103,6 @@
 
 // ********** Remove the onscreen keyboard after pressing "Go" button: **********
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    NSLog(@"textFieldShouldReturn");
     [textField resignFirstResponder];
     if (textField == self.url)
         [self go:nil];
@@ -630,6 +629,7 @@
         _statusCode.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
 
     NSLog(@"Receiving response: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
+    if ([_verboseLogSwitch isOn]) NSLog(@"Response header: %@",[[response allHeaderFields] description]);
 
 //	if ([response respondsToSelector:@selector(allHeaderFields)]) {
         // header is fine, filling header field
@@ -880,6 +880,13 @@
         LogOutputViewController *logOutputViewController = [segue destinationViewController];
         // passing the logPath
         [logOutputViewController setReferenceToLogPath:logPath];
+    } else if ([[segue identifier] isEqualToString:@"HeaderKeysViewPopover"]) {
+        HeaderKeysViewController *headerKeysViewController = [segue destinationViewController];
+        UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
+        [headerKeysViewController setReferenceToPopoverController:[popoverSegue popoverController]];
+        [headerKeysViewController setReferenceToHeaderKey:_keyTextField];
+        [headerKeysViewController setGeneralHeaders:generalHeaders];
+        [headerKeysViewController setRequestHeaders:requestHeaders];
     }
 }
 

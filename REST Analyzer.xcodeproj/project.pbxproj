@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC0C5EF916238FAD0040EA0A /* HeaderKeysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0C5EF816238FAD0040EA0A /* HeaderKeysViewController.m */; };
 		AC263D21161E5E0900173788 /* Arrow-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D1E161E5E0900173788 /* Arrow-Left.png */; };
 		AC263D22161E5E0900173788 /* Arrow-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D1F161E5E0900173788 /* Arrow-Right.png */; };
 		AC263D23161E5E0900173788 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D20161E5E0900173788 /* Home.png */; };
@@ -56,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC0C5EF716238FAD0040EA0A /* HeaderKeysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderKeysViewController.h; sourceTree = "<group>"; };
+		AC0C5EF816238FAD0040EA0A /* HeaderKeysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderKeysViewController.m; sourceTree = "<group>"; };
 		AC263D1E161E5E0900173788 /* Arrow-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Left.png"; sourceTree = "<group>"; };
 		AC263D1F161E5E0900173788 /* Arrow-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Right.png"; sourceTree = "<group>"; };
 		AC263D20161E5E0900173788 /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 				AC8B878A15DF646000E12B48 /* AppDelegate.h */,
 				AC8B878B15DF646000E12B48 /* AppDelegate.m */,
 				AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */,
+				AC0C5EF716238FAD0040EA0A /* HeaderKeysViewController.h */,
+				AC0C5EF816238FAD0040EA0A /* HeaderKeysViewController.m */,
 				ACBC27A71610EEEF006F982E /* ResourcesTableViewController.h */,
 				ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */,
 				AC8B879015DF646000E12B48 /* ViewController.h */,
@@ -360,6 +365,7 @@
 				AC4A6B95161B1961000C9BBE /* XMLParser.m in Sources */,
 				AC263D29161E630100173788 /* HistoryElement.m in Sources */,
 				ACB2F182162323D60047C497 /* LogOutputViewController.m in Sources */,
+				AC0C5EF916238FAD0040EA0A /* HeaderKeysViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
