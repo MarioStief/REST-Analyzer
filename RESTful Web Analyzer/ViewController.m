@@ -103,6 +103,7 @@
 
 // ********** Remove the onscreen keyboard after pressing "Go" button: **********
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    NSLog(@"textFieldShouldReturn");
     [textField resignFirstResponder];
     if (textField == self.url) {
         [self go:nil];
@@ -203,6 +204,23 @@
 
 // ********** "+" button pressed: **********
 - (IBAction)addKeyValue:(id)sender {
+    if ([_keyTextField.text isEqualToString:@""])
+        return; // don't add empty fields
+    for (int i = 0; i < numberOfRows; i++) {
+        NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
+        UITableViewCell *cell = [_headersTableView cellForRowAtIndexPath:path];
+        if ([_keyTextField.text isEqualToString:cell.textLabel.text]) {
+            NSString *errorMessage = [[NSString alloc] initWithFormat:@"Key \"%@\" already specified with value \"%@\".\n"
+                                       "Delete old one first.",cell.textLabel.text,cell.detailTextLabel.text];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:errorMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Close"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }
+
     // Option 1: no cell selected, new cell should be inserted at the end.
     if (![_headersTableView indexPathForSelectedRow]) {
         [_headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:numberOfRows++ inSection:0]]
@@ -768,6 +786,10 @@
                 BOOL isValidResource = ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"] ||
                                         [[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]);
                 if (isValidResource) {
+                    for (int j = i+1; j < [keyArray count]; j++) {
+                        if ([[keyArray objectAtIndex:i] isEqualToString:[keyArray objectAtIndex:j]])
+                            key = [[NSString alloc] initWithFormat:@"%@ (%@)", [keyArray objectAtIndex:j], [valueArray objectAtIndex:j]];
+                    }
                     [foundResourceKeys addObject:key]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
                     [foundResourceValues addObject:string];
                 }

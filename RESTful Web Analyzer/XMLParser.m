@@ -34,7 +34,10 @@ didStartElement:(NSString *)elementName
         if (_verbose) NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [values objectAtIndex:i]);
         
         // Alt: Anzeige mit Attribut
-        NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
+        // alt:
+        // NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
+        // neu:
+        NSString *key = [[NSString alloc] initWithFormat:@"%@", elementName];
         [_keyArray addObject:key];
 
         
