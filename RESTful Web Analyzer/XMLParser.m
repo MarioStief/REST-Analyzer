@@ -15,6 +15,7 @@
     // init array of elements
     _keyArray = [[NSMutableArray alloc] init];
     _valueArray = [[NSMutableArray alloc] init];
+    _verbose = NO;
     return self;
 }
 
@@ -24,13 +25,13 @@ didStartElement:(NSString *)elementName
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict {
 	
-    //NSLog(@"processing start element: %@", elementName);
+    if (_verbose) NSLog(@"processing start element: %@", elementName);
     actualElement = elementName;
  
     NSArray *keys = [attributeDict allKeys];
     NSArray *values = [attributeDict allValues];
     for (int i = 0; i < [keys count]; i++) {
-        //NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [values objectAtIndex:i]);
+        if (_verbose) NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [values objectAtIndex:i]);
         
         // Alt: Anzeige mit Attribut
         NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
@@ -64,7 +65,7 @@ didStartElement:(NSString *)elementName
         [_keyArray addObject:actualElement];
         [_valueArray addObject:string];
 //        [_parsedElementsAsDictionary setValue:string forKey:actualElement];
-        //NSLog(@"add value: \"%@ = %@\"", actualElement, string);
+        if (_verbose) NSLog(@"add value: \"%@ = %@\"", actualElement, string);
     }
 }
 

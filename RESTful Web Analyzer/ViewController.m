@@ -18,8 +18,19 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     logPath = [documentsDirectory stringByAppendingPathComponent:@"console.log"];
-    NSLog(@"Log to file: %@",logPath);
-    //freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+    NSFileManager *filemgr;
+    filemgr = [NSFileManager defaultManager];
+    if ([filemgr fileExistsAtPath:logPath]) {
+        NSLog (@"Existing log file found at %@ - logging enabled.", logPath);
+        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+        [_logToFileSwitch setOn:YES];
+        [_logFileButton setEnabled:YES];
+        [_verboseLogLabel setEnabled:YES];
+        [_verboseLogSwitch setEnabled:YES];
+    }
+    else
+        // all disabled by default, do nothing here
+        NSLog (@"No existing log file found, logging disabled.");
 
     // ********** End redirect logging output to file **********
 
@@ -35,7 +46,7 @@
     numberOfRows = 0;
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
-    [_showResourcesButton setAlpha:0.5]; // appearing inactive
+    [_showResourcesButton setAlpha:0.5]; // more obvious that this is inactive yet
     [_backButton setEnabled:NO]; // appearing inactive
     [_forwardButton setEnabled:NO]; // appearing inactive
     requestBody = @"{\"key\":\"value\"}";
@@ -46,8 +57,10 @@
     // [_loadIndicatorView setHidesWhenStopped:YES]; // storyboard
     //[_loadIndicatorView stopAnimating];
     
-// Todo: finding data
-//    _url.text = @"http://jabber.ccc.de:5222/";
+    // Todo: finding data
+    //    _url.text = @"http://jabber.ccc.de:5222/";
+    // Debug: JSON
+//    _url.text = @"https://graph.facebook.com/19292868552";
     
 }
 
@@ -72,13 +85,15 @@
     [self setFontSizeSlider:nil];
     [self setFontSize:nil];
     [self setAuthentication:nil];
-    [self setBaseUrlButton:nil];
     [self setBackButton:nil];
-    [self setBaseUrlButton:nil];
     [self setForwardButton:nil];
     [self setLoadProgressBar:nil];
     [self setLoadIndicatorView:nil];
     [self setAddMethodTextField:nil];
+    [self setLogToFileSwitch:nil];
+    [self setVerboseLogSwitch:nil];
+    [self setLogFileButton:nil];
+    [self setVerboseLogLabel:nil];
     [super viewDidUnload];
 }
 
@@ -271,7 +286,7 @@
 - (IBAction)backButton:(id)sender {
     if ([_backButton isEnabled]) {
         historyElement = [historyElement previous];
-        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
+        _url.text = [[NSString alloc] initWithFormat:@"%@",[historyElement url]];
         [_forwardButton setEnabled:YES];
         if ([historyElement previous] == nil)
             [_backButton setEnabled:NO];
@@ -285,7 +300,7 @@
 - (IBAction)forwardButton:(id)sender {
     if ([_forwardButton isEnabled]) {
         historyElement = [historyElement next];
-        _url.text = [[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]];
+        _url.text = [[NSString alloc] initWithFormat:@"%@",[historyElement url]];
         [_backButton setEnabled:YES];
         if ([historyElement next] == nil)
             [_forwardButton setEnabled:NO];
@@ -297,7 +312,6 @@
 
 // ********** GO button pressed: **********
 - (IBAction)go:(id)sender {
-//    NSLog(@"ViewController.go: %@: %@", resourceTableViewController, [resourceTableViewController resourcesAsDictionary]);
     
     // ********** Remove Keyboard **********
     [self.url resignFirstResponder];
@@ -311,7 +325,6 @@
     [_outputSwitch setEnabled:NO forSegmentAtIndex:0];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:1];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2];
-//    baseUrl = [[NSString alloc] init];
     _headerScrollViewText.text = [[NSString alloc] init];
     responseBody = [[NSString alloc] init];
     parsedText = [[NSMutableString alloc] init];
@@ -325,7 +338,6 @@
     _statusCode.backgroundColor = [UIColor whiteColor];
     responseBodyData = [[NSMutableData alloc] init];
 
-    
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
     methodId = [_requestMethod selectedRowInComponent:0];
@@ -344,7 +356,7 @@
     
     // setting the authentication text field
     _authentication.text = [challenge description];
-    NSLog(@"%@ challenge received.",_authentication.text);
+    NSLog(@"%@ authentication challenge received.",_authentication.text);
     
     if ([challenge previousFailureCount] == 0) {
         NSURLCredential *credential = [NSURLCredential credentialWithUser:_username.text
@@ -429,11 +441,37 @@
 // ********** End URL Processing **********
 
 
+// ********** Begin log to file **********
+
+- (IBAction)logToFileSwitch:(id)sender {
+     // Logging to file switch enabled?
+     
+     if ([_logToFileSwitch isOn]) {
+         freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+         [_logFileButton setEnabled:YES];
+         [_verboseLogLabel setEnabled:YES];
+         [_verboseLogSwitch setEnabled:YES];
+         if ([_verboseLogSwitch isOn]) NSLog (@"Enable logging to %@.", logPath);
+     } else {
+         NSFileManager *filemgr;
+         filemgr = [NSFileManager defaultManager];
+         [filemgr removeItemAtPath:logPath error:nil];
+         [_verboseLogLabel setEnabled:NO];
+         [_verboseLogSwitch setEnabled:NO];
+         [_logFileButton setEnabled:NO];
+         if ([_verboseLogSwitch isOn]) NSLog(@"Logging disabled. File deleted.");
+     }
+}
+
+// ********** End log to file **********
+
+
 - (void)startRequest:(NSString*)requestMethodString {
         
+    // ********** Begin Request **********
+
     NSLog(@"********** New Request **********");
     
-    // ********** Begin Request **********
     // -> Implement POST, PUT, DELETE, HEAD
     
     NSString *urlString = [[NSString alloc] initWithString:[self urlPart:_url.text definePart:@"fullPath"]];
@@ -447,7 +485,7 @@
     for (int i = 0; i < numberOfRows; i++) {
         NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
         UITableViewCell *cell = [_headersTableView cellForRowAtIndexPath:path];
-        NSLog(@"adding header: %@:%@",cell.textLabel.text,cell.detailTextLabel.text);
+        NSLog(@"Adding header: \"%@\":\"%@\"",cell.textLabel.text,cell.detailTextLabel.text);
         [request setValue:cell.detailTextLabel.text forHTTPHeaderField:cell.textLabel.text];
     }
 
@@ -488,7 +526,7 @@
     _contentScrollViewText.text = [[NSString alloc] init];
 
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
-    NSLog(@"sending request: %@ %@ (%@)",requestMethodString,urlString,connection);
+    NSLog(@"Sending request: %@ %@ (%@)",requestMethodString,urlString,connection);
 
     // ********** End Request **********
     
@@ -512,7 +550,7 @@
                                                        delegate:self cancelButtonTitle:@"Ok"
                                               otherButtonTitles: nil];
     [alertView show];
-    NSLog(@"%@",error);
+    NSLog(@"The following error occured: %@",error);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)_response {
@@ -535,7 +573,7 @@
     else
         _statusCode.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
 
-    NSLog(@"receiving response: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
+    NSLog(@"Receiving response: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
 
 //	if ([response respondsToSelector:@selector(allHeaderFields)]) {
         // header is fine, filling header field
@@ -551,8 +589,8 @@
     // ********** Begin actualize history **********
     if ([response statusCode] < 400) {
         // if the slash had been cut off: still the same url
-        BOOL urlIsTheSame = ([_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@%@",[historyElement baseUrl],[historyElement resource]]] ||
-                             [_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@%@/",[historyElement baseUrl],[historyElement resource]]]);
+        BOOL urlIsTheSame = ([_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@",[historyElement url]]] ||
+                             [_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@/",[historyElement url]]]);
         if (!historyElement) {
             // new history: initialize
             historyElement = [[HistoryElement alloc] init];
@@ -568,9 +606,7 @@
         }
         if (!urlIsTheSame) {
             // if URL is different: set new ones.
-            [historyElement setBaseUrl:[self urlPart:_url.text definePart:@"baseUrl"]];
-            [_baseUrlButton setEnabled:YES];
-            [historyElement setResource:[self urlPart:_url.text definePart:@"fullPath"]];
+            [historyElement setUrl:[self urlPart:_url.text definePart:@"fullPath"]];
         }
     }
     
@@ -608,7 +644,7 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // Connection succeeded in downloading the request.
-    NSLog(@"Finished receive.");
+    NSLog(@"Loading complete.");
     [_loadProgressBar setHidden:YES];
     [_loadIndicatorView stopAnimating];
     
@@ -619,16 +655,6 @@
     // response received -> parsing now if possible.
     [self parseResponse];
 }
-
-/*
-- (void)responseComplete:(NSTimer *)timer {
-    [_loadIndicatorView stopAnimating];
-    NSLog(@"3 seconds no incoming response - finishing.");
-    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSUTF8StringEncoding];
-    _contentScrollViewText.text = responseBody;
-    [self parseResponse];
-}
-*/
 
 // ********** End Receiving Response Body **********
 
@@ -650,37 +676,37 @@
        [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound) {
         // Ist "json" oder "javascript" im Content Type vorhanden, kann auf valides JSON geschlossen werden:
         // application/json, application/x-javascript, text/javascript, text/x-javascript, text/json, text/x-json
-        NSLog(@"Parsing JSON...");
+        if ([_verboseLogSwitch isOn]) NSLog(@"Parsing JSON...");
         
         // JSON parsen und als Wörterbuch abspeichern
         NSError *err = nil;
         parsedResponseAsDictionary = [NSJSONSerialization JSONObjectWithData:responseBodyData options:NSJSONWritingPrettyPrinted error:&err];
-        
         if ([parsedResponseAsDictionary count] > 0) {
             keyArray = [[NSArray alloc] initWithArray:[parsedResponseAsDictionary allKeys]];
             valueArray = [[NSArray alloc] initWithArray:[parsedResponseAsDictionary allValues]];
-            NSLog(@"JSON parsing success. Elements count: %i", [keyArray count]);
+            NSLog(@"Parsing JSON successful. %i elements found.", [keyArray count]);
             parsingSuccess = YES;
         } else {
-            NSLog(@"Sorry, the JSON parser returned an error.");
+            NSLog(@"Error in parsing JSON.");
         }
     } else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
         // Parse XML
         // [parsedText appendString:@"XML parsing not yet implemented."];
-        NSLog(@"Parsing XML...");
+        if ([_verboseLogSwitch isOn]) NSLog(@"Parsing XML...");
         
         // parse XML and save as dictionary
         NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseBodyData];
         XMLParser *xmlParser = [[XMLParser alloc] initXMLParser];
         [nsXmlParser setDelegate:xmlParser];
+        [xmlParser setVerbose:YES];
         parsingSuccess = [nsXmlParser parse];
         
         if (parsingSuccess) {
             keyArray = [[NSArray alloc] initWithArray:[xmlParser keyArray]];
             valueArray = [[NSArray alloc] initWithArray:[xmlParser valueArray]];
-            NSLog(@"XML parsing success. Elements count: %i", [keyArray count]);
+            NSLog(@"Parsing XML successful. %i elements found.", [keyArray count]);
         } else {
-            NSLog(@"Sorry, the XML parser returned an error.");
+            NSLog(@"Error in parsing XML.");
         }
     }
     
@@ -746,16 +772,14 @@
     
     // ********** Begin Console Output: Found Resources **********
     
-    /*
-    NSLog(@"Found Resources: %i",[foundResourceKeys count]);
-    for (int i = 0; i < [foundResourceKeys count]; i++) {
-        NSString *key = [[NSString alloc] initWithString:[foundResourceKeys objectAtIndex:i]];
-        NSString *value = [[NSString alloc] initWithString:[foundResourceValues objectAtIndex:i]];
-        NSLog(@"Key: \"%@\", Value: \"%@\"",key,value);
-        if (value == urlString)
-            NSLog(@"This resource.");
+    if ([_verboseLogSwitch isOn]) {
+        NSLog(@"Found Resources: %i",[foundResourceKeys count]);
+        for (int i = 0; i < [foundResourceKeys count]; i++) {
+            NSString *key = [[NSString alloc] initWithString:[foundResourceKeys objectAtIndex:i]];
+            NSString *value = [[NSString alloc] initWithString:[foundResourceValues objectAtIndex:i]];
+            NSLog(@"Key: \"%@\", Value: \"%@\"",key, value);
+        }
     }
-    */
     
     // ********** Begin Console Output: Found Resources **********
     

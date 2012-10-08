@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC0BD30C1621C8F900C5A913 /* LogOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0BD30B1621C8F900C5A913 /* LogOutputViewController.m */; };
 		AC263D21161E5E0900173788 /* Arrow-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D1E161E5E0900173788 /* Arrow-Left.png */; };
 		AC263D22161E5E0900173788 /* Arrow-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D1F161E5E0900173788 /* Arrow-Right.png */; };
 		AC263D23161E5E0900173788 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D20161E5E0900173788 /* Home.png */; };
@@ -40,7 +39,10 @@
 		AC98D474160B820F0083FB39 /* Circle_Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D472160B820F0083FB39 /* Circle_Grey.png */; };
 		AC98D479160B835D0083FB39 /* Box_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D477160B835D0083FB39 /* Box_Green.png */; };
 		AC98D47A160B835D0083FB39 /* Box_Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D478160B835D0083FB39 /* Box_Red.png */; };
+		ACB2F182162323D60047C497 /* LogOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB2F181162323D60047C497 /* LogOutputViewController.m */; };
 		ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */; };
+		ACCBB9391622CEAA00E097E3 /* terminal.png in Resources */ = {isa = PBXBuildFile; fileRef = ACCBB9381622CEAA00E097E3 /* terminal.png */; };
+		ACCBB93B1622CEBC00E097E3 /* Magnifier.png in Resources */ = {isa = PBXBuildFile; fileRef = ACCBB93A1622CEBC00E097E3 /* Magnifier.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,8 +56,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AC0BD30A1621C8F900C5A913 /* LogOutputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogOutputViewController.h; path = ../LogOutputViewController.h; sourceTree = "<group>"; };
-		AC0BD30B1621C8F900C5A913 /* LogOutputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogOutputViewController.m; path = ../LogOutputViewController.m; sourceTree = "<group>"; };
 		AC263D1E161E5E0900173788 /* Arrow-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Left.png"; sourceTree = "<group>"; };
 		AC263D1F161E5E0900173788 /* Arrow-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Right.png"; sourceTree = "<group>"; };
 		AC263D20161E5E0900173788 /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
@@ -96,8 +96,12 @@
 		AC98D472160B820F0083FB39 /* Circle_Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Grey.png; sourceTree = "<group>"; };
 		AC98D477160B835D0083FB39 /* Box_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Green.png; sourceTree = "<group>"; };
 		AC98D478160B835D0083FB39 /* Box_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Red.png; sourceTree = "<group>"; };
+		ACB2F180162323D60047C497 /* LogOutputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogOutputViewController.h; sourceTree = "<group>"; };
+		ACB2F181162323D60047C497 /* LogOutputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogOutputViewController.m; sourceTree = "<group>"; };
 		ACBC27A71610EEEF006F982E /* ResourcesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesTableViewController.h; sourceTree = "<group>"; };
 		ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcesTableViewController.m; sourceTree = "<group>"; };
+		ACCBB9381622CEAA00E097E3 /* terminal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terminal.png; sourceTree = "<group>"; };
+		ACCBB93A1622CEBC00E097E3 /* Magnifier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Magnifier.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,8 +176,6 @@
 		AC8B878115DF646000E12B48 /* RESTful Web Analyzer */ = {
 			isa = PBXGroup;
 			children = (
-				AC0BD30A1621C8F900C5A913 /* LogOutputViewController.h */,
-				AC0BD30B1621C8F900C5A913 /* LogOutputViewController.m */,
 				AC8B878A15DF646000E12B48 /* AppDelegate.h */,
 				AC8B878B15DF646000E12B48 /* AppDelegate.m */,
 				AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */,
@@ -183,6 +185,8 @@
 				AC8B879115DF646000E12B48 /* ViewController.m */,
 				AC263D27161E630100173788 /* HistoryElement.h */,
 				AC263D28161E630100173788 /* HistoryElement.m */,
+				ACB2F180162323D60047C497 /* LogOutputViewController.h */,
+				ACB2F181162323D60047C497 /* LogOutputViewController.m */,
 				AC4A6B93161B1961000C9BBE /* XMLParser.h */,
 				AC4A6B94161B1961000C9BBE /* XMLParser.m */,
 				AC8B878215DF646000E12B48 /* Supporting Files */,
@@ -193,6 +197,8 @@
 		AC8B878215DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ACCBB93A1622CEBC00E097E3 /* Magnifier.png */,
+				ACCBB9381622CEAA00E097E3 /* terminal.png */,
 				AC263D25161E602600173788 /* Globe.png */,
 				AC263D1E161E5E0900173788 /* Arrow-Left.png */,
 				AC263D1F161E5E0900173788 /* Arrow-Right.png */,
@@ -311,6 +317,8 @@
 				AC263D22161E5E0900173788 /* Arrow-Right.png in Resources */,
 				AC263D23161E5E0900173788 /* Home.png in Resources */,
 				AC263D26161E602600173788 /* Globe.png in Resources */,
+				ACCBB9391622CEAA00E097E3 /* terminal.png in Resources */,
+				ACCBB93B1622CEBC00E097E3 /* Magnifier.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +359,7 @@
 				ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */,
 				AC4A6B95161B1961000C9BBE /* XMLParser.m in Sources */,
 				AC263D29161E630100173788 /* HistoryElement.m in Sources */,
-				AC0BD30C1621C8F900C5A913 /* LogOutputViewController.m in Sources */,
+				ACB2F182162323D60047C497 /* LogOutputViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

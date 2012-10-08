@@ -61,11 +61,14 @@
 @property (weak, nonatomic) IBOutlet UISlider *fontSizeSlider;
 @property (weak, nonatomic) IBOutlet UITextField *fontSize;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
-@property (weak, nonatomic) IBOutlet UIButton *baseUrlButton;
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *loadProgressBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadIndicatorView;
 @property (weak, nonatomic) IBOutlet UITextField *addMethodTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *logToFileSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *verboseLogLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *verboseLogSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *logFileButton;
 
 - (IBAction)go:(id)sender;
 - (IBAction)outputToggle:(id)sender;
@@ -83,5 +86,6 @@
 - (IBAction)clearUrlField:(id)sender;
 - (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part;
 - (IBAction)addMethodButton:(id)sender;
+- (IBAction)logToFileSwitch:(id)sender;
 
 @end

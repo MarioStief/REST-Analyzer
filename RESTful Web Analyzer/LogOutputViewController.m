@@ -58,6 +58,6 @@
 - (IBAction)logClearButton:(id)sender {
     // empty log file
     freopen([_referenceToLogPath cStringUsingEncoding:NSASCIIStringEncoding],"w+",stderr);
-    _logOutputViewText.text = @"File emptied.";
+    _logOutputViewText.text = @"File deleted.";
 }
 @end

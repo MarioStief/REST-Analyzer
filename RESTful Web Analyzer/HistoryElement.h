@@ -10,8 +10,7 @@
 
 @interface HistoryElement : NSObject
 
-@property (strong, nonatomic) NSString *baseUrl;
-@property (strong, nonatomic) NSString *resource;
+@property (strong, nonatomic) NSString *url;
 @property (strong, nonatomic) HistoryElement *previous;
 @property (strong, nonatomic) HistoryElement *next;
 
