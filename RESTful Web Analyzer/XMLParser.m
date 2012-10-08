@@ -24,14 +24,13 @@ didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict {
-	
-    if (_verbose) NSLog(@"processing start element: %@", elementName);
+    if (_verbose) NSLog(@"processing %@...", elementName);
     actualElement = elementName;
  
     NSArray *keys = [attributeDict allKeys];
     NSArray *values = [attributeDict allValues];
     for (int i = 0; i < [keys count]; i++) {
-        if (_verbose) NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [values objectAtIndex:i]);
+        //if (_verbose) NSLog(@"add attribute: \"%@: %@ = %@\"", elementName, [keys objectAtIndex:i], [values objectAtIndex:i]);
         
         // Alt: Anzeige mit Attribut
         // alt:
@@ -68,7 +67,7 @@ didStartElement:(NSString *)elementName
         [_keyArray addObject:actualElement];
         [_valueArray addObject:string];
 //        [_parsedElementsAsDictionary setValue:string forKey:actualElement];
-        if (_verbose) NSLog(@"add value: \"%@ = %@\"", actualElement, string);
+        //if (_verbose) NSLog(@"add value: \"%@ = %@\"", actualElement, string);
     }
 }
 

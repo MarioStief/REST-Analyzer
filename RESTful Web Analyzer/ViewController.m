@@ -105,9 +105,14 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     NSLog(@"textFieldShouldReturn");
     [textField resignFirstResponder];
-    if (textField == self.url) {
+    if (textField == self.url)
         [self go:nil];
-    }
+    else if (textField == self.username)
+        [self.password becomeFirstResponder];
+    else if (textField == self.keyTextField)
+        [self.valueTextField becomeFirstResponder];
+    else if (textField == self.valueTextField)
+        [self addKeyValue:nil];
     return YES;
 }
 
@@ -204,21 +209,32 @@
 
 // ********** "+" button pressed: **********
 - (IBAction)addKeyValue:(id)sender {
-    if ([_keyTextField.text isEqualToString:@""])
-        return; // don't add empty fields
+    UIAlertView *alert;
+    NSString *errorMessage;
+    if ([_keyTextField.text isEqualToString:@""] || [_valueTextField.text isEqualToString:@""]) {
+        // don't add empty stuff
+        errorMessage = [[NSString alloc] initWithFormat:@"Please specify header and value."];
+    }
     for (int i = 0; i < numberOfRows; i++) {
+        // check table for duplicates
         NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
         UITableViewCell *cell = [_headersTableView cellForRowAtIndexPath:path];
+        NSLog(@"_valueTextField.text: %@",_valueTextField.text);
         if ([_keyTextField.text isEqualToString:cell.textLabel.text]) {
-            NSString *errorMessage = [[NSString alloc] initWithFormat:@"Key \"%@\" already specified with value \"%@\".\n"
-                                       "Delete old one first.",cell.textLabel.text,cell.detailTextLabel.text];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:errorMessage
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Close"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            // key exists
+            errorMessage = [[NSString alloc] initWithFormat:@"Key \"%@\" already specified with value \"%@\".\n"
+                                      "Delete old one first.",cell.textLabel.text,cell.detailTextLabel.text];
         }
+    }
+    
+    if (errorMessage) {
+        alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                           message:errorMessage
+                                          delegate:self
+                                 cancelButtonTitle:@"Close"
+                                 otherButtonTitles:nil];
+        [alert show];
+        return;
     }
 
     // Option 1: no cell selected, new cell should be inserted at the end.
@@ -738,7 +754,7 @@
         NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseBodyData];
         XMLParser *xmlParser = [[XMLParser alloc] initXMLParser];
         [nsXmlParser setDelegate:xmlParser];
-        [xmlParser setVerbose:YES];
+        if ([_verboseLogSwitch isOn]) [xmlParser setVerbose:YES];
         parsingSuccess = [nsXmlParser parse];
         
         if (parsingSuccess) {
