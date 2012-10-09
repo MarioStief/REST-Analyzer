@@ -60,7 +60,7 @@
     //    _url.text = @"http://jabber.ccc.de:5222/";
     // Debug: JSON
     // _url.text = @"https://graph.facebook.com/19292868552";
-    _url.text = @"test:test@test.deathangel.net/test.json";
+    // _url.text = @"test:test@test.deathangel.net/test.json";
     
 }
 
