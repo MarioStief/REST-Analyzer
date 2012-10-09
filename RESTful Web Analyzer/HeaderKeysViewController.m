@@ -50,6 +50,13 @@
         return [_requestHeaders count];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0)
+        return @"General Headers";
+    else
+        return @"Request Headers";
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -76,15 +83,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([indexPath section] == 0) {
-        NSLog(@"_referenceToHeaderKey.text: %@",_referenceToHeaderKey.text);
+    if ([indexPath section] == 0)
         _referenceToHeaderKey.text = [_generalHeaders objectAtIndex:[indexPath row]];
-        NSLog(@"_referenceToHeaderKey.text: %@",_referenceToHeaderKey.text);
-    }
     else
         _referenceToHeaderKey.text = [_requestHeaders objectAtIndex:[indexPath row]];
     // Use the passed reference to the popover controller to dismiss this view.
-    NSLog(@"%@ set.",_referenceToHeaderKey.text);
+    [_referenceToHeaderValue becomeFirstResponder];
     [_referenceToPopoverController dismissPopoverAnimated:YES];
 }
 

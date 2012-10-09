@@ -49,7 +49,6 @@
     [_showResourcesButton setAlpha:0.5]; // more obvious that this is inactive yet
     [_backButton setEnabled:NO]; // appearing inactive
     [_forwardButton setEnabled:NO]; // appearing inactive
-    requestBody = @"{\"key\":\"value\"}";
     _contentScrollViewText.text = requestBody;
     generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
     requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
@@ -60,7 +59,8 @@
     // Todo: finding data
     //    _url.text = @"http://jabber.ccc.de:5222/";
     // Debug: JSON
-//    _url.text = @"https://graph.facebook.com/19292868552";
+    // _url.text = @"https://graph.facebook.com/19292868552";
+    _url.text = @"test:test@test.deathangel.net/test.json";
     
 }
 
@@ -233,6 +233,7 @@
                                  cancelButtonTitle:@"Close"
                                  otherButtonTitles:nil];
         [alert show];
+        [_keyTextField becomeFirstResponder];
         return;
     }
 
@@ -249,6 +250,9 @@
                                      withRowAnimation:UITableViewRowAnimationFade];
         [_headersTableView deselectRowAtIndexPath:[_headersTableView indexPathForSelectedRow] animated:YES];
     }
+    _keyTextField.text = @"";
+    _valueTextField.text = @"";
+    [_keyTextField becomeFirstResponder];
 }
 
 // ********** Swype cell for delete option **********
@@ -366,10 +370,13 @@
     [_showResourcesButton setAlpha:0.5];
     [_showResourcesButton setEnabled:NO];
     _authentication.textColor = [UIColor blackColor];
-    _authentication.text = @"No challenge received.";
+    _authentication.text = @"none";
     _statusCode.text = [[NSString alloc] init];
     _statusCode.backgroundColor = [UIColor whiteColor];
     responseBodyData = [[NSMutableData alloc] init];
+    iter = nil;
+    _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
+    _authentication.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
 
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -388,8 +395,9 @@
     // ********** Begin Authentication **********
     
     // setting the authentication text field
-    _authentication.text = [challenge description];
-    NSLog(@"%@ authentication challenge received.",_authentication.text);
+    _authentication.text = @"required";
+
+    NSLog(@"%@ received.",_authentication.text);
     
     if ([challenge previousFailureCount] == 0) {
         NSURLCredential *credential = [NSURLCredential credentialWithUser:_username.text
@@ -400,7 +408,6 @@
         // Implement Server Trust Authentication:
         // NSURLCredential *credential = [NSURLCredential credentialForTrust:(SecTrustRef)];
         [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-        _authentication.textColor = [[UIColor alloc] initWithRed:0.75 green:0 blue:0 alpha:1];
     } else {
         [[challenge sender] cancelAuthenticationChallenge:challenge];
         // inform the user that the user name and password
@@ -411,13 +418,12 @@
                                               cancelButtonTitle:@"Close"
                                               otherButtonTitles:nil];
         [alert show];
-        _authentication.textColor = [[UIColor alloc] initWithRed:0 green:0.75 blue:0 alpha:1];
+        _authentication.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
+        _authentication.text = @"failed";
     }
     
     // ********** End Authentication **********
-
 }
-
 
 // ********** Begin URL Processing **********
 
@@ -540,7 +546,7 @@
     for (int i = 0; i < numberOfRows; i++) {
         NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
         UITableViewCell *cell = [_headersTableView cellForRowAtIndexPath:path];
-        NSLog(@"Adding header: \"%@\":\"%@\"",cell.textLabel.text,cell.detailTextLabel.text);
+        NSLog(@"Adding header \"%@\":\"%@\" to request.",cell.textLabel.text,cell.detailTextLabel.text);
         [request setValue:cell.detailTextLabel.text forHTTPHeaderField:cell.textLabel.text];
     }
 
@@ -574,7 +580,7 @@
             //[request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
 
             // attaching the bodystring encoded as data
-            [request setHTTPBody:[requestBody dataUsingEncoding:NSASCIIStringEncoding]];
+            [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
             
     }
     // and empty the contentScrollViewText;
@@ -604,7 +610,9 @@
                                                         message:errorLocalizedDescription
                                                        delegate:self cancelButtonTitle:@"Ok"
                                               otherButtonTitles: nil];
-    [alertView show];
+
+    if ([error code] != -1012) // the authentication error alert is handled somewhere else
+        [alertView show];
     NSLog(@"The following error occured: %@",error);
 }
 
@@ -705,8 +713,34 @@
     [_loadIndicatorView stopAnimating];
     
     // ********** Filling Body Field: RESPONSE **********
-    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSASCIIStringEncoding];
-    _contentScrollViewText.text = responseBody;
+
+    uint8_t c;
+    [responseBodyData getBytes:&c length:1];
+    NSString *imageType;
+    switch (c) {
+        case 0xFF:
+            imageType = @"image/jpeg";
+            break;
+        case 0x89:
+            imageType = @"image/png";
+            break;
+        case 0x47:
+            imageType = @"image/gif";
+            break;
+        case 0x49:
+        case 0x4D:
+            imageType = @"image/tiff";
+    }
+    if (imageType) {
+        // Image detected. Showing this instead of text.
+        NSLog(@"%@ detected.",imageType);
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:[_contentScrollViewText bounds]];
+        [imageView setImage:[UIImage imageWithData:responseBodyData]];
+        [_contentScrollViewText addSubview:imageView];
+    } else
+        // No image. Guess text instead.
+        responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSASCIIStringEncoding]; // UTF8 won't show some sites here, for example www.google.de
+        _contentScrollViewText.text = responseBody;
     
     // response received -> parsing now if possible.
     [self parseResponse];
@@ -716,7 +750,6 @@
 
 - (void)parseResponse {
 
-    responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSASCIIStringEncoding];
     keyArray = [[NSArray alloc] init];
     valueArray = [[NSArray alloc] init];
     
@@ -742,6 +775,9 @@
             valueArray = [[NSArray alloc] initWithArray:[parsedResponseAsDictionary allValues]];
             NSLog(@"Parsing JSON successful. %i elements found.", [keyArray count]);
             parsingSuccess = YES;
+            if (!requestBody)
+                // if request body is still empty and a json site has been requested, provide a simple json syntax as request
+                requestBody = @"{\n\t\"key\":\"value\"\n}";
         } else {
             NSLog(@"Error in parsing JSON.");
         }
@@ -761,6 +797,9 @@
             keyArray = [[NSArray alloc] initWithArray:[xmlParser keyArray]];
             valueArray = [[NSArray alloc] initWithArray:[xmlParser valueArray]];
             NSLog(@"Parsing XML successful. %i elements found.", [keyArray count]);
+            if (!requestBody)
+                // if request body is still empty and a json site has been requested, provide a simple json syntax as request
+                requestBody = @"<?xml version=\"1.0\"?>\n\n<tag xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n\t<element attribute=\"\">\n\t\tkey\n\t</element>\n</tag>";
         } else {
             NSLog(@"Error in parsing XML.");
         }
@@ -772,54 +811,15 @@
     // ********** Begin Filling Header + Body Fields: PARSED **********
     
     if (parsingSuccess) {
-        
-        // process key and values:
-        
-        for(int i = 0; i < [keyArray count]; i++) {
-            NSString *key = [[NSString alloc] initWithString:[keyArray objectAtIndex:i]];
-            NSString *value = [[NSString alloc] initWithFormat:@"%@",[valueArray objectAtIndex:i]];
-            [parsedText appendString:key];
-            [parsedText appendString:@": "];
-            
-            // ********** Arrays: **********
-            NSString *string = [[NSString alloc] initWithFormat:@"%@",value];
-            if ([string hasPrefix:@"{"]) {
-                
-                // Array process
-                [parsedText appendString:string];
-                
-                // ********** Begin Processing Array ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
-                
-                //
-                
-                // ********** End Processing Array ********** ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL * ACTUAL
-                
-            }
-            // *******************************
-            else {
-                [parsedText appendString:string];
-                NSURL *link = [[NSURL alloc] initWithString:string];
-                BOOL isValidResource = ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"] ||
-                                        [[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]);
-                if (isValidResource) {
-                    for (int j = i+1; j < [keyArray count]; j++) {
-                        if ([[keyArray objectAtIndex:i] isEqualToString:[keyArray objectAtIndex:j]])
-                            key = [[NSString alloc] initWithFormat:@"%@ (%@)", [keyArray objectAtIndex:j], [valueArray objectAtIndex:j]];
-                    }
-                    [foundResourceKeys addObject:key]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
-                    [foundResourceValues addObject:string];
-                }
-            }
-            [parsedText appendString:@"\n"];
-        }
+        [self processKeys:keyArray andValues:valueArray];
         
         if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
            [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound)
             [_detectedJSON setHighlighted:YES];
         else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound)
             [_detectedXML setHighlighted:YES];
-        
     }
+    
     if ([foundResourceKeys count] > 0) {
         
         _contentScrollViewText.text = parsedText;
@@ -857,36 +857,105 @@
 
 }
 
+
+// ********** Begin building Found Resources **********
+
+- (void)processKeys:(NSArray*)keys andValues:(NSArray*)values {
+    
+    // shifting on the "parsed" tab for nice printing if an array is found:
+    
+    if (!iter)
+        iter = [[NSMutableString alloc] init];
+    else
+        [iter appendString:@"\t"];
+    
+    // process key and values:
+    
+    for(int i = 0; i < [keys count]; i++) {
+        NSString *key = [[NSString alloc] initWithString:[keys objectAtIndex:i]];
+        NSString *value = [[NSString alloc] initWithFormat:@"%@",[values objectAtIndex:i]];
+        [parsedText appendFormat:@"%@%@",iter,key];
+        [parsedText appendString:@": "];
+        NSString *string = [[NSString alloc] initWithFormat:@"%@",value];
+
+        if ([string hasPrefix:@"{"]) {
+            // An array has been found. Call this method recursively
+            if ([_verboseLogSwitch isOn]) NSLog(@"Array found while parsing.");
+            [parsedText appendString:@"{\n"];
+            
+            NSDictionary *dic = [string propertyListFromStringsFileFormat];
+            if ([dic count] > 0) {
+                NSArray *arrayKeys = [[NSArray alloc] initWithArray:[dic allKeys]];
+                NSArray *arrayValues = [[NSArray alloc] initWithArray:[dic allValues]];
+                if ([_verboseLogSwitch isOn]) NSLog(@"Parsing array successful. %i elements found.", [arrayKeys count]);
+                [self processKeys:arrayKeys andValues:arrayValues];
+                iter = [[NSMutableString alloc] initWithString:[iter substringToIndex:[iter length]-1]];
+
+            } else
+                if ([_verboseLogSwitch isOn]) NSLog(@"Error in parsing array.");
+            
+            [parsedText appendString:@"}"];
+            
+        } else {
+            // No array.
+            [parsedText appendString:string];
+            NSURL *link = [[NSURL alloc] initWithString:string];
+            BOOL isValidResource = ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"] ||
+                                    [[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]);
+            if (isValidResource) {
+                for (int j = i+1; j < [keys count]; j++) {
+                    if ([[keys objectAtIndex:i] isEqualToString:[keys objectAtIndex:j]])
+                        key = [[NSString alloc] initWithFormat:@"%@ (%@)", [keys objectAtIndex:j], [values objectAtIndex:j]];
+                }
+                [foundResourceKeys addObject:key]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
+                [foundResourceValues addObject:string];
+            }
+        }
+        [parsedText appendString:@"\n"];
+    }
+}
+
+// ********** End building Found Resources **********
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"resourcesTableViewPopover"]) {
         // Get reference to the destination view controller
         ResourcesTableViewController *resourceTableViewController = [segue destinationViewController];
         
-        // Passing the found resources to the storyboard instance
+        // Passing the found resources to the destination view
         [resourceTableViewController setKeys:foundResourceKeys];
         [resourceTableViewController setValues:foundResourceValues];
 
         // pass the Table View Controller the references for communicating with this view
-        // url text field, button, method, so that it can pass the returning url
         [resourceTableViewController setReferenceToUrl:_url];
-        // the popover controller for being able to dismiss it programmatically again
+        
+        // pass reference to the the popover controller for being able to dismiss the new view from "here"
         UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
         [resourceTableViewController setReferenceToPopoverController:[popoverSegue popoverController]];
+        
         // baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
-        // and the foll url needs to be built
+        // and the full url needs to be built
         [resourceTableViewController setReferenceToBaseUrl:[self urlPart:_url.text definePart:@"baseUrl"]];
+        
     } else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"]) {
-        // Get reference to the destination view controller again
         LogOutputViewController *logOutputViewController = [segue destinationViewController];
+        
         // passing the logPath
         [logOutputViewController setReferenceToLogPath:logPath];
+        
     } else if ([[segue identifier] isEqualToString:@"HeaderKeysViewPopover"]) {
         HeaderKeysViewController *headerKeysViewController = [segue destinationViewController];
+        
+        // passing the data to the destination view
+        [headerKeysViewController setGeneralHeaders:generalHeaders];
+        [headerKeysViewController setRequestHeaders:requestHeaders];
+        
+        // passing references for working with main view
         UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
         [headerKeysViewController setReferenceToPopoverController:[popoverSegue popoverController]];
         [headerKeysViewController setReferenceToHeaderKey:_keyTextField];
-        [headerKeysViewController setGeneralHeaders:generalHeaders];
-        [headerKeysViewController setRequestHeaders:requestHeaders];
+        [headerKeysViewController setReferenceToHeaderValue:_valueTextField];
     }
 }
 

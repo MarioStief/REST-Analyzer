@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSArray *generalHeaders;
 @property (strong, nonatomic) NSArray *requestHeaders;
 @property (strong, nonatomic) UITextField *referenceToHeaderKey;
+@property (strong, nonatomic) UITextField *referenceToHeaderValue;
 @property (nonatomic, strong) UIPopoverController *referenceToPopoverController;
 
 @end

@@ -39,6 +39,7 @@
     NSArray *requestHeaders;
     NSInteger responseLength;
     NSTimer *awaitingResponse;
+    NSMutableString *iter;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
@@ -83,7 +84,6 @@
 - (IBAction)backButton:(id)sender;
 - (IBAction)baseUrlButton:(id)sender;
 - (IBAction)forwardButton:(id)sender;
-- (IBAction)headerInfo:(id)sender;
 - (IBAction)clearUrlField:(id)sender;
 - (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part;
 - (IBAction)addMethodButton:(id)sender;
