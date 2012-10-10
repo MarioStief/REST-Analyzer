@@ -21,7 +21,7 @@
     NSFileManager *filemgr;
     filemgr = [NSFileManager defaultManager];
     if ([filemgr fileExistsAtPath:logPath]) {
-        NSLog (@"Existing log file found at %@ - logging enabled.", logPath);
+        // NSLog (@"Existing log file found at %@ - logging enabled.", logPath);
         freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
         [_logToFileSwitch setOn:YES];
         [_logFileButton setEnabled:YES];
@@ -44,17 +44,20 @@
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2]; // ausgeschaltet ist.
     [_showResourcesButton setEnabled:NO];
     numberOfRows = 0;
-    indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    //indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
     [_showResourcesButton setAlpha:0.5]; // more obvious that this is inactive yet
     [_backButton setEnabled:NO]; // appearing inactive
     [_forwardButton setEnabled:NO]; // appearing inactive
     _contentScrollViewText.text = requestBody;
+    [_bodyHeaderSwitch setSelectedSegmentIndex:1];
     generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
     requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
     // [_loadProgressBar setHidden:YES]; // storyboard
     // [_loadIndicatorView setHidesWhenStopped:YES]; // storyboard
     //[_loadIndicatorView stopAnimating];
+    headerKeysArray = [[NSMutableArray alloc] init];
+    headerValuesArray = [[NSMutableArray alloc] init];
     
     // Todo: finding data
     //    _url.text = @"http://jabber.ccc.de:5222/";
@@ -94,14 +97,18 @@
     [self setVerboseLogSwitch:nil];
     [self setLogFileButton:nil];
     [self setVerboseLogLabel:nil];
+    [self setBodyHeaderSwitch:nil];
     [super viewDidUnload];
 }
 
+// ********** Set up orientation change **********
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return NO; // Not yet implemented -> not that important.
+    return YES;
 }
 
 // ********** Remove the onscreen keyboard after pressing "Go" button: **********
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     if (textField == self.url)
@@ -168,9 +175,10 @@
     else
         resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
 
-    // Assign the text to the cell and return the cell.
-    resourceTableViewCell.textLabel.text = _keyTextField.text;
-    resourceTableViewCell.detailTextLabel.text = _valueTextField.text;
+    // Assign the text from the Array to the cell.
+    resourceTableViewCell.textLabel.text = [headerKeysArray objectAtIndex:[indexPath row]];
+    resourceTableViewCell.detailTextLabel.text = [headerValuesArray objectAtIndex:[indexPath row]];
+    
     return resourceTableViewCell;
 }
 // ********** End set up cell **********
@@ -192,19 +200,6 @@
     _url.text = @"";
     [self.url becomeFirstResponder];
 }
-
-// ********** Begin header key info button **********
-
-
-/*
-// ********** let the TableView selection disappear when clicked outside **********
-// (important to be able to insert a key-value at the end)
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self.headersTableView deselectRowAtIndexPath:[self.headersTableView indexPathForSelectedRow] animated:YES];
-}
- */
-
 
 // ********** "+" button pressed: **********
 - (IBAction)addKeyValue:(id)sender {
@@ -237,6 +232,11 @@
         return;
     }
 
+    // retain the cell data
+    // keep the underlying model data separately from it's view representation
+    [headerKeysArray addObject:[[NSString alloc] initWithString:_keyTextField.text]];
+    [headerValuesArray addObject:[[NSString alloc] initWithString:_valueTextField.text]];
+
     // Option 1: no cell selected, new cell should be inserted at the end.
     if (![_headersTableView indexPathForSelectedRow]) {
         [_headersTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:numberOfRows++ inSection:0]]
@@ -261,9 +261,13 @@
 
 // ********** Process swype deletion **********
 - (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path {
-    if (editingStyle == UITableViewCellEditingStyleDelete)     {
-        numberOfRows--;
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // removing key and value from array
+        [headerKeysArray removeObjectAtIndex:[path row]];
+        [headerValuesArray removeObjectAtIndex:[path row]];
+        // and remove the cell from the tableview
         [_headersTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
+        numberOfRows--;
     }
 }
 
@@ -348,6 +352,16 @@
 
 
 // ********** GO button pressed: **********
+- (IBAction)bodyHeaderToggle:(id)sender {
+    if ([_bodyHeaderSwitch selectedSegmentIndex] == 0) {
+        [_headerScrollViewText setHidden:NO];
+        [_contentScrollViewText setHidden:YES];
+    } else if ([_bodyHeaderSwitch selectedSegmentIndex] == 1) {
+        [_headerScrollViewText setHidden:YES];
+        [_contentScrollViewText setHidden:NO];
+    }
+}
+
 - (IBAction)go:(id)sender {
     
     // ********** Remove Keyboard **********
@@ -397,7 +411,7 @@
     // setting the authentication text field
     _authentication.text = @"required";
 
-    NSLog(@"%@ received.",_authentication.text);
+    NSLog(@"%@ received.",[challenge description]);
     
     if ([challenge previousFailureCount] == 0) {
         NSURLCredential *credential = [NSURLCredential credentialWithUser:_username.text
@@ -413,13 +427,14 @@
         // inform the user that the user name and password
         // in the preferences are incorrect
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message: @"Authentication incorrect."
+                                                        message:@"Authentication incorrect."
                                                        delegate:self
                                               cancelButtonTitle:@"Close"
                                               otherButtonTitles:nil];
         [alert show];
         _authentication.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
         _authentication.text = @"failed";
+        NSLog(@"%@ failed: Authentication incorrect.",[challenge description]);
     }
     
     // ********** End Authentication **********
@@ -543,13 +558,14 @@
     
     // ********** Begin Changing HTTP Headers **********
     
-    for (int i = 0; i < numberOfRows; i++) {
+    for (int i = 0; i < [headerKeysArray count]; i++) {
         NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
-        UITableViewCell *cell = [_headersTableView cellForRowAtIndexPath:path];
-        NSLog(@"Adding header \"%@\":\"%@\" to request.",cell.textLabel.text,cell.detailTextLabel.text);
-        [request setValue:cell.detailTextLabel.text forHTTPHeaderField:cell.textLabel.text];
+        NSString *key = [headerKeysArray objectAtIndex:i];
+        NSString *value = [headerValuesArray objectAtIndex:i];
+        NSLog(@"Adding header \"%@\":\"%@\" to request.",key,value);
+        [request setValue:value forHTTPHeaderField:key];
     }
-
+    
     // ********** End Changing HTTP Headers **********
 
     // working with different methods
@@ -929,7 +945,7 @@
 
         // pass the Table View Controller the references for communicating with this view
         [resourceTableViewController setReferenceToUrl:_url];
-        
+
         // pass reference to the the popover controller for being able to dismiss the new view from "here"
         UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
         [resourceTableViewController setReferenceToPopoverController:[popoverSegue popoverController]];
@@ -944,7 +960,7 @@
         // passing the logPath
         [logOutputViewController setReferenceToLogPath:logPath];
         
-    } else if ([[segue identifier] isEqualToString:@"HeaderKeysViewPopover"]) {
+    } else if ([[segue identifier] isEqualToString:@"headerKeysViewPopover"]) {
         HeaderKeysViewController *headerKeysViewController = [segue destinationViewController];
         
         // passing the data to the destination view

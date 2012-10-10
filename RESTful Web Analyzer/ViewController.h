@@ -32,7 +32,7 @@
     NSMutableData *responseBodyData;
     NSMutableArray *foundResourceKeys;
     NSMutableArray *foundResourceValues;
-    NSIndexPath *indexPath;
+    //NSIndexPath *indexPath;
     NSInteger numberOfRows;
     HistoryElement *historyElement;
     NSArray *generalHeaders;
@@ -40,6 +40,10 @@
     NSInteger responseLength;
     NSTimer *awaitingResponse;
     NSMutableString *iter;
+    NSTimer *orientationChangeTimer;
+    UIDeviceOrientation preTimerOrientation;
+    NSMutableArray *headerKeysArray;
+    NSMutableArray *headerValuesArray;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
@@ -71,8 +75,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *verboseLogLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *verboseLogSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *logFileButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *bodyHeaderSwitch;
+
 
 - (IBAction)go:(id)sender;
+- (IBAction)bodyHeaderToggle:(id)sender;
 - (IBAction)outputToggle:(id)sender;
 - (IBAction)loggingOutput:(id)sender;
 - (IBAction)addKeyValue:(id)sender;
