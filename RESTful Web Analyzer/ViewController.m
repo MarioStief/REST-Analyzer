@@ -262,12 +262,10 @@
 // ********** Process swype deletion **********
 - (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // removing key and value from array
         [headerKeysArray removeObjectAtIndex:[path row]];
         [headerValuesArray removeObjectAtIndex:[path row]];
-        // and remove the cell from the tableview
-        [_headersTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
         numberOfRows--;
+        [_headersTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
@@ -559,7 +557,6 @@
     // ********** Begin Changing HTTP Headers **********
     
     for (int i = 0; i < [headerKeysArray count]; i++) {
-        NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
         NSString *key = [headerKeysArray objectAtIndex:i];
         NSString *value = [headerValuesArray objectAtIndex:i];
         NSLog(@"Adding header \"%@\":\"%@\" to request.",key,value);
