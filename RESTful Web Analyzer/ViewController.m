@@ -442,7 +442,18 @@
 
 - (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part {
     
-    
+    // string empty -> stays empty
+    if ([urlString isEqualToString:@""])
+        return @"";
+
+    // string empty -> stays empty
+    if ([urlString isEqualToString:@"http://"])
+        return @"http://";
+
+    // string empty -> stays empty
+    if ([urlString isEqualToString:@"https://"])
+        return @"https://";
+
     // URL beginnt weder mit "http://" noch "https://" -> hänge "http://" davor.
     if (![urlString hasPrefix:@"http://"] && ![urlString hasPrefix:@"https://"])
         urlString = ([[NSString alloc] initWithFormat:@"http://%@", urlString]);
