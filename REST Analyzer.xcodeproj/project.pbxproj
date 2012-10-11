@@ -25,8 +25,6 @@
 		AC8B879A15DF646000E12B48 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B879915DF646000E12B48 /* SenTestingKit.framework */; };
 		AC8B879B15DF646000E12B48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877B15DF645F00E12B48 /* UIKit.framework */; };
 		AC8B879C15DF646000E12B48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877D15DF645F00E12B48 /* Foundation.framework */; };
-		AC8B87A415DF646000E12B48 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC8B87A215DF646000E12B48 /* InfoPlist.strings */; };
-		AC8B87A715DF646000E12B48 /* RESTful_Web_AnalyzerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8B87A615DF646000E12B48 /* RESTful_Web_AnalyzerTests.m */; };
 		AC8B87CF15DF654E00E12B48 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B87C815DF654E00E12B48 /* CFNetwork.framework */; };
 		AC8B87D015DF654E00E12B48 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B87C915DF654E00E12B48 /* CoreData.framework */; };
 		AC8B87D115DF654E00E12B48 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B87CA15DF654E00E12B48 /* libxml2.dylib */; };
@@ -82,10 +80,6 @@
 		AC8B879115DF646000E12B48 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AC8B879815DF646000E12B48 /* REST AnalyzerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "REST AnalyzerTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B879915DF646000E12B48 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		AC8B87A115DF646000E12B48 /* REST AnalyzerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "REST AnalyzerTests-Info.plist"; sourceTree = "<group>"; };
-		AC8B87A315DF646000E12B48 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AC8B87A515DF646000E12B48 /* RESTful_Web_AnalyzerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RESTful_Web_AnalyzerTests.h; sourceTree = "<group>"; };
-		AC8B87A615DF646000E12B48 /* RESTful_Web_AnalyzerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RESTful_Web_AnalyzerTests.m; sourceTree = "<group>"; };
 		AC8B87C815DF654E00E12B48 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AC8B87C915DF654E00E12B48 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		AC8B87CA15DF654E00E12B48 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -143,7 +137,6 @@
 			children = (
 				AC8E797215DF715F003DCA88 /* Dokumentation.lyx */,
 				AC8B878115DF646000E12B48 /* RESTful Web Analyzer */,
-				AC8B879F15DF646000E12B48 /* RESTful Web AnalyzerTests */,
 				AC8B877A15DF645F00E12B48 /* Frameworks */,
 				AC8B877815DF645F00E12B48 /* Products */,
 			);
@@ -217,25 +210,6 @@
 				AC8B878415DF646000E12B48 /* InfoPlist.strings */,
 				AC8B878715DF646000E12B48 /* main.m */,
 				AC8B878915DF646000E12B48 /* REST Analyzer-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		AC8B879F15DF646000E12B48 /* RESTful Web AnalyzerTests */ = {
-			isa = PBXGroup;
-			children = (
-				AC8B87A515DF646000E12B48 /* RESTful_Web_AnalyzerTests.h */,
-				AC8B87A615DF646000E12B48 /* RESTful_Web_AnalyzerTests.m */,
-				AC8B87A015DF646000E12B48 /* Supporting Files */,
-			);
-			path = "RESTful Web AnalyzerTests";
-			sourceTree = "<group>";
-		};
-		AC8B87A015DF646000E12B48 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				AC8B87A115DF646000E12B48 /* REST AnalyzerTests-Info.plist */,
-				AC8B87A215DF646000E12B48 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -331,7 +305,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC8B87A415DF646000E12B48 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,7 +346,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC8B87A715DF646000E12B48 /* RESTful_Web_AnalyzerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,14 +374,6 @@
 				AC8B878E15DF646000E12B48 /* en */,
 			);
 			name = MainStoryboard.storyboard;
-			sourceTree = "<group>";
-		};
-		AC8B87A215DF646000E12B48 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AC8B87A315DF646000E12B48 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
