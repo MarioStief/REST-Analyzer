@@ -87,7 +87,7 @@ Die Werkzeugkiste (10 Seiten)
 \end_layout
 
 \begin_layout Section
-Sprache: Objective-C (2 - 3 Seiten)
+Basissprache: Objective-C (2 - 3 Seiten)
 \end_layout
 
 \begin_layout Subsection*
@@ -100,6 +100,62 @@ Delegate
 
 \begin_layout Section
 API: Cocoa Touch (2 - 3 Seiten)
+\end_layout
+
+\begin_layout Standard
+Apple stellt für seine Platformen zwei Programmierschnittstellen bereit:
+ Während Cocoa Mac OS X-Systeme bedient, findet Cocoa Touch ihren Einsatzzweck
+ auf dem iPhone, dem iPad sowie auf dem iPod Touch.
+ Gegenüber Cocoa greift die Touch-Variante der API auf eine modifizierte
+ Benutzerschnittstellenbibliothek zurück und beinhaltet Features wie Gestenerken
+nung sowie Animationen, welche speziell auf iOS abgestimmt sind.
+ Die Basis von Cocoa Touch bilden die folgenden drei Frameworks: das Foundation
+ Framework liefert alle Basisklassen, die die Grundlage zur Programmierung
+ mit Objective-C bilden und Werkzeuge wie Collections und Dateihandling
+ bereitstellen, ohne die eine moderne Programmierung heute nicht mehr auskommt.
+ Seit der iOS-Version 2 befindet sich darin bereits XML-Unterstützung, welche
+ in iOS 5 um die JSON-Unterstützung ergänzt wurde, was es im Rahmen dieser
+ Arbeit sehr einfach macht, auf fremde Frameworks zu verzichten.
+ Das Application Kit Framework beinhaltet Klassen, welche speziell auf die
+ Entwicklung der grafischen Oberfläche ausgerichtet sind.
+ Die Infrastruktur für grafische Anwendungen beinhaltet verschiedenen Ansichten,
+ so genannter Views, und deren Fenster, Menüs und Schaltflächen, sowie einen
+ Ereignisbetrieb mit Sprachanbindung und Textsystem.
+ Eeignisse durchlaufen eine so genannte 
+\begin_inset Quotes eld
+\end_inset
+
+Responder-Chain
+\begin_inset Quotes erd
+\end_inset
+
+, die aus unterschiedlichen Klassen besteht und ein eingetroffenes Ereignis
+ entnehmen und verarbeiten.
+ Seit OS X 10.4/iOS 3 wurde diese Sammlung um das Core Data Framework ergänzt,
+ welches für die Erstellung von Objektgraphen kümmert und dem schnellen
+ Entwurf von Modellen im Model-View-Controller-System dienlich ist.
+ Das MVC-Muster ist in Cocoa strikt umgesetzt; Klassen lassen sich in der
+ Regel eindeutig zuordnen.
+ Bei den Klassennamen selbst ist auffallend, dass die meisten mit NS beginnen,
+ wie z.
+ B.
+ NSObject, NSString oder NSArray.
+ Dies hat seinen Ursprung darin, dass Apple im Jahre 1996 das OpenStep-Framework
+ NeXTStep aufkaufte und als Basis für Mac OS X verwendete.
+ Durch die Verwendung von 
+\begin_inset Quotes eld
+\end_inset
+
+Klassen-Clustern
+\begin_inset Quotes erd
+\end_inset
+
+ werden viele sichtbare Klassen nie instanziert, sondern es werden direkt
+ zur Laufzeit statt dessen Instanzen von passenden Subklassen erzeugt, von
+ denen der Programmierer keine Kenntnis hat.
+ Beispielsweise verlangt ein Anwendungsprogrammierer nach einer Instanz
+ von NSArray, erzeugt wird jedoch in Abhängigkeit der Elemente eine Instanz
+ eine Klasse, die er nicht kennt.
 \end_layout
 
 \begin_layout Section
@@ -2147,6 +2203,16 @@ key "W3C - XML Essentials"
 \end_inset
 
 XML ESSENTIALS, URL: http://www.w3.org/standards/xml/core
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "The Objective-C Programming Language"
+
+\end_inset
+
+
 \end_layout
 
 \end_body

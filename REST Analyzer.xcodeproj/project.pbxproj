@@ -43,6 +43,7 @@
 		ACB2F182162323D60047C497 /* LogOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB2F181162323D60047C497 /* LogOutputViewController.m */; };
 		ACB2F18416232FEA0047C497 /* code.png in Resources */ = {isa = PBXBuildFile; fileRef = ACB2F18316232FEA0047C497 /* code.png */; };
 		ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */; };
+		ACBF1CB0162A1E1800D4410B /* Trash.png in Resources */ = {isa = PBXBuildFile; fileRef = ACBF1CAF162A1E1800D4410B /* Trash.png */; };
 		ACCBB93B1622CEBC00E097E3 /* Magnifier.png in Resources */ = {isa = PBXBuildFile; fileRef = ACCBB93A1622CEBC00E097E3 /* Magnifier.png */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,7 @@
 		ACB2F18316232FEA0047C497 /* code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = code.png; sourceTree = "<group>"; };
 		ACBC27A71610EEEF006F982E /* ResourcesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcesTableViewController.h; sourceTree = "<group>"; };
 		ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcesTableViewController.m; sourceTree = "<group>"; };
+		ACBF1CAF162A1E1800D4410B /* Trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trash.png; sourceTree = "<group>"; };
 		ACCBB93A1622CEBC00E097E3 /* Magnifier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Magnifier.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +205,7 @@
 		AC8B878215DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ACBF1CAF162A1E1800D4410B /* Trash.png */,
 				ACCBB93A1622CEBC00E097E3 /* Magnifier.png */,
 				AC263D25161E602600173788 /* Globe.png */,
 				AC263D1E161E5E0900173788 /* Arrow-Left.png */,
@@ -324,6 +327,7 @@
 				AC263D26161E602600173788 /* Globe.png in Resources */,
 				ACCBB93B1622CEBC00E097E3 /* Magnifier.png in Resources */,
 				ACB2F18416232FEA0047C497 /* code.png in Resources */,
+				ACBF1CB0162A1E1800D4410B /* Trash.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
