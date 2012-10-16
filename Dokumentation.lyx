@@ -74,7 +74,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Chapter
-Einleitung (3 Seiten)
+Einleitung (2 - 3 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -83,7 +83,7 @@ Hier könnte ihr Text stehen...
 \end_layout
 
 \begin_layout Chapter
-Die Werkzeugkiste (10 Seiten)
+Die Werkzeugkiste (10 - 12 Seiten)
 \end_layout
 
 \begin_layout Section
@@ -159,7 +159,7 @@ Klassen-Clustern
 \end_layout
 
 \begin_layout Section
-IDE: XCode (5 - 6 Seiten)
+IDE: XCode (2 - 3 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -188,7 +188,7 @@ IDE light
 \begin_inset Quotes erd
 \end_inset
 
-: Storyboard
+: Storyboard (2 - 3 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -196,7 +196,7 @@ Neu eingeführt in XCode 4.2.
 \end_layout
 
 \begin_layout Section
-Entwicklerlizenz
+Entwicklerlizenz (1 Seite)
 \end_layout
 
 \begin_layout Standard
@@ -319,7 +319,7 @@ Code Signing Identity
 \end_layout
 
 \begin_layout Section
-Repository
+Repository (zu wenig - > irgendwo integrieren)
 \end_layout
 
 \begin_layout Itemize
@@ -370,11 +370,11 @@ Initial Commit.
 \end_layout
 
 \begin_layout Chapter
-Schnittstelle mit der REST-Welt (10 Seiten)
+Schnittstelle mit der REST-Welt (8 Seiten)
 \end_layout
 
 \begin_layout Section
-RESTful Webservices (5 - 6 Seiten)
+RESTful Webservices (5,5 Seiten)
 \end_layout
 
 \begin_layout Subsection
@@ -1083,7 +1083,7 @@ POST /customer/1337/orders/shipped/2012-09-12_001
 \end_layout
 
 \begin_layout Section
-XML
+XML (1,5 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -1266,7 +1266,7 @@ ebenentreu
 \end_layout
 
 \begin_layout Section
-JSON
+JSON (1 Seite)
 \end_layout
 
 \begin_layout Standard
@@ -1618,11 +1618,11 @@ vip
 \end_layout
 
 \begin_layout Chapter
-Implementation (10 Seiten)
+Implementation (11 - 12 Seiten, vielleicht mehr)
 \end_layout
 
 \begin_layout Section
-Daten
+Daten (fällt weg)
 \end_layout
 
 \begin_layout Description
@@ -1650,7 +1650,11 @@ Identifier: Mario-Stief.RESTful-Web-Analyzer
 \end_layout
 
 \begin_layout Section
-Struktur
+Konzept?
+\end_layout
+
+\begin_layout Section
+Datenmodell (5 - 6 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -1658,7 +1662,7 @@ Struktur
 \end_layout
 
 \begin_layout Section
-Layout
+GUI (3 - 4 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -1706,7 +1710,8 @@ http://www.iconfinder.com/icondetails/54479/128/code_folder_icon
 \end_layout
 
 \begin_layout Section
-Schwierigkeiten
+Schwierigkeiten (ca.
+ 3 Seiten)
 \end_layout
 
 \begin_layout Description
@@ -1855,7 +1860,7 @@ Lösung: Die Daten waren hier in der GUI angelegt, welches einen Verstoß
 \end_layout
 
 \begin_layout Chapter
-Distribution
+Distribution (2 Seiten)
 \end_layout
 
 \begin_layout Section
@@ -2108,7 +2113,7 @@ http://cydia.myrepospace.com/RaveAngel/
 \end_layout
 
 \begin_layout Chapter
-Schlusswort
+Schlusswort (1 Seite?)
 \end_layout
 
 \begin_layout Bibliography
