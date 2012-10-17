@@ -90,6 +90,61 @@ Die Werkzeugkiste (10 - 12 Seiten)
 Basissprache: Objective-C (2 - 3 Seiten)
 \end_layout
 
+\begin_layout Standard
+Möchte man seine erste App für ein Apple-Gerät entwickeln, steht man zuallererst
+ vor einer kleinen Herausforderung: So wie Microsoft für sein .NET-Framework
+ die C#-Sprache entwickelte, welche Grundkonzepte der objektorientierten
+ Hochsprachen C++, Java und Delphi in sich vereint, wird für Apple-Hardware
+ grundsätzlich die Sprache Objective-C verwendet.
+ Anders als C# greift das in den frühen 80ern entwickelte ObjC auf das prozedual
+e C zurück, die objektorientierte Erweiterung ist hingegen an Smalltalk
+ angelehnt und von der C-Syntax strikt getrennt.
+ Das gleiche Erweiterungskonzept findet auch auf andere prozeduale Sprachen
+ Anwendung, so werden zum Beispiel aus Pascal und JavaScript, welche über
+ kein Klassenkonzept verfügen, die um Objektorientiertheit ergänzten Sprachen
+ Objective-Pascal und Objective-J.
+\end_layout
+
+\begin_layout Standard
+Wie aus der C-Welt bekannt haben Header die Dateiendung .h.
+ Die Quellcodedateien haben die Endung .m, wenn es sich hierbei um reinen
+ ObjC- bzw.
+ C-Code handelt; eine Quellcodedateie mit der Endung .mm kann darüber hinaus
+ aber auch noch für C++ geschriebenen Code enthalten.
+ Statt #include sollte man hier auf #import zurückgreifen, weil es sicher
+ stellt, dass die angegebene Datei nie mehr als einmal eingebunden wird.
+\end_layout
+
+\begin_layout Standard
+Die größte Umstellung zum Objective C-Denken ist, dass es keine Funktionen
+ mehr gibt, die mit Parametern aufgerufen werden, sondern nur Objekte, welche
+ sich untereinander Nachrichten an Methoden senden und so miteinander kommunizie
+ren.
+ Dieses Paradigma nennt sich 
+\shape italic
+Message Passings
+\shape default
+ und unterscheidet sich stark von der Art der nachrichtenübermittlung, die
+ C++ nutzt.
+ Grundsätzlich darf jedes Objekt jede Nachricht an jedes Objekt senden -
+ oder an sich selbst - ganz gleich ob die Zielklasse (oder eine deren Oberklasse
+n) die passende Methode zu dieser Nachricht implementiert.
+ Polymorphismus ist auch ObjC ein Begriff; gleichnamige Methoden können
+ nach Belieben implementiert werden, die Polymorphie stellt sicher, dass
+ immer die passende Methode aufgerufen wird.
+ Da jedoch die Methoden immer erst zur Laufzeit (und nicht bereits beim
+ Kompilieren) ermittelt werden, entscheidet sich erst beim Aufruf, wie ein
+ Objekt auf eine Nachricht reagieren wird.
+ Dieses Verfahren bezeichnet man daher auch als 
+\shape italic
+dynamisches Binden
+\shape default
+ - im Gegensatz zu verwendeten C-Funktionen, die bei der Kompilierung bereits
+ statisch gebunden werden.
+ Es lässt sich sogar eine klassenmethode implementieren, welche auch Nachtichten
+ reagiert, für die die Klasse keine eigene Implementierung bereitstellt.
+\end_layout
+
 \begin_layout Subsection*
 Singleton
 \end_layout
@@ -103,23 +158,29 @@ API: Cocoa Touch (2 - 3 Seiten)
 \end_layout
 
 \begin_layout Standard
-Apple stellt für seine Platformen zwei Programmierschnittstellen bereit:
- Während Cocoa Mac OS X-Systeme bedient, findet Cocoa Touch ihren Einsatzzweck
- auf dem iPhone, dem iPad sowie auf dem iPod Touch.
- Gegenüber Cocoa greift die Touch-Variante der API auf eine modifizierte
- Benutzerschnittstellenbibliothek zurück und beinhaltet Features wie Gestenerken
-nung sowie Animationen, welche speziell auf iOS abgestimmt sind.
- Die Basis von Cocoa Touch bilden die folgenden drei Frameworks: das Foundation
- Framework liefert alle Basisklassen, die die Grundlage zur Programmierung
- mit Objective-C bilden und Werkzeuge wie Collections und Dateihandling
- bereitstellen, ohne die eine moderne Programmierung heute nicht mehr auskommt.
+iOS lässt sich in vier grundlegende Schichten einteilen: Während sich auf
+ dem Core OS der Mach-Kernel sowie die grundlegenden Funktionen beinhaltet,
+ stellen die Core Services die Frameworks bereit, die Grundlage aller Anwendunge
+n und Dienste sind, die auf dem Gerät laufen.
+ Der darüber liegende Media-Layer beinhaltet sämtliche Multimediafunktionen,
+ schlussendlich folgt die Programmierschnittstelle Cocoa Touch, welche Schnittst
+ellen zu sämtlichen darunter liegenden Schichten bereitstellt.
+ Gegenüber Cocoa, der Schnittstelle für OS X-Maschinen, greift die Touch-Variant
+e der API auf eine passende Benutzerschnittstelle zurück und beinhaltet
+ Dinge wie Unterstützung der Bewegungssensoren, Multitouch-Gestenerkennung
+ sowie Animationen, welche speziell auf iOS abgestimmt sind und dem Programmiere
+r darauf abgestimmte Eingabeelemente und Events anbietet.
+ Die Basis von Cocoa Touch bilden mehrere Frameworks: das Foundation Framework
+ liefert alle Basisklassen, die die Grundlage zur Programmierung mit Objective-C
+ bilden und Werkzeuge wie Collections und Dateihandling bereitstellen, ohne
+ die eine moderne Programmierung heute nicht mehr auskommt.
  Seit der iOS-Version 2 befindet sich darin bereits XML-Unterstützung, welche
  in iOS 5 um die JSON-Unterstützung ergänzt wurde, was es im Rahmen dieser
- Arbeit sehr einfach macht, auf fremde Frameworks zu verzichten.
- Das Application Kit Framework beinhaltet Klassen, welche speziell auf die
- Entwicklung der grafischen Oberfläche ausgerichtet sind.
- Die Infrastruktur für grafische Anwendungen beinhaltet verschiedenen Ansichten,
- so genannter Views, und deren Fenster, Menüs und Schaltflächen, sowie einen
+ Arbeit sehr einfach macht, auf dritte Frameworks zu verzichten.
+ Das UIKit beinhaltet Klassen, welche speziell auf die Entwicklung der grafische
+n Oberfläche ausgerichtet sind.
+ So enthält die Infrastruktur für grafische Anwendungen verschiedene Ansichten,
+ so genannte Views, und deren Fenster, Menüs und Schaltflächen, sowie einen
  Ereignisbetrieb mit Sprachanbindung und Textsystem.
  Eeignisse durchlaufen eine so genannte 
 \begin_inset Quotes eld
@@ -2144,7 +2205,7 @@ key "JAXenter"
 
 \end_inset
 
-Tilkov, Stefan (2009); REST - Der bessere Webservice? In: JAXenter, URL:
+Tilkov, Stefan (2009): REST - Der bessere Webservice? In: JAXenter, URL:
  http://it-republik.de/jaxenter/artikel/REST---Der-bessere-Web-Service-2158.html
 \end_layout
 
@@ -2217,7 +2278,32 @@ key "The Objective-C Programming Language"
 
 \end_inset
 
+https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ObjectiveC
+/Introduction/introObjectiveC.html
+\end_layout
 
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Learning Objective-C"
+
+\end_inset
+
+http://developer.apple.com/library/ios/#referencelibrary/GettingStarted/Learning_O
+bjective-C_A_Primer/_index.html
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Galileo Computing"
+
+\end_inset
+
+Rodewig, Klaus M.
+ / Wagner, Clemens: Apps entwickeln für iPhone und iPad - Das Praxisbuch,
+ Galileo Computing, 2012, URL: http://openbook.galileocomputing.de/apps_entwickeln
+_fuer_iphone_und_ipad/index.html
 \end_layout
 
 \end_body
