@@ -26,12 +26,13 @@
     NSString *responseBody;
     NSMutableString *parsedText;
     NSString *logPath;
-    NSArray *keyArray;
-    NSArray *valueArray;
+    NSMutableArray *keyArray;
+    NSMutableArray *valueArray;
     NSHTTPURLResponse *response;
     NSMutableData *responseBodyData;
     NSMutableArray *foundResourceKeys;
     NSMutableArray *foundResourceValues;
+    NSMutableDictionary *foundResourcesValidateConnections;
     //NSIndexPath *indexPath;
     NSInteger numberOfRows;
     HistoryElement *historyElement;
@@ -44,6 +45,9 @@
     UIDeviceOrientation preTimerOrientation;
     NSMutableArray *headerKeysArray;
     NSMutableArray *headerValuesArray;
+    BOOL validatingResourcesState;
+    NSInteger resourcesToValidate;
+    NSInteger validatedResources;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
@@ -76,6 +80,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *verboseLogSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *logFileButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *bodyHeaderSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *progressBarDescription;
 
 
 - (IBAction)go:(id)sender;

@@ -17,6 +17,7 @@
 // passed references to work with the underlying view
 @property (nonatomic, strong) UITextField *referenceToUrl;
 @property (nonatomic, strong) UIPopoverController *referenceToPopoverController;
+@property (nonatomic, strong) NSString *referenceToHighestDir;
 @property (nonatomic, strong) NSString *referenceToBaseUrl;
 
 - (NSArray *)dissectURL:(NSString *)urlString;

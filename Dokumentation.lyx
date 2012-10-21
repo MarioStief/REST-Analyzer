@@ -74,19 +74,252 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Chapter
-Einleitung (3 Seiten)
+Einleitung (2 - 3 Seiten)
+\end_layout
+
+\begin_layout Standard
+Hier könnte ihr Text stehen...
+ :-)
 \end_layout
 
 \begin_layout Chapter
-Die Entwicklungsumgebung (10 Seiten)
+Die Werkzeugkiste (10 - 12 Seiten)
 \end_layout
 
 \begin_layout Section
-Sprache: Objective-C (2 - 3 Seiten)
+Basissprache: Objective-C (2 - 3 Seiten)
 \end_layout
 
-\begin_layout Subsection*
-Singleton
+\begin_layout Standard
+Möchte man seine erste App für ein Apple-Gerät entwickeln, steht man zuallererst
+ vor einer kleinen Herausforderung: So wie Microsoft für sein .NET-Framework
+ die C#-Sprache entwickelte, welche Grundkonzepte der objektorientierten
+ Hochsprachen C++, Java und Delphi in sich vereint, wird für Apple-Hardware
+ grundsätzlich die Sprache Objective-C verwendet.
+ Anders als C# greift das in den frühen 80ern entwickelte ObjC auf das prozedual
+e ANSI-C zurück, die objektorientierte Erweiterung ist an Smalltalk angelehnt
+ und von der C-Syntax strikt getrennt.
+ Die syntaktisch wichtigsten Neuerungen sind Klassen und Methodenaufrufe.
+ Das gleiche Erweiterungskonzept findet auch auf andere prozeduale Sprachen
+ Anwendung, so werden zum Beispiel aus Pascal und JavaScript, welche über
+ kein Klassenkonzept verfügen, die um Objektorientiertheit ergänzten Sprachen
+ Objective-Pascal und Objective-J.
+\end_layout
+
+\begin_layout Standard
+Wie aus der C-Welt bekannt verwendet man Header (.h) sowie deren Implementierunge
+n in Quellcodedateien (.m), welche ObjC- bzw.
+ C-Code enthalten können.
+ Aus Kompatibilitätsgründen kann man auch Implementierungen als mit der
+ Erweiterung mm anlegen, welcher auch explizit C++-Code enthalten darf.
+ Auf diese Art kann man C++-Bibliotheken weiterverwenden.
+ Statt #include sollte man hier auf #import zurückgreifen, weil es sicher
+ stellt, dass die angegebene Datei nie mehr als einmal eingebunden wird.
+ Da das ein äußerst sinnvolles Feature ist, wird es auch von allen gängigen
+ ObjC-Compilern unterstützt.
+\end_layout
+
+\begin_layout Standard
+Die größte Umstellung zum Denken in Objective C ist, dass es keine Funktionen
+ mehr gibt, die mit Parametern aufgerufen werden.
+ Hier verwendet man Objekte, die sich untereinander Nachrichten an Methoden
+ senden und so miteinander kommunizieren.
+ Dieses Paradigma nennt sich 
+\shape italic
+Message Passings
+\shape default
+ und unterscheidet sich stark von der Art der Aufrufe, die C++ nutzt.
+ Grundsätzlich darf jedes Objekt jede Nachricht an jedes Objekt senden -
+ oder an sich selbst - ganz gleich ob die Zielklasse (oder eine deren Oberklasse
+n) die passende Methode zu dieser Nachricht implementiert.
+ Da die Methoden immer erst zur Laufzeit (und nicht bereits beim Kompilieren)
+ ermittelt werden, entscheidet sich erst beim Aufruf, wie ein Objekt auf
+ eine Nachricht reagieren wird.
+ Dieses Verfahren bezeichnet man daher auch als 
+\shape italic
+dynamisches Binden
+\shape default
+ - im Gegensatz zu verwendeten C-Funktionen, die bei der Kompilierung bereits
+ statisch gebunden werden.
+ Es lässt sich sogar eine Klassenmethode implementieren, welche auf Nachrichten
+ reagiert, für die die Klasse keine eigene Implementierung bereitstellt.
+ Abstrakte Methoden kennt ObjC übrigens nicht - jede Klasse muss immer vollständ
+ig implementiert werden, damit stets Objekte dieser Klasse erzeugt werden
+ können.
+\end_layout
+
+\begin_layout Standard
+Ebenso wie in C++ lassen sich aus einer Klasse Objekte erzeugen.
+ Darüber hinaus ist aber jede Klasse selbst als Objekt ansprechbar.
+ Diese anthalten jedoch keine Member-Variablen und sind stets Singletons
+ - eine Art Erzeugungsmuster, die sicher stellen, dass von einer Klasse
+ genau ein Objekt existiert, welches global verfügbar ist.
+ So wie ein solches Klassenobjekt in der Lage ist, Nachrichten zu empfangen,
+ erfolgt das Binden der entsprechenden Methoden ebenfalls erst zur Laufzeit.
+ Strings werden in ObjC in der Notation @
+\begin_inset Quotes erd
+\end_inset
+
+…
+\begin_inset Quotes erd
+\end_inset
+
+ erzeugt.
+ Dieser String ist ein Objekt vom Typ NSString und als solcher ebenfalls
+ in der Lage, Nachrichten zu empfangen.
+ Wird das @ weggelassen, wird ein Nullterminierter C-String erzeugt.
+ Per Vorgabe besitzen die Datentypen in ObjC die gleiche Typisierung wie
+ in C: Sie sind statisch, schwach und explizit.
+ Für das Konzept der dynamischen Typisierung existiert der typlose Datentyp
+ id, welcher einen Zeiger auf ein Objekt beliebiger Klasse repräsentiert
+ und an den jede beliebige Nachricht gesendet werden kann.
+ Falls der Typ des Objektes diese Methode jedoch nicht unterstützt, kommt
+ es selbstverständlich zu einem Laufzeitfehler.
+ Möchte man eine solche typlose Variable einer Variable mit einem Typ zuweisen,
+ so müssen diese Typen natürlich übereinstimmen, sonst kommt es zu einem
+ Laufzeitfehler.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+id typelessObject = @"I'm a string."; // OK     NSString *string = typelessObject
+;    // OK     NSNumber *integer = typelessObject;   // logischer Fehler
+     char character = [integer charValue]; // Laufzeitfehler     NSLog(@"%i",int
+eger);
+\end_layout
+
+\begin_layout Standard
+Ein Instanzobjekt einer Klasse wird erzeugt, indem eine Nachricht an das
+ zugehörige Klassenobjekt gesendet wird.
+ Für gewöhnlich passiert dies beim Programmstart, im Gegensatz zu C++ können
+ bei ObjC jedoch auch während der Laufzeit noch neue Objekte erstellt werden.
+ Aus C++/Java bekannte überladene Methoden findet man so in ObjC nicht mehr;
+ eine Nachricht an eine Methode besteht aus einem 
+\shape italic
+Selektor
+\shape default
+ - dem Methodennamen - und den Parametern.
+ Das Laufzeitsystem sucht bei einer eingehenden Nachricht nach einer solchen
+ Methode und führt diese im Erfolgsfall aus.
+ Wird keine entsprechende Methode gefunden, wird ein 
+\shape italic
+nil
+\shape default
+ zurückgegeben.
+ Es besteht natürlich auch die Möglichkeit, ein Objekt vorher zu fragen,
+ ob eine bestimmte Nachricht verstanden wird.
+ Diese Fähigeit der Selbstkenntnis beinhaltet ebenfalls das Ermitteln der
+ eigenen Klasse oder das Wissen, ob seine Klasse eine Unterklasse einer
+ bestimmten anderen Klasse ist und nennt sich Reflexion und sollte dem ein
+ oder anderen ebenfalls aus der C++/Java-Welt bekannt sein.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+if([geometricFigure respondsToSelector:@selector(getShape)]) { … }
+\end_layout
+
+\begin_layout Standard
+Dem Smalltalk-Erweiterungsanteil verdankt ObjC die verwendete Notation mit
+ eckigen Klammern, um Nachrichten zu versenden.
+ Zuerst wird das Empfängerobjekt genannt, anschließend der Selektor und
+ ggfls.
+ der Parameter.
+ Sind Sender und Empfänger der Nachricht das gleiche Objekt, verwendet man
+ den Bezeichner 
+\family typewriter
+\size small
+self
+\family default
+\size default
+.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+// somewhere lost in code:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSInteger age = [self computeAgeFromYear:1981 withMonth:5 andDay:23]
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+// method declaration:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+- (NSInteger)computeAgeFromYear:(NSInteger)birthyear
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                      withMonth:(NSInteger)month
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                         andDay:(NSInteger)day { … }
+\end_layout
+
+\begin_layout Standard
+Diese Schreibweise ist für jemanden, der aus der C++/Java-Welt kommt äußerst
+ gewöhnungsbedürftig, da hier jeder Parameter eine explizite Benennung erfordert
+ und Methodennamen können in ObjC durchaus sehr lang werden.
+ Hat man sich jedoch einmal daran gewöhnt, möchte man dies jedoch nur schwer
+ wieder missen wollen, fördert es die Lesbarkeit und Verständlichkeit des
+ Codes ungemein.
+ Die angegebene Methode bezeichnet man vollständig in der Form: 
+\family typewriter
+\size small
+computeAgeFromYear:withMonth:andDay
+\family default
+\size default
+.
+\end_layout
+
+\begin_layout Standard
+Das Minus-Präfix zu Beginn der oben stehenden Methode zeigt auf, dass es
+ sich hierbei um eine Instanzmethode handelt.
+ Das entspricht unserem Verständnis einer Methode in C++/Java.
+ Da jedoch auch Klassen Objekte sind, können diese eigene Methoden haben.
+ Solche Klassenmethoden werden durch ein vorangestelltes Plus gekennzeichnet.
+ Ein gutes Beispiel ist der zum Initialisieren gebräuchliche verkettete
+ Befehl 
+\family typewriter
+\size small
+[[NSObject alloc] init]
+\family default
+\size default
+, der aus den folgenden Methoden besteht: 
+\family typewriter
+\size small
++(id)alloc
+\family default
+\size default
+ ist die Klassenmethode, welche Speicher für das Objekt reserviert, anschließend
+ initialisiert sich das erzeugte Objekt durch den Aufruf von 
+\family typewriter
+\size small
+-(id)init
+\family default
+\size default
+.
 \end_layout
 
 \begin_layout Subsection*
@@ -97,8 +330,70 @@ Delegate
 API: Cocoa Touch (2 - 3 Seiten)
 \end_layout
 
+\begin_layout Standard
+iOS lässt sich in vier grundlegende Schichten einteilen: Während sich auf
+ dem Core OS der Mach-Kernel sowie die grundlegenden Funktionen beinhaltet,
+ stellen die Core Services die Frameworks bereit, die Grundlage aller Anwendunge
+n und Dienste sind, die auf dem Gerät laufen.
+ Der darüber liegende Media-Layer beinhaltet sämtliche Multimediafunktionen,
+ schlussendlich folgt die Programmierschnittstelle Cocoa Touch, welche Schnittst
+ellen zu sämtlichen darunter liegenden Schichten bereitstellt.
+ Gegenüber Cocoa, der Schnittstelle für OS X-Maschinen, greift die Touch-Variant
+e der API auf eine passende Benutzerschnittstelle zurück und beinhaltet
+ Dinge wie Unterstützung der Bewegungssensoren, Multitouch-Gestenerkennung
+ sowie Animationen, welche speziell auf iOS abgestimmt sind und dem Programmiere
+r darauf abgestimmte Eingabeelemente und Events anbietet.
+ Die Basis von Cocoa Touch bilden mehrere Frameworks: das Foundation Framework
+ liefert alle Basisklassen, die die Grundlage zur Programmierung mit Objective-C
+ bilden und Werkzeuge wie Collections und Dateihandling bereitstellen, ohne
+ die eine moderne Programmierung heute nicht mehr auskommt.
+ Seit der iOS-Version 2 befindet sich darin bereits XML-Unterstützung, welche
+ in iOS 5 um die JSON-Unterstützung ergänzt wurde, was es im Rahmen dieser
+ Arbeit sehr einfach macht, auf dritte Frameworks zu verzichten.
+ Das UIKit beinhaltet Klassen, welche speziell auf die Entwicklung der grafische
+n Oberfläche ausgerichtet sind.
+ So enthält die Infrastruktur für grafische Anwendungen verschiedene Ansichten,
+ so genannte Views, und deren Fenster, Menüs und Schaltflächen, sowie einen
+ Ereignisbetrieb mit Sprachanbindung und Textsystem.
+ Eeignisse durchlaufen eine so genannte 
+\begin_inset Quotes eld
+\end_inset
+
+Responder-Chain
+\begin_inset Quotes erd
+\end_inset
+
+, die aus unterschiedlichen Klassen besteht und ein eingetroffenes Ereignis
+ entnehmen und verarbeiten.
+ Seit OS X 10.4/iOS 3 wurde diese Sammlung um das Core Data Framework ergänzt,
+ welches für die Erstellung von Objektgraphen kümmert und dem schnellen
+ Entwurf von Modellen im Model-View-Controller-System dienlich ist.
+ Das MVC-Muster ist in Cocoa strikt umgesetzt; Klassen lassen sich in der
+ Regel eindeutig zuordnen.
+ Bei den Klassennamen selbst ist auffallend, dass die meisten mit NS beginnen,
+ wie z.
+ B.
+ NSObject, NSString oder NSArray.
+ Dies hat seinen Ursprung darin, dass Apple im Jahre 1996 das OpenStep-Framework
+ NeXTStep aufkaufte und als Basis für Mac OS X verwendete.
+ Durch die Verwendung von 
+\begin_inset Quotes eld
+\end_inset
+
+Klassen-Clustern
+\begin_inset Quotes erd
+\end_inset
+
+ werden viele sichtbare Klassen nie instanziert, sondern es werden direkt
+ zur Laufzeit statt dessen Instanzen von passenden Subklassen erzeugt, von
+ denen der Programmierer keine Kenntnis hat.
+ Beispielsweise verlangt ein Anwendungsprogrammierer nach einer Instanz
+ von NSArray, erzeugt wird jedoch in Abhängigkeit der Elemente eine Instanz
+ eine Klasse, die er nicht kennt.
+\end_layout
+
 \begin_layout Section
-IDE: XCode 4 (5 - 6 Seiten)
+IDE: XCode (2 - 3 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -119,8 +414,64 @@ Cocoa
  die API Cocoa Touch bereit.
 \end_layout
 
+\begin_layout Standard
+Da es vor allem auf mobilen Geräten eher zu Resourcenknappheit kommt als
+ auf Desktop-Systemen, sollte man hier einen entsprechend resourcensparenden
+ Programierstil pflegen und Resourcen, die nicht mehr benötigt werden, nach
+ der Verwendung wieder freigeben.
+ In XCode 4.2 wurde das Automatic Reference Counting eingeführt, um sich
+ dieses Problemes anzunehmen.
+ Die bislang verwendeten 
+\family typewriter
+\size small
+retain
+\family default
+\size default
+ und 
+\family typewriter
+\size small
+release
+\family default
+\size default
+-Nachrichten, die bisher vom Programmierer verwendet wurden um Speicher
+ freizugeben oder eben diese Freigabe zu verhindern, sind somit obsolet.
+ Statt dessen übernimmt nun der Compiler die Referenzzählung und fügt dem
+ Code beim Übersetzen die entsprechenden 
+\family typewriter
+\size small
+retain
+\family default
+\size default
+ und 
+\family typewriter
+\size small
+release
+\family default
+\size default
+-Nachrichten hinzu.
+\end_layout
+
+\begin_layout Standard
+- Hilfe bei der Suche nach eckigen Klammern
+\end_layout
+
 \begin_layout Section
-Entwicklerlizenz
+\begin_inset Quotes eld
+\end_inset
+
+IDE light
+\begin_inset Quotes erd
+\end_inset
+
+: Storyboard (2 - 3 Seiten)
+\end_layout
+
+\begin_layout Standard
+Neu eingeführt in XCode 4.2.
+\end_layout
+
+\begin_layout Section
+Entwicklerlizenz (1 Seite)
 \end_layout
 
 \begin_layout Standard
@@ -243,7 +594,7 @@ Code Signing Identity
 \end_layout
 
 \begin_layout Section
-Repository
+Repository (zu wenig - > irgendwo integrieren)
 \end_layout
 
 \begin_layout Itemize
@@ -290,48 +641,15 @@ Hinzufügen im Project-Organizer als Remote Directory
 \end_layout
 
 \begin_layout Itemize
-Einbinden des Frameworks RestKit
-\end_layout
-
-\begin_layout Description
-Quelle: https://github.com/RestKit/RestKit/wiki/Installing-RestKit-in-Xcode-4.x
-\end_layout
-
-\begin_layout Itemize
-Hinzufügen des Frameworks RestKit als Submodul:
-\end_layout
-
-\begin_layout Standard
-
-\size small
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-git submodule add git://github.com/RestKit/RestKit.git
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-(Weiteres Vorgehen wie auf der Seite beschrieben)
-\end_layout
-
-\begin_layout Itemize
 Initial Commit.
 \end_layout
 
 \begin_layout Chapter
-REST (10 Seiten)
+Schnittstelle mit der REST-Welt (8 Seiten)
 \end_layout
 
 \begin_layout Section
-RESTful Webservices (5 - 6 Seiten)
+RESTful Webservices (5,5 Seiten)
 \end_layout
 
 \begin_layout Subsection
@@ -1040,717 +1358,190 @@ POST /customer/1337/orders/shipped/2012-09-12_001
 \end_layout
 
 \begin_layout Section
-Das RestKit-Framework (2 - 3 Seiten)
-\end_layout
-
-\begin_layout Subsection
-Beschreibung
+XML (1,5 Seiten)
 \end_layout
 
 \begin_layout Standard
-Das RestKit-Framework nimmt dem Programmierer viel Arbeit ab bezüglich der
- Interaktion mit einem RESTful Webservice aus Objective-C heraus.
- Es kombiniert eine HTTP-Request/-Response-API mit einem Object Mapping
- System, welches dem dem Programmierer ermöglicht, sich mehr auf das Datenmodell
- seines Programms konzentrieren zu können und sich weniger Gedanken darüber
- zu machen, wie genau das Senden von Requests, das Parsen von Responses
- und das Erstellen von Repräsentationen entfernter Ressourcen im Detail
- zu implementieren ist.
- Mit dem RestKit lassen sich Server und Arbeitsumgebung schnell umschalten,
- indem eine Basis-URL genutzt wird und die relativen Ressourcenpfade verwendet
- werden können.
- Die Interpolation von URL-Strings und die Erstellung von NSURL-Objekten
- aus diesen fällt somit weg.
- Das Parsen von JSON wird sowohl durch den Parser SBJSON unterstützt als
- auch durch den Parser YAJL und ist in einem simplen Interface implementiert,
- um zusätzliche Datenformate transparent behandeln zu können.
- Das RestKit besteht aus drei Hauptkomponenten:
-\end_layout
-
-\begin_layout Description
-Network stellt eine einfach zu bedienende HTTP-Request/Response-Abstraktion
- bereit, welche auf NSURLConnection aufsetzt.
- Sie beinhaltet viele hilfreiche Methoden, mir der sich Dateitypen und Statuscod
-es inspizieren, Formulardaten übertragen oder mehrteilige Vorlagen anfertigen
- lassen.
- Eine Basisunterstützung für einen einfachen Streamingupload befindet sich
- ebenfalls in der API.
-\end_layout
-
-\begin_layout Description
-Object
-\begin_inset space \thinspace{}
-\end_inset
-
-Mapping liefert eine einfache API, die die abgearbeiteten XML- oder JSON-Respons
-es in lokale Cocoa-Objekte überträgt.
- Dies spart dem Programmierer das Parsen, er kann nun einfach dem Framework
- die Zielressource mitteilen und anschließend die Ergebnisse aus der 
-\shape italic
-Delegate
-\shape default
- abrufen.
- Die Implementation basiert auf Key-Value-Coding und erlaubt eine angenehme
- Iteration der angelegten Struktur.
- Zum Ermitteln der Eigenschaftstypen kommen Reflections zum Einsatz, welche
- das Mappen von Werten ohne direkte Repräsentation in ein Zielformat erlauben,
- beispielsweise von einem als String kodierten JSON-Zeitstempel in ein NSDate-Ob
-jekt.
-\end_layout
-
-\begin_layout Description
-Core
-\begin_inset space \thinspace{}
-\end_inset
-
-Data setzt auf dem Object Mapping Layer auf und bietet die Integration mit
- Apples Core Data Framework.
- Somit wirdermöglicht, bereits geladene Objekte schnell wieder zurück in
- den lokalen Speicher zu spielen, womit sich ein Caching realisieren lässt.
- 
-\series bold
-(Ab hier noch Baustelle >>)
-\series default
- Möglich wäre auch, dies als einen primären Datenspeicher zu nutzen, der
- periodisch mit einer Cloud synchronisiert wird.
- RestKit ist in der Lage, die Core Data-Assoziationen zu bestücken, was
- eine natürliche, eigenschaftsbasierte Traversierung des Datenmodells emöglicht.
- Darüber hinaus wird eine API auf der Core Data-Primitive bereitgestellt,
- welche die Confituration und die Abfrage von use cases vereinfacht.
- Mithilfe des 
-\shape italic
-Core Data Objekt Store
-\shape default
- lässt sich von einer Kollektion von Dateien automatisch eine Datenbank
- erstellen, welche sich in des App Bundle integriert.
- Mit dieser lässt sich die App in den App Store stellen.
-\end_layout
-
-\begin_layout Subsection
-Integration in ein bestehendes XCode-Projekt
+Die Codebeispiele im vorhergehenden Kapitel zeigen bereits, dass sich hier
+ zur Kommunikation eines Austauschformates bedient wird, welches sowohl
+ von Menschen gelesen als auch von Maschinen unabhängig von Plattform und
+ Implementation geparst werden kann.
+ XML steht für Extensible Markup Language (zu Deutsch: erweiterbare Auszeichnung
+ssprache) und verwendet das - im einfachsten Fall im ASCII-Format kodierte
+ - Textformat, um über eine Metasprache strukuriert Informationen verfügbar
+ zu machen.
+ Diese vom World Wide Web Consortium (W3C) herausgegebene Spezifikation
+ ist aktuell in der 5ten Ausgabe verfügbar und ein Derivat des älteren SGML.
+ In vielen Punkten ist XML sehr verwandt mit HTML, jedoch folgt XML einer
+ konsequenteren Syntax.
+ Dies führt dazu, dass valide XML-Dokumente zuverlässig von verschiedenster
+ Software gelesen werden kann.
+ Um die zur Formatierung verwenden Zeichen <, >, &, " und ' in Texten zu
+ verwenden, greift man auf die Entitäten &lt;, &gt;, &amp;, &quot; sowie
+ &apos zurück.
+ Weitere feste Entitäten gibt es nicht, jedoch lassen sich beliebig weitere
+ Entitäten definieren.
 \end_layout
 
 \begin_layout Standard
-Das Wiki, welches ebenfalls auf dem Github-Accounts des RestKits zu finden
- ist (siehe 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Installing RestKit"
-
-\end_inset
-
-), stellt eine recht einfache Anleitung bereit, mit der sich das Framework
- einbinden lässt, daher gehe ich an dieser Stelle nur recht kurz darauf
- ein.
+Die Struktur von XML bietet einige Vorteile gegenüber anderen Austauschformaten:
+ Die redundante vollständige Wiederholung des Tagnamens beim Schließen erschwert
+ Fehler bei der Verschachtelung und die einfache Syntax von XML, inklusive
+ der Element- und Attributbezeichnungen, erleichtern es ungemein, gleich
+ zu Beginn ein gutes Gefühl zu bekommen, wie man mit XML umzugehen hat.
+ Da die volle XML-Spezifikation allerdings über einen Umfang von gut 30
+ Seiten verfügt, soll hier nur ein kleiner Überblick über das Basiswissen
+ im Umgang mit XML vermittelt werden.
 \end_layout
 
 \begin_layout Standard
-Die Framework-Entwickler empfehlen, ein Submodul dem eigentlichen Projekt
- hinzuzufügen, hierzu führen wir im Projektverzeichnis folgenden Befehl
- aus:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-git submodule add git://github.com/RestKit/RestKit.git
-\end_layout
-
-\begin_layout Standard
-Nachdem das Framework in das Projekt geklont wurde, wird die Projektdatei
- 
-\family typewriter
-\size small
-RestKit.xcodeproj
-\family default
-\size default
- per Drag'n'Drop in XCode auf unser Projekt gezogen.
- XCode wird sich darafhin mit dem Projekt vertraut machen.
- Nun müssen in den Build Settings unseres Projektes bei 
-\shape italic
-Other Linker Flags
-\shape default
- die Linker-Flags 
-\family typewriter
-\size small
--ObjC
-\family default
-\size default
- und 
-\family typewriter
-\size small
--all_load
-\family default
-\size default
- sowie bei 
-\shape italic
-Header Search Paths
-\shape default
- der Pfad 
-\family typewriter
-\size small
-"$(BUILT_PRODUCTS_DIR)/../../Headers"
-\family default
-\size default
- (inklusive der Anführungszeichen) hinzugefügt werden.
- Im Tab 
-\shape italic
-Build Phases
-\shape default
- bei 
-\shape italic
-Target Dependencies
-\shape default
- selektieren wir beim Hinzufügen für die Entwicklung einer iOS-Anwendung
- das 
-\family typewriter
-\size small
-RestKit
-\family default
-\size default
- (das 
-\family typewriter
-\size small
-RestKitFramework
-\family default
-\size default
- an dieser Stelle ist das Framework für die Entwicklung einer OS X-Anwendung)
- und unter 
-\shape italic
-Link Binary With Libraries
-\shape default
- fügen wir die Bibliotheken 
-\family typewriter
-\size small
-libRestKit.a
-\family default
-\size default
-, 
-\family typewriter
-\size small
-CFNetwork.framework
-\family default
-\size default
-, 
-\family typewriter
-\size small
-CoreData.framework
-\family default
-\size default
-, 
-\family typewriter
-\size small
-MobileCoreServices.framework
-\family default
-\size default
-, 
-\family typewriter
-\size small
-Security.framework
-\family default
-\size default
-, 
-\family typewriter
-\size small
-System- Configuration.framework
-\family default
-\size default
-, 
-\family typewriter
-\size small
-QuartzCore.framework
-\family default
-\size default
- sowie 
-\family typewriter
-\size small
-libxml2.dylib
-\family default
-\size default
- hinzu.
-\end_layout
-
-\begin_layout Standard
-Zum Testen fügen importieren wir in der 
-\family typewriter
-\size small
-AppDelegate.m
-\family default
-\size default
- das RestKit:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-#import <RestKit/RestKit.h>
-\end_layout
-
-\begin_layout Standard
-Lässt sich das Projekt nun erfolgreich kompilieren, wurde das Framework
- fehlerfrei installiert.
-\end_layout
-
-\begin_layout Subsection
-Die Verwendung der Klassen
-\end_layout
-
-\begin_layout Standard
-Im Folgenden sollen nur ein paar Beispielzeilen gezeigt werden, wie sich
- sich das RestKit verwenden lässt, größeren Beispielcode bezüglich der Implement
-ierung spare ich mir an dieser Stelle, da die exakte Implementierung in
- einem späteren Kapitel erfolgt.
-\end_layout
-
-\begin_layout Subsubsection*
-RKClient - Senden von Requests und Parsen von Responses
-\end_layout
-
-\begin_layout Standard
-Alle höheren Funktionalitäten von RestKit bauen auf dem Network Layer auf.
- Dessen Hauptaufgabe ist das Senden von Requests sowie das Parsen von Responses.
- Alle Requests erfolgen durch die Klasse 
-\shape italic
-RKClient
-\shape default
-, die mit einer Basis-URL initialisiert wird und er erlaubt, eine Konfiguration
- zu benutzen, die ähnlich der Requests verwendet werden, zum Beispiel wie
- HTTP-Header und Authentifizierungsinformationen.
- Auch wenn es natürlich ohne weiteres möglich ist, beliebig viele Instanzen
- von 
-\shape italic
-RKClient
-\shape default
- zu initialisieren, existiert eine globale, gemeinsam verwendete
-\shape italic
- Singleton
-\shape default
--Instanz.
- In der Regel ist diese in der Methode 
-\shape italic
-applicationDidFinishLaunching:withOptions:
-\shape default
- in der Delegate-Datei konfiguriert:
+Ein einfaches, wohlgeformtes XML-Dokument könnte wie folgt aussehen:
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-- (void)applicationDidFinishLaunching:(UIApplication*)application withOptions:
+<?xml version="1.0" encoding="UTF-8" ?>
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-(NSDictionary*)options {
+<content>
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-  RKClient* client = [RKClient clientWithBaseURL:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-    @"http://www.smartphoneseppel.de"];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-}
-\end_layout
-
-\begin_layout Standard
-In meiner Arbeit benötige ich nicht mehr als eine Instanz eines 
-\shape italic
-RKClient
-\shape default
-.
- Da der erste, der initialisiert wird, automatisch als Singleton-Instanz
- angelegt wird, lässt sich auf diese mit der 
-\shape italic
-sharedClient
-\shape default
- Singleton-Methode zugreifen:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-NSLog(@"RKClient Singelton: %@", [RKClient sharedClient]);
-\end_layout
-
-\begin_layout Standard
-Um nun Requests absenden zu können, müssen wir unserer Klasse lediglich
- mitteilen, dass das 
-\shape italic
-RKRequestDelegate
-\shape default
--Protokoll implementiert wird und anschließend selbst eine Implementation
- der 
-\shape italic
-request:didLoadResponse:
-\shape default
--Methode bereitstellen:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-- (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response
- {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  if ([request isGET]) {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-    if ([response isOK]) {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      ...
-\end_layout
-
-\begin_layout Standard
-
-\shape italic
-RKRequest
-\shape default
- und 
-\shape italic
-RKResponse
-\shape default
- stellen einige nützliche Helfermethoden bereit, mit denen sich der Status
- der Anfrage recht einfach untersuchen lässt.
- Es zahlt sich aus, sich die bereitgestellten Methoden im Header einmal
- genauer anzuschauen.
-\end_layout
-
-\begin_layout Subsubsection
-RKObject* - Laden und Umwandeln von entfernten Ressourcen
-\end_layout
-
-\begin_layout Standard
-Object Mapping soll es stark vereinfachen, eine Anfrage an einen entfernten
- Webservice zu stellen, eine XML- oder JSON-formatierte Antwort zu empfangen,
- diese zu parsen und die daraus erfassten Werte aus den Payloads in Objekte
- zu packen.
- Um diese Anliegen kümmert sich hier die Klasse 
-\shape italic
-RKObjectManager
-\shape default
-, die den Funktionsumfang von 
-\shape italic
-RKClient
-\shape default
- in sich einschließt.
- Indem wir das 
-\shape italic
-RKObjectMappable
-\shape default
--Protoll implementieren, verpflichten wir uns damit die Methode 
-\shape italic
-elementToPropertyMappings
-\shape default
- zu implementieren mit dem Rückgabetyp 
-\shape italic
-NSDictionary
-\shape default
-, bestehend aus Schlüsselpfaden und einem Eigenschaftennamen.
- Die Schlüsselpfade sind hierbei Key-Value-Coding-konforme Strings, um auf
- Daten eines geparsten Dokumentes zugreifen zu können.
- Der Eigenschaftenname als String ist hier einfach die Klasseneigenschaft,
- dem die zugegriffenen Daten zugewiesen werden.
- Schauen wir uns das wieder anhand eines Beispiels an.
- Eine JSON-Datei mit folgendem Muster wird geparst:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-{
-\begin_inset Quotes eld
-\end_inset
-
-customer-id
+   <chapter no=
 \begin_inset Quotes erd
 \end_inset
 
-: 1337,
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
- 
-\begin_inset Quotes eld
-\end_inset
-
-name
+1
 \begin_inset Quotes erd
 \end_inset
 
-: 
-\begin_inset Quotes eld
-\end_inset
+>
+\end_layout
 
-John Doe
+\begin_layout LyX-Code
+
+\size footnotesize
+      <description>Einleitung</description>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </chapter>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <chapter no=
 \begin_inset Quotes erd
 \end_inset
 
-}
+2
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <description>Die Entwicklungsumgebung</description>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </chapter>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <chapter no=
+\begin_inset Quotes erd
+\end_inset
+
+3
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <description>REST</description>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </chapter>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <!-- at least chapter IMPLEMENTATION still missing -->
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</content>
 \end_layout
 
 \begin_layout Standard
-Nun wird mit
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-@interface Customer : RKObject {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  NSNumber* _nr;
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  NSString* _name;
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-}
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-@property (nonatomic, retain) NSNumber* nr;
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-@property (nonatomic, retain) NSString* name;
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-@end
-\end_layout
-
-\begin_layout Standard
-sowie
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-@implementation Customer
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-- (NSDictionary*)elementToPropertyMappings {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  return [NSDictionary dictionaryWithKeysAndObjects:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  @"customer-id_key", @"customer-id_value",
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  @"name_key", @"name_value", nil];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-}
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-@end
-\end_layout
-
-\begin_layout Standard
-das RKObject vorbereitet und anschließend wie folgt aus dem Payload in unser
- lokales Objekt gemappt:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-- (void)loadCustomer {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  RKObjectManager* manager = [RKObjectManager objectManagerWithBaseURLString:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-    @"http://smartphoneseppel.de"];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  [manager loadObjectsAtResourcePath:@"/customer/1337" objectClass:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  [Customer class] delegate:self]
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-}
-\end_layout
-
-\begin_layout LyX-Code
-
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)obje
-cts {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  Customer* customer = [objects objectAtIndex:0];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  ...
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-}
-\end_layout
-
-\begin_layout LyX-Code
-
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)er
-ror {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-  ...
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-}
-\end_layout
-
-\begin_layout Subsubsection
-RKDynamicRouter - Arbeiten mit Pfaden
-\end_layout
-
-\begin_layout Standard
-RestKit ist nicht nur in der Lage, Ressourcen in lokale Objekte zu transferieren
- sondern erleichtert auch den Rückweg.
- Mit der Zeile
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-RKDynamicRouter* router = [RKDynamicRouter new];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-[router routeClass:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-[Contact class] toResourcePath:@"/customer" forMethod:RKRequestMethodPOST];
-\end_layout
-
-\begin_layout Standard
-würde explizit bei einer POST-Operation die Ressource 
+\begin_inset Quotes eld
+\end_inset
+
+Wohlgeformt
+\begin_inset Quotes erd
+\end_inset
+
+ bedeutet im Kontext eines XML-Dokumentes, dass exakt ein Wurzelelement
+ vorhanden ist.
+ Elemente sind Informationsträger gleich welcher Art, sie können Texte oder
+ weitere Elemente enthalten, auch in Kombination; die Elementbezeichnung
+ ist frei wählbar.
+ Verfügt ein Element über Inhalt, so wird dieser mit einem Start- sowie
+ mit einem Endelement versehen, beispielsweise <tag>content</tag>.
+ Steht ein Element ohne Inhalt, so kann das Element den Ein- und den Auszeichner
+ in sich vereinen: <no_content />.
+ Ein einem Einzeichner oder einem leeren Tag können Attribute enthalten
+ sein, die aus einem Name/Wert-Paar bestehen.
+ Mehrere gleichlautende Elemente nebeneinander sind kein Problem, mehrere
+ gleichlautende Attribute in einem Element sind jedoch nicht zulässig.
+ Die Verschachtelung erfolgt 
 \shape italic
-/customer
+ebenentreu
 \shape default
- erstellt werden.
- Hingegen würde die Zeile 
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-[router routeClass:[Contact class] toResourcePath:@"/customer/(customer-id_value
-)"];
+, ein Element muss also geschlossen werden, bevor ein Geschwisterelement
+ beginnt oder ein Elternelement geschlossen wird.
 \end_layout
 
 \begin_layout Standard
-bei Aufruf einer beliebigen Operation die Ressource 
-\shape italic
-/customer/1337
-\shape default
- anlegen.
+Über die Wohldefiniertheit hinaus besteht die Möglichkeit, weitere Anforderungen
+ an unser Dokument zu stellen, welches sich mit einer Grammatik wie einer
+ DTD (Document Type Definition) oder einem XML-Schema realisieren lässt.
+ Ein Dokument, welches einen Verweis auf eine solche Grammatik enthält,
+ diese auch einhält und darüber hinaus noch vohlgeformt ist, bezeichnet
+ man als valid.
+ Da das Programm, auf dem diese Arbeit beruht, keine solche Validität betrachtet
+, soll an dieser Stelle auch nicht weiter darauf eingegangen werden.
 \end_layout
 
 \begin_layout Section
-JSON
+JSON (1 Seite)
 \end_layout
 
 \begin_layout Standard
@@ -1772,7 +1563,7 @@ end - gegebenfalls von einer anderen - auch wieder leicht parsen zu lassen.
  Für ein sprachenübergreifendes Austauschformat ist es natürlich sinnig,
  dass man für den Aufbau auf Strukturen zurückgreift, die gängigen Sprachen
  geläufig sind.
- Somit kommen in JSON Key/Value-Records und Arrays zum tragen, Strukturen,
+ Somit kommen in JSON Key/Value-Records und Arrays zum Tragen, Strukturen,
  von denen es undenkbar ist, dass man sie in einer halbwegs modernen Programmier
 sprache nicht in irgendeiner Form wiederfindet.
  Ein Objekt folgt in JSON 
@@ -2102,11 +1893,11 @@ vip
 \end_layout
 
 \begin_layout Chapter
-Implementation (10 Seiten)
+Implementation (11 - 12 Seiten, vielleicht mehr)
 \end_layout
 
 \begin_layout Section
-Daten
+Daten (fällt weg)
 \end_layout
 
 \begin_layout Description
@@ -2114,7 +1905,7 @@ Template: Single View Application
 \end_layout
 
 \begin_layout Description
-Name: RESTful Web Analyzer
+Name: REST Analyzer
 \end_layout
 
 \begin_layout Description
@@ -2134,99 +1925,19 @@ Identifier: Mario-Stief.RESTful-Web-Analyzer
 \end_layout
 
 \begin_layout Section
-Struktur
-\end_layout
-
-\begin_layout Standard
-Notizen:
-\end_layout
-
-\begin_layout Itemize
-TextField erzeugt, Name: url
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Quotes eld
-\end_inset
-
-http://
-\begin_inset Quotes erd
-\end_inset
-
- voreingestellt
-\end_layout
-
-\begin_layout Itemize
-url -> ViewController(delegate)
-\end_layout
-
-\begin_layout Itemize
-textFieldShouldReturn
-\end_layout
-
-\begin_layout Itemize
-Label 
-\begin_inset Quotes eld
-\end_inset
-
-URL
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Button 
-\begin_inset Quotes eld
-\end_inset
-
-Go
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Bei 
-\begin_inset Quotes eld
-\end_inset
-
-Go
-\begin_inset Quotes erd
-\end_inset
-
--Knopfdruck das Keyboard verschwinden lassen [self.url resignFirstResponder]
-\end_layout
-
-\begin_layout Itemize
--> in self.url.text befindet sich nun die URL
-\end_layout
-
-\begin_layout Itemize
-PickerView erzeugt, Name: requestMethod
-\end_layout
-
-\begin_layout Itemize
-requestMethod -> ViewController (delegate)
-\end_layout
-
-\begin_layout Itemize
-requestMethod -> ViewController (dataSource)
-\end_layout
-
-\begin_layout Itemize
-...
-\end_layout
-
-\begin_layout Itemize
-Im Storyboard unter dem View Controller ein Text View erzeugt, dieses als
- Outlet in die ViewController.h gebunden, Text hinzugefügt.
+Konzept?
 \end_layout
 
 \begin_layout Section
-Layout
+Datenmodell (5 - 6 Seiten)
+\end_layout
+
+\begin_layout Standard
+…
+\end_layout
+
+\begin_layout Section
+GUI (3 - 4 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -2270,11 +1981,12 @@ http://www.iconfinder.com/icondetails/34229/256/find_magnifier_search_zoom_icon
 \end_layout
 
 \begin_layout Standard
-http://www.iconfinder.com/icondetails/28672/256/terminal_icon
+http://www.iconfinder.com/icondetails/54479/128/code_folder_icon
 \end_layout
 
 \begin_layout Section
-Schwierigkeiten
+Schwierigkeiten (ca.
+ 3 Seiten)
 \end_layout
 
 \begin_layout Description
@@ -2393,16 +2105,41 @@ Lösung: Die Output View in eine eigene Klasse auslagern, die eine Methode
  ViewDidAppear besitzt.
 \end_layout
 
-\begin_layout Part
-Problem: 
+\begin_layout Description
+Problem: Füllt man ein Table View mit Zellen und packt diese in einen Scroll
+ View-Container, so verschwinden die Zellen beim 
+\begin_inset Quotes eld
+\end_inset
+
+Wischen
+\begin_inset Quotes erd
+\end_inset
+
+ aus dem sichtbaren Bereich.
+\end_layout
+
+\begin_layout Description
+Ursache: ARC greift an dieser Stelle und setzt nicht sichtbare Elemente
+ auf die Reusable-List.
+ Kommen die Zellen wieder in den sichtbaren Bereich, wird die Methode ...
+ wieder durchlaufen und erzeugt neue Zellen.
+\end_layout
+
+\begin_layout Description
+Lösung: Die Daten waren hier in der GUI angelegt, welches einen Verstoß
+ gegen den Model View Controller (MVC) darstellt.
+ Vor der Zellenerzeugung werden 2 MutableArrays angelegt, deren Inhalt sich
+ stets am gleichen Indexwert befindet, wie es bei den Zellen der Fall ist.
+ Die Zellenerzeugung greift dann auf den entsprechenden Index im Array zu,
+ welcher nicht dereferenziert wird.
 \end_layout
 
 \begin_layout Chapter
-Distribution
+Distribution (2 Seiten)
 \end_layout
 
 \begin_layout Section
-App Store
+Der offizielle Weg: Apple's App Store
 \end_layout
 
 \begin_layout Section
@@ -2450,190 +2187,11 @@ rte Option sein, zwei oder mehr Fenster nebeneinander betreiben zu können.
  geöffnet ist.
 \end_layout
 
-\begin_layout Subsubsection
-Vom Code zur APP
-\end_layout
-
 \begin_layout Standard
-Entscheiden wir uns für diesen Weg, müssen wir unserem Gerät dennoch eine
- signierte App zur Verfügung stellen.
- Dies ist zum einen mit einer Entwicklerlizenz von Apple möglich, mit der
- wir unser fertiges Programm signieren.
- Verfügen wir nicht über eine solche Entwicklerlizenz bekommen wir bei dem
- Versuch, die Ausgabe vom Simulator auf das iOS Device umzustellen, um eine
- transferierbare Ausgabedatei zu erzeugen, die Meldung:
-\end_layout
-
-\begin_layout LyX-Code
-Code Sign error: The identity 'iPhone Developer' doesn't
-\end_layout
-
-\begin_layout LyX-Code
-match any valid, non-expired certificate/private key pair
-\end_layout
-
-\begin_layout LyX-Code
-in your keychains
-\end_layout
-
-\begin_layout Standard
-oder
-\end_layout
-
-\begin_layout LyX-Code
-Code Sign error: A valid provisioning profile matching the
-\end_layout
-
-\begin_layout LyX-Code
-application's Identifier 'Mario-Stief.REST-Analyzer' could
-\end_layout
-
-\begin_layout LyX-Code
-not be found
-\end_layout
-
-\begin_layout Standard
-Eine einfache Möglichkeit wäre es, in der Preferences-Datei 
-\family typewriter
-\size small
-SDKSettings.plist
-\family default
-\size default
- der entsprechenden SDK in der 
-\family typewriter
-XCode.app
-\family default
- den Schlüssel 
-\family typewriter
-\size small
-CODE_SIGNING_REQUIRED
-\family default
-\size default
- von 
-\family typewriter
-\size small
-YES
-\family default
-\size default
- auf 
-\family typewriter
-\size small
-NO
-\family default
-\size default
- zu setzen sowie in den 
-\shape italic
-Build Settings
-\shape default
- des Projektes die 
-\shape italic
-Code Signing Identity
-\shape default
- auf 
-\shape italic
-Don't Code Sign
-\shape default
- anzuändern.
- Auf diese Art und Weise kommt man zwar an die App-Dateien, jedoch verweigert
- selbst ein gejailbreaktes iPad deren Ausführung.
- Wir benötigen also eine gültige Signierung.
-\end_layout
-
-\begin_layout Standard
-Hierfür erstellen wir uns in der Keychain ein selbstsigniertes Zertifikat
- des Typs 
-\begin_inset Quotes eld
-\end_inset
-
-Code Signing
-\begin_inset Quotes erd
-\end_inset
-
-mit dem Namen 
-\begin_inset Quotes eld
-\end_inset
-
-iPhone Developer
-\begin_inset Quotes erd
-\end_inset
-
-.
- Statt auf 
-\shape italic
-Don't Code Sign
-\shape default
- stellen wir die Signings Identity auf den eben erstellten 
-\shape italic
-iPhone Developer
-\shape default
- und ändern in der Datei /Applications/Xcode.app/Contents/Developer/Platforms/
- iPhoneOS.platform/Info.plist alle Vorkommen von XCiPhoneOSCodeSignContext
- in XCCodeSignContext ab.
- Der Entwickler von Cydia hat ein Werkzeug mit dem Namen ldid bereitgestellt,
- welches in der Lage ist, die SHA1 Hashes zu überprüfen, welche vom iOS-Kernel
- überprüft werden.
- Dieses Kommandozeilenprogramm kopieren wir – zusammen mit einem Python
- Script - nach /usr/bin/ und tauschen - bei XCode 4.4 - in der Datei /Application
-s/Xcode.app/Contents/Developer/Platforms/ iPhoneOS.platform/Developer/Library/Xcod
-e/PrivatePlugIns/iPhoneOS Build System Support.xcplugin/Contents/Resources/iPhone
-CodeSign.xcspec die Zeile 
-\begin_inset Quotes erd
-\end_inset
-
-CommandLine = /usr/bin/codesign
-\begin_inset Quotes erd
-\end_inset
-
- mit der Zeile “CommandLine = /usr/bin/ldid3.py” aus.
- In XCode 4.5 ist die Datei keine Text-Datei mehr.
- Hier bedienen wir uns eines Hex Editors und öffnen die Datei 
-\begin_inset Quotes eld
-\end_inset
-
-/Applications/Xcode.app/Contents/Developer/ Platforms/iPhoneOS.platform/Developer/
-Library/Xcode/Specifications/iPhone CodeSign.xcspec
-\begin_inset Quotes erd
-\end_inset
-
-, in der wir ebenfalls den Textstring 
-\begin_inset Quotes eld
-\end_inset
-
-/usr/bin/codesign
-\begin_inset Quotes erd
-\end_inset
-
- mit dem String 
-\begin_inset Quotes erd
-\end_inset
-
-/usr/bin/ldid3.py
-\begin_inset Quotes erd
-\end_inset
-
- ersetzen.
- Von nun an übernimmt dieses Werkzeug die Signierng unserer Programme.
-\end_layout
-
-\begin_layout Standard
-Nachdem wir nun die Ausgabe vom Simulator auf das iOS Device abändern finden
- wir nach dem Übersetzen in XCode im Verzeichnis Products die gewünschte
- und signierte APP-Datei.
-\end_layout
-
-\begin_layout Description
-Quelle: http://iklive.org/objective-c-compiling-ios-5-software-without-developer-
-program/
-\end_layout
-
-\begin_layout Subsubsection
-Von der APP zum DEB-Paket
-\end_layout
-
-\begin_layout Standard
-Um unsere erstellten APP-Dateien in ein DEB-Paket umzuwandeln, bedienen
- uns bequem des Programmes MacPorts, welches – ähnlich Fink – eine Paketverwaltu
-ng für freie und quelloffene Software für OS X ist.
+Um unsere mittels unserer Entwicklerlizenz kompilierten Apps in ein DEB-Paket
+ umzuwandeln, bedienen uns bequem des Programmes MacPorts, welches – ähnlich
+ Fink – eine Paketverwaltung für freie und quelloffene Software für OS X
+ ist.
 \end_layout
 
 \begin_layout Description
@@ -2755,7 +2313,7 @@ Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
 \end_layout
 
 \begin_layout Standard
-wobei das Verzeichnis System jedoch nicht zwingend notwendig ist.
+Das Verzeichnis System ist hierbei optional.
 \end_layout
 
 \begin_layout Standard
@@ -2829,6 +2387,10 @@ Um die nun fertige DEB-Datei auf das iPad zu bekommen, benötigen wir ein
 http://cydia.myrepospace.com/RaveAngel/
 \end_layout
 
+\begin_layout Chapter
+Schlusswort (1 Seite?)
+\end_layout
+
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
@@ -2857,7 +2419,7 @@ key "JAXenter"
 
 \end_inset
 
-Tilkov, Stefan (2009); REST - Der bessere Webservice? In: JAXenter, URL:
+Tilkov, Stefan (2009): REST - Der bessere Webservice? In: JAXenter, URL:
  http://it-republik.de/jaxenter/artikel/REST---Der-bessere-Web-Service-2158.html
 \end_layout
 
@@ -2911,6 +2473,51 @@ key "JSON.org - Einführung in JSON"
 \end_inset
 
 Introducing JSON, URL: http://json.org/index.html
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "W3C - XML Essentials"
+
+\end_inset
+
+XML ESSENTIALS, URL: http://www.w3.org/standards/xml/core
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "The Objective-C Programming Language"
+
+\end_inset
+
+https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ObjectiveC
+/Introduction/introObjectiveC.html
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Learning Objective-C"
+
+\end_inset
+
+http://developer.apple.com/library/ios/#referencelibrary/GettingStarted/Learning_O
+bjective-C_A_Primer/_index.html
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Galileo Computing"
+
+\end_inset
+
+Rodewig, Klaus M.
+ / Wagner, Clemens: Apps entwickeln für iPhone und iPad - Das Praxisbuch,
+ Galileo Computing, 2012, URL: http://openbook.galileocomputing.de/apps_entwickeln
+_fuer_iphone_und_ipad/index.html
 \end_layout
 
 \end_body
