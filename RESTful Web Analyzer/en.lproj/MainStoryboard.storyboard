@@ -98,6 +98,13 @@
                                         <rect key="frame" x="216" y="273" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pm5-Hl-8Zr">
+                                        <rect key="frame" x="75" y="295" width="302" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="shf-ep-hlf">
@@ -543,6 +550,7 @@
                         <outlet property="logToFileSwitch" destination="uDz-6Y-eIk" id="Hla-qA-qRJ"/>
                         <outlet property="outputSwitch" destination="pqN-F7-NCN" id="x73-1n-TZw"/>
                         <outlet property="password" destination="Ufq-WV-7bd" id="z17-zu-AIK"/>
+                        <outlet property="progressBarDescription" destination="pm5-Hl-8Zr" id="6dJ-bs-ie1"/>
                         <outlet property="requestMethod" destination="68F-za-mbJ" id="R5h-Ij-QMQ"/>
                         <outlet property="scrollView" destination="uOx-u0-hy2" id="mS4-Et-hEV"/>
                         <outlet property="showResourcesButton" destination="WeS-qd-i1L" id="qeS-7D-WSJ"/>
@@ -636,70 +644,6 @@
         <image name="Trash.png" width="128" height="128"/>
         <image name="code.png" width="512" height="512"/>
     </resources>
-    <classes>
-        <class className="HeaderKeysViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeaderKeysViewController.h"/>
-        </class>
-        <class className="LogOutputViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogOutputViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logClearButton:"/>
-                <relationship kind="outlet" name="logOutputViewText" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="ResourcesTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ResourcesTableViewController.h"/>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="Impressum:"/>
-                <relationship kind="action" name="addKeyValue:"/>
-                <relationship kind="action" name="addMethodButton:"/>
-                <relationship kind="action" name="backButton:"/>
-                <relationship kind="action" name="baseUrlButton:"/>
-                <relationship kind="action" name="bodyHeaderToggle:"/>
-                <relationship kind="action" name="clearUrlField:"/>
-                <relationship kind="action" name="fontSizeSliderMove:"/>
-                <relationship kind="action" name="forwardButton:"/>
-                <relationship kind="action" name="go:"/>
-                <relationship kind="action" name="headerInfo:"/>
-                <relationship kind="action" name="logToFileSwitch:"/>
-                <relationship kind="action" name="loggingOutput:"/>
-                <relationship kind="action" name="outputToggle:"/>
-                <relationship kind="outlet" name="addMethodTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="authentication" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="bodyHeaderSwitch" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="contentScrollViewText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="contentType" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="detectedJSON" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="detectedXML" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="encoding" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="fontSize" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="fontSizeSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="forwardButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="headerScrollViewText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="headersTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="keyTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="loadIndicatorView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="loadProgressBar" candidateClass="UIProgressView"/>
-                <relationship kind="outlet" name="logFileButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="logToFileSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="outputSwitch" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="requestMethod" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="showResourcesButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="statusCode" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="url" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="username" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="valueTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="verboseLogLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="verboseLogSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

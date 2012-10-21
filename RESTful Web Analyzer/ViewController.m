@@ -59,8 +59,11 @@
     headerKeysArray = [[NSMutableArray alloc] init];
     headerValuesArray = [[NSMutableArray alloc] init];
     
+#pragma debug
+    //[_verboseLogSwitch setOn:YES];
     // Todo: finding data
-    //    _url.text = @"http://jabber.ccc.de:5222/";
+    // _url.text = @"http://dblp.uni-trier.de/rec/bibtex/conf/ideal/HuangNLC00.xml";
+    // _url.text = @"http://jabber.ccc.de:5222/";
     // Debug: JSON
     // _url.text = @"https://graph.facebook.com/19292868552";
     // _url.text = @"test:test@test.deathangel.net/test.json";
@@ -98,6 +101,7 @@
     [self setLogFileButton:nil];
     [self setVerboseLogLabel:nil];
     [self setBodyHeaderSwitch:nil];
+    [self setProgressBarDescription:nil];
     [super viewDidUnload];
 }
 
@@ -377,8 +381,6 @@
     _headerScrollViewText.text = [[NSString alloc] init];
     responseBody = [[NSString alloc] init];
     parsedText = [[NSMutableString alloc] init];
-    foundResourceKeys = [[NSMutableArray alloc] init];
-    foundResourceValues = [[NSMutableArray alloc] init];
     [_showResourcesButton setAlpha:0.5];
     [_showResourcesButton setEnabled:NO];
     _authentication.textColor = [UIColor blackColor];
@@ -389,6 +391,8 @@
     iter = nil;
     _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
     _authentication.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
+    validatingResourcesState = NO;
+    validatedResources = 0;
 
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -459,8 +463,12 @@
         urlString = ([[NSString alloc] initWithFormat:@"http://%@", urlString]);
     
     // URL endet mit "/" -> weg damit.
-    if ([urlString hasSuffix:@"/"])
+    if ([urlString hasSuffix:@"/"]) {
+        if ([part isEqualToString:@"highestDir"])
+            // url already is a dir. job done.
+            return urlString;
         urlString = [urlString substringToIndex:[urlString length]-1];
+    }
     
     // Trennung in BaseURL und ResourceURL
     NSArray *urlComponents = [[NSArray alloc] initWithArray:[urlString pathComponents]];
@@ -479,14 +487,15 @@
             [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
             i++;
         }
-        if ([part isEqualToString:@"prevPath"]) {
+        if ([part isEqualToString:@"prevPath"] || [part isEqualToString:@"highestDir"]) {
             // previous Path requested. This is it.
+            // Also the highest dir if it was NOT the full url.
             if ([resourcePath isEqualToString:[[NSString alloc] init]])
                 // resource ath is empty, prevPath is base url. return with / at the end
                 return [[NSString alloc] initWithFormat:@"%@/",baseUrl];
             else
                 // longer then base url
-                return [[NSString alloc] initWithFormat:@"%@%@",baseUrl,resourcePath];
+                return [[NSString alloc] initWithFormat:@"%@%@/",baseUrl,resourcePath];
         }
         // else: full Path requested. Add last url component.
         [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
@@ -570,7 +579,7 @@
     for (int i = 0; i < [headerKeysArray count]; i++) {
         NSString *key = [headerKeysArray objectAtIndex:i];
         NSString *value = [headerValuesArray objectAtIndex:i];
-        NSLog(@"Adding header \"%@\":\"%@\" to request.",key,value);
+        if ([_verboseLogSwitch isOn]) NSLog(@"Adding header \"%@\":\"%@\" to request.",key,value);
         [request setValue:value forHTTPHeaderField:key];
     }
     
@@ -629,6 +638,12 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    if (validatingResourcesState) {
+        // error while validating the parsed resources. happens. :)
+        validatedResources++;
+        return;
+    }
+    
     NSString *errorLocalizedDescription = [[NSString alloc] initWithFormat:@"%@",[error localizedDescription]];
     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:errorLocalizedDescription
@@ -642,6 +657,38 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)_response {
 
+    // ********** Begin validating resource **********
+    
+    if (validatingResourcesState) {
+        if ([_verboseLogLabel isEnabled]) {
+            NSInteger i = [[foundResourcesValidateConnections objectForKey:[connection description]] integerValue];
+            NSLog(@"Receiving response for resource \"%@\": %i",[valueArray objectAtIndex:i],[_response statusCode]);
+        }
+        validatedResources++;
+        // calculate process bar
+        float progress = 1.00*validatedResources/resourcesToValidate;
+        [_loadProgressBar setProgress:progress animated:NO];
+        
+        if ([_response statusCode] < 400) {
+
+            // add resource to foundResources
+
+            NSNumber *indexNumber = [foundResourcesValidateConnections objectForKey:[connection description]];
+            NSInteger index = [indexNumber integerValue];
+            NSString *key = [keyArray objectAtIndex:index];
+            NSString *value = [valueArray objectAtIndex:index];
+            [foundResourceKeys replaceObjectAtIndex:index withObject:key];
+            [foundResourceValues replaceObjectAtIndex:index withObject:value];
+            if ([_verboseLogSwitch isOn]) NSLog(@"Adding #%i \"%@\":\"%@\" to resources... (%i/%i)",index,key,value,validatedResources,resourcesToValidate);
+        }
+        if (validatedResources == resourcesToValidate)
+            [self validateDidFinish];
+        return;
+    }
+    
+    // ********** End validating resource **********
+
+    
     // ********** Begin Receiving Response Header **********
     
     response = _response;
@@ -703,15 +750,22 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)_bodyData {
     
+    if (validatedResources)
+        // just validating urls. not interested in bodys.
+        // strange thing this method is called when receiven a head-response...
+        return;
+    
     // ********** Begin Receiving Response Body **********
     
     BOOL responseComplete = NO;
     [responseBodyData appendData:_bodyData];
     if (responseLength > -1 ) {
         [_loadProgressBar setHidden:NO];
+        _progressBarDescription.text = @"Loading Resource...";
+        [_progressBarDescription setHidden:NO];
         float progress = 1.00*[responseBodyData length]/responseLength;
         [_loadProgressBar setProgress:progress animated:NO];
-        NSLog(@"%i/%i bytes received.",[responseBodyData length],responseLength);
+        if ([_verboseLogSwitch isOn]) NSLog(@"%i/%i bytes received.",[responseBodyData length],responseLength);
         if ([responseBodyData length] >= responseLength)
             responseComplete = YES;
     } else {
@@ -731,8 +785,14 @@
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    
+    if (validatingResourcesState)
+        // while validating, this is not relevant
+        return;
+
     // Connection succeeded in downloading the request.
     NSLog(@"Loading complete.");
+    [_progressBarDescription setHidden:YES];
     [_loadProgressBar setHidden:YES];
     [_loadIndicatorView stopAnimating];
     
@@ -774,8 +834,8 @@
 
 - (void)parseResponse {
 
-    keyArray = [[NSArray alloc] init];
-    valueArray = [[NSArray alloc] init];
+    keyArray = [[NSMutableArray alloc] init];
+    valueArray = [[NSMutableArray alloc] init];
     
     // ********** Begin Parsing Response **********
 
@@ -795,9 +855,10 @@
         NSError *err = nil;
         parsedResponseAsDictionary = [NSJSONSerialization JSONObjectWithData:responseBodyData options:NSJSONWritingPrettyPrinted error:&err];
         if ([parsedResponseAsDictionary count] > 0) {
-            keyArray = [[NSArray alloc] initWithArray:[parsedResponseAsDictionary allKeys]];
-            valueArray = [[NSArray alloc] initWithArray:[parsedResponseAsDictionary allValues]];
-            NSLog(@"Parsing JSON successful. %i elements found.", [keyArray count]);
+            keyArray = [[NSMutableArray alloc] initWithArray:[parsedResponseAsDictionary allKeys]];
+            valueArray = [[NSMutableArray alloc] initWithArray:[parsedResponseAsDictionary allValues]];
+            resourcesToValidate = [keyArray count];
+            NSLog(@"Parsing JSON successful. %i elements found.", resourcesToValidate);
             parsingSuccess = YES;
             if (!requestBody)
                 // if request body is still empty and a json site has been requested, provide a simple json syntax as request
@@ -818,9 +879,10 @@
         parsingSuccess = [nsXmlParser parse];
         
         if (parsingSuccess) {
-            keyArray = [[NSArray alloc] initWithArray:[xmlParser keyArray]];
-            valueArray = [[NSArray alloc] initWithArray:[xmlParser valueArray]];
-            NSLog(@"Parsing XML successful. %i elements found.", [keyArray count]);
+            keyArray = [[NSMutableArray alloc] initWithArray:[xmlParser keyArray]];
+            valueArray = [[NSMutableArray alloc] initWithArray:[xmlParser valueArray]];
+            resourcesToValidate = [keyArray count];
+            NSLog(@"Parsing XML successful. %i elements found.", resourcesToValidate);
             if (!requestBody)
                 // if request body is still empty and a json site has been requested, provide a simple json syntax as request
                 requestBody = @"<?xml version=\"1.0\"?>\n\n<tag xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n\t<element attribute=\"\">\n\t\tkey\n\t</element>\n</tag>";
@@ -830,12 +892,13 @@
     }
     
     // ********** End Parsing Response **********
-    
+
     
     // ********** Begin Filling Header + Body Fields: PARSED **********
     
     if (parsingSuccess) {
-        [self processKeys:keyArray andValues:valueArray];
+
+        [self processKeys];
         
         if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
            [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound)
@@ -843,8 +906,184 @@
         else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound)
             [_detectedXML setHighlighted:YES];
     }
+}
+
+
+// ********** Begin building Found Resources **********
+
+- (void)processKeys {
     
+    foundResourceKeys = [[NSMutableArray alloc] initWithCapacity:resourcesToValidate];
+    foundResourceValues = [[NSMutableArray alloc] initWithCapacity:resourcesToValidate];
+    for (int i = 0; i < resourcesToValidate; i++) {
+        [foundResourceKeys addObject:@""];
+        [foundResourceValues addObject:@""];
+    }
+    // because the check for valid resources is a asynchronous request and the responsed comes without order
+    // adding the resources at the right index keeps an order for them
+    foundResourcesValidateConnections = [[NSMutableDictionary alloc] init];
+    
+    // Reactivate progress bar:
+    _contentScrollViewText.text = @"";
+    _progressBarDescription.text = @"Validating resource candidates...";
+    float progress = 1.00*validatedResources/resourcesToValidate;
+    [_loadProgressBar setProgress:progress animated:NO];
+    [_progressBarDescription setHidden:NO];
+    [_loadProgressBar setHidden:NO];
+    
+    // shifting on the "parsed" tab for nice printing if an array is found:
+    
+    if (!iter)
+        iter = [[NSMutableString alloc] init];
+    else
+        [iter appendString:@"\t"];
+    
+    // process key and values:
+    
+    NSLog(@"Validating potential resources for well-formedness and reachability...");
+    
+    for(int i = 0; i < [keyArray count]; i++) {
+        NSString *key = [[NSString alloc] initWithString:[keyArray objectAtIndex:i]];
+        NSString *value = [[NSString alloc] initWithFormat:@"%@",[valueArray objectAtIndex:i]];
+        
+        [parsedText appendFormat:@"%@%@",iter,key];
+        [parsedText appendString:@": "];
+        NSString *string = [[NSString alloc] initWithFormat:@"%@",value];
+
+        if ([string hasPrefix:@"{"]) {
+            // An array has been found. Call this method recursively
+            resourcesToValidate--;
+            if ([_verboseLogSwitch isOn]) NSLog(@"Array found while parsing.");
+            //[parsedText appendString:@"{\n"];
+            [parsedText appendString:@"\n"];
+            
+            NSDictionary *dic = [string propertyListFromStringsFileFormat];
+            if ([dic count] > 0) {
+                NSArray *keys = [[NSArray alloc] initWithArray:[dic allKeys]];
+                NSArray *values = [[NSArray alloc] initWithArray:[dic allValues]];
+                if ([_verboseLogSwitch isOn]) NSLog(@"Parsing array successful. %i elements found.", [keys count]);
+                
+                // insert new keys and values into keyArray and valueArray
+                # warning arrays in arrays won't be detected any more.
+                
+                for (int j = 0; j < [keys count]; j++) {
+                    [keyArray insertObject:[keys objectAtIndex:j] atIndex:i+j+1];
+                    [valueArray insertObject:[values objectAtIndex:j] atIndex:i+j+1];
+                    NSLog(@"object at index %i: %@",i+j+1,[keyArray objectAtIndex:i+j+1]);
+                    resourcesToValidate++;
+                    [foundResourceKeys addObject:@""];
+                    [foundResourceValues addObject:@""];
+                }
+                
+                NSLog(@"keyArray count: %i",[keyArray count]);
+
+                
+                //iter = [[NSMutableString alloc] initWithString:[iter substringToIndex:[iter length]-1]];
+
+            } else
+                if ([_verboseLogSwitch isOn]) NSLog(@"Error in parsing array.");
+            
+            //[parsedText appendString:@"}"];
+            
+        } else {
+            // No array.
+            [parsedText appendString:string];
+
+            NSURL *link = [[NSURL alloc] initWithString:string];
+            
+            /*
+            for (int j = i+1; j < [keyArray count]; j++) {
+                if ([[keyArray objectAtIndex:i] isEqualToString:[keyArray objectAtIndex:j]]) {
+                    key = [[NSString alloc] initWithFormat:@"%@ (%@)", [keyArray objectAtIndex:i], [valueArray objectAtIndex:j]];
+                    [keyArray replaceObjectAtIndex:i withObject:key];
+                }
+             }
+             */
+            
+            //key = [[NSString alloc] initWithFormat:@"%@ (%@)", [keyArray objectAtIndex:i], [valueArray objectAtIndex:j]];
+            //[keyArray replaceObjectAtIndex:i withObject:key];
+            
+        
+            [self validateURL:link withKey:key withIndex:i];
+        }
+        [parsedText appendString:@"\n"];
+    }
+}
+
+-(void)validateURL:(NSURL*)link
+           withKey:(NSString*)key
+         withIndex:(NSInteger)i {
+    
+    if (link == nil) {
+        // URL is invalid.
+        validatedResources++;
+        if ([_verboseLogSwitch isOn]) NSLog(@"\"%@\" cannot be part of a well-formed url. (%i/%i)",[valueArray objectAtIndex:i],validatedResources,resourcesToValidate);
+        return;
+    }
+    
+    NSURL *candidate;
+    if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"])
+        // Link beginnt mit http beginnt
+        candidate = [link copy];
+    else if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]) {
+        // Link beginnt mit /, teste base url + link auf valide Resource
+        NSString *candidateString = [[NSString alloc] initWithFormat:@"%@%@",[self urlPart:_url.text definePart:@"baseUrl"],link];
+        candidate = [[NSURL alloc] initWithString:candidateString];
+    }
+    else {
+        // Link beginnt weder mit http noch mit /, teste aktuelles Verzeichnis + link auf valide Resource
+        NSString *prevPath = [self urlPart:_url.text definePart:@"highestDir"];
+        NSString *candidateString;
+        if ([prevPath hasSuffix:@"/"])
+            candidateString = [[NSString alloc] initWithFormat:@"%@%@",prevPath,link];
+        else
+            candidateString = [[NSString alloc] initWithFormat:@"%@/%@",prevPath,link];
+        candidate = [[NSURL alloc] initWithString:candidateString];
+    }
+    if (candidate && candidate.scheme && candidate.host) {
+        // well-formed
+    
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:candidate];
+        [request setHTTPMethod:@"HEAD"];
+    
+        validatingResourcesState = YES;
+        NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
+    
+        NSNumber *iAsNSNumber = [[NSNumber alloc] initWithInt:i];
+        // ARC doesn't allow cast from NSInteger to id.  But NSInteger -> NSNumber -> id is valid.
+        [foundResourcesValidateConnections setValue:iAsNSNumber forKey:[connection description]];
+/*
+    NSHTTPURLResponse* candidateResponse;
+    NSError* err = nil;
+    
+    //Capturing server response
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&candidateResponse error:&err];
+ */
+
+        if ([_verboseLogSwitch isOn]) NSLog(@"link %@ -> %@ is well-formed. Checking reachability...", link, candidate);
+    } else {
+        validatedResources++;
+        if ([_verboseLogSwitch isOn]) NSLog(@"Testing link %@ -> %@: well-formed: no (%i/%i)", link, candidate,validatedResources,resourcesToValidate);
+    }
+}
+
+-(void)validateDidFinish {
+    // trim arrays, fields with empty strings should be deleted
+    for (int i = 0; i < [foundResourceKeys count]; i++) {
+        if ([[foundResourceKeys objectAtIndex:i] isEqualToString:@""]) {
+            [foundResourceKeys removeObjectAtIndex:i];
+            [foundResourceValues removeObjectAtIndex:i];
+            i--;
+        }
+    }
+    
+    NSLog(@"%i resources added.",[foundResourceKeys count]);
+
     if ([foundResourceKeys count] > 0) {
+        
+        [_progressBarDescription setHidden:YES];
+        [_loadProgressBar setHidden:YES];
         
         _contentScrollViewText.text = parsedText;
         [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
@@ -878,65 +1117,6 @@
     }
     
     // ********** End Building TableView **********
-
-}
-
-
-// ********** Begin building Found Resources **********
-
-- (void)processKeys:(NSArray*)keys andValues:(NSArray*)values {
-    
-    // shifting on the "parsed" tab for nice printing if an array is found:
-    
-    if (!iter)
-        iter = [[NSMutableString alloc] init];
-    else
-        [iter appendString:@"\t"];
-    
-    // process key and values:
-    
-    for(int i = 0; i < [keys count]; i++) {
-        NSString *key = [[NSString alloc] initWithString:[keys objectAtIndex:i]];
-        NSString *value = [[NSString alloc] initWithFormat:@"%@",[values objectAtIndex:i]];
-        [parsedText appendFormat:@"%@%@",iter,key];
-        [parsedText appendString:@": "];
-        NSString *string = [[NSString alloc] initWithFormat:@"%@",value];
-
-        if ([string hasPrefix:@"{"]) {
-            // An array has been found. Call this method recursively
-            if ([_verboseLogSwitch isOn]) NSLog(@"Array found while parsing.");
-            [parsedText appendString:@"{\n"];
-            
-            NSDictionary *dic = [string propertyListFromStringsFileFormat];
-            if ([dic count] > 0) {
-                NSArray *arrayKeys = [[NSArray alloc] initWithArray:[dic allKeys]];
-                NSArray *arrayValues = [[NSArray alloc] initWithArray:[dic allValues]];
-                if ([_verboseLogSwitch isOn]) NSLog(@"Parsing array successful. %i elements found.", [arrayKeys count]);
-                [self processKeys:arrayKeys andValues:arrayValues];
-                iter = [[NSMutableString alloc] initWithString:[iter substringToIndex:[iter length]-1]];
-
-            } else
-                if ([_verboseLogSwitch isOn]) NSLog(@"Error in parsing array.");
-            
-            [parsedText appendString:@"}"];
-            
-        } else {
-            // No array.
-            [parsedText appendString:string];
-            NSURL *link = [[NSURL alloc] initWithString:string];
-            BOOL isValidResource = ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"http"] ||
-                                    [[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]);
-            if (isValidResource) {
-                for (int j = i+1; j < [keys count]; j++) {
-                    if ([[keys objectAtIndex:i] isEqualToString:[keys objectAtIndex:j]])
-                        key = [[NSString alloc] initWithFormat:@"%@ (%@)", [keys objectAtIndex:j], [values objectAtIndex:j]];
-                }
-                [foundResourceKeys addObject:key]; // Oder vielleicht besser wechseln auf "link"? Ausprobieren!
-                [foundResourceValues addObject:string];
-            }
-        }
-        [parsedText appendString:@"\n"];
-    }
 }
 
 // ********** End building Found Resources **********
@@ -961,6 +1141,7 @@
         // baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
         // and the full url needs to be built
         [resourceTableViewController setReferenceToBaseUrl:[self urlPart:_url.text definePart:@"baseUrl"]];
+        [resourceTableViewController setReferenceToHighestDir:[self urlPart:_url.text definePart:@"highestDir"]];
         
     } else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"]) {
         LogOutputViewController *logOutputViewController = [segue destinationViewController];

@@ -192,11 +192,11 @@
         // Is a URL. Passing to main controller.
         _referenceToUrl.text = resource;
     else if ([resource hasPrefix:@"/"])
-        // It's just the resource. Use the former base URL in combination with that.
+        // prefix / - use the former base URL in combination with that.
         _referenceToUrl.text = [[NSString alloc] initWithFormat:@"%@%@",_referenceToBaseUrl,resource];
     else
-        // Neither url nor resource. Should not be possible to land here. But in case... 
-        NSLog(@"This shouldn't be happening.");
+        // Neither http nor / as prefix
+        _referenceToUrl.text = [[NSString alloc] initWithFormat:@"%@%@",_referenceToHighestDir,resource];
     
     // Use the passed reference to the popover cntroller to dismiss this view.
     [_referenceToPopoverController dismissPopoverAnimated:YES];

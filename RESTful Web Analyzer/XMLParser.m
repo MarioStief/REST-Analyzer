@@ -34,9 +34,9 @@ didStartElement:(NSString *)elementName
         
         // Alt: Anzeige mit Attribut
         // alt:
-        // NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
+        NSString *key = [[NSString alloc] initWithFormat:@"%@ (%@)", elementName, [keys objectAtIndex:i]];
         // neu:
-        NSString *key = [[NSString alloc] initWithFormat:@"%@", elementName];
+        //NSString *key = [[NSString alloc] initWithFormat:@"%@", elementName];
         [_keyArray addObject:key];
 
         
