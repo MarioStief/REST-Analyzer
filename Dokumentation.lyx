@@ -99,6 +99,7 @@ Möchte man seine erste App für ein Apple-Gerät entwickeln, steht man zuallere
  Anders als C# greift das in den frühen 80ern entwickelte ObjC auf das prozedual
 e C zurück, die objektorientierte Erweiterung ist hingegen an Smalltalk
  angelehnt und von der C-Syntax strikt getrennt.
+ Die syntaktisch wichtigsten Neuerungen sind Klassen und Methodenaufrufe.
  Das gleiche Erweiterungskonzept findet auch auf andere prozeduale Sprachen
  Anwendung, so werden zum Beispiel aus Pascal und JavaScript, welche über
  kein Klassenkonzept verfügen, die um Objektorientiertheit ergänzten Sprachen
@@ -109,7 +110,7 @@ e C zurück, die objektorientierte Erweiterung ist hingegen an Smalltalk
 Wie aus der C-Welt bekannt haben Header die Dateiendung .h.
  Die Quellcodedateien haben die Endung .m, wenn es sich hierbei um reinen
  ObjC- bzw.
- C-Code handelt; eine Quellcodedateie mit der Endung .mm kann darüber hinaus
+ C-Code handelt; eine Quellcodedateien mit der Endung .mm kann darüber hinaus
  aber auch noch für C++ geschriebenen Code enthalten.
  Statt #include sollte man hier auf #import zurückgreifen, weil es sicher
  stellt, dass die angegebene Datei nie mehr als einmal eingebunden wird.
@@ -141,8 +142,161 @@ dynamisches Binden
 \shape default
  - im Gegensatz zu verwendeten C-Funktionen, die bei der Kompilierung bereits
  statisch gebunden werden.
- Es lässt sich sogar eine klassenmethode implementieren, welche auch Nachtichten
+ Es lässt sich sogar eine Klassenmethode implementieren, welche auf Nachrichten
  reagiert, für die die Klasse keine eigene Implementierung bereitstellt.
+ Abstrakte Methoden kennt ObjC übrigens nicht - jede Klasse muss immer vollständ
+ig implementiert werden, damit stets Objekte dieser Klasse erzeugt werden
+ können.
+\end_layout
+
+\begin_layout Standard
+Ebenso wie in C++ lassen sich aus einer Klasse Objekte erzeugen.
+ Darüber hinaus ist aber jede Klasse selbst als Objekt ansprechbar.
+ So wie ein solches Klassenobjekt ebenso in der Lage ist, Nachrichten zu
+ empfangen, erfolgt das Binden der entsprechenden Methoden ebenfalls erst
+ zur Laufzeit.
+ Strings werden in ObjC in der Notation @
+\begin_inset Quotes erd
+\end_inset
+
+…
+\begin_inset Quotes erd
+\end_inset
+
+ erzeugt.
+ Dieser String ist ein Objekt vom Typ NSString und als solcher ebenfalls
+ in der Lage, Nachrichten zu empfangen.
+ Wird das @ weggelassen, wird ein Nullterminierter C-String erzeugt.
+ Per Vorgabe besitzen die Datentypen in ObjC die gleiche Typisierung wie
+ in C: Sie sind statisch, schwach und explizit.
+ Für das Konzept der dynamischen Typisierung existiert der Datentyp id,
+ welcher einen Zeiger auf ein Objekt beliebiger Klasse repräsentiert und
+ an den jede beliebige Nachricht gesendet werden kann.
+ Falls der Typ des Objektes diese Methode jedoch nicht unterstützt, kommt
+ es selbstverständlich zu einem Laufzeitfehler.
+\end_layout
+
+\begin_layout Standard
+Ein neues Objekt einer Klasse wird erzeugt, indem eine Nachricht an das
+ zugehörige Klassenobjekt gesendet wird.
+ Für gewöhnlich passiert dies beim Programmstart, im Gegensatz zu C++ können
+ bei ObjC jedoch auch während der Laufzeit noch neue Objekte erstellt werden.
+ Aus C++/Java bekannte überladene Methoden findet man so in ObjC nicht mehr;
+ eine Nachricht an eine Methode besteht aus einem 
+\shape italic
+Selektor
+\shape default
+ - dem Methodennamen - und den Parametern.
+ Das Laufzeitsystem sucht bei einer eingehenden Nachricht nach einer solchen
+ Methode und führt diese im Erfolgsfall aus.
+ Wird keine entsprechende Methode gefunden, wird ein 
+\shape italic
+nil
+\shape default
+ zurückgegeben.
+ Es besteht natürlich auch die Möglichkeit, ein Objekt vorher zu fragen,
+ ob eine bestimmte Nachricht verstanden wird.
+ Diese Fähigeit der Selbstkenntnis beinhaltet ebenfalls das Ermitteln der
+ eigenen Klasse oder das Wissen, ob seine Klasse eine Unterklasse einer
+ bestimmten anderen Klasse ist und nennt sich Reflexion und sollte dem ein
+ oder anderen ebenfalls aus der C++/Java-Welt bekannt sein.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+if([geometricFigure respondsToSelector:@selector(getShape)]) { … }
+\end_layout
+
+\begin_layout Standard
+Dem Smalltalk-Erweiterungsanteil verdankt ObjC die verwendete Notation mit
+ eckigen Klammern, um Nachrichten zu versenden.
+ Zuerst wird das Empfängerobjekt genannt, anschließend der Selektor und
+ ggfls.
+ der Parameter.
+ Ist der Empfänger der Nachricht das gleiche Objekt, von dem aus die Nachricht
+ versendet wird, verwendet man 
+\family typewriter
+\size small
+self
+\family default
+\size default
+.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+// somewhere lost in code:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSInteger age = [self computeAgeFromYear:1981 withMonth:5 andDay:23]
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+// method declaration:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+- (NSInteger)computeAgeFromYear:(NSInteger)birthyear
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                      withMonth:(NSInteger)month
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                         andDay:(NSInteger)day { … }
+\end_layout
+
+\begin_layout Standard
+Diese Schreibweise ist für jemanden, der aus der C++/Java-Welt kommt äußerst
+ gewöhnungsbedürftig, da hier jeder Parameter eine explizite Benennung erfordert
+ und Methodennamen können in ObjC durchaus sehr lang werden.
+ Hat man sich jedoch einmal daran gewöhnt, möchte man dies jedoch nur schwer
+ wieder missen wollen, fördert es die Lesbarkeit und Verständlichkeit des
+ Codes ungemein.
+\end_layout
+
+\begin_layout Standard
+Das Minus-Präfix zu Beginn der oben stehenden Methode zeigt auf, dass es
+ sich hierbei um eine Objektmethode handelt.
+ Eine Klassenmethode wird durch ein Plus kenntlich gemacht.
+ Der oft verwendete verkettete Befehl 
+\family typewriter
+\size small
+[[class alloc] init]
+\family default
+\size default
+ ist wie folgt implementiert: 
+\family typewriter
+\size small
++(id)alloc;
+\family default
+\size default
+ ist die Klassenmethode, welche Speicher für das Objekt reserviert, anschließend
+ initialisiert sich das erzeugte Objekt durch den Aufruf von 
+\family typewriter
+\size small
+-(id)init;
+\family default
+\size default
+.
 \end_layout
 
 \begin_layout Subsection*
@@ -239,6 +393,47 @@ Cocoa
 \shape default
 -API basieren; möchte man eine iOS-Anwendung entwickeln, stellt Apple hierfür
  die API Cocoa Touch bereit.
+\end_layout
+
+\begin_layout Standard
+Da es vor allem auf mobilen Geräten eher zu Resourcenknappheit kommt als
+ auf Desktop-Systemen, sollte man hier einen entsprechend resourcensparenden
+ Programierstil pflegen und Resourcen, die nicht mehr benötigt werden, nach
+ der Verwendung wieder freigeben.
+ In XCode 4.2 wurde das Automatic Reference Counting eingeführt, um sich
+ dieses Problemes anzunehmen.
+ Die bislang verwendeten 
+\family typewriter
+\size small
+retain
+\family default
+\size default
+ und 
+\family typewriter
+\size small
+release
+\family default
+\size default
+-Nachrichten, die bisher vom Programmierer verwendet wurden um Speicher
+ freizugeben oder eben diese Freigabe zu verhindern, sind somit obsolet.
+ Statt dessen übernimmt nun der Compiler die Referenzzählung und fügt dem
+ Code beim Übersetzen die entsprechenden 
+\family typewriter
+\size small
+retain
+\family default
+\size default
+ und 
+\family typewriter
+\size small
+release
+\family default
+\size default
+-Nachrichten hinzu.
+\end_layout
+
+\begin_layout Standard
+- Hilfe bei der Suche nach eckigen Klammern
 \end_layout
 
 \begin_layout Section

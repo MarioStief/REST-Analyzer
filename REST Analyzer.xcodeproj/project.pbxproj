@@ -181,7 +181,6 @@
 		AC8B878115DF646000E12B48 /* RESTful Web Analyzer */ = {
 			isa = PBXGroup;
 			children = (
-				ACB2F18316232FEA0047C497 /* code.png */,
 				AC8B878A15DF646000E12B48 /* AppDelegate.h */,
 				AC8B878B15DF646000E12B48 /* AppDelegate.m */,
 				AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */,
@@ -205,6 +204,7 @@
 		AC8B878215DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ACB2F18316232FEA0047C497 /* code.png */,
 				ACBF1CAF162A1E1800D4410B /* Trash.png */,
 				ACCBB93A1622CEBC00E097E3 /* Magnifier.png */,
 				AC263D25161E602600173788 /* Globe.png */,
