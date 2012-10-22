@@ -48,6 +48,7 @@
     BOOL validatingResourcesState;
     NSInteger resourcesToValidate;
     NSInteger validatedResources;
+    NSInteger staticIndex;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;
