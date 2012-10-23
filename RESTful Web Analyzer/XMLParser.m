@@ -24,7 +24,7 @@ didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict {
-    if (_verbose) NSLog(@"processing %@...", elementName);
+    //if (_verbose) NSLog(@"processing %@...", elementName);
     actualElement = elementName;
  
     NSArray *keys = [attributeDict allKeys];
