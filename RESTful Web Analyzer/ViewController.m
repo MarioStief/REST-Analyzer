@@ -6,6 +6,13 @@
 //
 //
 
+// surpress the timestamp and process name in nslog, there is no need for that on ipad
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define NSLog(...) {}
+#endif
+
 #import "ViewController.h"
 
 @implementation ViewController
@@ -60,12 +67,12 @@
     headerValuesArray = [[NSMutableArray alloc] init];
     
 #pragma debug
-    [_verboseLogSwitch setOn:YES];
+    // [_verboseLogSwitch setOn:YES];
     // Todo: finding data
     // _url.text = @"http://dblp.uni-trier.de/rec/bibtex/conf/ideal/HuangNLC00.xml";
     // _url.text = @"http://jabber.ccc.de:5222/";
     // Debug: JSON
-    _url.text = @"https://graph.facebook.com/19292868552";
+    // _url.text = @"https://graph.facebook.com/19292868552";
     // _url.text = @"test:test@test.deathangel.net/test.json";
     
 }
@@ -394,6 +401,11 @@
     validatingResourcesState = NO;
     validatedResources = 0;
     staticIndex = 0;
+    // because the check for valid resources is a asynchronous request and the responsed comes without order
+    // adding the resources at the right index keeps an order for them
+    foundResourcesValidateConnections = [[NSMutableDictionary alloc] init];
+    [imageView removeFromSuperview];
+
 
     // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
@@ -548,7 +560,10 @@
                         "\n"
                         "Using free icons from:\n"
                         "• www.vistaico.com\n"
-                        "• www.icons-land.com"];
+                        "• www.icons-land.com\n"
+                        "\n"
+                        "Contact adress:\n"
+                        "mario.stief@gmail.com\n"];
     //NSMutableString *requestHeaders = [[NSMutableString alloc] initWithString:@"Request Headers: "];
     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Impressum"
                                                         message:string
@@ -661,9 +676,14 @@
     // ********** Begin validating resource **********
     
     if (validatingResourcesState) {
+        //NSLog(@"%@",foundResourcesValidateConnections);
+        //int k = [[foundResourcesValidateConnections valueForKey:[connection description]] integerValue];
+        //NSLog(@"%@ -> %@",[connection description],[keyArray objectAtIndex:k]);
+        
+        
         if ([_verboseLogSwitch isOn]) {
             NSInteger i = [[foundResourcesValidateConnections objectForKey:[connection description]] integerValue];
-            NSLog(@"Receiving response %@ for resource \"%@\": %i",connection,[valueArray objectAtIndex:i],[_response statusCode]);
+            NSLog(@"Receiving response %@ for resource \"%@\": %i -> %@",connection,[valueArray objectAtIndex:i],[_response statusCode],([_response statusCode] < 400) ? @"valid" : @"not valid");
         }
         validatedResources++;
         // calculate process bar
@@ -678,10 +698,17 @@
             NSInteger index = [indexNumber integerValue];
             NSString *key = [keyArray objectAtIndex:index];
             NSString *value = [valueArray objectAtIndex:index];
+            
             [foundResourceKeys replaceObjectAtIndex:index withObject:key];
-            [foundResourceValues replaceObjectAtIndex:index withObject:value];
-            if ([_verboseLogSwitch isOn]) NSLog(@"Adding #%i \"%@\":\"%@\" to resources... (%i/%i)",index,key,value,validatedResources,resourcesToValidate);
+            NSString *valueAsString = [[NSString alloc] initWithFormat:@"%@",value];
+            // should be string because class ResourceTableViewController uses string operations with it
+            [foundResourceValues replaceObjectAtIndex:index withObject:valueAsString];
+            if ([_verboseLogSwitch isOn]) NSLog(@"Adding #%i \"%@\":\"%@\" to resources... %i %% finished.",index,key,value,100*validatedResources/resourcesToValidate);
         }
+        
+        // filling structure of found ressources
+        // NSLog(@"foundResourceKeys: %@",foundResourceKeys);
+
         if (validatedResources == resourcesToValidate)
             [self validateDidFinish];
         return;
@@ -689,7 +716,6 @@
     
     // ********** End validating resource **********
 
-    
     // ********** Begin Receiving Response Header **********
     
     response = _response;
@@ -819,7 +845,7 @@
     if (imageType) {
         // Image detected. Showing this instead of text.
         NSLog(@"%@ detected.",imageType);
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:[_contentScrollViewText bounds]];
+        imageView = [[UIImageView alloc] initWithFrame:[_contentScrollViewText bounds]];
         [imageView setImage:[UIImage imageWithData:responseBodyData]];
         [_contentScrollViewText addSubview:imageView];
     } else
@@ -899,6 +925,13 @@
     
     if (parsingSuccess) {
 
+        foundResourceKeys = [[NSMutableArray alloc] initWithCapacity:resourcesToValidate];
+        foundResourceValues = [[NSMutableArray alloc] initWithCapacity:resourcesToValidate];
+        for (int i = 0; i < resourcesToValidate; i++) {
+            [foundResourceKeys addObject:@""];
+            [foundResourceValues addObject:@""];
+        }
+        
         [self processKeys:keyArray withValues:valueArray];
         
         if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
@@ -914,16 +947,6 @@
 
 - (void)processKeys:(NSArray*)localKeys
          withValues:(NSArray*)localValues {
-    
-    foundResourceKeys = [[NSMutableArray alloc] initWithCapacity:resourcesToValidate];
-    foundResourceValues = [[NSMutableArray alloc] initWithCapacity:resourcesToValidate];
-    for (int i = 0; i < resourcesToValidate; i++) {
-        [foundResourceKeys addObject:@""];
-        [foundResourceValues addObject:@""];
-    }
-    // because the check for valid resources is a asynchronous request and the responsed comes without order
-    // adding the resources at the right index keeps an order for them
-    foundResourcesValidateConnections = [[NSMutableDictionary alloc] init];
     
     // Reactivate progress bar:
     _contentScrollViewText.text = @"";
@@ -945,6 +968,8 @@
     NSLog(@"Validating potential resources for well-formedness and reachability...");
     
     for(int i = 0; i < [localKeys count]; i++) {
+        
+        //NSLog(@"********** now processing #%i (#%i) **********",i,staticIndex);
         NSString *key = [[NSString alloc] initWithString:[localKeys objectAtIndex:i]];
         NSString *value = [[NSString alloc] initWithFormat:@"%@",[localValues objectAtIndex:i]];
         
@@ -952,47 +977,76 @@
         [parsedText appendString:@": "];
         NSString *string = [[NSString alloc] initWithFormat:@"%@",value];
 
-        if ([string hasPrefix:@"{"]) {
-            // An array has been found. Call this method recursively
+        if ([string hasPrefix:@"{"] || [string hasPrefix:@"("]) {
+            // An array has been found
             resourcesToValidate--;
             if ([_verboseLogSwitch isOn]) NSLog(@"Array found while parsing.");
-            [parsedText appendString:@"{\n"];
             
             NSDictionary *dic = [string propertyListFromStringsFileFormat];
-            if ([dic count] > 0) {
-                NSArray *keys = [[NSArray alloc] initWithArray:[dic allKeys]];
+            if ([dic count] == 0) {
+                [parsedText appendString:string];
+                if ([_verboseLogSwitch isOn]) NSLog(@"Error in parsing array.");
+                if ([string hasPrefix:@"{"] || [string hasPrefix:@"("]) {
+                    #pragma mark Array in array detected - room for improvement."
+                    NSLog(@"Array in array detected - room for improvement.");
+                    // string parsen. string hat muster: ({…},{…},…) oder so ähnlich
+                    // in substrings aufteilen
+                    // für jeden substring: NSDictionary *dic = [substring propertyListFromStringsFileFormat];
+                    // dann die else hier drunter
+                }
+            } else {
+                ([string hasPrefix:@"{"]) ? [parsedText appendString:@"{\n"] : [parsedText appendString:@"(\n"];
+                NSMutableArray *keys = [[NSMutableArray alloc] initWithArray:[dic allKeys]];
                 NSArray *values = [[NSArray alloc] initWithArray:[dic allValues]];
                 if ([_verboseLogSwitch isOn]) NSLog(@"Parsing array successful. %i elements found.", [keys count]);
-                
+
                 // insert new keys and values into keyArray and valueArray
-                # warning Baustelle
                 
                 for (int j = 0; j < [keys count]; j++) {
-                    [keyArray insertObject:[keys objectAtIndex:j] atIndex:i+j+1];
-                    [valueArray insertObject:[values objectAtIndex:j] atIndex:i+j+1];
-                    NSLog(@"object at index %i: %@",i+j+1,[keyArray objectAtIndex:i+j+1]);
+                    // add path to key:
+                    NSString *newKeyWithArrayPath = [[NSString alloc] initWithFormat:@"%@/%@",[localKeys objectAtIndex:i],[keys objectAtIndex:j]];
+                    [keys replaceObjectAtIndex:j withObject:newKeyWithArrayPath];
+                    // insert new objects into global key- and value-arrays to be processed in the next loop iteration
+                    [keyArray insertObject:[keys objectAtIndex:j] atIndex:staticIndex+j+1];
+                    [valueArray insertObject:[values objectAtIndex:j] atIndex:staticIndex+j+1];
+                    //NSLog(@"object at index %i: %@",staticIndex+j+1,[keyArray objectAtIndex:staticIndex+j+1]);
                     resourcesToValidate++;
                     [foundResourceKeys addObject:@""];
                     [foundResourceValues addObject:@""];
                 }
-                i += [keys count];
-                NSLog(@"i set to %i",i);
                 
+                // remove the array containing key:value pair
                 [keyArray removeObjectAtIndex:staticIndex];
                 [valueArray removeObjectAtIndex:staticIndex];
                 [foundResourceKeys removeObjectAtIndex:staticIndex];
                 [foundResourceValues removeObjectAtIndex:staticIndex];
-                [self processKeys:keys withValues:values];
                 
-                NSLog(@"Array added. keyArray count: %i",[keyArray count]);
-
+                
+                // call this method recursively
+                [self processKeys:keys withValues:values];
+                i += [keys count];
+                // undo the last increase from the processKeys iteration
+                i--;
+                staticIndex--;
+                
+                //NSLog(@"Array added. keyArray count: %i",[keyArray count]);
+                /*
+                NSLog(@"######################################################################################");
+                for (int k = 0; k < [keyArray count]; k++)
+                    NSLog(@"#%i,%@:%@",k,[keyArray objectAtIndex:k],[valueArray objectAtIndex:k]);
+                NSLog(@"######################################################################################");
+                */
+                /*
+                for (int k = 0; k < [keyArray count]; k++) {
+                    NSLog(@"#%i,%@:%@",k,[keyArray objectAtIndex:k],[valueArray objectAtIndex:k]);
+                }
+                 */
                 
                 iter = [[NSMutableString alloc] initWithString:[iter substringToIndex:[iter length]-1]];
+                ([string hasPrefix:@"{"]) ? [parsedText appendString:@"}"] : [parsedText appendString:@")"];
 
-            } else
-                if ([_verboseLogSwitch isOn]) NSLog(@"Error in parsing array.");
-            
-            [parsedText appendString:@"}"];
+
+            }
             
         } else {
             // No array.
@@ -1011,8 +1065,7 @@
            withKey:(NSString*)key
          withIndex:(NSInteger)i {
     
-    NSLog(@"key: %@",key);
-    NSLog(@"keyarray: %@",[keyArray objectAtIndex:i]);
+    //NSLog(@"#%i: key: %@",i,key);
     
     if (link == nil) {
         // URL is invalid.
@@ -1052,9 +1105,16 @@
     
         NSNumber *iAsNSNumber = [[NSNumber alloc] initWithInt:i];
         // ARC doesn't allow cast from NSInteger to id.  But NSInteger -> NSNumber -> id is valid.
+        
         [foundResourcesValidateConnections setValue:iAsNSNumber forKey:[connection description]];
-#warning request send
-        NSLog(@"Request %@ sent for link %@",connection,candidate);
+        //NSLog(@"Adding #%i: %@ (%@) to foundResourcesValidateConnections...",i,[keyArray objectAtIndex:i],[connection description]);
+        //NSLog(@"Request %@ (\"%@\":\"%@\") sent for link %@",connection,[keyArray objectAtIndex:i],[valueArray objectAtIndex:i],candidate);
+        
+        // filling structure of sent responses for validating
+        //NSLog(@"foundResourcesValidateConnections: %@",foundResourcesValidateConnections);
+        //int k = [[foundResourcesValidateConnections valueForKey:[connection description]] integerValue];
+        //NSLog(@"%@ -> %@",[connection description],[keyArray objectAtIndex:k]);
+        
 /*
     NSHTTPURLResponse* candidateResponse;
     NSError* err = nil;
@@ -1071,6 +1131,13 @@
 }
 
 -(void)validateDidFinish {
+    
+    // Connection succeeded in downloading the request.
+    NSLog(@"Loading complete.");
+    [_progressBarDescription setHidden:YES];
+    [_loadProgressBar setHidden:YES];
+    [_loadIndicatorView stopAnimating];
+    
     // trim arrays, fields with empty strings should be deleted
     for (int i = 0; i < [foundResourceKeys count]; i++) {
         if ([[foundResourceKeys objectAtIndex:i] isEqualToString:@""]) {
@@ -1097,17 +1164,19 @@
     
     // ********** Begin Console Output: Found Resources **********
     
+    //NSLog(foundResourceKeys);
+    //NSLog(foundResourceValues);
+    
     if ([_verboseLogSwitch isOn]) {
         NSLog(@"Found Resources: %i",[foundResourceKeys count]);
         for (int i = 0; i < [foundResourceKeys count]; i++) {
             NSString *key = [[NSString alloc] initWithString:[foundResourceKeys objectAtIndex:i]];
-            NSString *value = [[NSString alloc] initWithString:[foundResourceValues objectAtIndex:i]];
+            NSString *value = [[NSString alloc] initWithFormat:@"%@",[foundResourceValues objectAtIndex:i]];
             NSLog(@"Key: \"%@\", Value: \"%@\"",key, value);
         }
     }
     
     // ********** Begin Console Output: Found Resources **********
-    
     
     // ********** Begin Building TableView **********
     

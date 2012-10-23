@@ -49,6 +49,7 @@
     NSInteger resourcesToValidate;
     NSInteger validatedResources;
     NSInteger staticIndex;
+    UIImageView *imageView;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *url;

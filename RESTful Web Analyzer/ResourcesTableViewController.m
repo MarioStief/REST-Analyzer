@@ -188,7 +188,7 @@
     NSString *resource = [_values objectAtIndex:[indexPath row]];
     
     // passing resource to url text field in the main view
-    if ([resource hasPrefix:@"http://"])
+    if ([resource hasPrefix:@"http://"] || [resource hasPrefix:@"https://"])
         // Is a URL. Passing to main controller.
         _referenceToUrl.text = resource;
     else if ([resource hasPrefix:@"/"])
