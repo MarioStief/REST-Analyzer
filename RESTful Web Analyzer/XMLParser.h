@@ -11,21 +11,19 @@
 // @class User;
 
 @interface XMLParser : NSObject <NSXMLParserDelegate> {
-    // an ad hoc string to hold element value
-//    NSMutableString *currentElementValue;
     NSString *actualElement;
-//    NSMutableArray *parsedElementsAsArray;
-    // user object
-    // array of user objects
-//    NSMutableArray *parsedElementsAsArray;
 }
 
-//@property (nonatomic, retain) User *user;
-//@property (nonatomic, retain) NSMutableArray *parsedElementsAsArray;
 @property (nonatomic, retain) NSMutableArray *keyArray;
 @property (nonatomic, retain) NSMutableArray *valueArray;
 @property (nonatomic) BOOL verbose;
 
 - (XMLParser *) initXMLParser;
+- (void)parser:(NSXMLParser *)parser
+didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qualifiedName
+    attributes:(NSDictionary *)attributeDict;
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string;
 
 @end

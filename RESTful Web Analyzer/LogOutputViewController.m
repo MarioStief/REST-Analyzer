@@ -47,13 +47,6 @@
     [super viewDidUnload];
 }
 
-// ********** "Show Logging Output" -> "Refresh" button pressed: **********
-- (IBAction)logRefreshButton:(id)sender {
-    // reading log from file
-    NSError *err;
-    _logOutputViewText.text = [[NSString alloc] initWithContentsOfFile:_referenceToLogPath encoding:NSASCIIStringEncoding error:&err];
-}
-
 // ********** "Show Logging Output" -> "Clear" button pressed: **********
 - (IBAction)logClearButton:(id)sender {
     // empty log file

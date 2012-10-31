@@ -6,7 +6,7 @@
 //
 //
 
-// surpress the timestamp and process name in nslog, there is no need for that on ipad
+// Surpress the timestamp and process name in NSLog, looks less overwhelming
 #ifdef DEBUG
 #define NSLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 #else
@@ -20,7 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // ********** Begin redirect logging output to file **********
+    
+    
+    // ******************** Begin redirect logging output to file ********************
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -28,7 +30,7 @@
     NSFileManager *filemgr;
     filemgr = [NSFileManager defaultManager];
     if ([filemgr fileExistsAtPath:logPath]) {
-        // NSLog (@"Existing log file found at %@ - logging enabled.", logPath);
+        NSLog (@"Existing log file found at %@ - logging to file enabled.", logPath);
         freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
         [_logToFileSwitch setOn:YES];
         [_logFileButton setEnabled:YES];
@@ -36,41 +38,40 @@
         [_verboseLogSwitch setEnabled:YES];
     }
     else
-        // all disabled by default, do nothing here
+        // no logging by default
         NSLog (@"No existing log file found, logging disabled.");
 
-    // ********** End redirect logging output to file **********
-
-	// Do any additional setup after loading the view, typically from a nib.
+    // ******************** End redirect logging output to file ********************
+    
+    
+    
+	// ******************** Begin additional setup ********************
+    
     httpVerbs = [[NSArray alloc] initWithObjects:@"GET", @"POST", @"PUT", @"DELETE", @"HEAD", nil];
     parsedText = [[NSMutableString alloc] init];
     foundResourceKeys = [[NSMutableArray alloc] init];
     foundResourceValues = [[NSMutableArray alloc] init];
-    [_outputSwitch setEnabled:NO forSegmentAtIndex:0]; // Muss einzeln durchgeführt werden,
-    [_outputSwitch setEnabled:NO forSegmentAtIndex:1]; // da sonst das Feld permanent
-    [_outputSwitch setEnabled:NO forSegmentAtIndex:2]; // ausgeschaltet ist.
+    [_outputSwitch setEnabled:NO forSegmentAtIndex:0]; // if globally disabled
+    [_outputSwitch setEnabled:NO forSegmentAtIndex:1]; // single parts can't
+    [_outputSwitch setEnabled:NO forSegmentAtIndex:2]; // separately set enabled
     [_showResourcesButton setEnabled:NO];
     numberOfRows = 0;
-    //indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [_fontSize setUserInteractionEnabled:NO]; // field that shows font size shouldn't be able to call the keyboard
-    [_showResourcesButton setAlpha:0.5]; // more obvious that this is inactive yet
-    [_backButton setEnabled:NO]; // appearing inactive
-    [_forwardButton setEnabled:NO]; // appearing inactive
+    [_showResourcesButton setAlpha:0.5]; // decreased alpha makes it more obvious that this field is still inactive
+    [_backButton setEnabled:NO]; // set inactive
+    [_forwardButton setEnabled:NO]; // set inactive
     _contentScrollViewText.text = requestBody;
     [_bodyHeaderSwitch setSelectedSegmentIndex:1];
     generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
     requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
-    // [_loadProgressBar setHidden:YES]; // storyboard
-    // [_loadIndicatorView setHidesWhenStopped:YES]; // storyboard
-    //[_loadIndicatorView stopAnimating];
     headerKeysArray = [[NSMutableArray alloc] init];
     headerValuesArray = [[NSMutableArray alloc] init];
     
+    // ******************** End additional setup ********************
+    
+    
+    
 #pragma debug
-    // [_verboseLogSwitch setOn:YES];
-    // Todo: finding data
-    // _url.text = @"http://dblp.uni-trier.de/rec/bibtex/conf/ideal/HuangNLC00.xml";
-    // _url.text = @"http://jabber.ccc.de:5222/";
     // Debug: JSON
     // _url.text = @"https://graph.facebook.com/19292868552";
     // _url.text = @"test:test@test.deathangel.net/test.json";
@@ -78,6 +79,7 @@
 }
 
 - (void)viewDidUnload {
+    // cleaning the kitchen after cooking ;-)
     [self setRequestMethod:nil];
     [self setScrollView:nil];
     [self setDetectedJSON:nil];
@@ -112,13 +114,13 @@
     [super viewDidUnload];
 }
 
-// ********** Set up orientation change **********
+// ******************** Orientation change setup ********************
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
-// ********** Remove the onscreen keyboard after pressing "Go" button: **********
+// ******************** Remove the onscreen keyboard after pressing "Go" button: ********************
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -133,33 +135,42 @@
     return YES;
 }
 
-// ********** Begin Setup Picker View **********
 
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    //One column
+
+// ******************** Begin Setup Picker View ********************
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    
+    // one column here should satisfy everyone :)
     return 1;
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    //set number of rows
+    
+    // number of rows is the quantity of the http methods
     return [httpVerbs count];
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    //set item per row
+    
+    // putting the http methods in the picker view
     return [httpVerbs objectAtIndex:row];
 }
 
-// ********** End Setup Picker View **********
+// ******************** End Setup Picker View ********************
 
 
-// ********** Begin Setup Table View **********
+
+// ******************** Begin Setup Table View ********************
 
 - (NSInteger)tableView:(UITableView *)headersTableView numberOfRowsInSection:(NSInteger)section {
-    return numberOfRows; //[foundResources count];
+    
+    // number of headers for the next request
+    return numberOfRows;
 }
 
 // ********** Begin set up cell **********
+
 - (UITableViewCell *)tableView:(UITableView *)headersTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"resourceCell";
@@ -170,42 +181,30 @@
                                                        reuseIdentifier:CellIdentifier];
     }
     
+    // Assign the text from the Array to the cell.
+    NSString *keyString = [headerKeysArray objectAtIndex:[indexPath row]];
+    NSString *valueAsString = [headerValuesArray objectAtIndex:[indexPath row]];
+    resourceTableViewCell.textLabel.text = keyString;
+    resourceTableViewCell.detailTextLabel.text = valueAsString;
+
     // Colorate the HTTP Headers
-    // entered header is a valid request header: color green text.
-    if ([generalHeaders containsObject:_keyTextField.text])
+    // entered header is a known general header: color green text.
+    if ([generalHeaders containsObject:keyString])
         resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-    else if ([requestHeaders containsObject:_keyTextField.text])
+    // entered header is a known request header: color bluegreen text.
+    else if ([requestHeaders containsObject:keyString])
         resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:1];
-        // if key exists AND value the same: also green text
-        /*
-        NSString *keyTextFieldString = [[NSString alloc] initWithFormat:@"%@",[parsedResponseAsDictionary objectForKey:_keyTextField.text]];
-        if ([keyTextFieldString isEqualToString:_valueTextField.text])
-            resourceTableViewCell.detailTextLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-         */
-    // if not: red text then.
+    // unknown: red text then.
     else
         resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
 
-    // Assign the text from the Array to the cell.
-    resourceTableViewCell.textLabel.text = [headerKeysArray objectAtIndex:[indexPath row]];
-    resourceTableViewCell.detailTextLabel.text = [headerValuesArray objectAtIndex:[indexPath row]];
-    
     return resourceTableViewCell;
 }
+
 // ********** End set up cell **********
 
 
-// ********** Begin header key info button **********
-
-- (IBAction)headerInfo:(id)sender {
-    NSString *string = [[NSMutableString alloc] initWithFormat:@"General Headers: %@\nRequest Headers: %@",generalHeaders,requestHeaders];
-    //NSMutableString *requestHeaders = [[NSMutableString alloc] initWithString:@"Request Headers: "];
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Header Keys"
-                                                        message:string
-                                                       delegate:self cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:nil];
-    [alertView show];
-}
+// ********** Header key info button **********
 
 - (IBAction)clearUrlField:(id)sender {
     _url.text = @"";
@@ -267,10 +266,12 @@
 }
 
 // ********** Swype cell for delete option **********
--(void)tableView:(UITableView*)headersTableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+
+- (void)tableView:(UITableView*)headersTableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 // ********** Process swype deletion **********
+
 - (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [headerKeysArray removeObjectAtIndex:[path row]];
@@ -280,10 +281,11 @@
     }
 }
 
-// ********** End Setup Table View **********
+// ******************** End Setup Table View ********************
 
 
-// ********** Begin change selected segment index (and refresh text) **********
+
+// ******************** Begin change selected segment index (and refresh text) ********************
 
 // outsourced method because it's code is used in "outputToggle" and in "fontSizeSliderMove":
 - (void)switchSegmentIndex {
@@ -303,10 +305,11 @@
 }
 
 
-// ********** End change selected segment index (and refresh text) **********
+// ******************** End change selected segment index (and refresh text) ********************
 
 
-// ********** Start using the Request/Response/Parsed output toggle: **********
+
+// ******************** Set up Request/Response/Parsed output toggle ********************
 
 - (IBAction)outputToggle:(id)sender {
     [self switchSegmentIndex]; // used for the toggle
@@ -316,10 +319,8 @@
     [self.navigationController pushViewController:self animated:YES];
 }
 
-// ********** End using the Request/Response/Parsed output toggle: **********
 
-
-// ********** Begin use font slider to change text field size **********
+// ******************** Begin use font slider to change text field size ********************
 
 - (IBAction)fontSizeSliderMove:(id)sender {
     _headerScrollViewText.font = [UIFont systemFontOfSize:_fontSizeSlider.value];
@@ -328,10 +329,11 @@
     [self switchSegmentIndex]; // used for the text refresh
 }
 
-// ********** End use font slider to change text field size **********
+// ******************** End use font slider to change text field size ********************
 
 
-// ********** Begin set up navigation buttons **********
+
+// ******************** Begin set up navigation buttons ********************
 
 - (IBAction)backButton:(id)sender {
     if ([_backButton isEnabled]) {
@@ -357,10 +359,11 @@
     }
 }
 
-// ********** End set up navigation buttons **********
+// ******************** End set up navigation buttons ********************
 
 
-// ********** GO button pressed: **********
+
+// ******************** GO button pressed: ********************
 - (IBAction)bodyHeaderToggle:(id)sender {
     if ([_bodyHeaderSwitch selectedSegmentIndex] == 0) {
         [_headerScrollViewText setHidden:NO];
@@ -373,47 +376,59 @@
 
 - (IBAction)go:(id)sender {
     
-    // ********** Remove Keyboard **********
+    // ******************** Remove Keyboard *******************
     [self.url resignFirstResponder];
     
-    // ********** New Request started: Do a full reset to avoid side effects **********
-    [_detectedJSON setHighlighted:NO];
-    [_detectedXML setHighlighted:NO];
-    _contentType.text = [[NSString alloc] init];
-    _encoding.text = [[NSString alloc] init];
+    // ******************** New Request started: Do a full reset to avoid side effects ********************
+    // buttons/switches
     [_outputSwitch setSelectedSegmentIndex:0];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:0];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:1];
     [_outputSwitch setEnabled:NO forSegmentAtIndex:2];
-    _headerScrollViewText.text = [[NSString alloc] init];
-    responseBody = [[NSString alloc] init];
-    parsedText = [[NSMutableString alloc] init];
     [_showResourcesButton setAlpha:0.5];
     [_showResourcesButton setEnabled:NO];
+    [_detectedJSON setHighlighted:NO];
+    [_detectedXML setHighlighted:NO];
+
+    // text fields
+    _contentType.text = [[NSString alloc] init];
+    _encoding.text = [[NSString alloc] init];
+    _headerScrollViewText.text = [[NSString alloc] init];
+    _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
+    _authentication.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
     _authentication.textColor = [UIColor blackColor];
     _authentication.text = @"none";
     _statusCode.text = [[NSString alloc] init];
     _statusCode.backgroundColor = [UIColor whiteColor];
-    responseBodyData = [[NSMutableData alloc] init];
-    iter = nil;
-    _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
-    _authentication.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
+
+    // clean other stuff
     validatingResourcesState = NO;
     validatedResources = 0;
     staticIndex = 0;
-    // because the check for valid resources is a asynchronous request and the responsed comes without order
-    // adding the resources at the right index keeps an order for them
+    
+    // check if scroll view contains an UIImageView from last run
     foundResourcesValidateConnections = [[NSMutableDictionary alloc] init];
-    [imageView removeFromSuperview];
+    for (int i = 0; i < [_contentScrollViewText.subviews count]; i++)
+        if ([[[_contentScrollViewText.subviews objectAtIndex:i] description] hasPrefix:@"<UIImageView"])
+            // if so -> delete
+            [[_contentScrollViewText.subviews objectAtIndex:i] removeFromSuperview];
 
+    
+    
+    // ******************** First initializations:  *******************
+    
+    responseBody = [[NSString alloc] init];
+    parsedText = [[NSMutableString alloc] init];
+    responseBodyData = [[NSMutableData alloc] init];
 
-    // ********** First initializations:  **********
     // Index of the selected HTTP method in the picker view:
-    methodId = [_requestMethod selectedRowInComponent:0];
+    NSInteger methodId = [_requestMethod selectedRowInComponent:0];
+    
     // HTTP method as String:
     NSString *calledMethodString = [[NSString alloc] initWithFormat:@"%@",[httpVerbs objectAtIndex:methodId]];
-    // Start request
-    [self startRequest:calledMethodString];
+    
+    // Start request:
+    [self startRequest:calledMethodString withMethodId:methodId];
 }
 
 // receiving a authentication challenge:
@@ -421,7 +436,7 @@
     // NSURLCredential supports HTTP Basic Authentication and HTTP Digest Authentication with username and password.
     // Client Certificate Authentication and Server Trust Authentication not implemented. Maybe later.
     
-    // ********** Begin Authentication **********
+    // ******************** Begin Authentication ********************
     
     // setting the authentication text field
     _authentication.text = @"required";
@@ -452,10 +467,10 @@
         NSLog(@"%@ failed: Authentication incorrect.",[challenge description]);
     }
     
-    // ********** End Authentication **********
+    // ******************** End Authentication ********************
 }
 
-// ********** Begin URL Processing **********
+// ******************** Begin URL Processing ********************
 
 - (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part {
     
@@ -523,10 +538,10 @@
 
 }
 
-// ********** End URL Processing **********
+// ******************** End URL Processing ********************
 
 
-// ********** Begin log to file **********
+// ******************** Begin log to file ********************
 
 - (IBAction)logToFileSwitch:(id)sender {
      // Logging to file switch enabled?
@@ -564,7 +579,6 @@
                         "\n"
                         "Contact adress:\n"
                         "mario.stief@gmail.com\n"];
-    //NSMutableString *requestHeaders = [[NSMutableString alloc] initWithString:@"Request Headers: "];
     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Impressum"
                                                         message:string
                                                        delegate:self
@@ -573,12 +587,13 @@
     [alertView show];
 }
 
-// ********** End log to file **********
+// ******************** End log to file ********************
 
 
-- (void)startRequest:(NSString*)requestMethodString {
+- (void)startRequest:(NSString*)requestMethodString
+        withMethodId:(NSInteger)methodId {
         
-    // ********** Begin Request **********
+    // ******************** Begin Request ********************
 
     NSLog(@"********** New Request **********");
     
@@ -590,7 +605,7 @@
     [request setMainDocumentURL:[[NSURL alloc]initWithString:[self urlPart:_url.text definePart:@"baseUrl"]]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
     [request setHTTPMethod:requestMethodString];
     
-    // ********** Begin Changing HTTP Headers **********
+    // ********** Change HTTP Headers **********
     
     for (int i = 0; i < [headerKeysArray count]; i++) {
         NSString *key = [headerKeysArray objectAtIndex:i];
@@ -599,29 +614,11 @@
         [request setValue:value forHTTPHeaderField:key];
     }
     
-    // ********** End Changing HTTP Headers **********
-
     // working with different methods
 
     switch (methodId) {
-            // GET:
-            // On Collection URI: List the URIs and perhaps other details of the collection's members.
-            // On Element URI: Retrieve a representation of the addressed member of the collection, expressed in an appropriate Internet media type.
-            // DELETE:
-            // On Collection URI: Delete the entire collection.
-            // On Element URI: Delete the addressed member of the collection.
-            // HEAD:
-            // On Collection URI: Retrieve Header.
-            // On Element URI: Retrieve Header.
-            
         case 1: // POST
-            // On Collection URI: Replace the entire collection with another collection.
-            // On Element URI: Replace the addressed member of the collection, or if it doesn't exist, create it.
         case 2: // PUT
-            // On Collection URI: Create a new entry in the collection. The new entry's URL is assigned automatically and is usually returned by the operation.
-            // On Element URI: Treat the addressed member as a collection in its own right and create a new entry in it.
-
-            // Case POST and PUT:
             // saving writen text field in String
             requestBody = _contentScrollViewText.text;
             // Add Body.
@@ -638,18 +635,14 @@
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
     NSLog(@"Sending request: %@ %@ (%@)",requestMethodString,urlString,connection);
 
-    // ********** End Request **********
+    // ******************** End Request ********************
     
     
-    // ********** Begin Filling Header + Body Fields: REQUEST **********
+    // ******************** Filling Header + Body Fields: REQUEST ********************
     
     requestHeader = [[NSString alloc] initWithFormat:@"%@",[[request allHTTPHeaderFields] description]];
-//    requestBody = [[NSString alloc] initWithFormat:@"%@",[request HTTPBody]];
     _headerScrollViewText.text = requestHeader;
-//    _contentScrollViewText.text = requestBody;
     [_outputSwitch setEnabled:YES forSegmentAtIndex:0]; // Request-Tab einschalten
-    
-    // ********** End Filling Header + Body Fields: REQUEST **********
 
 }
 
@@ -671,26 +664,21 @@
     NSLog(@"The following error occured: %@",error);
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)_response {
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {
 
-    // ********** Begin validating resource **********
-    
+    // ******************** Begin validating resource ********************
+
     if (validatingResourcesState) {
-        //NSLog(@"%@",foundResourcesValidateConnections);
-        //int k = [[foundResourcesValidateConnections valueForKey:[connection description]] integerValue];
-        //NSLog(@"%@ -> %@",[connection description],[keyArray objectAtIndex:k]);
-        
-        
         if ([_verboseLogSwitch isOn]) {
             NSInteger i = [[foundResourcesValidateConnections objectForKey:[connection description]] integerValue];
-            NSLog(@"Receiving response %@ for resource \"%@\": %i -> %@",connection,[valueArray objectAtIndex:i],[_response statusCode],([_response statusCode] < 400) ? @"valid" : @"not valid");
+            NSLog(@"Receiving response %@ for resource \"%@\": %i -> %@",connection,[valueArray objectAtIndex:i],[response statusCode],([response statusCode] < 400) ? @"valid" : @"not valid");
         }
         validatedResources++;
         // calculate process bar
         float progress = 1.00*validatedResources/resourcesToValidate;
         [_loadProgressBar setProgress:progress animated:NO];
         
-        if ([_response statusCode] < 400) {
+        if ([response statusCode] < 400) {
 
             // add resource to foundResources
 
@@ -705,20 +693,16 @@
             [foundResourceValues replaceObjectAtIndex:index withObject:valueAsString];
             if ([_verboseLogSwitch isOn]) NSLog(@"Adding #%i \"%@\":\"%@\" to resources... %i %% finished.",index,key,value,100*validatedResources/resourcesToValidate);
         }
-        
-        // filling structure of found ressources
-        // NSLog(@"foundResourceKeys: %@",foundResourceKeys);
 
         if (validatedResources == resourcesToValidate)
             [self validateDidFinish];
         return;
     }
     
-    // ********** End validating resource **********
+    // ******************** End validating resource ********************
 
-    // ********** Begin Receiving Response Header **********
+    // ******************** Begin Receiving Response Header ********************
     
-    response = _response;
     if (![response MIMEType])
         _contentType.text = @"unknown";
     else
@@ -737,18 +721,22 @@
     NSLog(@"Receiving response: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
     if ([_verboseLogSwitch isOn]) NSLog(@"Response header: %@",[[response allHeaderFields] description]);
 
-//	if ([response respondsToSelector:@selector(allHeaderFields)]) {
-        // header is fine, filling header field
 		responseHeader = [[response allHeaderFields] description];
         _headerScrollViewText.text = responseHeader;
         [_outputSwitch setSelectedSegmentIndex:1]; // zum Response-Tab wechseln
         [_outputSwitch setEnabled:YES forSegmentAtIndex:1]; // Request-Tab einschalten
-//    }
 
-    // ********** End Receiving Response Header **********
+    if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
+       [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound)
+        [_detectedJSON setHighlighted:YES];
+    else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound)
+        [_detectedXML setHighlighted:YES];
+    
+    // ******************** End Receiving Response Header ********************
     
     
-    // ********** Begin actualize history **********
+    // ******************** Begin actualize history ********************
+    
     if ([response statusCode] < 400) {
         // if the slash had been cut off: still the same url
         BOOL urlIsTheSame = ([_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@",[historyElement url]]] ||
@@ -772,7 +760,7 @@
         }
     }
     
-    // ********** End actualize history **********
+    // ******************** End actualize history ********************
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)_bodyData {
@@ -782,7 +770,7 @@
         // strange thing this method is called when receiven a head-response...
         return;
     
-    // ********** Begin Receiving Response Body **********
+    // ******************** Begin Receiving Response Body ********************
     
     BOOL responseComplete = NO;
     [responseBodyData appendData:_bodyData];
@@ -811,7 +799,7 @@
 
 }
 
--(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
     if (validatingResourcesState)
         // while validating, this is not relevant
@@ -845,7 +833,7 @@
     if (imageType) {
         // Image detected. Showing this instead of text.
         NSLog(@"%@ detected.",imageType);
-        imageView = [[UIImageView alloc] initWithFrame:[_contentScrollViewText bounds]];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:[_contentScrollViewText bounds]];
         [imageView setImage:[UIImage imageWithData:responseBodyData]];
         [_contentScrollViewText addSubview:imageView];
     } else
@@ -857,14 +845,14 @@
     [self parseResponse];
 }
 
-// ********** End Receiving Response Body **********
+// ******************** End Receiving Response Body ********************
 
 - (void)parseResponse {
 
     keyArray = [[NSMutableArray alloc] init];
     valueArray = [[NSMutableArray alloc] init];
     
-    // ********** Begin Parsing Response **********
+    // ******************** Begin Parsing Response ********************
 
     BOOL parsingSuccess = NO;
     NSDictionary *parsedResponseAsDictionary = [[NSDictionary alloc] init];
@@ -872,8 +860,7 @@
     
     
     // Bei erkannten Formaten: zugehöriger Highlighter aktivieren, dann entsprechend parsen
-    if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
-       [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound) {
+    if([_detectedJSON isHighlighted]) {
         // Ist "json" oder "javascript" im Content Type vorhanden, kann auf valides JSON geschlossen werden:
         // application/json, application/x-javascript, text/javascript, text/x-javascript, text/json, text/x-json
         if ([_verboseLogSwitch isOn]) NSLog(@"Parsing JSON...");
@@ -893,7 +880,7 @@
         } else {
             NSLog(@"Error in parsing JSON.");
         }
-    } else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound) {
+    } else if([_detectedXML isHighlighted]) {
         // Parse XML
         // [parsedText appendString:@"XML parsing not yet implemented."];
         if ([_verboseLogSwitch isOn]) NSLog(@"Parsing XML...");
@@ -918,10 +905,10 @@
         }
     }
     
-    // ********** End Parsing Response **********
+    // ******************** End Parsing Response ********************
 
     
-    // ********** Begin Filling Header + Body Fields: PARSED **********
+    // ******************** Filling Header + Body Fields: PARSED ********************
     
     if (parsingSuccess) {
 
@@ -932,21 +919,16 @@
             [foundResourceValues addObject:@""];
         }
         
-        [self processKeys:keyArray withValues:valueArray];
-        
-        if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
-           [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound)
-            [_detectedJSON setHighlighted:YES];
-        else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound)
-            [_detectedXML setHighlighted:YES];
+        [self processKeys:keyArray withValues:valueArray iteration:nil];
     }
 }
 
 
-// ********** Begin building Found Resources **********
+// ******************** Begin building Found Resources ********************
 
 - (void)processKeys:(NSArray*)localKeys
-         withValues:(NSArray*)localValues {
+         withValues:(NSArray*)localValues
+          iteration:(NSMutableString*)iter {
     
     // Reactivate progress bar:
     _contentScrollViewText.text = @"";
@@ -969,7 +951,6 @@
     
     for(int i = 0; i < [localKeys count]; i++) {
         
-        //NSLog(@"********** now processing #%i (#%i) **********",i,staticIndex);
         NSString *key = [[NSString alloc] initWithString:[localKeys objectAtIndex:i]];
         NSString *value = [[NSString alloc] initWithFormat:@"%@",[localValues objectAtIndex:i]];
         
@@ -1023,24 +1004,11 @@
                 
                 
                 // call this method recursively
-                [self processKeys:keys withValues:values];
+                [self processKeys:keys withValues:values iteration:iter];
                 i += [keys count];
                 // undo the last increase from the processKeys iteration
                 i--;
                 staticIndex--;
-                
-                //NSLog(@"Array added. keyArray count: %i",[keyArray count]);
-                /*
-                NSLog(@"######################################################################################");
-                for (int k = 0; k < [keyArray count]; k++)
-                    NSLog(@"#%i,%@:%@",k,[keyArray objectAtIndex:k],[valueArray objectAtIndex:k]);
-                NSLog(@"######################################################################################");
-                */
-                /*
-                for (int k = 0; k < [keyArray count]; k++) {
-                    NSLog(@"#%i,%@:%@",k,[keyArray objectAtIndex:k],[valueArray objectAtIndex:k]);
-                }
-                 */
                 
                 iter = [[NSMutableString alloc] initWithString:[iter substringToIndex:[iter length]-1]];
                 ([string hasPrefix:@"{"]) ? [parsedText appendString:@"}"] : [parsedText appendString:@")"];
@@ -1061,11 +1029,9 @@
     }
 }
 
--(void)validateURL:(NSURL*)link
+- (void)validateURL:(NSURL*)link
            withKey:(NSString*)key
          withIndex:(NSInteger)i {
-    
-    //NSLog(@"#%i: key: %@",i,key);
     
     if (link == nil) {
         // URL is invalid.
@@ -1107,21 +1073,6 @@
         // ARC doesn't allow cast from NSInteger to id.  But NSInteger -> NSNumber -> id is valid.
         
         [foundResourcesValidateConnections setValue:iAsNSNumber forKey:[connection description]];
-        //NSLog(@"Adding #%i: %@ (%@) to foundResourcesValidateConnections...",i,[keyArray objectAtIndex:i],[connection description]);
-        //NSLog(@"Request %@ (\"%@\":\"%@\") sent for link %@",connection,[keyArray objectAtIndex:i],[valueArray objectAtIndex:i],candidate);
-        
-        // filling structure of sent responses for validating
-        //NSLog(@"foundResourcesValidateConnections: %@",foundResourcesValidateConnections);
-        //int k = [[foundResourcesValidateConnections valueForKey:[connection description]] integerValue];
-        //NSLog(@"%@ -> %@",[connection description],[keyArray objectAtIndex:k]);
-        
-/*
-    NSHTTPURLResponse* candidateResponse;
-    NSError* err = nil;
- 
-    //Capturing server response
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&candidateResponse error:&err];
- */
 
         if ([_verboseLogSwitch isOn]) NSLog(@"#%i: link %@ -> %@ is well-formed. Checking reachability...", i, link, candidate);
     } else {
@@ -1130,7 +1081,7 @@
     }
 }
 
--(void)validateDidFinish {
+- (void)validateDidFinish {
     
     // Connection succeeded in downloading the request.
     NSLog(@"Loading complete.");
@@ -1162,10 +1113,7 @@
     // ********** End Filling Header + Body Fields: PARSED **********
     
     
-    // ********** Begin Console Output: Found Resources **********
-    
-    //NSLog(foundResourceKeys);
-    //NSLog(foundResourceValues);
+    // ******************** Begin Console Output: Found Resources ********************
     
     if ([_verboseLogSwitch isOn]) {
         NSLog(@"Found Resources: %i",[foundResourceKeys count]);
@@ -1190,7 +1138,7 @@
     // ********** End Building TableView **********
 }
 
-// ********** End building Found Resources **********
+// ******************** End building Found Resources ********************
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -1238,7 +1186,7 @@
 
 - (void)checkStatusCode:(NSInteger)code {
     
-    // ********** Begin diligence **********
+    // ******************** Begin diligence ********************
     
     switch (code) {
         case 100:

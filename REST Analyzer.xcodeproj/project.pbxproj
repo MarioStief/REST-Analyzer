@@ -185,10 +185,10 @@
 				AC8B879115DF646000E12B48 /* ViewController.m */,
 				AC263D27161E630100173788 /* HistoryElement.h */,
 				AC263D28161E630100173788 /* HistoryElement.m */,
-				ACB2F180162323D60047C497 /* LogOutputViewController.h */,
-				ACB2F181162323D60047C497 /* LogOutputViewController.m */,
 				AC4A6B93161B1961000C9BBE /* XMLParser.h */,
 				AC4A6B94161B1961000C9BBE /* XMLParser.m */,
+				ACB2F180162323D60047C497 /* LogOutputViewController.h */,
+				ACB2F181162323D60047C497 /* LogOutputViewController.m */,
 				AC8B878215DF646000E12B48 /* Supporting Files */,
 			);
 			path = "RESTful Web Analyzer";
