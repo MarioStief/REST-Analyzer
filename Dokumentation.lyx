@@ -1932,8 +1932,43 @@ Konzept?
 Datenmodell (5 - 6 Seiten)
 \end_layout
 
+\begin_layout Subsection
+...
+ und die AppDelegate?
+\end_layout
+
 \begin_layout Standard
-…
+Erstellt man ein neues Projekt, bekommt man 2 Dateien vor die Nase gesetzt:
+ eine AppDelegate und den ViewController.
+ Konzeptuell sollte der ViewController alles beinhalten, womit sich die
+ aktuelle View beschäftigt.
+ Die AppDelegate bleibt dabei erschreckend leer und hinterlässt das Gefühl,
+ dass man doch etwas Wichtiges vergessen hat.
+ Die einzige Methode, die überhaupt etwas macht ist die application didFinishLau
+nchingWithOptions:launchOptions: Sie gibt ein YES zurück.
+ Immerhin.
+\end_layout
+
+\begin_layout Standard
+Auch hier läuft wieder alles über das Storyboard.
+ Wirft man einen Blick auf die Datei 
+\shape italic
+REST Analyzer-Info.plist
+\shape default
+ findet sich ein Schlüssel mit der Bezeichnung 
+\shape italic
+Main storyboard file base name
+\shape default
+ und dem Wert 
+\shape italic
+MainStoryboard
+\shape default
+.
+ Die Bedeutung hinter diesem Eintrag ist Folgende: Ist diese Einstellung
+ gesetzt, lädt UIApplication die Datei mit der Bezeichnung MainStoryboard.storybo
+ard, instantiiert den ersten ViewController und packt dessen View in ein
+ neues Objekt des Typs UIWindow.
+ Kein Programmieraufwand nötig.
 \end_layout
 
 \begin_layout Section
