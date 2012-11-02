@@ -12,13 +12,13 @@
     NSArray *resourcesAsArray;
 }
 
-@property (nonatomic, strong) NSArray *keys;
-@property (nonatomic, strong) NSArray *values;
+@property (nonatomic) NSArray *keys;
+@property (nonatomic) NSArray *values;
 // passed references to work with the underlying view
-@property (nonatomic, strong) UITextField *referenceToUrl;
-@property (nonatomic, strong) UIPopoverController *referenceToPopoverController;
-@property (nonatomic, strong) NSString *referenceToHighestDir;
-@property (nonatomic, strong) NSString *referenceToBaseUrl;
+@property (nonatomic) UITextField *referenceToUrl;
+@property (nonatomic) UIPopoverController *referenceToPopoverController;
+@property (nonatomic) NSString *referenceToHighestDir;
+@property (nonatomic) NSString *referenceToBaseUrl;
 
 - (id)initWithStyle:(UITableViewStyle)style;
 - (void)viewDidLoad;

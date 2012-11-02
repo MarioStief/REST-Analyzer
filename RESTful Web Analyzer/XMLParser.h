@@ -14,8 +14,8 @@
     NSString *actualElement;
 }
 
-@property (nonatomic, retain) NSMutableArray *keyArray;
-@property (nonatomic, retain) NSMutableArray *valueArray;
+@property (nonatomic) NSMutableArray *keyArray;
+@property (nonatomic) NSMutableArray *valueArray;
 @property (nonatomic) BOOL verbose;
 
 - (XMLParser *) initXMLParser;

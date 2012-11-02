@@ -60,7 +60,7 @@
     [_showResourcesButton setAlpha:0.5]; // decreased alpha makes it more obvious that this field is still inactive
     [_backButton setEnabled:NO]; // set inactive
     [_forwardButton setEnabled:NO]; // set inactive
-    _contentScrollViewText.text = requestBody;
+    [_contentScrollViewText setText:requestBody];
     [_bodyHeaderSwitch setSelectedSegmentIndex:1];
     generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
     requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
@@ -73,8 +73,8 @@
     
 #pragma debug
     // Debug: JSON
-    // _url.text = @"https://graph.facebook.com/19292868552";
-    // _url.text = @"test:test@test.deathangel.net/test.json";
+    // _url setText:@"https://graph.facebook.com/19292868552";
+    // _url setText:@"test:test@test.deathangel.net/test.json";
     
 }
 
@@ -124,13 +124,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    if (textField == self.url)
+    if (textField == _url)
         [self go:nil];
-    else if (textField == self.username)
-        [self.password becomeFirstResponder];
-    else if (textField == self.keyTextField)
-        [self.valueTextField becomeFirstResponder];
-    else if (textField == self.valueTextField)
+    else if (textField == _username)
+        [_password becomeFirstResponder];
+    else if (textField == _keyTextField)
+        [_valueTextField becomeFirstResponder];
+    else if (textField == _valueTextField)
         [self addKeyValue:nil];
     return YES;
 }
@@ -145,13 +145,13 @@
     return 1;
 }
 
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     
     // number of rows is the quantity of the http methods
     return [httpVerbs count];
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     
     // putting the http methods in the picker view
     return [httpVerbs objectAtIndex:row];
@@ -184,19 +184,19 @@
     // Assign the text from the Array to the cell.
     NSString *keyString = [headerKeysArray objectAtIndex:[indexPath row]];
     NSString *valueAsString = [headerValuesArray objectAtIndex:[indexPath row]];
-    resourceTableViewCell.textLabel.text = keyString;
-    resourceTableViewCell.detailTextLabel.text = valueAsString;
+    [[resourceTableViewCell textLabel] setText:keyString];
+    [[resourceTableViewCell detailTextLabel] setText:valueAsString];
 
     // Colorate the HTTP Headers
     // entered header is a known general header: color green text.
     if ([generalHeaders containsObject:keyString])
-        resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+        [[resourceTableViewCell textLabel] setTextColor:[UIColor colorWithRed:0 green:0.5 blue:0 alpha:1]];
     // entered header is a known request header: color bluegreen text.
     else if ([requestHeaders containsObject:keyString])
-        resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:1];
+        [[resourceTableViewCell textLabel] setTextColor:[UIColor colorWithRed:0 green:0.5 blue:0.5 alpha:1]];
     // unknown: red text then.
     else
-        resourceTableViewCell.textLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
+        [[resourceTableViewCell textLabel] setTextColor:[UIColor colorWithRed:0.5 green:0 blue:0 alpha:1]];
 
     return resourceTableViewCell;
 }
@@ -207,15 +207,15 @@
 // ********** Header key info button **********
 
 - (IBAction)clearUrlField:(id)sender {
-    _url.text = @"";
-    [self.url becomeFirstResponder];
+    [_url setText:@""];
+    [_url becomeFirstResponder];
 }
 
 // ********** "+" button pressed: **********
 - (IBAction)addKeyValue:(id)sender {
     UIAlertView *alert;
     NSString *errorMessage;
-    if ([_keyTextField.text isEqualToString:@""] || [_valueTextField.text isEqualToString:@""]) {
+    if ([[_keyTextField text] isEqualToString:@""] || [[_valueTextField text] isEqualToString:@""]) {
         // don't add empty stuff
         errorMessage = [[NSString alloc] initWithFormat:@"Please specify header and value."];
     }
@@ -223,11 +223,10 @@
         // check table for duplicates
         NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
         UITableViewCell *cell = [_headersTableView cellForRowAtIndexPath:path];
-        NSLog(@"_valueTextField.text: %@",_valueTextField.text);
-        if ([_keyTextField.text isEqualToString:cell.textLabel.text]) {
+        if ([[_keyTextField text] isEqualToString:[[cell textLabel] text]]) {
             // key exists
             errorMessage = [[NSString alloc] initWithFormat:@"Key \"%@\" already specified with value \"%@\".\n"
-                                      "Delete old one first.",cell.textLabel.text,cell.detailTextLabel.text];
+                                      "Delete old one first.",[[cell textLabel] text],[[cell detailTextLabel] text]];
         }
     }
     
@@ -244,8 +243,8 @@
 
     // retain the cell data
     // keep the underlying model data separately from it's view representation
-    [headerKeysArray addObject:[[NSString alloc] initWithString:_keyTextField.text]];
-    [headerValuesArray addObject:[[NSString alloc] initWithString:_valueTextField.text]];
+    [headerKeysArray addObject:[[NSString alloc] initWithString:[_keyTextField text]]];
+    [headerValuesArray addObject:[[NSString alloc] initWithString:[_valueTextField text]]];
 
     // Option 1: no cell selected, new cell should be inserted at the end.
     if (![_headersTableView indexPathForSelectedRow]) {
@@ -260,8 +259,8 @@
                                      withRowAnimation:UITableViewRowAnimationFade];
         [_headersTableView deselectRowAtIndexPath:[_headersTableView indexPathForSelectedRow] animated:YES];
     }
-    _keyTextField.text = @"";
-    _valueTextField.text = @"";
+    [_keyTextField setText:@""];
+    [_valueTextField setText:@""];
     [_keyTextField becomeFirstResponder];
 }
 
@@ -291,16 +290,16 @@
 - (void)switchSegmentIndex {
     switch ([_outputSwitch selectedSegmentIndex]) {
         case 0:
-            _headerScrollViewText.text = requestHeader;
-            _contentScrollViewText.text = requestBody;
+            [_headerScrollViewText setText:requestHeader];
+            [_contentScrollViewText setText:requestBody];
             break;
         case 1:
-            _headerScrollViewText.text = responseHeader;
-            _contentScrollViewText.text = responseBody;
+            [_headerScrollViewText setText:responseHeader];
+            [_contentScrollViewText setText:responseBody];
             break;
         case 2:
-            _headerScrollViewText.text = responseHeader;
-            _contentScrollViewText.text = parsedText;
+            [_headerScrollViewText setText:responseHeader];
+            [_contentScrollViewText setText:parsedText];
     }
 }
 
@@ -316,16 +315,16 @@
 }
 
 - (IBAction)loggingOutput:(id)sender {
-    [self.navigationController pushViewController:self animated:YES];
+    [[self navigationController] pushViewController:self animated:YES];
 }
 
 
 // ******************** Begin use font slider to change text field size ********************
 
 - (IBAction)fontSizeSliderMove:(id)sender {
-    _headerScrollViewText.font = [UIFont systemFontOfSize:_fontSizeSlider.value];
-    _contentScrollViewText.font = [UIFont systemFontOfSize:_fontSizeSlider.value];
-    _fontSize.text = [[NSString alloc] initWithFormat:@"%i",(int)_fontSizeSlider.value];
+    [_headerScrollViewText setFont:[UIFont systemFontOfSize:[_fontSizeSlider value]]];
+    [_contentScrollViewText setFont:[UIFont systemFontOfSize:[_fontSizeSlider value]]];
+    [_fontSize setText:[[NSString alloc] initWithFormat:@"%i",(int)[_fontSizeSlider value]]];
     [self switchSegmentIndex]; // used for the text refresh
 }
 
@@ -338,7 +337,7 @@
 - (IBAction)backButton:(id)sender {
     if ([_backButton isEnabled]) {
         historyElement = [historyElement previous];
-        _url.text = [[NSString alloc] initWithFormat:@"%@",[historyElement url]];
+        [_url setText:[[NSString alloc] initWithFormat:@"%@",[historyElement url]]];
         [_forwardButton setEnabled:YES];
         if ([historyElement previous] == nil)
             [_backButton setEnabled:NO];
@@ -346,13 +345,13 @@
 }
 
 - (IBAction)baseUrlButton:(id)sender {
-    _url.text = [self urlPart:_url.text definePart:@"prevPath"];
+    [_url setText:[self urlPart:[_url text] definePart:@"prevPath"]];
 }
 
 - (IBAction)forwardButton:(id)sender {
     if ([_forwardButton isEnabled]) {
         historyElement = [historyElement next];
-        _url.text = [[NSString alloc] initWithFormat:@"%@",[historyElement url]];
+        [_url setText:[[NSString alloc] initWithFormat:@"%@",[historyElement url]]];
         [_backButton setEnabled:YES];
         if ([historyElement next] == nil)
             [_forwardButton setEnabled:NO];
@@ -377,7 +376,7 @@
 - (IBAction)go:(id)sender {
     
     // ******************** Remove Keyboard *******************
-    [self.url resignFirstResponder];
+    [_url resignFirstResponder];
     
     // ******************** New Request started: Do a full reset to avoid side effects ********************
     // buttons/switches
@@ -391,27 +390,27 @@
     [_detectedXML setHighlighted:NO];
 
     // text fields
-    _contentType.text = [[NSString alloc] init];
-    _encoding.text = [[NSString alloc] init];
-    _headerScrollViewText.text = [[NSString alloc] init];
-    _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
-    _authentication.backgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1];
-    _authentication.textColor = [UIColor blackColor];
-    _authentication.text = @"none";
-    _statusCode.text = [[NSString alloc] init];
-    _statusCode.backgroundColor = [UIColor whiteColor];
+    [_contentType setText:[[NSString alloc] init]];
+    [_encoding setText:[[NSString alloc] init]];
+    [_headerScrollViewText setText:[[NSString alloc] init]];
+    [_statusCode setBackgroundColor:[[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1]];
+    [_authentication setBackgroundColor:[[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:0.1] ];
+    [_authentication setTextColor:[UIColor blackColor]];
+    [_authentication setText:@"none"];
+    [_statusCode setText:[[NSString alloc] init]];
+    [_statusCode setBackgroundColor:[UIColor whiteColor]];
 
     // clean other stuff
-    validatingResourcesState = NO;
+    [self setValidatingState:NO];
     validatedResources = 0;
     staticIndex = 0;
     
     // check if scroll view contains an UIImageView from last run
     foundResourcesValidateConnections = [[NSMutableDictionary alloc] init];
     for (int i = 0; i < [_contentScrollViewText.subviews count]; i++)
-        if ([[[_contentScrollViewText.subviews objectAtIndex:i] description] hasPrefix:@"<UIImageView"])
+        if ([[[[_contentScrollViewText subviews] objectAtIndex:i] description] hasPrefix:@"<UIImageView"])
             // if so -> delete
-            [[_contentScrollViewText.subviews objectAtIndex:i] removeFromSuperview];
+            [[[_contentScrollViewText subviews] objectAtIndex:i] removeFromSuperview];
 
     
     
@@ -439,13 +438,13 @@
     // ******************** Begin Authentication ********************
     
     // setting the authentication text field
-    _authentication.text = @"required";
+    [_authentication setText:@"required"];
 
     NSLog(@"%@ received.",[challenge description]);
     
     if ([challenge previousFailureCount] == 0) {
-        NSURLCredential *credential = [NSURLCredential credentialWithUser:_username.text
-                                                                 password:_password.text
+        NSURLCredential *credential = [NSURLCredential credentialWithUser:[_username text]
+                                                                 password:[_password text]
                                                               persistence:NSURLCredentialPersistenceNone];
         // Implement Client Certificate Authentication:
         // NSURLCredential *credential = [NSURLCredential credentialWithIdentity:(SecIdentityRef) certificates:(NSArray *) persistence:(NSURLCredentialPersistence)];
@@ -462,8 +461,8 @@
                                               cancelButtonTitle:@"Close"
                                               otherButtonTitles:nil];
         [alert show];
-        _authentication.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
-        _authentication.text = @"failed";
+        [_authentication setBackgroundColor:[[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1]];
+        [_authentication setText:@"failed"];
         NSLog(@"%@ failed: Authentication incorrect.",[challenge description]);
     }
     
@@ -533,7 +532,7 @@
 
 - (IBAction)addMethodButton:(id)sender {
     NSMutableArray *newHttpVerbs = [[NSMutableArray alloc] initWithArray:httpVerbs];
-    [newHttpVerbs replaceObjectAtIndex:[httpVerbs count]-1 withObject:_addMethodTextField.text];
+    [newHttpVerbs replaceObjectAtIndex:[httpVerbs count]-1 withObject:[_addMethodTextField text]];
     httpVerbs = [[NSArray alloc] initWithArray:newHttpVerbs];
 
 }
@@ -599,10 +598,10 @@
     
     // -> Implement POST, PUT, DELETE, HEAD
     
-    NSString *urlString = [[NSString alloc] initWithString:[self urlPart:_url.text definePart:@"fullPath"]];
+    NSString *urlString = [[NSString alloc] initWithString:[self urlPart:[_url text] definePart:@"fullPath"]];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    [request setMainDocumentURL:[[NSURL alloc]initWithString:[self urlPart:_url.text definePart:@"baseUrl"]]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
+    [request setMainDocumentURL:[[NSURL alloc]initWithString:[self urlPart:[_url text] definePart:@"baseUrl"]]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
     [request setHTTPMethod:requestMethodString];
     
     // ********** Change HTTP Headers **********
@@ -620,7 +619,7 @@
         case 1: // POST
         case 2: // PUT
             // saving writen text field in String
-            requestBody = _contentScrollViewText.text;
+            requestBody = [_contentScrollViewText text];
             // Add Body.
             [request setValue:[NSString stringWithFormat:@"%d", [requestBody length]] forHTTPHeaderField:@"Content-Length"];
             //[request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
@@ -630,7 +629,7 @@
             
     }
     // and empty the contentScrollViewText;
-    _contentScrollViewText.text = [[NSString alloc] init];
+    [_contentScrollViewText setText:[[NSString alloc] init]];
 
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
     NSLog(@"Sending request: %@ %@ (%@)",requestMethodString,urlString,connection);
@@ -641,13 +640,13 @@
     // ******************** Filling Header + Body Fields: REQUEST ********************
     
     requestHeader = [[NSString alloc] initWithFormat:@"%@",[[request allHTTPHeaderFields] description]];
-    _headerScrollViewText.text = requestHeader;
+    [_headerScrollViewText setText:requestHeader];
     [_outputSwitch setEnabled:YES forSegmentAtIndex:0]; // Request-Tab einschalten
 
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    if (validatingResourcesState) {
+    if ([self validatingState]) {
         // error while validating the parsed resources. happens. :)
         validatedResources++;
         return;
@@ -668,7 +667,7 @@
 
     // ******************** Begin validating resource ********************
 
-    if (validatingResourcesState) {
+    if ([self validatingState]) {
         if ([_verboseLogSwitch isOn]) {
             NSInteger i = [[foundResourcesValidateConnections objectForKey:[connection description]] integerValue];
             NSLog(@"Receiving response %@ for resource \"%@\": %i -> %@",connection,[valueArray objectAtIndex:i],[response statusCode],([response statusCode] < 400) ? @"valid" : @"not valid");
@@ -704,25 +703,25 @@
     // ******************** Begin Receiving Response Header ********************
     
     if (![response MIMEType])
-        _contentType.text = @"unknown";
+        [_contentType setText:@"unknown"];
     else
-        _contentType.text = [response MIMEType]; // Content Type-Feld setzen
+        [_contentType setText:[response MIMEType]]; // Content Type-Feld setzen
     if (![response textEncodingName])
-        _encoding.text = @"unknown";
+        [_encoding setText:@"unknown"];
     else
-        _encoding.text = [response textEncodingName]; // Content Type-Feld setzen
+        [_encoding setText:[response textEncodingName]]; // Content Type-Feld setzen
     responseLength = [response expectedContentLength];
     [self checkStatusCode:[response statusCode]]; // Statuscode aktualisieren
     if ([response statusCode] < 400) // color status code field
-        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:0.1];
+        [_statusCode setBackgroundColor:[[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:0.1]];
     else
-        _statusCode.backgroundColor = [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1];
+        [_statusCode setBackgroundColor:[[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1]];
 
     NSLog(@"Receiving response: %@, type: %@, charset: %@, status code: %i",[response description],[response MIMEType],[response textEncodingName],[response statusCode]);
     if ([_verboseLogSwitch isOn]) NSLog(@"Response header: %@",[[response allHeaderFields] description]);
 
 		responseHeader = [[response allHeaderFields] description];
-        _headerScrollViewText.text = responseHeader;
+        [_headerScrollViewText setText:responseHeader];
         [_outputSwitch setSelectedSegmentIndex:1]; // zum Response-Tab wechseln
         [_outputSwitch setEnabled:YES forSegmentAtIndex:1]; // Request-Tab einschalten
 
@@ -739,8 +738,8 @@
     
     if ([response statusCode] < 400) {
         // if the slash had been cut off: still the same url
-        BOOL urlIsTheSame = ([_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@",[historyElement url]]] ||
-                             [_url.text isEqualToString:[[NSString alloc] initWithFormat:@"%@/",[historyElement url]]]);
+        BOOL urlIsTheSame = ([[_url text] isEqualToString:[[NSString alloc] initWithFormat:@"%@",[historyElement url]]] ||
+                             [[_url text] isEqualToString:[[NSString alloc] initWithFormat:@"%@/",[historyElement url]]]);
         if (!historyElement) {
             // new history: initialize
             historyElement = [[HistoryElement alloc] init];
@@ -756,7 +755,7 @@
         }
         if (!urlIsTheSame) {
             // if URL is different: set new ones.
-            [historyElement setUrl:[self urlPart:_url.text definePart:@"fullPath"]];
+            [historyElement setUrl:[self urlPart:[_url text] definePart:@"fullPath"]];
         }
     }
     
@@ -776,7 +775,7 @@
     [responseBodyData appendData:_bodyData];
     if (responseLength > -1 ) {
         [_loadProgressBar setHidden:NO];
-        _progressBarDescription.text = @"Loading Resource...";
+        [_progressBarDescription setText:@"Loading Resource..."];
         [_progressBarDescription setHidden:NO];
         float progress = 1.00*[responseBodyData length]/responseLength;
         [_loadProgressBar setProgress:progress animated:NO];
@@ -801,7 +800,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-    if (validatingResourcesState)
+    if ([self validatingState])
         // while validating, this is not relevant
         return;
 
@@ -839,10 +838,13 @@
     } else
         // No image. Guess text instead.
         responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSASCIIStringEncoding]; // UTF8 won't show some sites here, for example www.google.de
-        _contentScrollViewText.text = responseBody;
+        [_contentScrollViewText setText:responseBody];
     
     // response received -> parsing now if possible.
     [self parseResponse];
+    
+    // program finished - flush cache to file
+    fflush(stderr);
 }
 
 // ******************** End Receiving Response Body ********************
@@ -931,8 +933,8 @@
           iteration:(NSMutableString*)iter {
     
     // Reactivate progress bar:
-    _contentScrollViewText.text = @"";
-    _progressBarDescription.text = @"Validating resource candidates...";
+    [_contentScrollViewText setText:@""];
+    [_progressBarDescription setText:@"Validating resource candidates..."];
     float progress = 1.00*validatedResources/resourcesToValidate;
     [_loadProgressBar setProgress:progress animated:NO];
     [_progressBarDescription setHidden:NO];
@@ -1046,12 +1048,12 @@
         candidate = [link copy];
     else if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]) {
         // Link beginnt mit /, teste base url + link auf valide Resource
-        NSString *candidateString = [[NSString alloc] initWithFormat:@"%@%@",[self urlPart:_url.text definePart:@"baseUrl"],link];
+        NSString *candidateString = [[NSString alloc] initWithFormat:@"%@%@",[self urlPart:[_url text] definePart:@"baseUrl"],link];
         candidate = [[NSURL alloc] initWithString:candidateString];
     }
     else {
         // Link beginnt weder mit http noch mit /, teste aktuelles Verzeichnis + link auf valide Resource
-        NSString *prevPath = [self urlPart:_url.text definePart:@"highestDir"];
+        NSString *prevPath = [self urlPart:[_url text] definePart:@"highestDir"];
         NSString *candidateString;
         if ([prevPath hasSuffix:@"/"])
             candidateString = [[NSString alloc] initWithFormat:@"%@%@",prevPath,link];
@@ -1059,14 +1061,14 @@
             candidateString = [[NSString alloc] initWithFormat:@"%@/%@",prevPath,link];
         candidate = [[NSURL alloc] initWithString:candidateString];
     }
-    if (candidate && candidate.scheme && candidate.host) {
+    if (candidate && [candidate scheme] && [candidate host]) {
         // well-formed
     
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:candidate];
         [request setHTTPMethod:@"HEAD"];
     
-        validatingResourcesState = YES;
+        [self setValidatingState:YES];
         NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
     
         NSNumber *iAsNSNumber = [[NSNumber alloc] initWithInt:i];
@@ -1105,7 +1107,7 @@
         [_progressBarDescription setHidden:YES];
         [_loadProgressBar setHidden:YES];
         
-        _contentScrollViewText.text = parsedText;
+        [_contentScrollViewText setText:parsedText];
         [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
         [_outputSwitch setSelectedSegmentIndex:2];   // auf Parsed-Tab wechseln
     }
@@ -1159,8 +1161,8 @@
         
         // baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
         // and the full url needs to be built
-        [resourceTableViewController setReferenceToBaseUrl:[self urlPart:_url.text definePart:@"baseUrl"]];
-        [resourceTableViewController setReferenceToHighestDir:[self urlPart:_url.text definePart:@"highestDir"]];
+        [resourceTableViewController setReferenceToBaseUrl:[self urlPart:[_url text] definePart:@"baseUrl"]];
+        [resourceTableViewController setReferenceToHighestDir:[self urlPart:[_url text] definePart:@"highestDir"]];
         
     } else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"]) {
         LogOutputViewController *logOutputViewController = [segue destinationViewController];
@@ -1190,139 +1192,139 @@
     
     switch (code) {
         case 100:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"100 - Continue"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"100 - Continue"]];
             break;
         case 101:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"101 - Switching Protocols"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"101 - Switching Protocols"]];
             break;
         case 200:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"200 - OK"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"200 - OK"]];
             break;
         case 201:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"201 - Created"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"201 - Created"]];
             break;
         case 202:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"202 - Accepted"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"202 - Accepted"]];
             break;
         case 203:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"203 - Non-Authoritative Information"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"203 - Non-Authoritative Information"]];
             break;
         case 204:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"204 - No Content"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"204 - No Content"]];
             break;
         case 205:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"205 - Reset Content"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"205 - Reset Content"]];
             break;
         case 206:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"206 - Partial Content"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"206 - Partial Content"]];
             break;
         case 207:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"207 - Multi-Status"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"207 - Multi-Status"]];
             break;
         case 300:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"300 - Multiple Choices"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"300 - Multiple Choices"]];
             break;
         case 301:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"301 - Moved Permanently"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"301 - Moved Permanently"]];
             break;
         case 302:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"302 - Found"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"302 - Found"]];
             break;
         case 303:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"303 - See Other"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"303 - See Other"]];
             break;
         case 304:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"304 - Not Modified"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"304 - Not Modified"]];
             break;
         case 305:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"305 - Use Proxy"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"305 - Use Proxy"]];
             break;
         case 307:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"307 - Temporary Redirect"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"307 - Temporary Redirect"]];
             break;
         case 400:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"400 - Bad Request"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"400 - Bad Request"]];
             break;
         case 401:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"401 - Unauthorized"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"401 - Unauthorized"]];
             break;
         case 402:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"402 - Payment Required"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"402 - Payment Required"]];
             break;
         case 403:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"403 - Forbidden"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"403 - Forbidden"]];
             break;
         case 404:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"404 - Not Found"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"404 - Not Found"]];
             break;
         case 405:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"405 - Method Not Allowed"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"405 - Method Not Allowed"]];
             break;
         case 406:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"406 - Not Acceptable"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"406 - Not Acceptable"]];
             break;
         case 407:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"407 - Proxy Authentication"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"407 - Proxy Authentication"]];
             break;
         case 408:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"408 - Request Timeout"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"408 - Request Timeout"]];
             break;
         case 409:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"409 - Conflict"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"409 - Conflict"]];
             break;
         case 410:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"410 - Gone"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"410 - Gone"]];
             break;
         case 411:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"411 - Length Required"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"411 - Length Required"]];
             break;
         case 412:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"412 - Precondition Failed"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"412 - Precondition Failed"]];
             break;
         case 413:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"413 - Request Entity Too Large"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"413 - Request Entity Too Large"]];
             break;
         case 414:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"414 - Request-URI Too Long"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"414 - Request-URI Too Long"]];
             break;
         case 415:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"415 - Unsupported Media Type"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"415 - Unsupported Media Type"]];
             break;
         case 416:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"416 - Requested Range Not Satisfiable"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"416 - Requested Range Not Satisfiable"]];
             break;
         case 417:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"417 - Expectation Failed"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"417 - Expectation Failed"]];
             break;
         case 422:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"422 - Unprocessable Entity"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"422 - Unprocessable Entity"]];
             break;
         case 423:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"423 - Locked"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"423 - Locked"]];
             break;
         case 424:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"424 - Failed Dependency"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"424 - Failed Dependency"]];
             break;
         case 500:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"500 - Internal Server Error"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"500 - Internal Server Error"]];
             break;
         case 501:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"501 - Not Implemented"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"501 - Not Implemented"]];
             break;
         case 502:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"502 - Bad Gateway"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"502 - Bad Gateway"]];
             break;
         case 503:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"503 - Service Unavailable"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"503 - Service Unavailable"]];
             break;
         case 504:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"504 - Gateway Timeout"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"504 - Gateway Timeout"]];
             break;
         case 505:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"505 - HTTP Version Not Supported"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"505 - HTTP Version Not Supported"]];
             break;
         case 507:
-            _statusCode.text = [[NSString alloc] initWithFormat:@"507 - Insufficient Storage"];
+            [_statusCode setText:[[NSString alloc] initWithFormat:@"507 - Insufficient Storage"]];
             break;
     }
     
@@ -1331,3 +1333,7 @@
 }
 
 @end
+
+
+
+// 1337

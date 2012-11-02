@@ -107,8 +107,8 @@ e ANSI-C zurück, die objektorientierte Erweiterung ist an Smalltalk angelehnt
 \end_layout
 
 \begin_layout Standard
-Wie aus der C-Welt bekannt verwendet man Header (.h) sowie deren Implementierunge
-n in Quellcodedateien (.m), welche ObjC- bzw.
+Wie aus der C-Welt bekannt deklariert man das Interface im Header (.h) sowie
+ deren Implementierungen in den .m-Dateien, welche ObjC- bzw.
  C-Code enthalten können.
  Aus Kompatibilitätsgründen kann man auch Implementierungen als mit der
  Erweiterung mm anlegen, welcher auch explizit C++-Code enthalten darf.
@@ -143,17 +143,25 @@ dynamisches Binden
  statisch gebunden werden.
  Es lässt sich sogar eine Klassenmethode implementieren, welche auf Nachrichten
  reagiert, für die die Klasse keine eigene Implementierung bereitstellt.
- Abstrakte Methoden kennt ObjC übrigens nicht - jede Klasse muss immer vollständ
-ig implementiert werden, damit stets Objekte dieser Klasse erzeugt werden
+ Abstrakte Klassen kennt ObjC übrigens nicht - jede Klasse muss immer vollständi
+g implementiert werden, damit stets Objekte dieser Klasse erzeugt werden
  können.
+ Statt dessen können wir jedoch Protokolle deklarieren, in denen wir zwangsweise
+ zu implementierende Methoden unter dem 
+\family typewriter
+\size small
+@required
+\family default
+\size default
+-Tag auflisten.
 \end_layout
 
 \begin_layout Standard
 Ebenso wie in C++ lassen sich aus einer Klasse Objekte erzeugen.
  Darüber hinaus ist aber jede Klasse selbst als Objekt ansprechbar.
  Diese anthalten jedoch keine Member-Variablen und sind stets Singletons
- - eine Art Erzeugungsmuster, die sicher stellen, dass von einer Klasse
- genau ein Objekt existiert, welches global verfügbar ist.
+ - Entwurfsmuster, die sicher stellen, dass von einer Klasse genau ein Objekt
+ existiert, welches global verfügbar ist.
  So wie ein solches Klassenobjekt in der Lage ist, Nachrichten zu empfangen,
  erfolgt das Binden der entsprechenden Methoden ebenfalls erst zur Laufzeit.
  Strings werden in ObjC in der Notation @
@@ -183,10 +191,31 @@ Ebenso wie in C++ lassen sich aus einer Klasse Objekte erzeugen.
 \begin_layout LyX-Code
 
 \size small
-id typelessObject = @"I'm a string."; // OK     NSString *string = typelessObject
-;    // OK     NSNumber *integer = typelessObject;   // logischer Fehler
-     char character = [integer charValue]; // Laufzeitfehler     NSLog(@"%i",int
-eger);
+id typelessObject = @"I'm a string."; // OK
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSString *string = typelessObject;    // OK
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSNumber *integer = typelessObject;   // logischer Fehler
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+char character = [integer charValue]; // Laufzeitfehler
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSLog(@"%i",integer);
 \end_layout
 
 \begin_layout Standard
@@ -218,7 +247,8 @@ nil
 \begin_layout LyX-Code
 
 \size small
-if([geometricFigure respondsToSelector:@selector(getShape)]) { … }
+if([geometricFigure respondsToSelector:@selector(getShape)]) { ...
+ }
 \end_layout
 
 \begin_layout Standard
@@ -274,7 +304,8 @@ NSInteger age = [self computeAgeFromYear:1981 withMonth:5 andDay:23]
 \begin_layout LyX-Code
 
 \size small
-                         andDay:(NSInteger)day { … }
+                         andDay:(NSInteger)day { ...
+ }
 \end_layout
 
 \begin_layout Standard
@@ -312,8 +343,9 @@ Das Minus-Präfix zu Beginn der oben stehenden Methode zeigt auf, dass es
 +(id)alloc
 \family default
 \size default
- ist die Klassenmethode, welche Speicher für das Objekt reserviert, anschließend
- initialisiert sich das erzeugte Objekt durch den Aufruf von 
+ ist die Klassenmethode, welche Speicher für das Objekt reserviert und einen
+ Zeiger darauf zurückliefert, anschließend initialisiert sich das erzeugte
+ Objekt in dem allokierten Speicher durch den Aufruf von 
 \family typewriter
 \size small
 -(id)init
@@ -322,8 +354,164 @@ Das Minus-Präfix zu Beginn der oben stehenden Methode zeigt auf, dass es
 .
 \end_layout
 
-\begin_layout Subsection*
-Delegate
+\begin_layout Subsection
+Protokolle: Data Sources und Delegates
+\end_layout
+
+\begin_layout Standard
+Wer in Java mit Interfaces umgehen kann, sollte keine Schwierigkeiten haben,
+ sich mit der Funktionsweise von Protokollen vertraut zu machen.
+ Eine Protokolldeklaration beginnt mit dem Schlüsselwort 
+\family typewriter
+\size small
+@protocol
+\family default
+\size default
+, die enthaltenen Methoden befinden sich entweder unter 
+\family typewriter
+\size small
+@required
+\family default
+\size default
+ oder unter 
+\family typewriter
+\size small
+@optional
+\family default
+\size default
+, was selbsterklärend sein sollte.
+ Bei der Deklaration der Klasse wird das Protokoll in spitzen Klammern hinter
+ der Oberklasse angegeben, mehrere Protokolle werden mit Kommata voneinander
+ getrennt:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+@interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDe
+legate, UITableViewDataSource> {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+}
+\end_layout
+
+\begin_layout Standard
+Ein Konzept, welches so ebenfalls nicht bei C++ anzutreffen ist, sind Delegates
+ (vom englischen 
+\shape italic
+delegation
+\shape default
+: Abordnung, Übertragung) und Data Sources.
+ Mit ihnen ist es möglich, Nachrichten an einen 
+\begin_inset Quotes eld
+\end_inset
+
+Deligierten
+\begin_inset Quotes erd
+\end_inset
+
+ weiterzuleiten, mit denen eine Methode aufgerufen werden soll, die in einen
+ bestimmten Funktionalitätsbereich fällt.
+ Ein TextField sendet nach dem Betätigen des Enter-Buttons die Nachricht
+ textFieldShouldReturn:(UITextField *) an ihren Deligierten.
+ Die kann die eigene Instanz sein - in diesem Fall angesprochen mit 
+\shape italic
+self
+\shape default
+ - oder aber ein beliebiges anderes Objekt, welches das Protokoll (BOOL)UITextFi
+eldDelegate implementiert.
+ Existiert diese Methode, wird abgefragt, was beim Betätigen der Entertaste
+ passieren soll.
+ An dieser Stelle bietet es sich an, mittels 
+\family typewriter
+\size small
+[textField resignFirstResponder]
+\family default
+\size default
+ das On-Screen-Keyboard wieder zurückzuziehen und eine Methode aufzurufen,
+ welche auf den im Textfeld enthaltenen Text zugreift.
+ Da bei diesem Vorgang wenig Komplikationen zu erwarten sind, sollte abschließen
+d ein YES zurückgegeben werden, um zu bestätigen, dass die Bearbeitung der
+ Entertaste erfolgreich abgeschlossen wurde.
+\end_layout
+
+\begin_layout Standard
+Ein Objekt kann aber nicht nur als Empfänger von Nachrichten dienen, er
+ kann auch als Datenquelle fungieren.
+ Implementiert es das einer Programmstruktur zugehörige DataSource-Protokoll,
+ lässt es sich von dieser nutzen, um bei Laufzeit von dieser benötigte Daten
+ abzufragen.
+\end_layout
+
+\begin_layout Subsection
+Properties
+\end_layout
+
+\begin_layout Standard
+Properties werden in der Headerdatei deklariert und stellen einen einfachen
+ Weg dar, Accessoren zu implementieren.
+ War in früheren XCode-Versionen noch das manuelle Anlegen mittels 
+\family typewriter
+\size small
+@synthesize
+\family default
+\size default
+ notwendig, werden diese nun automatisch generiert.
+ ein 
+\family typewriter
+\size small
+@property (UITextField*)name
+\family default
+\size default
+ erzeugt somit per default den Setter 
+\family typewriter
+\size small
+setName
+\family default
+\size default
+ sowie den Getter 
+\family typewriter
+\size small
+name
+\family default
+\size default
+.
+ Möchte man nun den Namen setzen, hat man hier 2 Möglichkeiten: den C- oder
+ den ObjC-Weg.
+ Ein 
+\family typewriter
+\size small
+_name.text = string
+\family default
+\size default
+ würde intern in ein 
+\family typewriter
+\size small
+[_name setText:NSString]
+\family default
+\size default
+ umgewandelt werden.
+ In meiner Implementation habe ich ausschließlich die ObjC-Variante verwendet.
+ Wenn man es ganz genau nimmt, führt ObjC intern den folgenden Befehl aus:
+ 
+\family typewriter
+\size small
+[[self name] setText:NSString]
+\family default
+\size default
+, wobei der Unterstrich aufzeigt, dass es sich um eine Instanzvariable handelt.
+ Da Apple vorangestellte Unterstriche für eigene Zwecke einsetzt, sollte
+ somit zur Vermeidung von Verwechslungen auf deren eigene Verwendung verzichtet
+ werden.
 \end_layout
 
 \begin_layout Section
@@ -340,16 +528,16 @@ n und Dienste sind, die auf dem Gerät laufen.
 ellen zu sämtlichen darunter liegenden Schichten bereitstellt.
  Gegenüber Cocoa, der Schnittstelle für OS X-Maschinen, greift die Touch-Variant
 e der API auf eine passende Benutzerschnittstelle zurück und beinhaltet
- Dinge wie Unterstützung der Bewegungssensoren, Multitouch-Gestenerkennung
- sowie Animationen, welche speziell auf iOS abgestimmt sind und dem Programmiere
-r darauf abgestimmte Eingabeelemente und Events anbietet.
+ spezielle Dinge wie Unterstützung der Bewegungssensoren, Multitouch-Gestenerken
+nung sowie Animationen, welche speziell auf iOS abgestimmt sind und dem
+ Programmierer darauf abgestimmte Eingabeelemente und Events anbietet.
  Die Basis von Cocoa Touch bilden mehrere Frameworks: das Foundation Framework
  liefert alle Basisklassen, die die Grundlage zur Programmierung mit Objective-C
  bilden und Werkzeuge wie Collections und Dateihandling bereitstellen, ohne
  die eine moderne Programmierung heute nicht mehr auskommt.
  Seit der iOS-Version 2 befindet sich darin bereits XML-Unterstützung, welche
- in iOS 5 um die JSON-Unterstützung ergänzt wurde, was es im Rahmen dieser
- Arbeit sehr einfach macht, auf dritte Frameworks zu verzichten.
+ in iOS 5 um JSON-Unterstützung ergänzt wurde, was es im Rahmen dieser Arbeit
+ sehr einfach macht, auf externe Frameworks zu verzichten.
  Das UIKit beinhaltet Klassen, welche speziell auf die Entwicklung der grafische
 n Oberfläche ausgerichtet sind.
  So enthält die Infrastruktur für grafische Anwendungen verschiedene Ansichten,
@@ -416,9 +604,9 @@ Cocoa
 
 \begin_layout Standard
 Da es vor allem auf mobilen Geräten eher zu Resourcenknappheit kommt als
- auf Desktop-Systemen, sollte man hier einen entsprechend resourcensparenden
- Programierstil pflegen und Resourcen, die nicht mehr benötigt werden, nach
- der Verwendung wieder freigeben.
+ auf Desktop-Systemen, sollte man hier einen entsprechend ökonimischen Programie
+rstil pflegen und Ressourcen, die nicht mehr benötigt werden, nach der Verwendun
+g wieder freigeben.
  In XCode 4.2 wurde das Automatic Reference Counting eingeführt, um sich
  dieses Problemes anzunehmen.
  Die bislang verwendeten 
@@ -449,10 +637,6 @@ release
 \family default
 \size default
 -Nachrichten hinzu.
-\end_layout
-
-\begin_layout Standard
-- Hilfe bei der Suche nach eckigen Klammern
 \end_layout
 
 \begin_layout Section
@@ -591,57 +775,6 @@ Code Signing Identity
 \shape default
  auf das neu erzeugte Zertifikat um und sind nun in der Lage, das angeschlossene
  iOS-Gerät statt des Simulators für die Entwicklung zu benutzen.
-\end_layout
-
-\begin_layout Section
-Repository (zu wenig - > irgendwo integrieren)
-\end_layout
-
-\begin_layout Itemize
-Einrichten eines github-Accounts git@github.com:MarioStief/RemoteRepository.git
-\end_layout
-
-\begin_layout Description
-Adresse: https://github.com/MarioStief/RemoteRepository
-\end_layout
-
-\begin_layout Itemize
-SSH-Schlüssel erstellen, auf github eintragen, Verbindung testen
-\end_layout
-
-\begin_layout Standard
-
-\size small
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-ssh-keygen -t rsa -C "mario.stief@gmail.com"
-\end_layout
-
-\begin_layout Plain Layout
-
-pbcopy < ~/.ssh/id_rsa.pub
-\end_layout
-
-\begin_layout Plain Layout
-
-ssh -T git@github.com
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Hinzufügen im Project-Organizer als Remote Directory
-\end_layout
-
-\begin_layout Itemize
-Initial Commit.
 \end_layout
 
 \begin_layout Chapter
@@ -1933,6 +2066,16 @@ Datenmodell (5 - 6 Seiten)
 \end_layout
 
 \begin_layout Subsection
+ViewController
+\end_layout
+
+\begin_layout Standard
+Erzeugt man ein Projekt, liefert XCode bereits einige Dateien, mit denen
+ man Arbeiten darf.
+ Single View Application 
+\end_layout
+
+\begin_layout Subsection
 ...
  und die AppDelegate?
 \end_layout
@@ -2477,27 +2620,6 @@ key "Wikipedia - REST"
 \end_inset
 
 http://de.wikipedia.org/wiki/Representational_State_Transfer
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Installing RestKit"
-
-\end_inset
-
-https://github.com/RestKit/RestKit/wiki/Installing-RestKit-in-Xcode-4.x
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Developing RESTful iOS Apps with RestKit"
-
-\end_inset
-
-Watters, Blake (2011); Developing RESTful iOS Apps with RestKit in: mobile
- tuts+, URL: http://mobile.tutsplus.com/tutorials/iphone/restkit_ios-sdk/
 \end_layout
 
 \begin_layout Bibliography

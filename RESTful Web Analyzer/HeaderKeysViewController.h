@@ -11,15 +11,14 @@
 @interface HeaderKeysViewController : UITableViewController <UITextFieldDelegate> {
 }
 
-@property (strong, nonatomic) NSArray *generalHeaders;
-@property (strong, nonatomic) NSArray *requestHeaders;
-@property (strong, nonatomic) UITextField *referenceToHeaderKey;
-@property (strong, nonatomic) UITextField *referenceToHeaderValue;
-@property (nonatomic, strong) UIPopoverController *referenceToPopoverController;
+@property (nonatomic) NSArray *generalHeaders;
+@property (nonatomic) NSArray *requestHeaders;
+@property (nonatomic) UITextField *referenceToHeaderKey;
+@property (nonatomic) UITextField *referenceToHeaderValue;
+@property (nonatomic) UIPopoverController *referenceToPopoverController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (void)viewDidLoad;
-- (void)didReceiveMemoryWarning;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;

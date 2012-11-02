@@ -8,10 +8,6 @@
 
 #import "HeaderKeysViewController.h"
 
-@interface HeaderKeysViewController ()
-
-@end
-
 @implementation HeaderKeysViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,12 +25,6 @@
 	// Do any additional setup after loading the view.
     _generalHeaders = [[NSArray alloc]initWithObjects:@"Cache-Control",@"Connection",@"Content-Encoding",@"Content-Language",@"Content-Length",@"Content-Location",@"Content-MD5",@"Content-Range",@"Content-Type",@"Pragma",@"Trailer",@"Via",@"Warning",@"Transfer-Encoding",@"Upgrade",nil];
     _requestHeaders = [[NSArray alloc]initWithObjects:@"Accept",@"Accept-Charset",@"Accept-Encoding",@"Accept-Language",@"Accept-Ranges",@"Authorization",@"Depth",@"Destination",@"Expect",@"From",@"Host",@"If",@"If-Match",@"If-Modified-Since",@"If-None-Match",@"If-Range",@"If-Unmodified-Since",@"Lock-Token",@"Max-Forwards",@"Overwrite",@"Proxy-Authorization",@"Range",@"Referer",@"TE",@"Timeout",@"User-Agent",nil];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -75,7 +65,7 @@
     else
         cellText = [[NSString alloc] initWithFormat:@"%@",[_requestHeaders objectAtIndex:[indexPath row]]];
     
-    cell.textLabel.text = cellText;
+    [[cell textLabel] setText:cellText];
     return cell;
 }
 
@@ -84,9 +74,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([indexPath section] == 0)
-        _referenceToHeaderKey.text = [_generalHeaders objectAtIndex:[indexPath row]];
+        [_referenceToHeaderKey setText:[_generalHeaders objectAtIndex:[indexPath row]]];
     else
-        _referenceToHeaderKey.text = [_requestHeaders objectAtIndex:[indexPath row]];
+        [_referenceToHeaderKey setText:[_requestHeaders objectAtIndex:[indexPath row]]];
     // Use the passed reference to the popover controller to dismiss this view.
     [_referenceToHeaderValue becomeFirstResponder];
     [_referenceToPopoverController dismissPopoverAnimated:YES];
