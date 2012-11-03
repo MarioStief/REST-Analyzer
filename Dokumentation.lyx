@@ -598,8 +598,40 @@ XCode ist Apples integrierte Entwicklungsumgebung und steht aktuell in der
 \shape italic
 Cocoa
 \shape default
--API basieren; möchte man eine iOS-Anwendung entwickeln, stellt Apple hierfür
- die API Cocoa Touch bereit.
+-API basieren; möchte man eine iOS-Anwendung entwickeln, stellt Apple das
+ im vorherigen Kapitel vorgestellte Cocoa Touch-Framework bereit.
+\end_layout
+
+\begin_layout Standard
+XCode kommt mit einer Reihe von Werkzeugen, die die alltägliche Arbeit des
+ Programmierers ein wenig erleichtern soll.
+ Apples LLVM Compiler bietet eine angenehme Echtzeitüberprüfung des eingegebenen
+ Codes und meldet auffallende Syntax- oder Schreibfehler umgehend.
+ Oft bietet die eingeblendete 
+\shape italic
+Fix-it
+\shape default
+-Funktion gleich eine adäquate Lösung, die sich mit einem Click darauf übernehme
+n lässt.
+ Natürlich darf man hier keine Wunder erwarten, in der Praxis hat sich deren
+ Vorhandensein jedoch als sehr angenehm erwiesen.
+ Mit dem Analysetool Instruments lassen sich diverse Messinstrumente an
+ einen Prozess hängen und deren Laufzeitverhalten akribisch genau analysieren.
+ Möchte man ein Programmverhalten auf einem bestimmten iOS-Gerät testen,
+ kann man auf den integrierten iPhone- und iPad-Simulator zurückgreifen,
+ für den verschiedene iOS-Versionen zum Download bereit gestellt werden.
+ Auf diesem lässt sich die App testen, ohne dass man ein physisches Gerät
+ zur Hand haben muss.
+ Hierbei lassen sich verschiedene Hardware-Events simulieren, vom Schwenk
+ des Orientation-Modus über die Betätigung der Home-Taste bis hin zu einer
+ Speicherwarnung, mit welcher man die eigene Implementation überprüfen kann.
+ Möchte man jedoch Implementation der in den aktuellen Geräten verbauten
+ Sensoren überprüfen, kommt man an einem echten Stück Apple-Hardware nicht
+ vorbei.
+\end_layout
+
+\begin_layout Section*
+https://developer.apple.com/technologies/tools/features.html
 \end_layout
 
 \begin_layout Standard

@@ -771,7 +771,6 @@
     
     // ******************** Begin Receiving Response Body ********************
     
-    BOOL responseComplete = NO;
     [responseBodyData appendData:_bodyData];
     if (responseLength > -1 ) {
         [_loadProgressBar setHidden:NO];
@@ -780,19 +779,9 @@
         float progress = 1.00*[responseBodyData length]/responseLength;
         [_loadProgressBar setProgress:progress animated:NO];
         if ([_verboseLogSwitch isOn]) NSLog(@"%i/%i bytes received.",[responseBodyData length],responseLength);
-        if ([responseBodyData length] >= responseLength)
-            responseComplete = YES;
     } else {
-/*
-        if (!awaitingResponse)
-            NSLog(@"No content length is specified. Starting timer. If there is no answer for 3 seconds the transmission is assumed to be completed.");
- */
         [_loadIndicatorView startAnimating];
         NSLog(@"%i bytes received.",[responseBodyData length]+[_bodyData length]);
-/*
-        [awaitingResponse invalidate];
-        awaitingResponse = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(responseComplete:) userInfo:nil repeats:NO];
- */
     }
 
 
@@ -857,7 +846,7 @@
     // ******************** Begin Parsing Response ********************
 
     BOOL parsingSuccess = NO;
-    NSDictionary *parsedResponseAsDictionary = [[NSDictionary alloc] init];
+    NSDictionary *parsedResponseAsDictionary;
 
     
     
@@ -1333,7 +1322,3 @@
 }
 
 @end
-
-
-
-// 1337
