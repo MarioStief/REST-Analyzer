@@ -422,13 +422,22 @@ Deligierten
  weiterzuleiten, mit denen eine Methode aufgerufen werden soll, die in einen
  bestimmten Funktionalitätsbereich fällt.
  Ein TextField sendet nach dem Betätigen des Enter-Buttons die Nachricht
- textFieldShouldReturn:(UITextField *) an ihren Deligierten.
+ 
+\family typewriter
+\size small
+textFieldShouldReturn:(UITextField *)
+\family default
+\size default
+ an ihren Deligierten.
  Die kann die eigene Instanz sein - in diesem Fall angesprochen mit 
 \shape italic
 self
 \shape default
- - oder aber ein beliebiges anderes Objekt, welches das Protokoll (BOOL)UITextFi
-eldDelegate implementiert.
+ - oder aber ein beliebiges anderes Objekt, welches das Protokoll 
+\family typewriter
+(BOOL)UITextFieldDelegate
+\family default
+ implementiert.
  Existiert diese Methode, wird abgefragt, was beim Betätigen der Entertaste
  passieren soll.
  An dieser Stelle bietet es sich an, mittels 
@@ -775,7 +784,7 @@ t eines Textfeldes.
 \end_layout
 
 \begin_layout Section
-Entwicklerlizenz (1 Seite)
+Entwicklerlizenz: Testen auf echter Hardware (1 Seite)
 \end_layout
 
 \begin_layout Standard

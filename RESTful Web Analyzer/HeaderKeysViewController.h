@@ -17,7 +17,6 @@
 @property (nonatomic) UITextField *referenceToHeaderValue;
 @property (nonatomic) UIPopoverController *referenceToPopoverController;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (void)viewDidLoad;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;

@@ -497,7 +497,7 @@
         urlString = [urlString substringToIndex:[urlString length]-1];
     }
     
-    // Trennung in BaseURL und ResourceURL
+    // Splitting URL in BaseURL and Resource
     NSArray *urlComponents = [[NSArray alloc] initWithArray:[urlString pathComponents]];
     NSString *baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
     
@@ -604,15 +604,6 @@
     [request setMainDocumentURL:[[NSURL alloc]initWithString:[self urlPart:[_url text] definePart:@"baseUrl"]]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
     [request setHTTPMethod:requestMethodString];
     
-    // ********** Change HTTP Headers **********
-    
-    for (int i = 0; i < [headerKeysArray count]; i++) {
-        NSString *key = [headerKeysArray objectAtIndex:i];
-        NSString *value = [headerValuesArray objectAtIndex:i];
-        if ([_verboseLogSwitch isOn]) NSLog(@"Adding header \"%@\":\"%@\" to request.",key,value);
-        [request setValue:value forHTTPHeaderField:key];
-    }
-    
     // working with different methods
 
     switch (methodId) {
@@ -626,6 +617,15 @@
 
             // attaching the bodystring encoded as data
             [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            // ********** Change HTTP Headers **********
+            
+            for (int i = 0; i < [headerKeysArray count]; i++) {
+                NSString *key = [headerKeysArray objectAtIndex:i];
+                NSString *value = [headerValuesArray objectAtIndex:i];
+                if ([_verboseLogSwitch isOn]) NSLog(@"Adding header \"%@\":\"%@\" to request.",key,value);
+                [request setValue:value forHTTPHeaderField:key];
+            }
             
     }
     // and empty the contentScrollViewText;

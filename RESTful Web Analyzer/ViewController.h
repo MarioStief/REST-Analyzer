@@ -51,11 +51,11 @@
     // add up data for unfinished responses for processing when load did finish
     NSMutableData *responseBodyData;
     
-    // actual active history element with connection to its pre- and postdecessors
+    // actual active history element with connection to its pre- and sucessors
     HistoryElement *historyElement;
     
     // didReceiveData needs to know the length for calculating the progress bar
-    // or the indicator view - cannot pass parameters to that methos
+    // or the indicator view - cannot pass parameters to that methods
     NSInteger responseLength;
     
     // didReceiveResponse can't receive parameters either,
@@ -63,60 +63,75 @@
     NSInteger resourcesToValidate;
     NSInteger validatedResources;
     
-    // because the check for valid resources is a asynchronous request and the responsed comes without order
+    // because the check for valid resources is a asynchronous request and the responded comes without order
     // adding the resources at the right index keeps an order for them
     NSInteger staticIndex;
 }
 
-// NO: "normal" state, YES: "validating resources" state
+// changing state: NO = "normal" state, YES = "validating resources" state
 @property (nonatomic) BOOL validatingState;
+
+// upper area: input and info fields
 @property (nonatomic) IBOutlet UITextField *url;
-@property (nonatomic) IBOutlet UIPickerView *requestMethod;
-@property (nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic) IBOutlet UITextView *headerScrollViewText;
-@property (nonatomic) IBOutlet UITextView *contentScrollViewText;
-@property (nonatomic) IBOutlet UISegmentedControl *outputSwitch;
-@property (nonatomic) IBOutlet UIImageView *detectedJSON;
-@property (nonatomic) IBOutlet UIImageView *detectedXML;
 @property (nonatomic) IBOutlet UITextField *username;
 @property (nonatomic) IBOutlet UITextField *password;
 @property (nonatomic) IBOutlet UITextField *statusCode;
 @property (nonatomic) IBOutlet UITextField *authentication;
 @property (nonatomic) IBOutlet UITextField *contentType;
 @property (nonatomic) IBOutlet UITextField *encoding;
-@property (nonatomic) IBOutlet UIButton *showResourcesButton;
-@property (nonatomic) IBOutlet UITableView *headersTableView;
 @property (nonatomic) IBOutlet UITextField *keyTextField;
 @property (nonatomic) IBOutlet UITextField *valueTextField;
-@property (nonatomic) IBOutlet UISlider *fontSizeSlider;
-@property (nonatomic) IBOutlet UITextField *fontSize;
+@property (nonatomic) IBOutlet UIImageView *detectedJSON;
+@property (nonatomic) IBOutlet UIImageView *detectedXML;
+
+// opening the detected resources here
+@property (nonatomic) IBOutlet UIButton *showResourcesButton;
+
+// history
 @property (nonatomic) IBOutlet UIButton *backButton;
 @property (nonatomic) IBOutlet UIButton *forwardButton;
-@property (nonatomic) IBOutlet UIProgressView *loadProgressBar;
-@property (nonatomic) IBOutlet UIActivityIndicatorView *loadIndicatorView;
-@property (nonatomic) IBOutlet UITextField *addMethodTextField;
-@property (nonatomic) IBOutlet UISwitch *logToFileSwitch;
-@property (nonatomic) IBOutlet UILabel *verboseLogLabel;
-@property (nonatomic) IBOutlet UISwitch *verboseLogSwitch;
 @property (nonatomic) IBOutlet UIButton *logFileButton;
+
+// method picker
+@property (nonatomic) IBOutlet UIPickerView *requestMethod;
+@property (nonatomic) IBOutlet UITextField *addMethodTextField;
+
+// header table view
+@property (nonatomic) IBOutlet UITableView *headersTableView;
+
+// main request/response/parsed output for header and body
+@property (nonatomic) IBOutlet UIScrollView *scrollView; // container
 @property (nonatomic) IBOutlet UISegmentedControl *bodyHeaderSwitch;
+@property (nonatomic) IBOutlet UITextView *headerScrollViewText;
+@property (nonatomic) IBOutlet UITextView *contentScrollViewText;
+@property (nonatomic) IBOutlet UIProgressView *loadProgressBar;
 @property (nonatomic) IBOutlet UILabel *progressBarDescription;
+@property (nonatomic) IBOutlet UIActivityIndicatorView *loadIndicatorView;
+@property (nonatomic) IBOutlet UISegmentedControl *outputSwitch;
+@property (nonatomic) IBOutlet UITextField *fontSize;
+@property (nonatomic) IBOutlet UISlider *fontSizeSlider;
 
+// logging corner
+@property (nonatomic) IBOutlet UISwitch *logToFileSwitch;
+@property (nonatomic) IBOutlet UISwitch *verboseLogSwitch;
+@property (nonatomic) IBOutlet UILabel *verboseLogLabel;
 
-- (void)viewDidLoad;
-- (void)viewDidUnload;
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-- (BOOL)textFieldShouldReturn:(UITextField *)textField;
+/* UIPicker methods
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+*/
+
+/* UITableView methods
 - (NSInteger)tableView:(UITableView *)headersTableView numberOfRowsInSection:(NSInteger)section;
 - (UITableViewCell *)tableView:(UITableView *)headersTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)tableView:(UITableView *)headersTableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path;
+*/
+
+// ********* Buttons and Switches *********
 - (IBAction)clearUrlField:(id)sender;
 - (IBAction)addKeyValue:(id)sender;
-- (void)tableView:(UITableView*)headersTableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath;
-- (void)tableView:(UITableView *)headersTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)path;
-- (void)switchSegmentIndex;
 - (IBAction)outputToggle:(id)sender;
 - (IBAction)loggingOutput:(id)sender;
 - (IBAction)fontSizeSliderMove:(id)sender;
@@ -125,17 +140,27 @@
 - (IBAction)forwardButton:(id)sender;
 - (IBAction)bodyHeaderToggle:(id)sender;
 - (IBAction)go:(id)sender;
-- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
-- (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part;
 - (IBAction)addMethodButton:(id)sender;
 - (IBAction)logToFileSwitch:(id)sender;
 - (IBAction)Impressum:(id)sender;
-- (void)startRequest:(NSString*)requestMethodString
-        withMethodId:(NSInteger)methodId;
+// ****************************************
+
+// ******************************** implementations responding to a system generated message ********************************
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)_bodyData;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
+// **************************************************************************************************************************
+
+// *********************** additional methods ***********************
+- (void)switchSegmentIndex;
+- (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part;
+- (void)startRequest:(NSString*)requestMethodString
+        withMethodId:(NSInteger)methodId;
 - (void)parseResponse;
 - (void)processKeys:(NSArray*)localKeys
          withValues:(NSArray*)localValues
@@ -144,7 +169,7 @@
             withKey:(NSString*)key
           withIndex:(NSInteger)i;
 - (void)validateDidFinish;
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
 - (void)checkStatusCode:(NSInteger)code;
+// ******************************************************************
 
 @end
