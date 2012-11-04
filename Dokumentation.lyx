@@ -83,11 +83,11 @@ Hier könnte ihr Text stehen...
 \end_layout
 
 \begin_layout Chapter
-Die Werkzeugkiste (10 - 12 Seiten)
+Die Werkzeugkiste (8 Seiten)
 \end_layout
 
 \begin_layout Section
-Basissprache: Objective-C (2 - 3 Seiten)
+Basissprache: Objective-C (4 Seiten)
 \end_layout
 
 \begin_layout Standard
@@ -459,7 +459,7 @@ Properties
 \begin_layout Standard
 Properties werden in der Headerdatei deklariert und stellen einen einfachen
  Weg dar, Accessoren zu implementieren.
- War in früheren XCode-Versionen noch das manuelle Anlegen mittels 
+ War in früheren Xcode-Versionen noch das manuelle Anlegen mittels 
 \family typewriter
 \size small
 @synthesize
@@ -515,7 +515,7 @@ _name.text = string
 \end_layout
 
 \begin_layout Section
-API: Cocoa Touch (2 - 3 Seiten)
+API: Cocoa Touch (1 Seite)
 \end_layout
 
 \begin_layout Standard
@@ -581,19 +581,19 @@ Klassen-Clustern
 \end_layout
 
 \begin_layout Section
-IDE: XCode (2 - 3 Seiten)
+IDE: Xcode (1,5 Seiten)
 \end_layout
 
 \begin_layout Standard
-XCode ist Apples integrierte Entwicklungsumgebung und steht aktuell in der
+Xcode ist Apples integrierte Entwicklungsumgebung und steht aktuell in der
  Version 4.5 zur Verfügung.
- Seit der Version 4.1 lässt sich XCode für jedermann zugänglich kostenlos
+ Seit der Version 4.1 lässt sich Xcode für jedermann zugänglich kostenlos
  im App Store herunterladen.
  In der Version 4.4 sind die SDKs für OS X 10.8 sowie für iOS 5.1 enthalten,
  Xcode 4.5 bringt die SDK für das neue iOS 6 mit.
  Beide benötigen mindestens OS X in der Version 10.7.4 Lion oder 10.8 Mountain
  Lion.
- Mit Hilfe von XCode lassen sich OS X- oder iOS-Anwendungen entwickeln,
+ Mit Hilfe von Xcode lassen sich OS X- oder iOS-Anwendungen entwickeln,
  wobei OS X-Anwendungen auf der 
 \shape italic
 Cocoa
@@ -603,8 +603,11 @@ Cocoa
 \end_layout
 
 \begin_layout Standard
-XCode kommt mit einer Reihe von Werkzeugen, die die alltägliche Arbeit des
- Programmierers ein wenig erleichtern soll.
+Xcode kommt mit einer Reihe von Werkzeugen - den 
+\shape italic
+Xcode Tools
+\shape default
+ - die die alltägliche Arbeit des Programmierers ein wenig erleichtern soll.
  Apples LLVM Compiler bietet eine angenehme Echtzeitüberprüfung des eingegebenen
  Codes und meldet auffallende Syntax- oder Schreibfehler umgehend.
  Oft bietet die eingeblendete 
@@ -615,8 +618,12 @@ Fix-it
 n lässt.
  Natürlich darf man hier keine Wunder erwarten, in der Praxis hat sich deren
  Vorhandensein jedoch als sehr angenehm erwiesen.
- Mit dem Analysetool Instruments lassen sich diverse Messinstrumente an
- einen Prozess hängen und deren Laufzeitverhalten akribisch genau analysieren.
+ Mit dem Analysetool 
+\shape italic
+Instruments
+\shape default
+ lassen sich diverse Messinstrumente an einen Prozess hängen und deren Laufzeitv
+erhalten akribisch genau analysieren.
  Möchte man ein Programmverhalten auf einem bestimmten iOS-Gerät testen,
  kann man auf den integrierten iPhone- und iPad-Simulator zurückgreifen,
  für den verschiedene iOS-Versionen zum Download bereit gestellt werden.
@@ -630,8 +637,62 @@ n lässt.
  vorbei.
 \end_layout
 
-\begin_layout Section*
-https://developer.apple.com/technologies/tools/features.html
+\begin_layout Standard
+Das Interface von Xcode besteht zum einen aus dem 
+\shape italic
+Source Editor
+\shape default
+, welcher Komfortmerkmale 
+\shape italic
+Code Completion
+\shape default
+, 
+\shape italic
+Syntax Highlighting
+\shape default
+ und 
+\shape italic
+Code Folding
+\shape default
+ bereitstellt sowie die äußerst angenehme Echtzeitanzeige von Fehlern, Warnungen
+ und anderer kontextsensitiven Informationen in Nachrichtenblasen.
+ Darüber hinaus ermöglicht der 
+\shape italic
+Assistant Editor
+\shape default
+ über ein zweigeteiltes Fenster den Schnellzugriff auf die Dateien, die
+ für gewöhnlich die hilfreichste Kombiation mit der geöffneten Datei darstellt
+ (zum Beispiel wird neben dem Interface deren Implementation geöffnet).
+ Der 
+\shape italic
+Interface Builder
+\shape default
+ - mit Version 4.0 von den 
+\shape italic
+Xcode Tools
+\shape default
+ in die 
+\shape italic
+IDE
+\shape default
+ gewandert - ermöglicht es, äußerst komfortabel und ohne eine Zeile Code,
+ die GUI der App zu designen und die einzelnen Interfacekomponenten untereinande
+r zu verknüpfen und in den Programmcode einzubinden.
+ Der Organizer bietet eine zentrale Verwaltung für die der Entwicklerlizenz
+ hinzugefügten Geräte, Versionsverwaltung über lokale sowie entfernte Repositori
+es, Projekte und deren Snapshots und ein App Archiv, von dem aus man seine
+ entwickelten Apps verwaltet und zum App Store sendet.
+\end_layout
+
+\begin_layout Standard
+Am Rand lassen sich weitere Leisten einblenden; auf der linken Seite wäre
+ dies der Navigator, der uns Dateien, Fehler und Logs führt, rechts lässt
+ uns die Utility Bar einige Einstellungen vornehmen.
+ Darüber hinaus befindet sich dort auch eine File Templates- und eine Code
+ Snippets-Library im unteren Bereich für Dinge, die man einfach immer mal
+ wieder benötigt.
+ Im unteren Bereich lässt sich selbstverständlich die für das Debugging
+ unentbehrliche obligatorische Konsole einblenden.
 \end_layout
 
 \begin_layout Standard
@@ -639,7 +700,7 @@ Da es vor allem auf mobilen Geräten eher zu Resourcenknappheit kommt als
  auf Desktop-Systemen, sollte man hier einen entsprechend ökonimischen Programie
 rstil pflegen und Ressourcen, die nicht mehr benötigt werden, nach der Verwendun
 g wieder freigeben.
- In XCode 4.2 wurde das Automatic Reference Counting eingeführt, um sich
+ In Xcode 4.2 wurde das Automatic Reference Counting eingeführt, um sich
  dieses Problemes anzunehmen.
  Die bislang verwendeten 
 \family typewriter
@@ -672,18 +733,45 @@ release
 \end_layout
 
 \begin_layout Section
-\begin_inset Quotes eld
-\end_inset
-
-IDE light
-\begin_inset Quotes erd
-\end_inset
-
-: Storyboard (2 - 3 Seiten)
+Interface Builder: Storyboards (0,5 Seiten)
 \end_layout
 
 \begin_layout Standard
-Neu eingeführt in XCode 4.2.
+Neu eingeführt in Xcode 4.2 bilden Storyboards die Grundlage die Grundlage
+ des Interface Builders und lösen die vorhergehenden NIBs, bei denen man
+ darauf beschränkt war, zu jedem Zeitpunkt mit je einer View zu arbeiten.
+ Storyboards gestalten dies nun etwas einfacher und zeigen eine komplette
+ Szene an, also die einzelnen Views und deren Übergänge untereinander.
+ Verbindungen zu anderen Views wie die Möglichkeit, diese als Datenquelle
+ oder Deligierte zu nutzen, lassen sich mit realisieren, indem man ein Objekt
+ bei gedrückter ctrl-Taste auf die gewünschte View zieht.
+ Zieht man diese statt dessen in den Interfaceteil des Programmcodes, werden
+ die entsprechenden Codefragteile erstellt, in denen man mit der Implementation
+ beginnen kann, ohne sich mit programmatischen Details zum Setzen der einzelnen
+ GUI-Elemente beschäftigen zu müssen.
+ Es lassen sich sogar solche Verbindungslinien mit ID-Strings versehen und
+ auf die man programmatisch zugreifen.
+ So wird im Falle eines Überganges auf eine andere View die Methode 
+\shape italic
+prepareForSegue
+\shape default
+ mit dem entsprechenden String für diesen Übergang aufgerufen.
+ In dieser lassen sich Vorbereitungen für die neue Ansicht treffen - wie
+ z.
+ B.
+ Daten und Referenzen übergeben - bevor diese dann geladen wird.
+\end_layout
+
+\begin_layout Standard
+Im Utility-Bereich kann praktisch jede Eigenschaft bearbeitet werden, mit
+ der das Erscheinungsbild beeinflusst werden kann, so lässt sich ein Objekt
+ inaktiv oder gleich komplett versteckt darstellen oder man ändert die Schriftar
+t eines Textfeldes.
+ Möchte man ein Objekt einem Container unterordnen, lässt sich das unkompliziert
+ per Drag and Drop realisieren.
+ Zieht man beispielsweise eine Text View in einen Scroll View-Container
+ erhält man Text, welcher sich mit einer Wischbewegung scrollen lässt.
+ 
 \end_layout
 
 \begin_layout Section
@@ -696,7 +784,7 @@ Grundsätzlich lässt sich eine App auch ohne Lizenz entwickeln und auf dem
 \shape italic
 iOS Simulator
 \shape default
- des seit der Version 4.1 für jedermann verfügbaren XCode testen.
+ des seit der Version 4.1 für jedermann verfügbaren Xcode testen.
  Möchte man jedoch die App auf einem 
 \begin_inset Quotes eld
 \end_inset
@@ -788,9 +876,9 @@ n.
 Um eine App direkt auf unserem Gerät ausführen zu können, benötigen wir
  ein Development Certificate.
  Hierzu schließen wir das Gerät, das wir hinzufügen möchten, an den Mac
- an und wechseln in XCode in den Organizer.
+ an und wechseln in Xcode in den Organizer.
  Hier können wir das angeschlossene Gerät unserem Entwickleraccount zuordnen.
- Beim ersten Mal wird uns XCode mitteilen, dass kein 
+ Beim ersten Mal wird uns Xcode mitteilen, dass kein 
 \shape italic
 iOS Development Certificate
 \shape default
@@ -2102,7 +2190,7 @@ ViewController
 \end_layout
 
 \begin_layout Standard
-Erzeugt man ein Projekt, liefert XCode bereits einige Dateien, mit denen
+Erzeugt man ein Projekt, liefert Xcode bereits einige Dateien, mit denen
  man Arbeiten darf.
  Single View Application 
 \end_layout
