@@ -2159,49 +2159,289 @@ Implementation (11 - 12 Seiten, vielleicht mehr)
 \end_layout
 
 \begin_layout Section
-Daten (fällt weg)
+Ein erster Überblick
 \end_layout
 
-\begin_layout Description
-Template: Single View Application
+\begin_layout Standard
+Da es sich um eine iOS-App handelt und daher nicht mit Optionsvielfalt erschlage
+n sollten, habe ich mich für ein einfaches 
+\shape italic
+Single View Application
+\shape default
+-Template und gegen einen 
+\shape italic
+NavigationController
+\shape default
+ entschieden.
+ Erzeugt man ein Projekt, liefert Xcode bereits einige Template-Dateien,
+ in denen man sofort loslegen darf, dazu gehören der 
+\shape italic
+ViewController
+\shape default
+ und das 
+\shape italic
+MainStoryboard
+\shape default
+.
 \end_layout
 
-\begin_layout Description
-Name: REST Analyzer
-\end_layout
+\begin_layout Standard
+\begin_inset Graphics
+	filename Diagram.png
+	lyxscale 42
+	scale 42
 
-\begin_layout Description
-Company
-\begin_inset space \thinspace{}
 \end_inset
 
-Identifier: Mario Stief
+
 \end_layout
 
-\begin_layout Description
-Bundle
-\begin_inset space \thinspace{}
-\end_inset
+\begin_layout Standard
 
-Identifier: Mario-Stief.RESTful-Web-Analyzer
+\shape italic
+ViewController
+\shape default
+ ist hierbei die Initialisierungs-View und das zentrale Bedieninstrument
+ dieser App.
+ Die Implementation jeder View gehört in eine eigene Datei, was den Klassen
+ 
+\shape italic
+HeaderKeysViewController
+\shape default
+, 
+\shape italic
+ResourcesTableViewController
+\shape default
+ sowie 
+\shape italic
+LogOutputViewController
+\shape default
+ ihre Existenzberechtigung verleiht.
+ Keine View besitzt der 
+\shape italic
+XMLParser
+\shape default
+, welcher sich jedoch hervorragend als autonome Klasse auszugliedern lies.
+ 
+\shape italic
+HistoryElement
+\shape default
+ ist die Implementation einer URL-History in Form einer doppelt verketteten
+ linearen Liste.
 \end_layout
 
 \begin_layout Section
-Konzept?
+Hauptklasse: ViewController
+\end_layout
+
+\begin_layout Standard
+Der ViewController ist unsere Basisklasse und wird uns von XCode zu Projektbegin
+n bereitgestellt und stellt die Methoden 
+\shape italic
+viewDidLoad
+\shape default
+, 
+\shape italic
+viewDidUnload
+\shape default
+ (mit je einer kurzen Beschreibung) und die 
+\shape italic
+shouldAutorotateToInterfaceOrientation
+\shape default
+, mit welcher sich der Landscape Orientation-Modus ein- und ausschalten
+ lässt.
+ Aufgrund des fehlenden 
+\shape italic
+NavigationControllers
+\shape default
+ muss jede weitere View ihr aus erreichbar sein.
+ Oberklasse von 
+\shape italic
+ViewController
+\shape default
+ ist die 
+\shape italic
+UIViewController
+\shape default
+, welche das fundamentelle View-Management-Modell für alle iOS Apps stellt.
+ Die View beinhaltet mehrere Textfelder und implementiert demnach das 
+\shape italic
+UITextFieldDelegate
+\shape default
+-Protokoll.
+ Dieses Protokoll definiert die darin möglichen Nachrichten, die ein Textfeld
+ an seine Delegate-Klasse sendet, als Teil der Textbearbeitung.
+ In der ViewController wird beispielsweise die im Protokoll enthaltene Methode
+ textFieldShouldReturn so implementiert, dass nach dem Druck der Return-Taste
+ auf der On Screen-Tastatur das Keyboard wieder vom Bildschirm ausgeblendet
+ wird und - sofern das aktive Textfeld eben gerade das URL-Feld war - anschließe
+nd die Methode 
+\shape italic
+go
+\shape default
+ aufgerufen wird, was den gleichen Effekt hat wie der Druck auf den Go-Button
+ oben rechts am Bildschirm.
+ Für das Textfeld, welches diese Methode aufrufen möchte, muss zwingend
+ eine Delegate spezifiziert werden.
+ Dies wird im Storyboard einfach erledigt, indem bei gedrückter Strg-Taste
+ eine Verbindung vom Textfeld zum Controller gezogen und 
+\end_layout
+
+\begin_layout Standard
+Implementation der Methode 
+\shape italic
+textFieldShouldReturn
+\shape default
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   [textField resignFirstResponder];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   if (textField == _url)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [self go:nil];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   else if (textField == _username)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [_password becomeFirstResponder];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   else if (textField == _keyTextField)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [_valueTextField becomeFirstResponder];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   else if (textField == _valueTextField)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [self addKeyValue:nil];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   return YES;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+}
+\end_layout
+
+\begin_layout Standard
+ViewController ist darüber hinaus auch Delegate sowie DataSource für die
+ TableView auf der rechten Seite, in welcher sich Key/Value-Tupel aufnehmen
+ lassen, welche sich bei einem PUT oder POST als Header hinzufügen lassen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ViewController1.tiff
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ViewController2.tiff
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Modellierung
+\end_layout
+
+\begin_layout Standard
+* geparste Daten werden an MutableArray angehangen
+\end_layout
+
+\begin_layout Subsection
+Auswahl der HTTP-Methoden
+\end_layout
+
+\begin_layout Standard
+* Auswahl der HTTP-Verben mittels Picker View.
+ Begünstigend aufgrund der Implementation: zusätzliches Feld zum Hinzufügen
+ weiterer Methoden wie z.
+ B.
+ OPTIONS.
+ Dieses zusäsätzliche Feld 
 \end_layout
 
 \begin_layout Section
-Datenmodell (5 - 6 Seiten)
+Hilfsklassen
+\end_layout
+
+\begin_layout Subsection
+ResourceTableViewController
+\end_layout
+
+\begin_layout Subsection
+HeaderKeysViewController
+\end_layout
+
+\begin_layout Subsection
+XMLParser
+\end_layout
+
+\begin_layout Subsection
+LogOutputViewController
+\end_layout
+
+\begin_layout Subsection
+HistoryElement
 \end_layout
 
 \begin_layout Subsection
 ViewController
-\end_layout
-
-\begin_layout Standard
-Erzeugt man ein Projekt, liefert Xcode bereits einige Dateien, mit denen
- man Arbeiten darf.
- Single View Application 
 \end_layout
 
 \begin_layout Subsection
@@ -2245,6 +2485,17 @@ ard, instantiiert den ersten ViewController und packt dessen View in ein
 
 \begin_layout Section
 GUI (3 - 4 Seiten)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Storyboard.png
+	lyxscale 45
+	scale 45
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
