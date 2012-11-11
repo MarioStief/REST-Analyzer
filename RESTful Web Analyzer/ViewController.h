@@ -15,7 +15,7 @@
 #import "LogOutputViewController.h"
 #import "HeaderKeysViewController.h"
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface ViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource> {
     // justification for being global variables:
     
     // needed for the picker view:

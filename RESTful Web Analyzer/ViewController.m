@@ -783,8 +783,6 @@
         [_loadIndicatorView startAnimating];
         NSLog(@"%i bytes received.",[responseBodyData length]+[_bodyData length]);
     }
-
-
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {

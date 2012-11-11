@@ -2186,10 +2186,34 @@ MainStoryboard
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename Diagram.png
-	lyxscale 42
-	scale 42
+	lyxscale 45
+	scale 45
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Verwendete Klassen in UML-Notation
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -2282,15 +2306,62 @@ go
  aufgerufen wird, was den gleichen Effekt hat wie der Druck auf den Go-Button
  oben rechts am Bildschirm.
  Für das Textfeld, welches diese Methode aufrufen möchte, muss zwingend
- eine Delegate spezifiziert werden.
- Dies wird im Storyboard einfach erledigt, indem bei gedrückter Strg-Taste
- eine Verbindung vom Textfeld zum Controller gezogen und 
+ eine 
+\shape italic
+Delegate
+\shape default
+ spezifiziert werden.
+ Dazu wird im Storyboard bei gedrückter Strg-Taste eine Verbindung vom Textfeld
+ (hier: dem 
+\shape italic
+UITextField *url
+\shape default
+) zum Controller gezogen und das Outlet 
+\shape italic
+delegate
+\shape default
+ ausgewählt.
+ Das Interface des entsprechenden Controllers wird automatisch um die entspreche
+nde Deklaration des Protokolls erweitert.
+ Der programmatische Weg wäre das manuelle Setzen der 
+\shape italic
+Delegate
+\shape default
+ mittels 
+\family typewriter
+\size small
+[_url setDelegate:self];
+\family default
+\size default
+.
+ (Zur Erinnerung: 
+\shape italic
+url
+\shape default
+ wird als 
+\shape italic
+property
+\shape default
+ im Interface angegeben und es werden standardmäßig die Accessoren generiert.
+ Der Zugriff auf 
+\shape italic
+url
+\shape default
+ über den Getter erfolgt über die Instanzvariable 
+\shape italic
+_url
+\shape default
+.)
 \end_layout
 
 \begin_layout Standard
-Implementation der Methode 
+Beispielhafte Implementation der Methode 
 \shape italic
 textFieldShouldReturn
+\shape default
+ im 
+\shape italic
+ViewController
 \shape default
 :
 \end_layout
@@ -2368,16 +2439,122 @@ textFieldShouldReturn
 \end_layout
 
 \begin_layout Standard
-ViewController ist darüber hinaus auch Delegate sowie DataSource für die
- TableView auf der rechten Seite, in welcher sich Key/Value-Tupel aufnehmen
- lassen, welche sich bei einem PUT oder POST als Header hinzufügen lassen.
+Weitere Elemente in dieser View, welche eine Delegate benötigen, sind zum
+ einen die 
+\shape italic
+PickerView
+\shape default
+ links oben, in der man die zu verwendende HTTP-Methode selektiert sowie
+ die 
+\shape italic
+TableView
+\shape default
+ auf der rechten Seite, in welcher sich Key/Value-Tupel aufnehmen lassen,
+ welche sich bei einem PUT oder POST als Header hinzufügen lassen.
+ Diese beiden Komponenten benötigen nicht nur ein Objekt, dem sie Nachrichten
+ übermitteln können, die im weiteren Programmverlauf etwas anstoßen; sie
+ benötigen darüber hinaus ebenfalls ein Objekt, bei dem sie Daten abfragen
+ dürfen, die sie für ihre eigene Funktion benötigen.
+ Das 
+\shape italic
+DataSource
+\shape default
+-Objekt liefert als Antwort auf die im Protokoll spezifizierten Nachrichten,
+ die es von der 
+\shape italic
+PickerView
+\shape default
+ oder der 
+\shape italic
+TableView
+\shape default
+ empfängt, die benötigten Daten zurück.
+ Oft handelt es sich dabei bei der 
+\shape italic
+Delegate
+\shape default
+ und der 
+\shape italic
+DataSource
+\shape default
+ um ein- und dasselbe Objekt, daher implementiert der 
+\shape italic
+ViewController
+\shape default
+ sowohl die Protokolle 
+\shape italic
+UIPickerViewDelegate
+\shape default
+ und 
+\shape italic
+UITableViewDelegate
+\shape default
+ als auch die Protokolle 
+\shape italic
+UIPickerViewDataSource
+\shape default
+ und 
+\shape italic
+UITableViewDataSource
+\shape default
+.
 \end_layout
 
 \begin_layout Standard
+Auf die Anfrage der PickerView nach der Anzahl der Spalten reagiert das
+ ViewController-Objekt mit der folgenden Methode:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+     return 1;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+}
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename ViewController1.tiff
-	lyxscale 40
-	scale 40
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+ViewController nach geparster XML-Response.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -2385,10 +2562,33 @@ ViewController ist darüber hinaus auch Delegate sowie DataSource für die
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename ViewController2.tiff
-	lyxscale 40
-	scale 40
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+ViewController im Landscape-Modus.
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -2396,24 +2596,461 @@ ViewController ist darüber hinaus auch Delegate sowie DataSource für die
 \end_layout
 
 \begin_layout Subsection
-Modellierung
+Senden einer Request
 \end_layout
 
 \begin_layout Standard
-* geparste Daten werden an MutableArray angehangen
+Die Grundstruktur ist die Folgende: Im URL-Textfeld ist die Adresse einzugeben,
+ zu welcher der Request gesendet werden soll; im Picker links oben wird
+ die auszuführende HTTP-Methode ausgewählt.
+ Das Feld darunter bietet die Möglichkeit, zusätzliche Methoden in den Picker
+ aufzunehmen, beispielsweise ein OPTIONS.
+ Ist der Request ein PUT oder ein POST, so wird der im Body-Bereich des
+ aktuell aktiven Tabs im Output-Fenster (Request/Response/Parsed) angezeigte
+ Text dem Request als Body hinzugefügt.
+ Dieser Textbereich ist somit bearbeitbar.
+ Es sollte dabei niemals der Parsed-Tab aktiv sein, da dieser keinen gültigen
+ JSON-/XML-Code enthält.
+ Nach einem PUT oder einem POST befindet sich eine Kopie des gesendeten
+ Bodys im Request-Tab zur eventuellen weiteren Bearbeitung.
+ Wurde ein beliebiger Request durchgeführt und die Response erfolgreich
+ auf JSON oder XML getestet und ist das Request-Fenster bislang noch leer,
+ so wird dem Anwender an dieser Stelle ein JSON- bzw.
+ ein XML-Template eingeblendet, welches er anpassen kann.
+\end_layout
+
+\begin_layout Standard
+Möchte der Anwender einen PUT oder einen POST-Request absenden, so hat er
+ im rechten Bereich die Möglichkeit, diesen um beliebige Header zu erweitern.
+ Der Header Content-Length wird hierbei automatisch mit der tatsächlichen
+ Länge der angehangenen Body-Nachricht gesetzt.
+ An dieser Stelle kann man aus der angebotenen Liste einen gebräuchlichen
+ General- oder einen Request-Header auswählen, man darf jedoch auch einen
+ beliebiges Header/Werte-Paar eingeben.
+ Zwei gleichnamige Header sind hier verständlicherweise ebenso wenig erlaubt,
+ wie ein leeres Header- bzw.
+ Wertefeld.
+ Wird eine Headerzeile markiert, so wird der neue Header direkt darüber
+ eingefügt und die Markierung entfernt; ist keine Headerzeile markiert,
+ so wird das neue Tupel am Ende der Liste eingefügt.
+ Die hier verwendete Datenstruktur sind die beiden Arrays headerKeysArray
+ sowie headerValuesArray, an deren Indexwert x sich der Eintrag der x-ten
+ Reihe des Headerfeldes findet.
+ Zwar sind die Zellen ebenfalls in der Lage, Daten zu speichern, aufgrund
+ der verwendeten ScrollView kommt es hierbei jedoch zu einem anormalen Programmv
+erhalten: Als Container wurde eine ScrollView verwendet, darin wurde eine
+ TableView plaziert.
+ Das hat den Vorteil, dass es möglich ist, mehr Daten aufzunehmen, aus sichtbar
+ sind - man kann sie einfach mit dem Finger scrollen.
+ Scrollt man nun jedoch eine Zelle aus dem sichtbaren Bereich, existiert
+ aktuell keine (sichtbare) Referenz mehr darauf und iOS setzt den Inhalt
+ auf eine Reusable-Liste.
+ Die Daten, die in der Zelle enthalten sind, werden entfernt.
+ Kommt die Zelle nun wieder in den sichtbaren Bereich, so werden eben nicht
+ die ensprechenden Daten wieder angefragt, sondern die DataSource des TableViews
+ - der HeaderKeysViewController - wird die Methode tableView:cellForRowAtIndexPa
+th aufgerufen, welche eine neue Zelle erzeugt.
+ Diese würde sich in diesem Fall den Zelleninhalt aus den aktuellen Inhalten
+ der Textfelder für den HTTP Header-Input besorgen, was nicht das ist, was
+ an dieser Stelle passieren sollte.
+ Da jedoch fernab der GUI die beiden Arrays existieren, deren Index mit
+ der Reihenzahl äquivalent ist, kann die (Wieder-)Erzeugung der Zelle auf
+ die entsprechenden Einträge der Arrays zugreifen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+- (UITableViewCell *)tableView:(UITableView *)tableView
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+  cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      static NSString *CellIdentifier = @"Cell";
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      UITableViewCell *cell =
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      if (cell == nil)
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          cell = [[UITableViewCell alloc]
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+            initWithStyle:UITableViewCellStyleValue1
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          reuseIdentifier:CellIdentifier];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      NSString *cellText; if ([indexPath section] == 0) cellText =
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [[NSString alloc] initWithFormat:@"%@",
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [_generalHeaders objectAtIndex:[indexPath row]]];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      else cellText = [[NSString alloc] initWithFormat:@"%@",
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [_requestHeaders objectAtIndex:[indexPath row]]];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [[cell textLabel] setText:cellText];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      return cell;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+  }
+\end_layout
+
+\begin_layout Standard
+Befindet sich der hinzugefügte Header in der Liste der bekannten General
+ Headers, so wird er mit grüner Schrift angezeigt, ist er ein bekannter
+ Request Header, erscheint seine Schrift in Blaugrün.
+ Befindet sich der hinzugefügte Header weder in der General- noch in der
+ Request-Header-Liste, so wird dessen Name rot gefärbt.
+ Dies soll der Vermeidung von Tippfehlern dienen.
+\end_layout
+
+\begin_layout Standard
+Benötigt die Seite eine HTTP Basic Authentication oder eine HTTP Digest
+ Authentication, so wird dieses App darüber benachrichtigt.
+ Apple stellt hierfür den Methodenaufruf connection:didReceiveAuthenticationChal
+lenge bereit, in welcher man auf diesen Umstand reagieren kann.
+ Sind Authentifizierungsinformationen gegeben, so werden diese nun ausgelesen
+ und dem angefragten Server übermittelt.
+ Die Implementation dieser Methode sieht wie folgt aus:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+- (void)connection:(NSURLConnection *)connection
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+  didReceiveAuthenticationChallenge:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+  (NSURLAuthenticationChallenge *)challenge {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      [_authentication setText:@"required"];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      NSLog(@"%@ received.",[challenge description]);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      if ([challenge previousFailureCount] == 0) {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          NSURLCredential *credential =
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [NSURLCredential credentialWithUser:[_username text]         
+                                                                    password:[_p
+assword text]                                                          
+     persistence:NSURLCredentialPersistenceNone];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [[challenge sender] useCredential:credential
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                 forAuthenticationChallenge:challenge];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      } else {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [[challenge sender] cancelAuthenticationChallenge:challenge];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          UIAlertView *alert =
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [[UIAlertView alloc] initWithTitle:@"Error"
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                             message:@"Authentication incorrect."
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                            delegate:self
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                   cancelButtonTitle:@"Close"
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                   otherButtonTitles:nil];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [alert show];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [_authentication setBackgroundColor:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+              [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1]];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [_authentication setText:@"failed"];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          NSLog(@"%@ failed: Authentication incorrect.",
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+          [challenge description]);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      }
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+  }
 \end_layout
 
 \begin_layout Subsection
-Auswahl der HTTP-Methoden
+Empfangen einer Response
 \end_layout
 
 \begin_layout Standard
-* Auswahl der HTTP-Verben mittels Picker View.
- Begünstigend aufgrund der Implementation: zusätzliches Feld zum Hinzufügen
- weiterer Methoden wie z.
- B.
- OPTIONS.
- Dieses zusäsätzliche Feld 
+Jede eingehende Response ruft die Methode 
+\shape italic
+connection:didReceiveResponse
+\shape default
+ auf.
+ Hier werden die Informationsfelder gesetzt, die Header ausgelesen und auf
+ das Header-Feld übertragen und überprüft, ob der Inhaltstyp als JSON oder
+ XML angegeben wird.
+ Liegt der vom Server zurückgelieferte Statuscode unter 400 deutet dies
+ auf eine positive Antwort auf unsere Request hin.
+ Es wird nun ein neues Historyelement erzeugt und mit der erfolgreich bearbeitet
+en URL gefüllt.
+\end_layout
+
+\begin_layout Standard
+Trifft eine Response ein, die neben der Response einen Body enthält, wird
+ mit diesem die Methode connection:didReceiveData aufgerufen.
+ Werden noch weitere Teilresponses erwartet, bis die Nachricht vollständig
+ eingegangen ist, werden die Daten mittels 
+\family typewriter
+\size small
+[responseBodyData appendData:_bodyData]
+\family default
+\size default
+ der statischen Variable 
+\shape italic
+responseBodyData
+\shape default
+ hinzugefügt.
+ Ist die Response vollständig, so wird die Methode connectionDidFinishLoading
+ aufgerufen, in der vollständige Body abgearbeitet wird.
+ Anhand des ersten Bytes wird überprüft, ob es sich um ein Bild handelt.
+ Ist das der Fall, so wird eine ImageView in die ScrollView eingebettet,
+ welche das Bild anzeigt.
+ Ist dies nicht der Fall und es wurde bereits vorher erkannt, dass es sich
+ um JSON- oder um XML-Code handelt, wird der Body an den entsprechenden
+ Parser übergeben.
+ Im Apple Foundation-Framework findet sich schon seit geraumer Zeit der
+ NSXMLParser, seit iOS 5 wurde es nun auch um die NSJSONSerialization erweitert,
+ welches ein NSData-Objekt parst und ein NSDictionary zurückliefert.
+ In beiden Fällen werden die Keys als auch die Values in je ein eigenes
+ MutableArray gepackt.
+ Wurde das Parsen erfolgreich abgeschlossen (im Falle des XML-Parsers bedeutet
+ das, dass er nach erfolgter Durchführung ein YES zurückliefert, im Falle
+ des NSJSONSerializers bedeutet erfolgreich einfach, dass das Array nicht
+ leer ist), wird die rekursive Methode processKeys aufgerufen.
+ Die einzelnen Key/Value-Paare werden nun schrittweise überprüft, ob es
+ sich hierbei um eine Ressource handelt.
+ Da es durchaus sein kann, dass als Value ein komplettes Array mit weiteren
+ Key/Value-Paaren auftritt, ist es in hohem Maße erwünscht, dass diese Methode
+ rekursiv aufrufbar ist.
+ Da hier durchaus Key/Value-Paare gelöscht werden (im Falle eines Arrays
+ als Value, welcher abgearbeitet wurde und somit keine weitere Funktion
+ mehr erfüllt) oder eingeschoben werden (anstelle des Subarrays), ist das
+ Mitführen eines statischen Indexes staticIndex erforderlich.
+\end_layout
+
+\begin_layout Standard
+Zum Vorbereiten des Tests auf eine valide URL wird der String in einem ersten
+ Schritt in eine Variable des Typs NSURL umgewandelt.
+ Hier wir intern getestet, ob die Zeichen für eine URL valid sind.
+ Ist dem nicht der Fall, wird nil zurückgegeben.
+ Wird kein nil zurückgegeben, wird der Stringanfang überprüft.
+ Beginnt dieser mit http, wird er unverändert als URL interpretiert.
+ Beginnt er statt dessen mit einem Schrägstrich, wird er an die Basis URL
+ des zuletzt aufgerufenen Requests gehangen und dann zur Überprüfung auf
+ eine valide URL weitergegeben.
+ Treffen beide Anfänge nicht zu, so wird das höchste Verzeichnis, welches
+ sich im letzten Aufruf finden lässt, um diesen String erweitert und ebenfalls
+ getestet, ob es sich um eine valide URL handelt.
+\end_layout
+
+\begin_layout Standard
+Um den Test anschließend durchzuführen, wechselt die App mittels 
+\family typewriter
+\size small
+[self setValidatingState:YES]
+\family default
+\size default
+ in einen zweiten Zustand, in dem Responses erwartet werden.
+ Es werden für jeden Resourcenkandidaten ein asynchroner HEAD-Request abgesendet
+, mit dessen Antworten anders umgegangen wird, als es mit normalen Responses
+ der Fall wäre.
+ Ein nebenbei laufender Counter führt Buch über den aktuellen Fortschritt.
+ Da die Methode, die mit der Überprüfung beauftragt wurde, wissen muss,
+ um welches Key/Value-Paar es sich handelt und die Methode didReceiveResponse
+ eben nur die Nachricht kennt, die sie empfängt, wird die ID der abgesendeten
+ NSURLConnection zusammen mit dem Index des zu überprüfenden Wertes in ein
+ NSDictionary gepackt.
+ In der empfangenden Methode kann anhand der ID der Response der Indexwert
+ aus dem Wörterbuch gefischt werden und es ist wieder klar, welchem Key/Value-Pa
+ar der empfangene Statuscode zugeordnet werden kann.
+ Auch hier weist ein Statuscode von unter 400 auf die Existenz der angefragten
+ Resource hin und der angefragte Wert wird in die MutableArrays foundResourceKey
+s sowie foundResourceValues geschrieben.
+ Da eine synchrone Überprüfung zu viel Zeit in Anspruch nehmen würde, ein
+ asynchroner Request jedoch den Nachteil hat, dass die überprüften Resourcen
+ nun in beliebiger Reihenfolge im Zielarray landen würden, habe ich mir
+ mit einem kleinen Trick beholfen: Die Arrays foundResourceKeys und foundResourc
+eValues werden mit der Größe der Resourcenkandidaten angelegt und mit einem
+ leeren Stringobjekt initialisiert.
+ Eine überprüfte Resource, die sich im Quellarray an Index y befindet, wird
+ in das Zielarray ebenfalls an den Index y geschrieben, so dass später alle
+ Felder, die keine Validen Resourcen enthalten, weiterhin leere Strings
+ beinhalten.
+ Da es sich um ein MutableArray handelt, lassen sich, nachdem alle Kandidaten
+ abgearbeitet wurden, die Arrays bereinigen, in dem man die Felder mit den
+ leeren Strings aus dem Array entfernt.
 \end_layout
 
 \begin_layout Section
@@ -2450,7 +3087,7 @@ ViewController
 \end_layout
 
 \begin_layout Standard
-Erstellt man ein neues Projekt, bekommt man 2 Dateien vor die Nase gesetzt:
+Erstellt man ein neues Projekt, bekommt man zwei Dateien vor die Nase gesetzt:
  eine AppDelegate und den ViewController.
  Konzeptuell sollte der ViewController alles beinhalten, womit sich die
  aktuelle View beschäftigt.
@@ -2488,10 +3125,37 @@ GUI (3 - 4 Seiten)
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename Storyboard.png
 	lyxscale 45
 	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+GUI im Storyboard
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
