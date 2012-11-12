@@ -2600,30 +2600,34 @@ Senden einer Request
 \end_layout
 
 \begin_layout Standard
-Die Grundstruktur ist die Folgende: Im URL-Textfeld ist die Adresse einzugeben,
- zu welcher der Request gesendet werden soll; im Picker links oben wird
- die auszuführende HTTP-Methode ausgewählt.
- Das Feld darunter bietet die Möglichkeit, zusätzliche Methoden in den Picker
- aufzunehmen, beispielsweise ein OPTIONS.
+Beim Senden einer Request passiert Folgendes: Im URL-Textfeld ist die Adresse
+ einzugeben, zu welcher der Request gesendet werden soll; im linken oberen
+ Picker wird die HTTP-Methode ausgewählt.
+ Das Textfeld direkt unter dem Picker bietet die Möglichkeit, zusätzliche
+ Methoden in den Picker aufzunehmen, beispielsweise ein OPTIONS.
  Ist der Request ein PUT oder ein POST, so wird der im Body-Bereich des
  aktuell aktiven Tabs im Output-Fenster (Request/Response/Parsed) angezeigte
  Text dem Request als Body hinzugefügt.
- Dieser Textbereich ist somit bearbeitbar.
- Es sollte dabei niemals der Parsed-Tab aktiv sein, da dieser keinen gültigen
- JSON-/XML-Code enthält.
- Nach einem PUT oder einem POST befindet sich eine Kopie des gesendeten
- Bodys im Request-Tab zur eventuellen weiteren Bearbeitung.
- Wurde ein beliebiger Request durchgeführt und die Response erfolgreich
- auf JSON oder XML getestet und ist das Request-Fenster bislang noch leer,
- so wird dem Anwender an dieser Stelle ein JSON- bzw.
- ein XML-Template eingeblendet, welches er anpassen kann.
+ Dieser Textbereich ist aus diesem Grund bearbeitbar.
+ Es sollte natürlich niemals der Parsed-Tab aktiv sein, da dieser keinen
+ gültigen JSON- oder XML-Code enthält.
+ Nach einem PUT- oder einem POST-Request befindet sich eine Kopie des gesendeten
+ Bodys im Body/Request-Tab zur eventuellen weiteren Bearbeitung und auch
+ die gesendeten Request-Header sind im Bereich Header/Request ersichtlich.
+ Der Header 
+\shape italic
+Content-Length
+\shape default
+ wird automatisch mit der Länge der angehangenen Body-Nachricht gesetzt.Wurde
+ ein beliebiger Request durchgeführt und die Response erfolgreich auf JSON
+ oder XML getestet und ist das Request-Fenster bislang noch leer, so wird
+ dem Anwender an dieser Stelle ein JSON- bzw.
+ ein XML-Template eingeblendet, welches er nach Belieben anpassen kann.
 \end_layout
 
 \begin_layout Standard
-Möchte der Anwender einen PUT oder einen POST-Request absenden, so hat er
- im rechten Bereich die Möglichkeit, diesen um beliebige Header zu erweitern.
- Der Header Content-Length wird hierbei automatisch mit der tatsächlichen
- Länge der angehangenen Body-Nachricht gesetzt.
+Der Anwender hat darüber hinaus im rechten Bereich die Möglichkeit, diesen
+ um weitere Header zu erweitern.
  An dieser Stelle kann man aus der angebotenen Liste einen gebräuchlichen
  General- oder einen Request-Header auswählen, man darf jedoch auch einen
  beliebiges Header/Werte-Paar eingeben.
@@ -2633,29 +2637,70 @@ Möchte der Anwender einen PUT oder einen POST-Request absenden, so hat er
  Wird eine Headerzeile markiert, so wird der neue Header direkt darüber
  eingefügt und die Markierung entfernt; ist keine Headerzeile markiert,
  so wird das neue Tupel am Ende der Liste eingefügt.
- Die hier verwendete Datenstruktur sind die beiden Arrays headerKeysArray
- sowie headerValuesArray, an deren Indexwert x sich der Eintrag der x-ten
- Reihe des Headerfeldes findet.
- Zwar sind die Zellen ebenfalls in der Lage, Daten zu speichern, aufgrund
- der verwendeten ScrollView kommt es hierbei jedoch zu einem anormalen Programmv
-erhalten: Als Container wurde eine ScrollView verwendet, darin wurde eine
- TableView plaziert.
- Das hat den Vorteil, dass es möglich ist, mehr Daten aufzunehmen, aus sichtbar
- sind - man kann sie einfach mit dem Finger scrollen.
- Scrollt man nun jedoch eine Zelle aus dem sichtbaren Bereich, existiert
+ Die hier verwendete Datenstruktur sind die beiden Arrays 
+\shape italic
+headerKeysArray
+\shape default
+ sowie 
+\shape italic
+headerValuesArray
+\shape default
+, an deren Indexwert x sich der Eintrag der x-ten Reihe des Headerfeldes
+ findet.
+ Zwar wären die Zellen der 
+\shape italic
+TableView
+\shape default
+ theoretisch ebenfalls in der Lage, Daten zu speichern, jedoch kommt es
+ dann zu folgendem anormalen Programmverhalten: Als Container dient eine
+ 
+\shape italic
+ScrollView
+\shape default
+, darin befindet sich eine 
+\shape italic
+TableView
+\shape default
+.
+ Das hat den Vorteil, dass es möglich ist, mehr Daten darzustellen, als
+ sichtbar sind, denn man die Tabelle einfach mit dem Finger scrollen.
+ Bewegt man nun jedoch eine Zelle aus dem sichtbaren Bereich, existiert
  aktuell keine (sichtbare) Referenz mehr darauf und iOS setzt den Inhalt
  auf eine Reusable-Liste.
  Die Daten, die in der Zelle enthalten sind, werden entfernt.
  Kommt die Zelle nun wieder in den sichtbaren Bereich, so werden eben nicht
- die ensprechenden Daten wieder angefragt, sondern die DataSource des TableViews
- - der HeaderKeysViewController - wird die Methode tableView:cellForRowAtIndexPa
-th aufgerufen, welche eine neue Zelle erzeugt.
- Diese würde sich in diesem Fall den Zelleninhalt aus den aktuellen Inhalten
- der Textfelder für den HTTP Header-Input besorgen, was nicht das ist, was
- an dieser Stelle passieren sollte.
- Da jedoch fernab der GUI die beiden Arrays existieren, deren Index mit
- der Reihenzahl äquivalent ist, kann die (Wieder-)Erzeugung der Zelle auf
- die entsprechenden Einträge der Arrays zugreifen:
+ die alten Daten wiederhergestellt, sondern an die 
+\shape italic
+DataSource
+\shape default
+ der 
+\shape italic
+TableViews
+\shape default
+ - ein instanziertes Objekt der Klasse 
+\shape italic
+HeaderKeysViewController
+\shape default
+ - wird die Nachricht 
+\shape italic
+tableView:cellForRowAtIndexPath
+\shape default
+ gesendet, woraufhin dieser eine neue Zelle erzeugt.
+ Diese würde sich den Zelleninhalt jedoch aus den aktuellen Inhalten der
+ Textfelder für den HTTP Header-Input besorgen, was nicht das ist, was an
+ dieser Stelle passieren sollte.
+ Da gemäß MVC allerdings unterhalb der GUI die Daten in Feldern von Arrays
+ abgelegt sind, deren Index mit der Zellennummer identisch ist, kann die
+ (Wieder-)Erzeugung der Zelle auf die entsprechenden Einträge der Arrays
+ zugreifen.
+\end_layout
+
+\begin_layout Standard
+Implementation der 
+\shape italic
+tableView:cellforRowAtIndexPath
+\shape default
+:
 \end_layout
 
 \begin_layout LyX-Code
@@ -2770,10 +2815,22 @@ Befindet sich der hinzugefügte Header in der Liste der bekannten General
 \end_layout
 
 \begin_layout Standard
-Benötigt die Seite eine HTTP Basic Authentication oder eine HTTP Digest
- Authentication, so wird dieses App darüber benachrichtigt.
+Benötigt die Seite eine 
+\shape italic
+HTTP Basic
+\shape default
+- oder eine 
+\shape italic
+HTTP Digest
+\shape default
+-Authentifizierung, so erhält das Objekt eine 
+\shape italic
+Authentication Challenge
+\shape default
+.
  Apple stellt hierfür den Methodenaufruf connection:didReceiveAuthenticationChal
-lenge bereit, in welcher man auf diesen Umstand reagieren kann.
+lenge bereit, in welcher man die Möglichkeit hat, auf diese Aufforderung
+ zu reagieren.
  Sind Authentifizierungsinformationen gegeben, so werden diese nun ausgelesen
  und dem angefragten Server übermittelt.
  Die Implementation dieser Methode sieht wie folgt aus:
@@ -2795,18 +2852,6 @@ lenge bereit, in welcher man auf diesen Umstand reagieren kann.
 
 \size small
   (NSURLAuthenticationChallenge *)challenge {
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-      [_authentication setText:@"required"];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-      NSLog(@"%@ received.",[challenge description]);
 \end_layout
 
 \begin_layout LyX-Code
@@ -2899,30 +2944,6 @@ assword text]
 \begin_layout LyX-Code
 
 \size small
-          [_authentication setBackgroundColor:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-              [[UIColor alloc] initWithRed:1 green:0 blue:0 alpha:0.1]];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-          [_authentication setText:@"failed"];
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-          NSLog(@"%@ failed: Authentication incorrect.",
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
           [challenge description]);
 \end_layout
 
@@ -2948,18 +2969,22 @@ Jede eingehende Response ruft die Methode
 connection:didReceiveResponse
 \shape default
  auf.
- Hier werden die Informationsfelder gesetzt, die Header ausgelesen und auf
- das Header-Feld übertragen und überprüft, ob der Inhaltstyp als JSON oder
- XML angegeben wird.
+ Hier werden die Informationstextfelder im oberen Bereich der View gesetzt,
+ die Header in den entsprechenden Bereich im Output-Feld übertragen und
+ überprüft, ob der Inhaltstyp als JSON oder XML angegeben wird.
  Liegt der vom Server zurückgelieferte Statuscode unter 400 deutet dies
  auf eine positive Antwort auf unsere Request hin.
- Es wird nun ein neues Historyelement erzeugt und mit der erfolgreich bearbeitet
-en URL gefüllt.
+ Es wird nun ein neues Historyelement erzeugt, mit der erfolgreich bearbeiteten
+ URL gefüllt und der History-Queue angehangen.
 \end_layout
 
 \begin_layout Standard
-Trifft eine Response ein, die neben der Response einen Body enthält, wird
- mit diesem die Methode connection:didReceiveData aufgerufen.
+Trifft eine Response ein, die neben dem Header einen Body enthält, wird
+ mit diesem die Methode 
+\shape italic
+connection:didReceiveData
+\shape default
+ aufgerufen.
  Werden noch weitere Teilresponses erwartet, bis die Nachricht vollständig
  eingegangen ist, werden die Daten mittels 
 \family typewriter
@@ -2972,46 +2997,127 @@ Trifft eine Response ein, die neben der Response einen Body enthält, wird
 responseBodyData
 \shape default
  hinzugefügt.
- Ist die Response vollständig, so wird die Methode connectionDidFinishLoading
- aufgerufen, in der vollständige Body abgearbeitet wird.
+ Wurde der Body vollständig empfangen, so wird die Methode 
+\shape italic
+connectionDidFinishLoading
+\shape default
+ aufgerufen, in der der vollständige Body abgearbeitet wird.
  Anhand des ersten Bytes wird überprüft, ob es sich um ein Bild handelt.
- Ist das der Fall, so wird eine ImageView in die ScrollView eingebettet,
- welche das Bild anzeigt.
- Ist dies nicht der Fall und es wurde bereits vorher erkannt, dass es sich
- um JSON- oder um XML-Code handelt, wird der Body an den entsprechenden
- Parser übergeben.
- Im Apple Foundation-Framework findet sich schon seit geraumer Zeit der
- NSXMLParser, seit iOS 5 wurde es nun auch um die NSJSONSerialization erweitert,
- welches ein NSData-Objekt parst und ein NSDictionary zurückliefert.
- In beiden Fällen werden die Keys als auch die Values in je ein eigenes
- MutableArray gepackt.
- Wurde das Parsen erfolgreich abgeschlossen (im Falle des XML-Parsers bedeutet
- das, dass er nach erfolgter Durchführung ein YES zurückliefert, im Falle
- des NSJSONSerializers bedeutet erfolgreich einfach, dass das Array nicht
- leer ist), wird die rekursive Methode processKeys aufgerufen.
- Die einzelnen Key/Value-Paare werden nun schrittweise überprüft, ob es
- sich hierbei um eine Ressource handelt.
- Da es durchaus sein kann, dass als Value ein komplettes Array mit weiteren
- Key/Value-Paaren auftritt, ist es in hohem Maße erwünscht, dass diese Methode
- rekursiv aufrufbar ist.
- Da hier durchaus Key/Value-Paare gelöscht werden (im Falle eines Arrays
- als Value, welcher abgearbeitet wurde und somit keine weitere Funktion
- mehr erfüllt) oder eingeschoben werden (anstelle des Subarrays), ist das
- Mitführen eines statischen Indexes staticIndex erforderlich.
+ Ist das der Fall, so wird eine 
+\shape italic
+ImageView
+\shape default
+ in die 
+\shape italic
+ScrollView
+\shape default
+ eingebettet und das Bild darin angezeigt.
+ Ist dies nicht der Fall und es wurde bereits vorher anhand des 
+\shape italic
+Content Type
+\shape default
+ erkannt, dass es sich um JSON- oder um XML-Code handelt, wird der Body
+ an den entsprechenden Parser übergeben.
+ Im Apple Foundation-Framework findet sich schon seit OS X-Version 10.3 der
+ 
+\shape italic
+NSXMLParser
+\shape default
+, seit iOS 5 wurde es nun auch um 
+\shape italic
+NSJSONSerialization
+\shape default
+ erweitert, welches ein 
+\shape italic
+NSData
+\shape default
+-Objekt parst und ein 
+\shape italic
+NSDictionary
+\shape default
+ zurückliefert.
+ In beiden Fällen werden sowohl die Keys als auch die Values in je ein 
+\shape italic
+MutableArray
+\shape default
+ geschrieben.
+ Mutable deswegen, weil es nötig sein wird, an verschiedenen Stellen Felder
+ zu löschen und hinzuzufügen.
+ Wurde das Parsen erfolgreich abgeschlossen, wird die rekursive Methode
+ 
+\shape italic
+processKeys
+\shape default
+ aufgerufen.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Erfolgreich
+\begin_inset Quotes erd
+\end_inset
+
+ bereutet im Falle des XML-Parsers dass er nach erfolgter Durchführung ein
+ YES zurückliefert, im Falle des NSJSONSerializers befindet sich ein Inhalt
+ im Array.
+ Die einzelnen Schlüssel/Wert-Paare werden nun daraufhin überprüft, ob es
+ sich bei den Werten um eine Ressource handelt.
+ Da es nun durchaus sein kann, dass ein komplettes Array mit weiteren Schlüssel/
+Wert-Paaren einen solchen Wert darstellt, ist ein rekursiver Aufruf von
+ 
+\shape italic
+processKeys
+\shape default
+ äußerst bequem.
+ Da hier durchaus Schlüssel/Wert-Paare eingefügt oder gelöscht werden, ist
+ das Mitführen eines statischen Indexes staticIndex erforderlich.
+ Eingefügt werden Schlüssel/Werte-Paare, wenn ein Array gefunden wird und
+ deren Inhalt dem eigenen Array am aktuellen Index eingefügt wird.
+ Das Schlüssel/Wert-Paar, welches das Array enthielt, hat nach dem rekursiven
+ Abarbeiten keine weitere Funktion mehr und es wird entfernt, denn die darin
+ enthaltenen Schlüssel/Wert-Paare befinden sich nun bereits in dessen 
+\begin_inset Quotes eld
+\end_inset
+
+Ober-Array
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 Zum Vorbereiten des Tests auf eine valide URL wird der String in einem ersten
- Schritt in eine Variable des Typs NSURL umgewandelt.
- Hier wir intern getestet, ob die Zeichen für eine URL valid sind.
- Ist dem nicht der Fall, wird nil zurückgegeben.
- Wird kein nil zurückgegeben, wird der Stringanfang überprüft.
- Beginnt dieser mit http, wird er unverändert als URL interpretiert.
- Beginnt er statt dessen mit einem Schrägstrich, wird er an die Basis URL
- des zuletzt aufgerufenen Requests gehangen und dann zur Überprüfung auf
- eine valide URL weitergegeben.
- Treffen beide Anfänge nicht zu, so wird das höchste Verzeichnis, welches
- sich im letzten Aufruf finden lässt, um diesen String erweitert und ebenfalls
+ Schritt in eine Variable des Typs 
+\shape italic
+NSURL
+\shape default
+ umgewandelt.
+ Hier wird intern getestet, ob die Zeichen für eine URL valid sind.
+ Ist dem nicht der Fall, wird ein 
+\family typewriter
+\size small
+nil
+\family default
+\size default
+ zurückgegeben.
+ Wird kein 
+\family typewriter
+\size small
+nil
+\family default
+\size default
+ zurückgegeben, wird der Anfang des Strings überprüft.
+ Beginnt dieser mit 
+\shape italic
+http
+\shape default
+, wird er unverändert als URL interpretiert.
+ Beginnt er statt dessen mit einem Schrägstrich, wird er an die Basis-URL
+ des zuletzt aufgerufenen Requests angehangen und zur Überprüfung auf eine
+ valide URL weitergegeben.
+ Treffen beide Fälle nicht zu, so wird die höchste Verzeichnisebene, welche
+ sich im letzten Request finden lässt, um diesen String erweitert und ebenfalls
  getestet, ob es sich um eine valide URL handelt.
 \end_layout
 
@@ -3022,35 +3128,84 @@ Um den Test anschließend durchzuführen, wechselt die App mittels
 [self setValidatingState:YES]
 \family default
 \size default
- in einen zweiten Zustand, in dem Responses erwartet werden.
- Es werden für jeden Resourcenkandidaten ein asynchroner HEAD-Request abgesendet
-, mit dessen Antworten anders umgegangen wird, als es mit normalen Responses
- der Fall wäre.
- Ein nebenbei laufender Counter führt Buch über den aktuellen Fortschritt.
- Da die Methode, die mit der Überprüfung beauftragt wurde, wissen muss,
- um welches Key/Value-Paar es sich handelt und die Methode didReceiveResponse
- eben nur die Nachricht kennt, die sie empfängt, wird die ID der abgesendeten
- NSURLConnection zusammen mit dem Index des zu überprüfenden Wertes in ein
- NSDictionary gepackt.
- In der empfangenden Methode kann anhand der ID der Response der Indexwert
- aus dem Wörterbuch gefischt werden und es ist wieder klar, welchem Key/Value-Pa
-ar der empfangene Statuscode zugeordnet werden kann.
- Auch hier weist ein Statuscode von unter 400 auf die Existenz der angefragten
- Resource hin und der angefragte Wert wird in die MutableArrays foundResourceKey
-s sowie foundResourceValues geschrieben.
- Da eine synchrone Überprüfung zu viel Zeit in Anspruch nehmen würde, ein
- asynchroner Request jedoch den Nachteil hat, dass die überprüften Resourcen
- nun in beliebiger Reihenfolge im Zielarray landen würden, habe ich mir
- mit einem kleinen Trick beholfen: Die Arrays foundResourceKeys und foundResourc
-eValues werden mit der Größe der Resourcenkandidaten angelegt und mit einem
- leeren Stringobjekt initialisiert.
- Eine überprüfte Resource, die sich im Quellarray an Index y befindet, wird
- in das Zielarray ebenfalls an den Index y geschrieben, so dass später alle
- Felder, die keine Validen Resourcen enthalten, weiterhin leere Strings
- beinhalten.
- Da es sich um ein MutableArray handelt, lassen sich, nachdem alle Kandidaten
- abgearbeitet wurden, die Arrays bereinigen, in dem man die Felder mit den
- leeren Strings aus dem Array entfernt.
+ in einen Zustand, der der Validierung von Ressourcen dient.
+ Es wird für jeden Ressourcenkandidaten einen asynchronen HEAD-Request abgesende
+t, deren Responses different betrachtet werden.
+ Ein nebenbei laufender Counter führt hierbei Buch über den aktuellen Fortschrit
+t und wird inkrementiert, sobald eine Resource aus irgendeinem Grund invalid
+ ist oder sie als valid befunden wird.
+ Die endgültige Entscheidung über die Validität wird erst in der Methode
+ 
+\shape italic
+didReceiveResponse
+\shape default
+ getroffen, welche die Antwort des Servers auswerten darf.
+ Da die asynchronen Requests die Responses in willkürlicher Reihenfolge
+ eintreffen lassen, kann leider nicht ohne Weiteres zugeordnet werden, für
+ welchen Wert gerade eine Antwort empfangen wurde.
+ Die ID der abgesendeten 
+\shape italic
+NSURLConnection
+\shape default
+ wird daher zusammen mit dem Index des zu überprüfenden Wertes in ein
+\shape italic
+ NSDictionary
+\shape default
+ gepackt.
+ In der empfangenden Methode kann anhand dieser ID der Indexwert aus dem
+ Wörterbuch abgefragt werden und es ist wieder klar, welchem Schlüssel/Wert-Paar
+ der empfangene Statuscode zuzuordnen ist.
+ Ein Statuscode kleiner 400 ist auch positiv zu interpretieren und weist
+ auf die Existenz der angefragten Resource hin.
+ Der angefragte Wert wird in die 
+\shape italic
+MutableArrays
+\shape default
+ 
+\shape italic
+foundResourceKeys
+\shape default
+ sowie 
+\shape italic
+foundResourceValues
+\shape default
+ geschrieben.
+ Da ein asynchroner Request den Nachteil hat, dass die überprüften Resourcen
+ in beliebiger Reihenfolge im Zielarray landen würden, eine synchrone Überprüfun
+g jedoch zu viel Zeit in Anspruch nehmen würde, wird sich hier mit einem
+ kleinen Trick beholfen: Die Arrays 
+\shape italic
+foundResourceKeys
+\shape default
+ und 
+\shape italic
+foundResourceValues
+\shape default
+ werden mit der Größe der Resourcenkandidaten angelegt und die Felder mit
+ einem leeren 
+\shape italic
+NSString
+\shape default
+ initialisiert.
+ Eine überprüfte Resource, die sich im Quellarray an einem Feld mit dem
+ Index y befindet, wird in das Zielarray ebenfalls an das Feld mit dem Index
+ y geschrieben.
+ Alle Felder der beiden Arrays, an die keine Einträge geschrieben wurden,
+ enthalten weiterhin leere Strings.
+ Nachdem keine Ressourcenkandidaten mehr auf ihre Validierung warten, lassen
+ sie die 
+\shape italic
+MutableArrays
+\shape default
+ bereinigen, in dem man die Felder mit den leeren Strings kurzerhand aus
+ dem Array entfernt.
+ Zurück bleiben je ein Array mit den Schlüsseln und eines mit den Werten,
+ welche beim Berühren der Ressourcenschaltfläche - der Lupe - an die Klasse
+ 
+\shape italic
+ResourceTableViewController
+\shape default
+ übergeben lassen.
 \end_layout
 
 \begin_layout Section
