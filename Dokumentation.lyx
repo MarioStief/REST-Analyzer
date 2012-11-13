@@ -3600,6 +3600,159 @@ od;
 LogOutputViewController
 \end_layout
 
+\begin_layout Standard
+Da es sich um ein Entwicklertool handelt, wäre es vielleicht interessant
+ zu sehen, was intern an Logging Output erzeugt wird.
+ Da viele Informatiker mein Faible für schwarze Fenster mit durchlaufendem
+ Text teilen, soll diese PopoverView ihnen diesen Wunsch erfüllen.
+ Zu Beginn der Hauptklasse wurde daher er Programmname und die Zeit aus
+ der Ausgabe von NSLog herausgeschnitten: 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+#ifdef DEBUG
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+#define NSLog(FORMAT, ...) fprintf(stderr,"%s
+\backslash
+n",
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+#else
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+#define NSLog(...) {}
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+#endif
+\end_layout
+
+\begin_layout Standard
+und zu Beginn in der Methode viewDidLoad die Ausgabe in eine Datei umgeleitet.
+ Hierbei wird zuerst geschaut, ob die Output-Datei bereits existiert.
+ Ist das der Fall, so wird die Logging-Funktion automatisch wieder eingeschaltet
+; ist sie nicht vorhanden, bleibt sie deaktiviert.
+ Deaktiviert man sie im laufenden Programmbetrieb, so wird die Datei ebenso
+ entfernt, wie wenn man unter der Ausgabefläche den Mülleimer antippt.
+ Reichen die angebotenen Mitschnitte nicht aus, lassen sich mit dem Verbose-Scha
+lter eine Reihe tiefergehende Nachrichten mitschneiden.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSArray *paths = NSSearchPathForDirectoriesInDomains
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+(NSDocumentDirectory, NSUserDomainMask, YES);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSString *documentsDirectory = [paths objectAtIndex:0];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+logPath = [documentsDirectory stringByAppendingPathComponent:@"console.log"];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+NSFileManager *filemgr;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+filemgr = [NSFileManager defaultManager];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+if ([filemgr fileExistsAtPath:logPath]) {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   NSLog (@"Existing log file found at %@ - logging to file enabled.", logPath);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   [_logToFileSwitch setOn:YES];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   [_logFileButton setEnabled:YES];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   [_verboseLogLabel setEnabled:YES];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   [_verboseLogSwitch setEnabled:YES];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+} else
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   NSLog (@"No existing log file found, logging disabled.");
+\end_layout
+
+\begin_layout Standard
+die Ausgabe in eine Datei umgeleitet.
+ 
+\end_layout
+
 \begin_layout Subsection
 HistoryElement
 \end_layout
