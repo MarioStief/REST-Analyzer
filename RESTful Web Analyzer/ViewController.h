@@ -158,7 +158,6 @@
 
 // *********************** additional methods ***********************
 - (void)switchSegmentIndex;
-- (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part;
 - (void)startRequest:(NSString*)requestMethodString
         withMethodId:(NSInteger)methodId;
 - (void)parseResponse;

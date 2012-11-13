@@ -3606,11 +3606,90 @@ HistoryElement
 
 \begin_layout Standard
 Hierbei handelt es sich im ein Element einer doppelt verketteten Liste.
- Da diese Klasse nichts tun muss, außer Die vollständi
+ Es kennt seinen Vorgänger, seinen Nachfolger als auch die an ihn gebundene
+ Ressource.
+ HistoryElement verfügt über eine Methode getPart, die auf Wunsch die Basis
+ URL, den höchsten oder den vorherigen Verzeichnispfad zurückliefert.
+ Der Unterschied zwischen vorherigem und höchstem Verzeichnis ist der Folgende:
+ Endet eine URL mit einem Schrägstrich, so wird er als Verzeichnis angenommen
+ und ist somit gleichzeitig auch das höchste.
+ Endet er nicht mit einem Schrägstrich, wird eine Datei in einem Verzeichnis
+ vermutet und statt dessen das letzte Verzeichnis zurückgegeben, das mit
+ einem Schrägstrich endet.
+ Wird das vorherige Verzeichnis angefragt, wird immer das vorherige Verzeichnis
+ angegeben, egal ob das aktuelle mit einem Schrägstrich endet oder nicht.
 \end_layout
 
-\begin_layout Subsection
-ViewController
+\begin_layout Standard
+Beispiel 1: @
+\begin_inset Quotes eld
+\end_inset
+
+http://www.smartphoneseppel.de/customer/1337
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+highestDir = previousDir = @
+\begin_inset Quotes eld
+\end_inset
+
+http://www.smartphoneseppel.de/customer/
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Beispiel 2: @
+\begin_inset Quotes eld
+\end_inset
+
+http://www.smartphoneseppel.de
+\shape italic
+/
+\shape default
+shoppingcart/1337/
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+highestDir = @
+\begin_inset Quotes eld
+\end_inset
+
+http://www.smartphoneseppel.de
+\shape italic
+/
+\shape default
+shoppingcart/1337/
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+previousDir = @
+\begin_inset Quotes eld
+\end_inset
+
+http://www.smartphoneseppel.de
+\shape italic
+/
+\shape default
+shoppingcart/
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

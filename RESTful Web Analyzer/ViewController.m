@@ -345,7 +345,7 @@
 }
 
 - (IBAction)baseUrlButton:(id)sender {
-    [_url setText:[self urlPart:[_url text] definePart:@"prevPath"]];
+    [_url setText:[historyElement getPart:@"prevPath"]];
 }
 
 - (IBAction)forwardButton:(id)sender {
@@ -469,76 +469,12 @@
     // ******************** End Authentication ********************
 }
 
-// ******************** Begin URL Processing ********************
-
-- (NSString*)urlPart:(NSString*)urlString definePart:(NSString*)part {
-    
-    // string empty -> stays empty
-    if ([urlString isEqualToString:@""])
-        return @"";
-
-    // string empty -> stays empty
-    if ([urlString isEqualToString:@"http://"])
-        return @"http://";
-
-    // string empty -> stays empty
-    if ([urlString isEqualToString:@"https://"])
-        return @"https://";
-
-    // URL beginnt weder mit "http://" noch "https://" -> hänge "http://" davor.
-    if (![urlString hasPrefix:@"http://"] && ![urlString hasPrefix:@"https://"])
-        urlString = ([[NSString alloc] initWithFormat:@"http://%@", urlString]);
-    
-    // URL endet mit "/" -> weg damit.
-    if ([urlString hasSuffix:@"/"]) {
-        if ([part isEqualToString:@"highestDir"])
-            // url already is a dir. job done.
-            return urlString;
-        urlString = [urlString substringToIndex:[urlString length]-1];
-    }
-    
-    // Splitting URL in BaseURL and Resource
-    NSArray *urlComponents = [[NSArray alloc] initWithArray:[urlString pathComponents]];
-    NSString *baseUrl = [NSString stringWithFormat:@"%@//%@",[urlComponents objectAtIndex:0],[urlComponents objectAtIndex:1]];
-    
-    if ([part isEqualToString:@"baseUrl"]) {
-        // only base url is requested; job done.
-        return [[NSString alloc] initWithFormat:@"%@/",baseUrl];
-    }
-    
-    if ([urlComponents count] > 2) {
-        //
-        NSMutableString *resourcePath = [[NSMutableString alloc] init];
-        int i = 2; // while instead of for: i will be needed outside this loop.
-        while (i < [urlComponents count]-1) {
-            [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
-            i++;
-        }
-        if ([part isEqualToString:@"prevPath"] || [part isEqualToString:@"highestDir"]) {
-            // previous Path requested. This is it.
-            // Also the highest dir if it was NOT the full url.
-            if ([resourcePath isEqualToString:[[NSString alloc] init]])
-                // resource ath is empty, prevPath is base url. return with / at the end
-                return [[NSString alloc] initWithFormat:@"%@/",baseUrl];
-            else
-                // longer then base url
-                return [[NSString alloc] initWithFormat:@"%@%@/",baseUrl,resourcePath];
-        }
-        // else: full Path requested. Add last url component.
-        [resourcePath appendFormat:@"/%@",[urlComponents objectAtIndex:i]];
-    }
-    return [[NSString alloc] initWithFormat:@"%@",urlString];
-}
-
 - (IBAction)addMethodButton:(id)sender {
     NSMutableArray *newHttpVerbs = [[NSMutableArray alloc] initWithArray:httpVerbs];
     [newHttpVerbs replaceObjectAtIndex:[httpVerbs count]-1 withObject:[_addMethodTextField text]];
     httpVerbs = [[NSArray alloc] initWithArray:newHttpVerbs];
-
+    
 }
-
-// ******************** End URL Processing ********************
-
 
 // ******************** Begin log to file ********************
 
@@ -598,10 +534,10 @@
     
     // -> Implement POST, PUT, DELETE, HEAD
     
-    NSString *urlString = [[NSString alloc] initWithString:[self urlPart:[_url text] definePart:@"fullPath"]];
+    NSString *urlString = [[NSString alloc] initWithString:[_url text]];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    [request setMainDocumentURL:[[NSURL alloc]initWithString:[self urlPart:[_url text] definePart:@"baseUrl"]]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
+    //[request setMainDocumentURL:[[NSURL alloc]initWithString:[historyElement getPart:@"baseUrl"]]]; // This URL will be used for the “only from same domain as main document” cookie accept policy.
     [request setHTTPMethod:requestMethodString];
     
     // working with different methods
@@ -743,10 +679,12 @@
         if (!historyElement) {
             // new history: initialize
             historyElement = [[HistoryElement alloc] init];
+            [historyElement setUrl:[_url text]];
         } else if (!urlIsTheSame) {
             // history exists, and entry is new: initialize new element and connect each other
             HistoryElement *oldElement = historyElement;
             historyElement = [[HistoryElement alloc] init];
+            [historyElement setUrl:[_url text]];
             [historyElement setPrevious:oldElement];
             [_backButton setEnabled:YES];
             [historyElement setNext:nil];
@@ -755,7 +693,7 @@
         }
         if (!urlIsTheSame) {
             // if URL is different: set new ones.
-            [historyElement setUrl:[self urlPart:[_url text] definePart:@"fullPath"]];
+            [historyElement setUrl:[historyElement getPart:@"fullPath"]];
         }
     }
     
@@ -1035,12 +973,12 @@
         candidate = [link copy];
     else if ([[[NSString alloc] initWithFormat:@"%@",link] hasPrefix:@"/"]) {
         // Link beginnt mit /, teste base url + link auf valide Resource
-        NSString *candidateString = [[NSString alloc] initWithFormat:@"%@%@",[self urlPart:[_url text] definePart:@"baseUrl"],link];
+        NSString *candidateString = [[NSString alloc] initWithFormat:@"%@%@",[historyElement getPart:@"baseUrl"],link];
         candidate = [[NSURL alloc] initWithString:candidateString];
     }
     else {
         // Link beginnt weder mit http noch mit /, teste aktuelles Verzeichnis + link auf valide Resource
-        NSString *prevPath = [self urlPart:[_url text] definePart:@"highestDir"];
+        NSString *prevPath = [historyElement getPart:@"highestDir"];
         NSString *candidateString;
         if ([prevPath hasSuffix:@"/"])
             candidateString = [[NSString alloc] initWithFormat:@"%@%@",prevPath,link];
@@ -1148,8 +1086,8 @@
         
         // baseURL to the table view in case there is only a resource (not a full)) url that should be loaded
         // and the full url needs to be built
-        [resourceTableViewController setReferenceToBaseUrl:[self urlPart:[_url text] definePart:@"baseUrl"]];
-        [resourceTableViewController setReferenceToHighestDir:[self urlPart:[_url text] definePart:@"highestDir"]];
+        [resourceTableViewController setReferenceToBaseUrl:[historyElement getPart:@"baseUrl"]];
+        [resourceTableViewController setReferenceToHighestDir:[historyElement getPart:@"highestDir"]];
         
     } else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"]) {
         LogOutputViewController *logOutputViewController = [segue destinationViewController];

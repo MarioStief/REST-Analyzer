@@ -14,4 +14,6 @@
 @property (nonatomic) HistoryElement *previous;
 @property (nonatomic) HistoryElement *next;
 
+- (NSString*)getPart:(NSString*)part;
+
 @end
