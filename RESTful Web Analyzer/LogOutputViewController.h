@@ -13,9 +13,6 @@
 @property (nonatomic) IBOutlet UITextView *logOutputViewText;
 @property (nonatomic) NSString *referenceToLogPath;
 
-- (void)viewDidLoad;
-- (void)viewDidAppear:(BOOL)animated;
-- (void)viewDidUnload;
 - (IBAction)logClearButton:(id)sender;
 
 @end

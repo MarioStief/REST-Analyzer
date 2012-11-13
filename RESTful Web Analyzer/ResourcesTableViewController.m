@@ -52,10 +52,6 @@
     return array;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
@@ -109,14 +105,14 @@
     // Use the passed reference to the popover cntroller to dismiss this view.
     [_referenceToPopoverController dismissPopoverAnimated:YES];
 }
-
+/*
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    //[self dismissViewControllerAnimated:YES completion:NULL];
     //or better yet
     [self dismissModalViewControllerAnimated:YES];
     //the latter works fine for Modal segues
-}
+}*/
 
 - (void)viewDidUnload {
     [super viewDidUnload];

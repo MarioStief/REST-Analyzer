@@ -2259,8 +2259,13 @@ Hauptklasse: ViewController
 \end_layout
 
 \begin_layout Standard
-Der ViewController ist unsere Basisklasse und wird uns von XCode zu Projektbegin
-n bereitgestellt und stellt die Methoden 
+Der ViewController als unsere Basisklasse erbt vom Typ UIViewController,
+ welche das fundamentelle View-Management-Modell für alle iOS Applikationen
+ stellt.
+ Seine Oberklasse UIResponder definiert das Interface zum Umgang mit Events
+ und erbt selbst direkt von NSObject, der Wurzelklasse aller Objective-C-Klassen.
+ Er wird uns von XCode zu Projektbeginn bereitgestellt und stellt die Methoden
+ 
 \shape italic
 viewDidLoad
 \shape default
@@ -2279,15 +2284,6 @@ shouldAutorotateToInterfaceOrientation
 NavigationControllers
 \shape default
  muss jede weitere View ihr aus erreichbar sein.
- Oberklasse von 
-\shape italic
-ViewController
-\shape default
- ist die 
-\shape italic
-UIViewController
-\shape default
-, welche das fundamentelle View-Management-Modell für alle iOS Apps stellt.
  Die View beinhaltet mehrere Textfelder und implementiert demnach das 
 \shape italic
 UITextFieldDelegate
@@ -3206,6 +3202,142 @@ MutableArrays
 ResourceTableViewController
 \shape default
  übergeben lassen.
+ Was sich so fast beiläufig in einem Nebensatz erwähnen lässt war, zumindest
+ Zeittechnisch - alles andere als beiläufig, da die sich öffnende TableView
+ nach ihrer Instantiierung und Überreichung der Daten stets ihrer leeren
+ Seite zeigte.
+ Wie sich herausstellte, erzeugt bereits das Storyboard eine Instanz einer
+ View nach der Betätigung der Schaltfläche, jede programmatisch erzeugte
+ Instanz ist eine weitere, die irgendwo anders abläuft, aber nicht für den
+ Anwender im Vordergrund ersichtlich ist.
+ Das Ziel ist das Folgende: Nachdem der Button betätigt wurde, welcher das
+ Storyboard veranlasst, einen Übergang in neue View einzuleiten, soll diese
+ View mit Daten gefüllt werden.
+ Dies muss allerdings geschehen, bevor die View auf dem Bildschirm erscheint,
+ was ja scheinbar zeitgleich ist.
+ Um dieses Kunststück zu bewerkstelligen, lassen sich auf diese Übergänge,
+ so genannte 
+\shape italic
+Segues
+\shape default
+, programmatisch zugreifen.
+ Falls vorhanden wird bei einem Übergang die Methode 
+\shape italic
+prepareForSegue:sender
+\shape default
+ aufgerufen.
+ Um gezielt Übergänge ansprechen zu können lassen sich hierfür im Storyboard
+ Identifier vergeben; der Identifier des gerade aktiven Überganges kann
+ in der Implementation mit [segue identifier] abgefragt werden.
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+if ([[segue identifier] isEqualToString:@"resourcesTableViewPopover"]) {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+ResourcesTableViewController *resourceTableViewController =
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[segue destinationViewController]; 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[resourceTableViewController setKeys:foundResourceKeys];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[resourceTableViewController setValues:foundResourceValues];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[resourceTableViewController setReferenceToUrl:_url];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[resourceTableViewController setReferenceToPopoverController:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[popoverSegue popoverController]];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[resourceTableViewController setReferenceToBaseUrl:[self urlPart:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[_url text] definePart:@"baseUrl"]];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[resourceTableViewController setReferenceToHighestDir:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[self urlPart:[_url text] definePart:@"highestDir"]];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+} else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"])
+ {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+LogOutputViewController *logOutputViewController =
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+[segue destinationViewController];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+...
 \end_layout
 
 \begin_layout Section
@@ -3216,12 +3348,252 @@ Hilfsklassen
 ResourceTableViewController
 \end_layout
 
+\begin_layout Standard
+Die erste Hilfsklasse ist eine View vom Typ 
+\shape italic
+UITableViewController
+\shape default
+, einer Unterklasse des 
+\shape italic
+UIViewController
+\shape default
+.
+ Der 
+\shape italic
+TableViewController
+\shape default
+ bietet eine View bestehend aus einer einzigen Tabelle, deren 
+\shape italic
+Delegate
+\shape default
+ und 
+\shape italic
+DataSource
+\shape default
+ er selbst ist.
+ Ihm stehen die 
+\shape italic
+NSArrays
+\shape default
+ 
+\shape italic
+keys
+\shape default
+ und 
+\shape italic
+values
+\shape default
+ zur Verfügung, welche die validierten Resourcen darstellen, die er von
+ der Hauptview unmittelbar vor dem Erscheinen erhalten hat und die er in
+ die Zellen seiner Tabelle einfüllt.
+ Da eine Berührung einer Zelle veranlassen soll zur Hauptview zurückzukehren
+ und dort die Ressource in das URL-Feld zu füllen, benötigt er für seine
+ Funktion ein paar Referenzen: Zum einen benötigt er selbstverständlich
+ die Referenz des URL-Feldes, auf deren Text er schreibend zugreift.
+ Referenzen zu den 
+\shape italic
+NSStrings
+\shape default
+ 
+\shape italic
+highestDir
+\shape default
+ und 
+\shape italic
+baseUrl
+\shape default
+ benötigt er, um die URLs vollständig erzustellen.
+ Eine Resource 
+\shape italic
+1337
+\shape default
+, welche auf 
+\shape italic
+http://www.smartphoneseppel.de/customer/
+\shape default
+ gefunden wurde, sollte auf 
+\shape italic
+http://www.smartphoneseppel.de/customer/1337
+\shape default
+ verweisen, dafür wird die Ressource an den höchsten Verzeichnispfad der
+ Abfrage gehangen, welche die Ressource 
+\shape italic
+1337
+\shape default
+ enthielt.
+ Lautet eine Ressource 
+\shape italic
+/article/galaxy_s3
+\shape default
+ wird das als einen absoluten Pfad interpretiert und direkt an die Base-URL
+ angehangen.
+ Die Resultierende URL wäre somit 
+\shape italic
+http://www.smartphoneseppel.de/article/galaxy_s3
+\shape default
+.
+\end_layout
+
+\begin_layout Standard
+Eine View kann sich nicht ohne weiteres selbst wieder schließen.
+ Um dies zu realisieren wurde darüber hinaus noch die Referenz des PopoverContro
+llers hierher übergeben.
+ Der Zugriff auf diesen ermöglicht es, die View durch 
+\family typewriter
+\size small
+[_referenceToPopoverController dismissPopoverAnimated:YES]
+\family default
+\size default
+ wieder 
+\begin_inset Quotes eld
+\end_inset
+
+von unten
+\begin_inset Quotes erd
+\end_inset
+
+ zu beenden.
+\end_layout
+
 \begin_layout Subsection
 HeaderKeysViewController
 \end_layout
 
+\begin_layout Standard
+Wie auch bei der 
+\shape italic
+ResourceTableViewController
+\shape default
+ handelt es sich hier um eine Klasse des Typs 
+\shape italic
+UITableViewController
+\shape default
+.
+ Er beinhaltet eine Auflistung der für eine Request gebräuchlichen 
+\shape italic
+Request Header
+\shape default
+ und der 
+\shape italic
+General Headers
+\shape default
+ und soll dem Anwender eine einfache Möglichkeit bieten, seine Anfrage um
+ valide Header zu erweitern.
+ Wie die zuvor genannte Klasse werden hier die Daten der durch Berührung
+ selektierten Zelle in das Headers-Feld der Hauptview geschrieben und die
+ View mittels Referenzzugriff auf den darunter liegenden 
+\shape italic
+PopoverController
+\shape default
+ beendet.
+ Als kleines 
+\begin_inset Quotes eld
+\end_inset
+
+Extra
+\begin_inset Quotes erd
+\end_inset
+
+ wird die Referenz für das dem Header zugehörige Wertefeld übergeben, mit
+ dessen Hilfe dieses zum 
+\shape italic
+FirstResponder
+\shape default
+ wird - nach dem Verwerfen der View hat dieses also den Tastaturfokus und
+ es kann sofort nach dem Selektieren des headers mit der Eingabe des Wertes
+ begonnen werden.
+ 
+\end_layout
+
 \begin_layout Subsection
 XMLParser
+\end_layout
+
+\begin_layout Standard
+Er ist nicht wirklich umfangreich, eignet sich jedoch perfekt, dessen Funktionsu
+mfang in eine eigene Klasse auszugliedern.
+ Er wird initialisiert mit zwei leeren 
+\shape italic
+MutableArrays
+\shape default
+, an die sowohl Attribute als auch Elemente der geparsten XML angefügt werden.
+ Ein Attributname wird in Klammern gesetzt und erhält den Elementnamen,
+ dem es zugehörig ist, vorangestellt.
+ Die Bezeichnung der Keys setzt demnach sich wie Folgt zusammen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+for (int i = 0; i < elementsToParse; i++) do
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   if actualObjectType = attribut then
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      keyArray[i] ← elementName + 
+\begin_inset Quotes eld
+\end_inset
+
+(
+\begin_inset Quotes eld
+\end_inset
+
+ + attributName + 
+\begin_inset Quotes eld
+\end_inset
+
+)
+\begin_inset Quotes erd
+\end_inset
+
+;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      valueArray[i] ← AttributValue;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   else if actualObjectType = element then
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      keyArray[i] ← elementName;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      valueArray[i] ← elementValue;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   fi;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+od;
+\end_layout
+
+\begin_layout LyX-Code
+
 \end_layout
 
 \begin_layout Subsection
@@ -3230,6 +3602,11 @@ LogOutputViewController
 
 \begin_layout Subsection
 HistoryElement
+\end_layout
+
+\begin_layout Standard
+Hierbei handelt es sich im ein Element einer doppelt verketteten Liste.
+ Da diese Klasse nichts tun muss, außer Die vollständi
 \end_layout
 
 \begin_layout Subsection
