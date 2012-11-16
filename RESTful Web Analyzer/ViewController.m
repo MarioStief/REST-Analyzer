@@ -8,9 +8,7 @@
 
 // Surpress the timestamp and process name in NSLog, looks less overwhelming
 #ifdef DEBUG
-#define NSLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
-#else
-#define NSLog(...) {}
+#define NSLog(output, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:output, ##__VA_ARGS__] UTF8String]);
 #endif
 
 #import "ViewController.h"
@@ -760,6 +758,7 @@
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:[_contentScrollViewText bounds]];
         [imageView setImage:[UIImage imageWithData:responseBodyData]];
         [_contentScrollViewText addSubview:imageView];
+        return;
     } else
         // No image. Guess text instead.
         responseBody = [[NSString alloc] initWithData:responseBodyData encoding:NSASCIIStringEncoding]; // UTF8 won't show some sites here, for example www.google.de

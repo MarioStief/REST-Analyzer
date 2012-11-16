@@ -74,20 +74,19 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Chapter
-Einleitung (2 - 3 Seiten)
+Einleitung
 \end_layout
 
 \begin_layout Standard
-Hier könnte ihr Text stehen...
- :-)
+Motivation, Erwartungen...
 \end_layout
 
 \begin_layout Chapter
-Die Werkzeugkiste (8 Seiten)
+Die Werkzeugkiste
 \end_layout
 
 \begin_layout Section
-Basissprache: Objective-C (4 Seiten)
+Basissprache: Objective-C
 \end_layout
 
 \begin_layout Standard
@@ -524,7 +523,7 @@ _name.text = string
 \end_layout
 
 \begin_layout Section
-API: Cocoa Touch (1 Seite)
+API: Cocoa Touch
 \end_layout
 
 \begin_layout Standard
@@ -590,7 +589,7 @@ Klassen-Clustern
 \end_layout
 
 \begin_layout Section
-IDE: Xcode (1,5 Seiten)
+IDE: Xcode
 \end_layout
 
 \begin_layout Standard
@@ -742,7 +741,7 @@ release
 \end_layout
 
 \begin_layout Section
-Interface Builder: Storyboards (0,5 Seiten)
+Interface Builder: Storyboards
 \end_layout
 
 \begin_layout Standard
@@ -780,11 +779,44 @@ t eines Textfeldes.
  per Drag and Drop realisieren.
  Zieht man beispielsweise eine Text View in einen Scroll View-Container
  erhält man Text, welcher sich mit einer Wischbewegung scrollen lässt.
- 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Storyboard.png
+	lyxscale 45
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+GUI im Storyboard
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-Entwicklerlizenz: Testen auf echter Hardware (1 Seite)
+Entwicklerlizenz: Testen auf echter Hardware
 \end_layout
 
 \begin_layout Standard
@@ -907,11 +939,11 @@ Code Signing Identity
 \end_layout
 
 \begin_layout Chapter
-Schnittstelle mit der REST-Welt (8 Seiten)
+Schnittstelle mit der REST-Welt
 \end_layout
 
 \begin_layout Section
-RESTful Webservices (5,5 Seiten)
+RESTful Webservices
 \end_layout
 
 \begin_layout Subsection
@@ -1620,7 +1652,7 @@ POST /customer/1337/orders/shipped/2012-09-12_001
 \end_layout
 
 \begin_layout Section
-XML (1,5 Seiten)
+XML
 \end_layout
 
 \begin_layout Standard
@@ -1803,7 +1835,7 @@ ebenentreu
 \end_layout
 
 \begin_layout Section
-JSON (1 Seite)
+JSON
 \end_layout
 
 \begin_layout Standard
@@ -2155,7 +2187,7 @@ vip
 \end_layout
 
 \begin_layout Chapter
-Implementation (11 - 12 Seiten, vielleicht mehr)
+Implementation
 \end_layout
 
 \begin_layout Section
@@ -2865,10 +2897,19 @@ lenge bereit, in welcher man die Möglichkeit hat, auf diese Aufforderung
 \begin_layout LyX-Code
 
 \size small
-          [NSURLCredential credentialWithUser:[_username text]         
-                                                                    password:[_p
-assword text]                                                          
-     persistence:NSURLCredentialPersistenceNone];
+          [NSURLCredential credentialWithUser:[_username text]
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                                     password:[_password text]
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+                           persistence:NSURLCredentialPersistenceNone];
 \end_layout
 
 \begin_layout LyX-Code
@@ -2955,6 +2996,42 @@ assword text]
   }
 \end_layout
 
+\begin_layout LyX-Code
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Graphics
+	filename Flowchart Request.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Senden einer Request
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Empfangen einer Response
 \end_layout
@@ -2972,6 +3049,44 @@ connection:didReceiveResponse
  auf eine positive Antwort auf unsere Request hin.
  Es wird nun ein neues Historyelement erzeugt, mit der erfolgreich bearbeiteten
  URL gefüllt und der History-Queue angehangen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Flowchart Response.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Eintreffen einer Response
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2993,11 +3108,65 @@ connection:didReceiveData
 responseBodyData
 \shape default
  hinzugefügt.
- Wurde der Body vollständig empfangen, so wird die Methode 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Flowchart BodyData.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Eingehende Packages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Mit den willkürlich eingehenden Paketen hatte ich einiges an Problemen,
+ denn für jedes Paket mit einem Body wurde stets gleich der Parser angeschmissen.
+ Mein erster Ansatz war es, die ContentLength mit der Länge des eingetroffenen
+ Bodys zu vergleichen und so lange die Daten in einem statischen String
+ zu sammeln, bis die Nachricht vollständig ist.
+ Leider gibt nicht jede Nachricht Auskunft über ihre vollständige Größe,
+ weswegen ich einen Timer von 3 Sekunden einführte, welcher sich mit jeder
+ eingehenden Nachricht wieder zurücksetzte.
+ Lief dieser ab, so wurde das vollständige Empfangen der Nachricht angenommen
+ und die Analyse der Bodydaten begonnen.
+ Hier zeigte sich, dass ein tiefergehender Blick ins Referenzhandbuch mit
+ einiges an Arbeit erspart hätte, denn wie für so vieles stellt Apple sehr
+ einfache Hilfsmethoden bereit und einige Zeit später stieß ich durch Zufall
+ auf die Methode 
 \shape italic
 connectionDidFinishLoading
 \shape default
- aufgerufen, in der der vollständige Body abgearbeitet wird.
+.
+ Da dies natürlich ein wesentlich feinerer Ansatz ist, als ein Timer, wird
+ nun auf diese Methode zurückgegriffen, sobald der der Body vollständig
+ empfangen wurde.
+ Hier erfolgt auch das Abarbeiten der nun vollständigen Bodys.
  Anhand des ersten Bytes wird überprüft, ob es sich um ein Bild handelt.
  Ist das der Fall, so wird eine 
 \shape italic
@@ -3188,7 +3357,44 @@ NSString
  y geschrieben.
  Alle Felder der beiden Arrays, an die keine Einträge geschrieben wurden,
  enthalten weiterhin leere Strings.
- Nachdem keine Ressourcenkandidaten mehr auf ihre Validierung warten, lassen
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Flowchart FinishReceive.png
+	lyxscale 65
+	scale 65
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Response wurde vollständig empfangen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Nachdem keine Ressourcenkandidaten mehr auf ihre Validierung warten, lassen
  sie die 
 \shape italic
 MutableArrays
@@ -3338,6 +3544,34 @@ LogOutputViewController *logOutputViewController =
 
 \size small
 ...
+\end_layout
+
+\begin_layout Standard
+Ein wenig Kopfzerbrechen bereitete mir der Umstand, dass offensichtlich
+ zwischen iOS 5.1 und 6 zwischen dem Laden der View ein zeitlicher Unterschied
+ besteht.
+ Unter iOS 6 ist es vollkommen in Ordnung, wenn die Initialisierung des
+ übergebenen Arrays in der Startmethode 
+\shape italic
+viewDidLoad
+\shape default
+ erfolgt.
+ Doch während iOS 6 bei einem 
+\shape italic
+prepareForSegue
+\shape default
+ den Aufbau der View verzögert, bis die Methode abgearbeitet wurde, ist
+ dies bei iOS 5.1 nicht der Fall.
+ Die Initialisierung des übergebenen Arrays darf erst in der Initialisierungsmet
+hode 
+\shape italic
+viewDidAppear
+\shape default
+ erfolgen, sonst werden alle Zellen mit 
+\shape italic
+nil
+\shape default
+ gefüllt.
 \end_layout
 
 \begin_layout Section
@@ -3601,12 +3835,23 @@ LogOutputViewController
 \end_layout
 
 \begin_layout Standard
-Da es sich um ein Entwicklertool handelt, wäre es vielleicht interessant
- zu sehen, was intern an Logging Output erzeugt wird.
- Da viele Informatiker mein Faible für schwarze Fenster mit durchlaufendem
- Text teilen, soll diese PopoverView ihnen diesen Wunsch erfüllen.
- Zu Beginn der Hauptklasse wurde daher er Programmname und die Zeit aus
- der Ausgabe von NSLog herausgeschnitten: 
+Da es sich um ein Entwicklertool handelt, wäre es für den ein oder anderen
+ sicherlich interessant zu sehen, was das Programm in der Kommandozeile
+ an Output erzeugen würde wird.
+ Da viele Informatiker ein Faible für schwarze Fenster mit durchlaufendem
+ Text haben, soll eine 
+\shape italic
+PopoverView
+\shape default
+ ihnen diesen Wunsch erfüllen.
+ Um nicht in jeder Zeile mit dem Datum, der Uhrzeit und dem Programmnamen
+ beginnen zu lassen, wurden diese zu Beginn der Hauptklasse aus der Ausgabe
+ von 
+\shape italic
+NSLog
+\shape default
+ herausgeschnitten, indem der reine Ausgabeteil als String in UTF8-Codierung
+ mittels fprintf ausgegeben wird:
 \end_layout
 
 \begin_layout LyX-Code
@@ -3632,30 +3877,21 @@ n",
 \begin_layout LyX-Code
 
 \size small
-#else
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-#define NSLog(...) {}
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
 #endif
 \end_layout
 
 \begin_layout Standard
-und zu Beginn in der Methode viewDidLoad die Ausgabe in eine Datei umgeleitet.
- Hierbei wird zuerst geschaut, ob die Output-Datei bereits existiert.
- Ist das der Fall, so wird die Logging-Funktion automatisch wieder eingeschaltet
-; ist sie nicht vorhanden, bleibt sie deaktiviert.
+Weiterhin wird geich zu Beginn in der Methode 
+\shape italic
+viewDidLoad
+\shape default
+ die Ausgabe in eine Datei umgeleitet.
+ Hierbei wird zuerst geschaut, ob bereits eine Ausgabedatei existiert.
+ Ist das der Fall, so wird die Logging-Funktion automatisch eingeschaltet;
+ ist sie nicht vorhanden, bleibt sie deaktiviert.
  Deaktiviert man sie im laufenden Programmbetrieb, so wird die Datei ebenso
- entfernt, wie wenn man unter der Ausgabefläche den Mülleimer antippt.
- Reichen die angebotenen Mitschnitte nicht aus, lassen sich mit dem Verbose-Scha
-lter eine Reihe tiefergehende Nachrichten mitschneiden.
+ entfernt, somit findet man den Logging-Schalter bei einem App-Restart stets
+ so vor, wie man ihn verlassen hat.
 \end_layout
 
 \begin_layout LyX-Code
@@ -3749,8 +3985,23 @@ if ([filemgr fileExistsAtPath:logPath]) {
 \end_layout
 
 \begin_layout Standard
-die Ausgabe in eine Datei umgeleitet.
- 
+Möchte man das Gesehene nach dem Sichten löschen, das Logging jedoch eingeschalt
+et lassen, lässt sich der Usability wegen der Mülleimer unter dem Ausgabe-Fenste
+r antippen.
+ An diesem Icon habe ich keine Bildunterschrift angebracht, denn es sollte
+ selbsterklärend sein, was hier passiert.
+ Möchte man noch mehr Mitschnitte, lässt sich ein Verbose-Modus einschalten,
+ in dem noch eine Reihe mehr Informationen über das Programmverhalten mitgeschni
+tten werden.
+ Auch hier bin ich über ein unerwartetes Problem gestolpert: Da die View
+ sehr wenig Code und nichts beinhaltet, was eine Delegate oder DataSource
+ benötigt, wollte ich diese recht codezeilenarme Funktionalität in der Hauptview
+ unterbringen.
+ Jedoch war nach dem Öffnen der View das Ausgabefeld stets leer und ich
+ musste einige Zeit lang erst einen Refresh-Button betätigen, der die Datei
+ neu in das Textfeld gelagen hat.
+ Abhilfe brachte das Auslagern in eine eigene Klasse mit der Initialisierungsmet
+hode viewDidAppear, welche nun das Laden der Datei übernimmt.
 \end_layout
 
 \begin_layout Subsection
@@ -3761,8 +4012,16 @@ HistoryElement
 Hierbei handelt es sich im ein Element einer doppelt verketteten Liste.
  Es kennt seinen Vorgänger, seinen Nachfolger als auch die an ihn gebundene
  Ressource.
- HistoryElement verfügt über eine Methode getPart, die auf Wunsch die Basis
- URL, den höchsten oder den vorherigen Verzeichnispfad zurückliefert.
+ 
+\shape italic
+HistoryElement
+\shape default
+ verfügt über eine Methode 
+\shape italic
+getPart
+\shape default
+, die auf Wunsch die Basis-URL - bestehend aus Protokoll und Domain -, den
+ höchsten Verzeichnispfad oder den vorherigen zurückliefert.
  Der Unterschied zwischen vorherigem und höchstem Verzeichnis ist der Folgende:
  Endet eine URL mit einem Schrägstrich, so wird er als Verzeichnis angenommen
  und ist somit gleichzeitig auch das höchste.
@@ -3851,14 +4110,33 @@ shoppingcart/
 \end_layout
 
 \begin_layout Standard
-Erstellt man ein neues Projekt, bekommt man zwei Dateien vor die Nase gesetzt:
- eine AppDelegate und den ViewController.
- Konzeptuell sollte der ViewController alles beinhalten, womit sich die
- aktuelle View beschäftigt.
- Die AppDelegate bleibt dabei erschreckend leer und hinterlässt das Gefühl,
- dass man doch etwas Wichtiges vergessen hat.
- Die einzige Methode, die überhaupt etwas macht ist die application didFinishLau
-nchingWithOptions:launchOptions: Sie gibt ein YES zurück.
+Erstellt man ein neues Projekt, befindet sich im Projektordner neben dem
+ oder den Controllern stets eine weitere Klasse: die 
+\shape italic
+AppDelegate
+\shape default
+.
+ Konzeptuell sollte der 
+\shape italic
+ViewController
+\shape default
+ alles beinhalten, womit sich die aktuelle 
+\shape italic
+View
+\shape default
+ beschäftigt.
+ Die 
+\shape italic
+AppDelegate
+\shape default
+ bleibt dabei erschreckend leer und hinterlässt das Gefühl, dass man doch
+ etwas Wichtiges vergessen hat.
+ Die einzige Methode, die überhaupt etwas macht ist die application 
+\shape italic
+didFinishLaunchingWithOptions:launchOptions
+\shape default
+.
+ Sie gibt ein YES zurück.
  Immerhin.
 \end_layout
 
@@ -3885,45 +4163,7 @@ ard, instantiiert den ersten ViewController und packt dessen View in ein
 \end_layout
 
 \begin_layout Section
-GUI (3 - 4 Seiten)
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename Storyboard.png
-	lyxscale 45
-	scale 45
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-GUI im Storyboard
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
+GUI
 \end_layout
 
 \begin_layout Standard
@@ -3970,158 +4210,8 @@ http://www.iconfinder.com/icondetails/34229/256/find_magnifier_search_zoom_icon
 http://www.iconfinder.com/icondetails/54479/128/code_folder_icon
 \end_layout
 
-\begin_layout Section
-Schwierigkeiten (ca.
- 3 Seiten)
-\end_layout
-
-\begin_layout Description
-Problem: Der RKObjectManager mappt die Werte zu den Keys, die er in seiner
- Delegierten angegeben hat.
- In einem generischen Clienten kann man die Schlüssel schlecht bereits vordefini
-eren.
-\end_layout
-
-\begin_layout Description
-Lösung: Selbst parsen und mappen.
- Parser aus dem Apple-Framework verwenden.
-\end_layout
-
-\begin_layout Description
-Problem: RKClient kann kein HEAD.
-\end_layout
-
-\begin_layout Description
-Lösung: Selbst eine Verbindung aufbauen.
- Framework obsolet.
-\end_layout
-
-\begin_layout Description
-Problem: In Storyboard erzeugter Table View Controller erzeugt eigene Instanz
- der View, Inizialisierung programatisch im Code erzeugt wieder eine eigene.
-\end_layout
-
-\begin_layout Description
-Lösung: Der Storyboard-Segue einen Identifier zuweisen und mit der Methode
- prepareForSegue der Zielinstanz die Variable übergeben.
-\end_layout
-
-\begin_layout Description
-Problem: URL soll zur 
-\begin_inset Quotes eld
-\end_inset
-
-darunterliegenden
-\begin_inset Quotes erd
-\end_inset
-
- View übergeben werden und die View geschlossen.
-\end_layout
-
-\begin_layout Description
-Lösung: Referenzen weiterreichen.
- Zum Schließen der View die Referenz des PopoverControllers weiterleiten,
- dann kann die View 
-\begin_inset Quotes eld
-\end_inset
-
-von oben
-\begin_inset Quotes erd
-\end_inset
-
- geschlossen werden.
-\end_layout
-
-\begin_layout Description
-Problem: Nachdem das Programm auf iOS 6 problemlos läuft, stürzt es unter
- 5.1.1 ab.
-\end_layout
-
-\begin_layout Description
-Ursache: Unter iOS 6 wird, wenn ein 
-\begin_inset Quotes eld
-\end_inset
-
-prepareForSegue
-\begin_inset Quotes erd
-\end_inset
-
- erkannt wird, der Aufbau der View verzögert, bis die Methode abgearbeitet
- wurde.
- Unter iOS 5.1.1 ist das nicht der Fall, die View wird sofort angelegt.
- Das Dictionary, das in der viewDidLoad in ein Array gefüllt wird, ist noch
- nicht vorhanden, alle Zellen werden (null).
- 
-\end_layout
-
-\begin_layout Description
-Lösung: die Initialisierung des Arrays verschieben von viewDidLoad nach
- viewDidAppear.
-\end_layout
-
-\begin_layout Description
-Problem: Parsen von großen Inhalten schlägt fehl und die Anzeige im Body
- ist defekt.
-\end_layout
-
-\begin_layout Description
-Ursache: Jeder Body wurde einzeln abgearbeitet und versucht, zu parsen.
- Fragmente, die demnach falsch anfingen, verursachten einen Fehler.
-\end_layout
-
-\begin_layout Description
-Lösung: Auslesen der Content Length und abwarten, bis alle Responses eingetroffe
-n sind.
- Erst dann parsen.
-\end_layout
-
-\begin_layout Description
-Problem: Beim Öffnen der Logging View muss erst ein Refresh-Button betätigt
- werden, damit der Log angezeigt wird.
-\end_layout
-
-\begin_layout Description
-Ursache: Nach dem Anzeigen der View muss das Textfeld aktualisiert werden,
- mit einer Segue lässt sich das so nicht realisieren, das Textfeld müsste
- in einer viewDidAppear ausgeführt werden.
-\end_layout
-
-\begin_layout Description
-Lösung: Die Output View in eine eigene Klasse auslagern, die eine Methode
- ViewDidAppear besitzt.
-\end_layout
-
-\begin_layout Description
-Problem: Füllt man ein Table View mit Zellen und packt diese in einen Scroll
- View-Container, so verschwinden die Zellen beim 
-\begin_inset Quotes eld
-\end_inset
-
-Wischen
-\begin_inset Quotes erd
-\end_inset
-
- aus dem sichtbaren Bereich.
-\end_layout
-
-\begin_layout Description
-Ursache: ARC greift an dieser Stelle und setzt nicht sichtbare Elemente
- auf die Reusable-List.
- Kommen die Zellen wieder in den sichtbaren Bereich, wird die Methode ...
- wieder durchlaufen und erzeugt neue Zellen.
-\end_layout
-
-\begin_layout Description
-Lösung: Die Daten waren hier in der GUI angelegt, welches einen Verstoß
- gegen den Model View Controller (MVC) darstellt.
- Vor der Zellenerzeugung werden 2 MutableArrays angelegt, deren Inhalt sich
- stets am gleichen Indexwert befindet, wie es bei den Zellen der Fall ist.
- Die Zellenerzeugung greift dann auf den entsprechenden Index im Array zu,
- welcher nicht dereferenziert wird.
-\end_layout
-
 \begin_layout Chapter
-Distribution (2 Seiten)
+Distribution
 \end_layout
 
 \begin_layout Section
@@ -4374,7 +4464,55 @@ http://cydia.myrepospace.com/RaveAngel/
 \end_layout
 
 \begin_layout Chapter
-Schlusswort (1 Seite?)
+Schlusswort
+\end_layout
+
+\begin_layout Standard
+Gesammelte Erkenntnis:
+\end_layout
+
+\begin_layout Itemize
+Namenskonvention bei Objective-C ist gewöhnungsbedürftig, aber sehr angenehm.
+\end_layout
+
+\begin_layout Itemize
+Kurze und unverständliche Variablennamen sind aus meinem Gebrauch gebannt,
+ ebenso werde ich beim Entwickeln fernab Objective-C die zusätzlichen Parameter-
+Bezeichner in den Methoden vermissen.
+\end_layout
+
+\begin_layout Itemize
+Die Syntax der Eckigen Klammern ist ebenfalls erst sehr gewöhnungsbedürftig,
+ nach einiger Zeit habe ich jedoch automatisch diese Notation gewählt.
+\end_layout
+
+\begin_layout Itemize
+XCode ist eine sehr angenehme Entwicklungsumgebung, in der sich angenehm
+ arbeiten lässt.
+ Das Storyboard fühlt sich schon fast 
+\begin_inset Quotes eld
+\end_inset
+
+zu leicht
+\begin_inset Quotes erd
+\end_inset
+
+ an.
+\end_layout
+
+\begin_layout Itemize
+Live-Prüfung, Autokorrektur und Assistenzcontroller sind Dinge, die ich
+ in künftigen Entwicklungsumgebungen wiederfinden will.
+\end_layout
+
+\begin_layout Itemize
+View sollte in einer Klasse behandelt werden, dennoch habe ich das Gefühl,
+ dass künftig mehr Wert auf Outsourcing lege.
+\end_layout
+
+\begin_layout Itemize
+Arbeit hat mir sehr viel Spaß gemacht und ich werde einige weitere Anwendungen
+ für Apple-Geräte entwickeln.
 \end_layout
 
 \begin_layout Bibliography

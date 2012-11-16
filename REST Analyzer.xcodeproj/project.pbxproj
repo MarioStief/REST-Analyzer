@@ -45,7 +45,20 @@
 		AC263D28161E630100173788 /* HistoryElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryElement.m; sourceTree = "<group>"; };
 		AC4A6B93161B1961000C9BBE /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
 		AC4A6B94161B1961000C9BBE /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
-		AC60210F1642D24200722FFE /* Diagram.graffle */ = {isa = PBXFileReference; lastKnownFileType = file; path = Diagram.graffle; sourceTree = "<group>"; };
+		AC5EDB0B1655D16800949307 /* Diagram.graffle */ = {isa = PBXFileReference; lastKnownFileType = file; path = Diagram.graffle; sourceTree = "<group>"; };
+		AC5EDB0C1655D16800949307 /* Diagram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Diagram.png; sourceTree = "<group>"; };
+		AC5EDB0D1655D16800949307 /* Flowchart BodyData.graffle */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flowchart BodyData.graffle"; sourceTree = "<group>"; };
+		AC5EDB0E1655D16800949307 /* Flowchart BodyData.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flowchart BodyData.png"; sourceTree = "<group>"; };
+		AC5EDB0F1655D16800949307 /* Flowchart FinishReceive.graffle */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flowchart FinishReceive.graffle"; sourceTree = "<group>"; };
+		AC5EDB101655D16800949307 /* Flowchart FinishReceive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flowchart FinishReceive.png"; sourceTree = "<group>"; };
+		AC5EDB111655D16800949307 /* Flowchart Request.graffle */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flowchart Request.graffle"; sourceTree = "<group>"; };
+		AC5EDB121655D16800949307 /* Flowchart Request.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flowchart Request.png"; sourceTree = "<group>"; };
+		AC5EDB131655D16800949307 /* Flowchart Response.graffle */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flowchart Response.graffle"; sourceTree = "<group>"; };
+		AC5EDB141655D16800949307 /* Flowchart Response.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flowchart Response.png"; sourceTree = "<group>"; };
+		AC5EDB151655D16800949307 /* Storyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Storyboard.png; sourceTree = "<group>"; };
+		AC5EDB161655D16800949307 /* ViewController1.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ViewController1.tiff; sourceTree = "<group>"; };
+		AC5EDB171655D16800949307 /* ViewController2.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ViewController2.tiff; sourceTree = "<group>"; };
+		AC5EDB181655D16800949307 /* webservice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webservice.png; sourceTree = "<group>"; };
 		AC8B877715DF645F00E12B48 /* REST Analyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REST Analyzer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B877B15DF645F00E12B48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AC8B877D15DF645F00E12B48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -95,11 +108,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC5EDB0A1655D12000949307 /* Thesis */ = {
+			isa = PBXGroup;
+			children = (
+				AC5EDB0B1655D16800949307 /* Diagram.graffle */,
+				AC5EDB0C1655D16800949307 /* Diagram.png */,
+				AC5EDB0D1655D16800949307 /* Flowchart BodyData.graffle */,
+				AC5EDB0E1655D16800949307 /* Flowchart BodyData.png */,
+				AC5EDB0F1655D16800949307 /* Flowchart FinishReceive.graffle */,
+				AC5EDB101655D16800949307 /* Flowchart FinishReceive.png */,
+				AC5EDB111655D16800949307 /* Flowchart Request.graffle */,
+				AC5EDB121655D16800949307 /* Flowchart Request.png */,
+				AC5EDB131655D16800949307 /* Flowchart Response.graffle */,
+				AC5EDB141655D16800949307 /* Flowchart Response.png */,
+				AC5EDB151655D16800949307 /* Storyboard.png */,
+				AC5EDB161655D16800949307 /* ViewController1.tiff */,
+				AC5EDB171655D16800949307 /* ViewController2.tiff */,
+				AC5EDB181655D16800949307 /* webservice.png */,
+				AC8E797215DF715F003DCA88 /* Dokumentation.lyx */,
+			);
+			name = Thesis;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		AC8B876C15DF645F00E12B48 = {
 			isa = PBXGroup;
 			children = (
-				AC8E797215DF715F003DCA88 /* Dokumentation.lyx */,
-				AC60210F1642D24200722FFE /* Diagram.graffle */,
 				AC8B878115DF646000E12B48 /* RESTful Web Analyzer */,
 				AC8B877A15DF645F00E12B48 /* Frameworks */,
 				AC8B877815DF645F00E12B48 /* Products */,
@@ -150,6 +184,7 @@
 				AC4A6B94161B1961000C9BBE /* XMLParser.m */,
 				ACB2F180162323D60047C497 /* LogOutputViewController.h */,
 				ACB2F181162323D60047C497 /* LogOutputViewController.m */,
+				AC5EDB0A1655D12000949307 /* Thesis */,
 				AC8B878215DF646000E12B48 /* Supporting Files */,
 			);
 			path = "RESTful Web Analyzer";
