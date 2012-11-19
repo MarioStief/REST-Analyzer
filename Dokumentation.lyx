@@ -78,7 +78,128 @@ Einleitung
 \end_layout
 
 \begin_layout Standard
-Motivation, Erwartungen...
+Im Programmieralltag an der Universität Trier dreht sich alles um die objektorie
+ntierte Programmiersprache Java, die sich aufgrund ihrer Portabilität hervorrage
+nd als Einsteigersprache eignet, denn die für das Ausführen benötigte Laufzeitum
+gebung findet sich für jedes Betriebssystem.
+ Für effiziente und maschinennahe Programmierung bedient man sich in der
+ Regel C++, welche auf C basiert, jedoch zahlreiche Erweiterungen in Hinblick
+ auf die objektorientierte Programmierung bietet, seien es Möglichkeiten
+ zur Datenkapselung, Vererbung oder Polymorpie, um nur einige zu nennen.
+ Für diese Erweiterung wurden Sprachkonstrukte abgeändert, so dass manche
+ C-Programme abgepasst werden müssen, um sich als C++-Programm übersetzen
+ zu lassen.
+ 
+\end_layout
+
+\begin_layout Standard
+Einen etwas anderen Ansatz geht Apple mit der Programmiersprache Objective-C,
+ welche ursprünglich als Basis für das Betriebsystem NextStep verwendet
+ wurde.
+ Mit der Übernahme zu Apple wurde aus die aus NextStep hervorgehende OpenStep-AP
+I ebenfalls Grundlage für OS X, womit sich auch die zu Grunde liegende Sprache
+ von Pascal auf Objective-C änderte.
+ Anders als C+ greift Objective-C für die objektorientierte Erweiterung
+ auf die Sprache Smalltalk zurück, eine Sprache, in derhauptsächlich mit
+ Nachrichtenkommunikation gearbeitet wird und in der es nur drei eingebaute
+ ausführbare Konstrukte gibt: Senden einer Botschaft an ein Objekt, Zuweisen
+ eines Objektes an eine Variable so wie das Rückliefern eines Objektes als
+ Rückgabewert einer Methode.
+ Von der gewöhnlichen C-Syntax ist die Smalltalk-Erweiterung strikt getrennt,
+ somit kann herkömmlicher C-Code problemlos übersetzt werden.
+ Dieser neuartige Ansatz macht neugierig, einmal selbst in die Tiefen des
+ auf Nachrichten basierenden C-Derivates abzutauchen und das Konzept hinter
+ den vielen eckigen Klammern, mit denen sich ein in Objective-C geschriebes
+ Programm präsentiert, näher kennenzulernen.
+ Diese Arbeit bietet eine attraktive Möglichkeit, sich im universitären
+ Rahmen in einen völlig neuen Bereich einzuarbeiten.
+ Apple bietet für die Entwicklung auf dessen Systemen mit Xcode eine Enwicklungs
+umgebung, die nach eigenen Angaben mächtig genug ist, dass sie Apple selbst
+ zur Entwicklung von Betriebssystemen und Anwendungen einsetzt und in neueren
+ Versionen eine sehr einfach zu erlernende Oberfläche für den Entwurf der
+ GUI mit sich bringt.
+ Neben der Entwickung einer Anwendung für einen Apple Macintosh bietet sich
+ mit einer relativ neuen Technologie jedoch noch ein weiteres Stück Apple-Hardwa
+re an:
+\end_layout
+
+\begin_layout Standard
+Im Jahr 2010 landete mit dem iPad von Apple die Sparte der 
+\begin_inset Quotes eld
+\end_inset
+
+Post-PC
+\begin_inset Quotes erd
+\end_inset
+
+-Tablets im Mainstream-Bereich, die 2005 ihren ersten Kandidaten mit dem
+ Nokia 770 Internet-Tablet hatte.
+ Diese Post-PCs waren keine herkömmlichen Notebooks mit Tastatur mehr, die
+ über für Stift-Bedienung ausgelegte Touchscreen verfügten, sie waren wesentlich
+ leichter und dünner, liefen eigenen, angepassten Betriebssystem und verfügten
+ über eine innovatives Bedienung mittels Fingerberührungen - auch wenn das
+ beim Nokia 770 noch nicht der Fall war.
+ Auch heute lieg der Marktanteil von Apples iPad noch bei über 50 % 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Der Apple-Marktanteil am Tabletmarkt betrug lt.
+ einer IDC-Pressemitteilung vom 5.
+ November 2012 50,4 %.
+\end_layout
+
+\end_inset
+
+, so ist es sicherlich eine lohnende Erfahrung, den 
+\begin_inset Quotes eld
+\end_inset
+
+Blick über den Tellerand
+\begin_inset Quotes erd
+\end_inset
+
+ auf dieses neuartige Stück Hardware zu fokussieren und eine Anwendung zu
+ schreiben, die auf Apples mobilem Betriebssystem iOS läuft.
+\end_layout
+
+\begin_layout Standard
+Als Anwendungsbeispiel für meine ersten Erfahrungen in einem neuen Umfeld
+ dient die Implementation eines Clienten, der sich ebenfalls in einen für
+ mich neuen Bereich bewegt: RESTful Web Services.
+ REST - die Abkürzung für Representional State Transfer - ist ein Programmierpar
+adigma für Webanwendungen, welches im Grunde so alt ist wie das Internet
+ selbst.
+ Dieser erst 2000 in einer Dessertation eingeführte Standard beschreibt
+ die Implementation eines Webservices, mit dem die bereits im HTTP-Protokoll
+ definierten Methoden auf statistischen Inhalten arbeiten, welche wiederum
+ auf permanente URLs abgebildet werden.
+ Da diese Methoden auf allen Services, die diesen Standard verwenden, die
+ gleichen sind, sollte es möglich sein, einen generischen Client zu entwickeln,
+ der mit den verschiedenen Services kommuniziert und deren Antworten auswerten
+ kann.
+ Diese Antworten bekommt man in der Regel in Form von XML- oder JSON-Daten
+ zurückgeliefert.
+ Die Anwendung sollte in der Lage sein, diese Daten zu analysieren, die
+ Ressourcen darin zu erkennen und aufzubereiten und dem Anwender eine einfache
+ Möglichkeit bieten, mit diesen zu interagieren.
+\end_layout
+
+\begin_layout Standard
+Auf dem Weg dorthin wird zunächst ein kurzer Einblick in die Werkzeugkiste
+ gegeben, mit der hier gearbeitet wird.
+ Es wird kurz die Programmiersprache Objective-C vorgestellt und auf einige
+ Eigenheiten eingegangen, die man in dieser Form so nicht in der Java- oder
+ in der C++-Welt findet.
+ Weiterhin wird die von Apple verwendete API vorgestellt und die Entwicklungsumg
+ebung, mit der auf diese zugegriffen wird.
+ In einem weiteren Kapitel wird auf die Schnittstelle mit der REST-Welt
+ eingegangen.
+ Es wird erklärt, was im Genauen unter einem REST-kompatiblen Webservice
+ zu verstehen ist und wie man mit solchen Webservices kommuniziert.
+ Abschließend wird die Implementation der fertigen Software vorgestellt,
+ deren Funktionaliät anhand genereller Abläufe beschrieben werden sowie
+ auf Probleme, die sich während dieser Arbeit ergaben, näher eingegangen.
 \end_layout
 
 \begin_layout Chapter
