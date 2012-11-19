@@ -221,9 +221,9 @@ e ANSI-C zurück, die objektorientierte Erweiterung ist an Smalltalk angelehnt
  und von der C-Syntax strikt getrennt.
  Die syntaktisch wichtigsten Neuerungen sind Klassen und Methodenaufrufe.
  Das gleiche Erweiterungskonzept findet auch auf andere prozeduale Sprachen
- Anwendung, so werden zum Beispiel aus Pascal und JavaScript, welche über
- kein Klassenkonzept verfügen, die um Objektorientiertheit ergänzten Sprachen
- Objective-Pascal und Objective-J.
+ Anwendung, so werden zum Beispiel aus Pascal und , welche über kein Klassenkonz
+ept verfügen, die um Objektorientiertheit ergänzten Sprachen Objective-Pascal
+ und Objective-J.
 \end_layout
 
 \begin_layout Standard

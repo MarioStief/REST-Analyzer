@@ -659,12 +659,6 @@
         [_outputSwitch setSelectedSegmentIndex:1]; // zum Response-Tab wechseln
         [_outputSwitch setEnabled:YES forSegmentAtIndex:1]; // Request-Tab einschalten
 
-    if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
-       [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound)
-        [_detectedJSON setHighlighted:YES];
-    else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound)
-        [_detectedXML setHighlighted:YES];
-    
     // ******************** End Receiving Response Header ********************
     
     
@@ -693,6 +687,15 @@
             // if URL is different: set new ones.
             [historyElement setUrl:[historyElement getPart:@"fullPath"]];
         }
+        
+        if([[response MIMEType] rangeOfString:@"json"].location != NSNotFound ||
+           [[response MIMEType] rangeOfString:@"javascript"].location != NSNotFound ||
+           [[historyElement url] hasSuffix:@".json"])
+            [_detectedJSON setHighlighted:YES];
+        else if([[response MIMEType] rangeOfString:@"xml"].location != NSNotFound ||
+                [[historyElement url] hasSuffix:@".xml"])
+            [_detectedXML setHighlighted:YES];
+
     }
     
     // ******************** End actualize history ********************
@@ -846,6 +849,18 @@
         }
         
         [self processKeys:keyArray withValues:valueArray iteration:nil];
+        
+        if ([parsedText length] > 0) {
+            
+            [_progressBarDescription setHidden:YES];
+            [_loadProgressBar setHidden:YES];
+            
+            [_contentScrollViewText setText:parsedText];
+            [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
+            [_outputSwitch setSelectedSegmentIndex:2];   // auf Parsed-Tab wechseln
+        }
+        
+        // ********** End Filling Header + Body Fields: PARSED **********
     }
 }
 
@@ -855,7 +870,7 @@
 - (void)processKeys:(NSArray*)localKeys
          withValues:(NSArray*)localValues
           iteration:(NSMutableString*)iter {
-    
+
     // Reactivate progress bar:
     [_contentScrollViewText setText:@""];
     [_progressBarDescription setText:@"Validating resource candidates..."];
@@ -1026,19 +1041,6 @@
     
     NSLog(@"%i resources added.",[foundResourceKeys count]);
 
-    if ([foundResourceKeys count] > 0) {
-        
-        [_progressBarDescription setHidden:YES];
-        [_loadProgressBar setHidden:YES];
-        
-        [_contentScrollViewText setText:parsedText];
-        [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
-        [_outputSwitch setSelectedSegmentIndex:2];   // auf Parsed-Tab wechseln
-    }
-    
-    // ********** End Filling Header + Body Fields: PARSED **********
-    
-    
     // ******************** Begin Console Output: Found Resources ********************
     
     if ([_verboseLogSwitch isOn]) {
