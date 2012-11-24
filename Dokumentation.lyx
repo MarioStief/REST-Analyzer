@@ -968,7 +968,7 @@ itunes Connect
 \end_layout
 
 \begin_layout Standard
-Der erste Schritt ist es, die User anzulegen, welche an der Entwicklung
+In einem ersten Schritt legen wir die User an, welche an der Entwicklung
  und Distribution der Software beteiligt sind.
  Hier stehen die vordefinierten Rollen 
 \shape italic
@@ -1057,6 +1057,251 @@ Code Signing Identity
 \shape default
  auf das neu erzeugte Zertifikat um und sind nun in der Lage, das angeschlossene
  iOS-Gerät statt des Simulators für die Entwicklung zu benutzen.
+\end_layout
+
+\begin_layout Section
+Distributionsalternative: Der Cydia Store
+\end_layout
+
+\begin_layout Standard
+Zum offiziellen Vertriebsweg über den Apple App Store gibt es eine Alternative,
+ über die man jedoch nur freigeschaltete 
+\begin_inset Quotes eld
+\end_inset
+
+gejailbreakte
+\begin_inset Quotes erd
+\end_inset
+
+ Geräte Zugriff haben: Mit dem 
+\shape italic
+Cydia Store
+\shape default
+, der standardmäßig bei jedem Jailbreak gleich mitinstalliert wird.
+ Mit diesem kann man sich, wie unter Linuxsystemen bekannt, mit verschiedenen
+ Repositories verbinden und auf deren Angebot zugreifen.
+ Hierbei ist der 
+\shape italic
+Cydia Store
+\shape default
+ nicht als ein Distributionssystem für raubkopierte Software zu verstehen,
+ denn er implementiert ebenfalls ein Bezahlsystem, mit dem Entwickler in
+ der Lage sind, ihre Anwendungen entgeltlich anzubieten.
+ Interessant wird diese Vertriebsmethode, wenn man eine App entwickeln möchte,
+ die die Rechte, die Apple einer solchen Anwendung zugesteht, bei weitem
+ überschreitet.
+ Ein sehr schönes Beispiel für eine solche Anwendung ist der Windowmanager
+ 
+\shape italic
+Quasar
+\shape default
+, der eine Alternative bietet zu Apples Zwangvorschrift, jede Anwendung
+ im Vollbild betreiben zu müssen.
+ Vor allem auf dem iPad der dritten Generation kann es durchaus eine wünschenswe
+rte Option sein, zwei oder mehr Fenster nebeneinander betreiben zu können.
+ So könnte man beispielsweise auf der einen Seite ein Textverarbeitungsprogramm
+ laufen haben, während auf der anderen Bildschirmhälfte ein Internetbrowser
+ geöffnet ist.
+\end_layout
+
+\begin_layout Standard
+Um unsere mittels unserer Entwicklerlizenz kompilierten Apps in ein DEB-Paket
+ umzuwandeln, bedienen uns bequem des Programmes MacPorts, welches – ähnlich
+ Fink – eine Paketverwaltung für freie und quelloffene Software für OS X
+ ist.
+\end_layout
+
+\begin_layout Description
+Quelle: http://www.macports.org/
+\end_layout
+
+\begin_layout Standard
+Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
+ Verzeichnis unserem Pfad hinzu:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+\end_layout
+
+\begin_layout Standard
+Nun folgt ein Update dessen Paketquellen:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+sudo port selfupdate
+\end_layout
+
+\begin_layout Standard
+und die Installation des gewünschten Paketes dpkg:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+sudo port install dpkg
+\end_layout
+
+\begin_layout Standard
+welche den gewünschten Befehl dkgp-deb bereitstellt.
+ Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repo-konforme
+ DEB-Pakete zu erstellen.
+\end_layout
+
+\begin_layout Standard
+Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
+ welche sich wie folgt aufbaut:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
++- MyProgram
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   +- Applications
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |  +- MyProgram.app
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |     +- Info.plist
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |     +- MyProgram
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |     +- icon.png
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   +- DEBIAN
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   |  +- control
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+   +- System
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+      +- Library
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+         +- LaunchDaemons
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+            +- com.identifier.MyProgram.plist
+\end_layout
+
+\begin_layout Standard
+Das Verzeichnis System ist hierbei optional.
+\end_layout
+
+\begin_layout Standard
+Die Datei control kann folgende Einträge beinhalten: Package, Name, Version,
+ Architecture, Description, Homepage, Depiction, Maintainer, Author, Sponsor,
+ Section.
+ Zwingend vorgeschrieben sind davon jedoch nur Package und Version.
+\end_layout
+
+\begin_layout Standard
+Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
+ Teil der internen Struktur eines Debian-Paketes darstellen – einige ._*-Dateien,
+ welche zusätzliche Informationen enthalten.
+ Diese zusätzlichen Dateien würden zusammen mit dem Paket installiert werden
+ und Konflikte mit anderen Paketen erzeugen (abgesehen davon, dass diese
+ Dateien einfach nicht in unser Paket gehören).
+ Um dieses Feature zu deaktivieren werden folgende Umgebungsvariablen exportiert
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+export COPYFILE_DISABLE
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+export COPY_EXTENDED_ATTRIBUTES_DISABLE
+\end_layout
+
+\begin_layout Standard
+Sind wir nun soweit wechseln im Terminal ins Verzeichnis 
+\begin_inset Quotes eld
+\end_inset
+
+MyProgramm
+\begin_inset Quotes erd
+\end_inset
+
+ und erzeuen unser DEB-Paket mittels:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+dpkg-deb -b MyProgram
+\end_layout
+
+\begin_layout Description
+Quelle: http://www.saurik.com/id/7
+\end_layout
+
+\begin_layout Subsubsection
+Vom DEB-Paket aufs Device
+\end_layout
+
+\begin_layout Standard
+Um die nun fertige DEB-Datei auf das iPad zu bekommen, benötigen wir ein
+ Cydia-kompatible Repository.
+ Hierfür kann zum Beispiel auf das kostenlose Angebot von MyRepoSpace zurückgegr
+iffen werden, in dem man die fertigen Pakete komfortabel über ein Webinterface
+ in die Source lädt.
+ Die im Cydia Store eingebundene Paketquelle lautet:
+\end_layout
+
+\begin_layout LyX-Code
+
+\size small
+http://cydia.myrepospace.com/Username/
 \end_layout
 
 \begin_layout Chapter
@@ -2417,7 +2662,7 @@ Der ViewController als unsere Basisklasse erbt vom Typ UIViewController,
  stellt.
  Seine Oberklasse UIResponder definiert das Interface zum Umgang mit Events
  und erbt selbst direkt von NSObject, der Wurzelklasse aller Objective-C-Klassen.
- Er wird uns von XCode zu Projektbeginn bereitgestellt und stellt die Methoden
+ Er wird uns von Xcode zu Projektbeginn bereitgestellt und stellt die Methoden
  
 \shape italic
 viewDidLoad
@@ -2443,7 +2688,7 @@ UITextFieldDelegate
 \shape default
 -Protokoll.
  Dieses Protokoll definiert die darin möglichen Nachrichten, die ein Textfeld
- an seine Delegate-Klasse sendet, als Teil der Textbearbeitung.
+ an seine Delegate-Klasse sendet, als Teil der Textverarbeitung.
  In der ViewController wird beispielsweise die im Protokoll enthaltene Methode
  textFieldShouldReturn so implementiert, dass nach dem Druck der Return-Taste
  auf der On Screen-Tastatur das Keyboard wieder vom Bildschirm ausgeblendet
@@ -4283,334 +4528,100 @@ ard, instantiiert den ersten ViewController und packt dessen View in ein
  Kein Programmieraufwand nötig.
 \end_layout
 
-\begin_layout Section
-GUI
-\end_layout
-
-\begin_layout Standard
-Verwendete Grafiken:
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/34203/256/
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/34206/256/
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/34224/256/browser_earth_internet_world_icon
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/34211/128/
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/34212/128/
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/49232/256/arrow_left_icon
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/49243/256/
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/49243/256/
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/34229/256/find_magnifier_search_zoom_icon
-\end_layout
-
-\begin_layout Standard
-http://www.iconfinder.com/icondetails/54479/128/code_folder_icon
-\end_layout
-
 \begin_layout Chapter
-Distribution
-\end_layout
-
-\begin_layout Section
-Der offizielle Weg: Apple's App Store
-\end_layout
-
-\begin_layout Section
-Die Alternative: Cydia Store
+Schlusswort und Ausblick
 \end_layout
 
 \begin_layout Standard
-Zum offiziellen Vertriebsweg über den Apple App Store gibt es eine Alternative,
- über die man jedoch nur freigeschaltete 
-\begin_inset Quotes eld
-\end_inset
-
-gejailbreakte
-\begin_inset Quotes erd
-\end_inset
-
- Geräte Zugriff haben: Mit dem 
-\shape italic
-Cydia Store
-\shape default
-, der standardmäßig bei jedem Jailbreak gleich mitinstalliert wird.
- Mit diesem kann man sich, wie unter Linuxsystemen bekannt, mit verschiedenen
- Repositories verbinden und auf deren Angebot zugreifen.
- Hierbei ist der 
-\shape italic
-Cydia Store
-\shape default
- nicht als ein Distributionssystem für raubkopierte Software zu verstehen,
- denn er implementiert ebenfalls ein Bezahlsystem, mit dem Entwickler in
- der Lage sind, ihre Anwendungen entgeltlich anzubieten.
- Interessant wird diese Vertriebsmethode, wenn man eine App entwickeln möchte,
- die die Rechte, die Apple einer solchen Anwendung zugesteht, bei weitem
- überschreitet.
- Ein sehr schönes Beispiel für eine solche Anwendung ist der Windowmanager
- 
-\shape italic
-Quasar
-\shape default
-, der eine Alternative bietet zu Apples Zwangvorschrift, jede Anwendung
- im Vollbild betreiben zu müssen.
- Vor allem auf dem iPad der dritten Generation kann es durchaus eine wünschenswe
-rte Option sein, zwei oder mehr Fenster nebeneinander betreiben zu können.
- So könnte man beispielsweise auf der einen Seite ein Textverarbeitungsprogramm
- laufen haben, während auf der anderen Bildschirmhälfte ein Internetbrowser
- geöffnet ist.
+Es ist vollbracht - die erste eigene Anwendung, geschrieben in der auf den
+ ersten Blick exotisch anmutenden Programmiersprache mit den vielen eckigen
+ Klammern, läuft auf dem marktbeherrschenden Tablet-Computer der Firma Apple
+ Inc.
+ In einem abschließenden Fazit werde ich die einzelnen Punkte auf dem Weg
+ dorthin noch einmal revue passieren lassen und sowohl der persönliche Nutzen
+ dieser Arbeit für mich als auch die Bereitschaft, mich weiterhin in dieser
+ Umgebung aufzuhalten, einem reflektiven Blick unterzogen.
 \end_layout
 
 \begin_layout Standard
-Um unsere mittels unserer Entwicklerlizenz kompilierten Apps in ein DEB-Paket
- umzuwandeln, bedienen uns bequem des Programmes MacPorts, welches – ähnlich
- Fink – eine Paketverwaltung für freie und quelloffene Software für OS X
+Objective-C ist anders, allerings nicht so anders, dass man sich nicht mit
+ ein wenig Zeit daran gewöhnen kann.
+ Und möchte.
+ Die Namenskonvention bei Objective-C ist gewöhnungsbedürftig, die Verwendung
+ von derart langen Variablennamen oder einer redundanten zusätzlichen Beschreibu
+ng pro Parameter in einer Methode ist gewöhnungsbedürftig, steigert aber
+ die Lesbarkeit des Codes ungemein.
+ Auch an die Notation der eckigen Klammern gewöhnt man sich ziemlich schnell
+ - wenn gleich man das auch nicht wirklich nötig ist, denn die Klammern
+ lassen sich in den meisten Fällen mit der alternativ angebotenen Punkt-Syntax
+ umgehen.
+ Ich selbst habe mich nach einiger Zeit schon während meines ersten Programmes
+ auf diese Notation umgestellt, man führt sich dadurch automatisch vor Augen,
+ dass es sich um versendete Nachrichten handelt.
+\end_layout
+
+\begin_layout Standard
+Die API erleichtert viele Dinge und es lohnt sich stets, einen Blick in
+ die Referenz zu werfen.
+ Ich selbst habe anhand der Content-Länge überprüft, wann eine Response
+ vollständig eingegangen ist.
+ Ein sehr einfacher Weg - sofern die Content-Länge allerdings spezifiziert
  ist.
-\end_layout
-
-\begin_layout Description
-Quelle: http://www.macports.org/
-\end_layout
-
-\begin_layout Standard
-Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
- Verzeichnis unserem Pfad hinzu:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-\end_layout
-
-\begin_layout Standard
-Nun folgt ein Update dessen Paketquellen:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-sudo port selfupdate
-\end_layout
-
-\begin_layout Standard
-und die Installation des gewünschten Paketes dpkg:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-sudo port install dpkg
-\end_layout
-
-\begin_layout Standard
-welche den gewünschten Befehl dkgp-deb bereitstellt.
- Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repo-konforme
- DEB-Pakete zu erstellen.
-\end_layout
-
-\begin_layout Standard
-Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
- welche sich wie folgt aufbaut:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-+- MyProgram
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   +- Applications
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |  +- MyProgram.app
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |     +- Info.plist
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |     +- MyProgram
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |     +- icon.png
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   +- DEBIAN
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   |  +- control
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-   +- System
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-      +- Library
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-         +- LaunchDaemons
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-            +- com.identifier.MyProgram.plist
-\end_layout
-
-\begin_layout Standard
-Das Verzeichnis System ist hierbei optional.
-\end_layout
-
-\begin_layout Standard
-Die Datei control kann folgende Einträge beinhalten: Package, Name, Version,
- Architecture, Description, Homepage, Depiction, Maintainer, Author, Sponsor,
- Section.
- Zwingend vorgeschrieben sind davon jedoch nur Package und Version.
-\end_layout
-
-\begin_layout Standard
-Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
- Teil der internen Struktur eines Debian-Paketes darstellen – einige ._*-Dateien,
- welche zusätzliche Informationen enthalten.
- Diese zusätzlichen Dateien würden zusammen mit dem Paket installiert werden
- und Konflikte mit anderen Paketen erzeugen (abgesehen davon, dass diese
- Dateien einfach nicht in unser Paket gehören).
- Um dieses Feature zu deaktivieren werden folgende Umgebungsvariablen exportiert
-:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-export COPYFILE_DISABLE
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-export COPY_EXTENDED_ATTRIBUTES_DISABLE
-\end_layout
-
-\begin_layout Standard
-Sind wir nun soweit wechseln im Terminal ins Verzeichnis 
+ Da dies aber nicht imme der Fall ist, habe ich einen Workaround implementiert,
+ der durch die Response gestartet und bei jedem eingehenden Package wieder
+ zurückgesetzt wird.
+ So wollte ich herausfinden, ab wann eine eine Nachricht unbekannter Länge
+ als 
 \begin_inset Quotes eld
 \end_inset
 
-MyProgramm
+vollständig empfangen
 \begin_inset Quotes erd
 \end_inset
 
- und erzeuen unser DEB-Paket mittels:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-dpkg-deb -b MyProgram
-\end_layout
-
-\begin_layout Description
-Quelle: http://www.saURLk.com/id/7
-\end_layout
-
-\begin_layout Subsubsection
-Vom DEB-Paket aufs Device
+ anzusehen ist.
+ Ein sorgfältiger Blick in die Referenz hätte mir diesen Umstand abgenommen,
+ denn dort wäre ich auf die Methode 
+\shape italic
+connectionDidFinishLoading
+\shape default
+ gestoßen, welche eine elegante Lösung zu genau dieser Problematik bieteet,
+ denn dessen Implementation wird nach dem Erhalt des finalisierenden Packages
+ aufgerufen.
 \end_layout
 
 \begin_layout Standard
-Um die nun fertige DEB-Datei auf das iPad zu bekommen, benötigen wir ein
- Cydia-kompatible Repository.
- Hierfür habe ich auf das kostenlose Angebot von MyRepoSpace zurückgegriffen,
- in dem man die fertigen Pakete komfortabel über ein Webinterface in die
- Source lädt.
- Die im Cydia Store eingebundene Paketquelle lautet:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-http://cydia.myrepospace.com/RaveAngel/
-\end_layout
-
-\begin_layout Chapter
-Schlusswort
+Auch meine Erfahrungen mit Xcode waren fast durchgängig von sehr angenehmer
+ Natur.
+ Unter Apples Entwicklungsumgebung lässt es sich sehr angenehm arbeiten.
+ Die Live-Prüfung nach syntaktischen Fehlern oder einfachen Vertippern und
+ deren Autokorrektur sowie der Assistenzcontroller, der immer gleich eine
+ passende Sekundärdatei parat hat, sind Dinge, die ich in künftigen Entwicklungs
+umgebungen ungern misse werde.
+ Ein kleiner Wermutstropfen ist, dass Xcode nach einiger Zeit kontinuierlich
+ immer langsammer wird.
+ Das geht so weit, dass es eine Qual ist, den Tab zu wechseln, wobei ein
+ neuer Quelltext geladen wird.
+ Ein wenig Foren-Recherche ergibt schnell, dass der Schuldige daran der
+ sich ansammelnde Workspace ist.
+ Dessen Einstellungen sind in der Datei project.xcworkspace speichert, welche
+ man findet, wenn man sich die Contents des Packages Projectname.xcodeproj
+ anzeigen lässt.
+ Nach einem Löschen der Workspace-Datei und Neustart von Xcode sind zwar
+ die Workspaceeinstellungen verschwunden, dafür ist aber die Performance
+ von Xcode wiederhergestellt.
+ Ein Opfer, dass man an dieser Stelle gerne zu zahlen bereit ist.
+ Es könnte natürlich sein, dass es sich um einen versionsspezifischen Bug
+ handelt.
+ In der aktuellen Version 4.5.2 habe ich dieses Verhalten noch nicht festgestellt,
+ allerdings war beim Update auf diese Version die App bereits nahezu vollständig
+ fertig.
 \end_layout
 
 \begin_layout Standard
-Gesammelte Erkenntnis:
-\end_layout
-
-\begin_layout Itemize
-Namenskonvention bei Objective-C ist gewöhnungsbedürftig, aber sehr angenehm.
-\end_layout
-
-\begin_layout Itemize
-Kurze und unverständliche Variablennamen sind aus meinem Gebrauch gebannt,
- ebenso werde ich beim Entwickeln fernab Objective-C die zusätzlichen Parameter-
-Bezeichner in den Methoden vermissen.
-\end_layout
-
-\begin_layout Itemize
-Die Syntax der Eckigen Klammern ist ebenfalls erst sehr gewöhnungsbedürftig,
- nach einiger Zeit habe ich jedoch automatisch diese Notation gewählt.
-\end_layout
-
-\begin_layout Itemize
-XCode ist eine sehr angenehme Entwicklungsumgebung, in der sich angenehm
- arbeiten lässt.
- Das Storyboard fühlt sich schon fast 
+Das Storyboard ist eine ungemeine Arbeitserleichterung, wenn es an die Gestaltun
+g der GUI geht.
+ Zu Beginn fühlt es sich schon fast 
 \begin_inset Quotes eld
 \end_inset
 
@@ -4618,22 +4629,85 @@ zu leicht
 \begin_inset Quotes erd
 \end_inset
 
- an.
+ an und ermöglicht es in wenigen Minuten die Views zu erstellen und die
+ Übergangsverbindungen zu definieren, die GUI-Elemente einzufügen und ggfls.
+ deren Delegates und DataSources zu setzen und die Parameter der Elemente
+ in der Seitenleiste zu bearbeiten.
+ Gleichzeitig werden damit die Bereiche im Quelltext eingefügt und man beginnt
+ in kurzer Zeit mit der eigentlichen Implementation der Funktionalität ohne
+ sich eine gefühlte Ewigkeit an notwendigen Nebensächlichkeiten aufhalten
+ zu müssen.
+ Man sollte Storyboards jedoch nach Möglichkeit nicht mit dem programmatischen
+ Lösungsweg vermischen.
+ Es hat mich viel Zeit und Recherche gekostet, festzustellen, dass eine
+ im Storyboard erstellte View nicht ohne Weiteres programmatisch zugreifbar
+ ist.
+ Der Weg, einem Übergang eine Bezeichnung zu verpassen und auf diese über
+ die in einem solchen Fall automatisch augerufene Methode prepareForSegue
+ zuzugreifen, wirkt auf mich ein wenig wie ein Workaround.
+ Um der Übersichtlichkeit zu genügen bietet das Storyboard 4 Zoomstufen
+ an: 12,5 %, 25 %, 50 % und 100 %.
+ Warum ist an dieser Stelle keine manuelle Eingabe der Zoomstufe möglich
+ oder zumindest ein Regler gegeben, der sich etwas feingranularer einstellen
+ lässt? Bei meiner FullHD-Auflösung habe ich mich oft geärgert, dass hier
+ keine 75 % möglich sind.
 \end_layout
 
-\begin_layout Itemize
-Live-Prüfung, Autokorrektur und Assistenzcontroller sind Dinge, die ich
- in künftigen Entwicklungsumgebungen wiederfinden will.
+\begin_layout Standard
+Nicht zuletzt war auch das Thema RESTful Webservices ein interessantes Umsetzung
+sgebiet.
+ Die Idee, mit einem generischen Clienten auf verschiedene Webservices zugreifen
+ zu können, deren Schnittstelle die Methoden bilden, die das HTTP-Protokoll
+ schon selbst mitbringt.
+ Die zugrunde liegende Idee ist einfach und angenehm zu implementieren und
+ das Arbeiten mit HTTP-Verben fühlt sich 
+\begin_inset Quotes eld
+\end_inset
+
+irgendwie nach Internet an
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Zu Beginn der Arbeit verwendete ich das externes Framework RestKit, welches
+ mir die Arbeit mit REST-konformen Seiten erleichtern soll.
+ Es stellte sich jedoch sehr schnell heraus, dass einige der Funktionen
+ meine Erwartungen nicht erfüllen konnten, so bot mir RestKit das Mappen
+ einer Ressource in ein NSDictionary an, welches jeodch bereits über die
+ Schlüsselwerte verfügen musste.
+ Für einen generischen Clienten, der jedoch noch nicht wieß, was er auf
+ den Zielseiten alles auffindet, ist dies leider nur von stark eingeschränktem
+ Nutzen und die Zuhilfenahme eines Parsers ist unvermeidlich.
+ Apple bietet in seinem hauseigenen Framework sowohl einen Parser für XML
+ als auch einen Parser für JSON an, welchen allein schon des Supportes Wegen
+ den Vorzug gegeben werden sollte.
+ Auch andere Teile, die das externe Framework mir bereitstellen würde, waren
+ ohne größere Schwierigkeiten durch die mächtigen Funktionen zu realisieren,
+ die Cocoa Touch ohnehin bereitstellt, was mir die Umsetzung dieser Arbeit
+ erlaubte, ohne dass ich auf externe Frameworks zurückgreifen musste.
 \end_layout
 
-\begin_layout Itemize
-View sollte in einer Klasse behandelt werden, dennoch habe ich das Gefühl,
- dass künftig mehr Wert auf Outsourcing lege.
-\end_layout
+\begin_layout Standard
+Schließt diese Arbeit meinen 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Itemize
-Arbeit hat mir sehr viel Spaß gemacht und ich werde einige weitere Anwendungen
- für Apple-Geräte entwickeln.
+Blick über den Tellerrand in Richtung Objective-C
+\begin_inset Quotes erd
+\end_inset
+
+ ab? Nein, definitiv nicht.
+ Ich möchte noch einige weitere Anwendungen für Apple-Hardware entwickeln.
+ Die Arbeit auf und mit Apples Plattform hat sich für mich als sehr angeehm
+ erwiesen und meinen Programmierstil positiv beeinflusst.
+ Kurze und unverständliche Variablennamen werde ich künftig vermeiden, ebenso
+ werde ich beim Entwickeln fernab Objective-C die zusätzlichen Parameter-Bezeich
+ner in den Methoden vermissen.
+ Einen ersten Kundenauftrag für eine iPhone-App habe ich bereits schon jetzt
+ vor dem Abschluss dieser Arbeit.
+ Xcode wird also schon sehr bald wieder geöffnet werden und meinen Ausflug
+ in die Objective-C-Welt werde ich dort weiterführen, wo ich ihn mit dem
+ Abschluss dieser Arbeit unterbrochen habe.
 \end_layout
 
 \begin_layout Bibliography
