@@ -78,128 +78,146 @@ Einleitung
 \end_layout
 
 \begin_layout Standard
-Im Programmieralltag an der Universität Trier dreht sich alles um die objektorie
-ntierte Programmiersprache Java, die sich aufgrund ihrer Portabilität hervorrage
-nd als Einsteigersprache eignet, denn die für das Ausführen benötigte Laufzeitum
-gebung findet sich für jedes Betriebssystem.
- Für effiziente und maschinennahe Programmierung bedient man sich in der
- Regel C++, welche auf C basiert, jedoch zahlreiche Erweiterungen in Hinblick
- auf die objektorientierte Programmierung bietet, seien es Möglichkeiten
- zur Datenkapselung, Vererbung oder Polymorpie, um nur einige zu nennen.
- Für diese Erweiterung wurden Sprachkonstrukte abgeändert, so dass manche
- C-Programme abgepasst werden müssen, um sich als C++-Programm übersetzen
- zu lassen.
- 
-\end_layout
-
-\begin_layout Standard
-Einen etwas anderen Ansatz geht Apple mit der Programmiersprache Objective-C,
- welche ursprünglich als Basis für das Betriebsystem NextStep verwendet
+Im Programmieralltag eines Informatikers an der Universität Trier beschäftigt
+ man sich hauptsächlich mit der plattformunabhängigen objektorientierten
+ Programmiersprache Java.
+ Sie eignet sich aufgrund ihrer Portabilität hervorragend als Einsteigersprache,
+ denn die für das Ausführen benötigte Laufzeitumgebung kann man sich für
+ nahezu jedes Betriebssystem herunterladen und installieren.
+ Eine Ausnahme bildet das mobile Betriebssystem iOS, für welches Apple die
+ Entwicklung einer Java Runtime nicht gestattet.
+ Maschinennähere Erfahrungen sammelt man in C++, welches auf dem prozeduralen
+ ANSI-C basiert, jedoch zahlreiche Erweiterungen in Hinblick auf die objektorien
+tierte Programmierung bietet, seien es Möglichkeiten zur Datenkapselung,
+ Vererbung oder Polymorphie, um nur einige zu nennen.
+ Dazu wurden Sprachkonstrukte von C abgeändert, so dass manche C-Programme
+ abgepasst werden müssen, um sich als C++-Programm übersetzen zu lassen.
+ Einen etwas anderen Ansatz geht Apple mit der Programmiersprache Objective-C,
+ welche ursprünglich als Basis für das Betriebssystem NextStep verwendet
  wurde.
- Mit der Übernahme zu Apple wurde aus die aus NextStep hervorgehende OpenStep-AP
-I ebenfalls Grundlage für OS X, womit sich auch die zu Grunde liegende Sprache
- von Pascal auf Objective-C änderte.
+ Mit der Übernahme zu Apple wurde die aus NextStep hervorgehende OpenStep-API
+ ebenfalls Grundlage für OS X, womit sich auch die zu Systemsprache von
+ Pascal auf Objective-C änderte.
  Anders als C+ greift Objective-C für die objektorientierte Erweiterung
- auf die Sprache Smalltalk zurück, eine Sprache, in derhauptsächlich mit
- Nachrichtenkommunikation gearbeitet wird und in der es nur drei eingebaute
- ausführbare Konstrukte gibt: Senden einer Botschaft an ein Objekt, Zuweisen
- eines Objektes an eine Variable so wie das Rückliefern eines Objektes als
- Rückgabewert einer Methode.
- Von der gewöhnlichen C-Syntax ist die Smalltalk-Erweiterung strikt getrennt,
- somit kann herkömmlicher C-Code problemlos übersetzt werden.
- Dieser neuartige Ansatz macht neugierig, einmal selbst in die Tiefen des
- auf Nachrichten basierenden C-Derivates abzutauchen und das Konzept hinter
- den vielen eckigen Klammern, mit denen sich ein in Objective-C geschriebes
- Programm präsentiert, näher kennenzulernen.
- Diese Arbeit bietet eine attraktive Möglichkeit, sich im universitären
- Rahmen in einen völlig neuen Bereich einzuarbeiten.
- Apple bietet für die Entwicklung auf dessen Systemen mit Xcode eine Enwicklungs
-umgebung, die nach eigenen Angaben mächtig genug ist, dass sie Apple selbst
- zur Entwicklung von Betriebssystemen und Anwendungen einsetzt und in neueren
- Versionen eine sehr einfach zu erlernende Oberfläche für den Entwurf der
- GUI mit sich bringt.
- Neben der Entwickung einer Anwendung für einen Apple Macintosh bietet sich
- mit einer relativ neuen Technologie jedoch noch ein weiteres Stück Apple-Hardwa
-re an:
-\end_layout
-
-\begin_layout Standard
-Im Jahr 2010 landete mit dem iPad von Apple die Sparte der 
-\begin_inset Quotes eld
-\end_inset
-
-Post-PC
-\begin_inset Quotes erd
-\end_inset
-
--Tablets im Mainstream-Bereich, die 2005 ihren ersten Kandidaten mit dem
- Nokia 770 Internet-Tablet hatte.
- Diese Post-PCs waren keine herkömmlichen Notebooks mit Tastatur mehr, die
- über für Stift-Bedienung ausgelegte Touchscreen verfügten, sie waren wesentlich
- leichter und dünner, liefen eigenen, angepassten Betriebssystem und verfügten
- über eine innovatives Bedienung mittels Fingerberührungen - auch wenn das
- beim Nokia 770 noch nicht der Fall war.
- Auch heute lieg der Marktanteil von Apples iPad noch bei über 50 % 
+ auf die Sprache Smalltalk zurück, in der mit Nachrichtenkommunikation gearbeite
+t wird und in der es nur drei eingebaute ausführbare Konstrukte gibt: Eine
+ Botschaft wird an ein Objekt gesendet, einer Variable wird ein Objekt zugewiese
+n oder ein Objekt wird als Rückgabewert einer Methode zurückgeliefert.
+ Die Smalltalk-Erweiterung ist von der gewöhnlichen C-Syntax strikt getrennt,
+ somit gibt es kein Problem, herkömmlichen C-Code zu übersetzen.
+ Dieser andersartige Ansatz macht neugierig, einmal selbst in die Tiefen
+ des auf Nachrichten basierenden C-Derivates abzutauchen und einen genaueren
+ Blick auf das Konzept hinter den vielen eckigen Klammern zu werfen, mit
+ denen sich ein in Objective-C geschriebenes Programm präsentiert.
+ Der TIOBE-Index, der seit 2001 ein monatlich aktualisiertes Ranking von
+ Programmiersprachen nach ihrer Popularität publiziert, listet Objective-C
+ hinter C und Java derzeit auf Platz 3 der am meisten verwendeten Programmierspr
+achen.
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-Der Apple-Marktanteil am Tabletmarkt betrug lt.
+Quelle: TIOBE Programming Community Index for November 2012, Headline: Objective
+-C on its way to become "language of the year" again
+\end_layout
+
+\end_inset
+
+ Die Tendenz: kontinuierlich steigend.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Quelle: TIOBE Programming Community Index Objective-C
+\end_layout
+
+\end_inset
+
+ Diese Arbeit bietet eine attraktive Möglichkeit, sich im universitären
+ Rahmen in diesen Bereich einzuarbeiten und einen Blick über den Tellerrand
+ zu werfen.
+ Eine Möglichkeit, die ich hiermit gerne ergreifen möchte.
+\end_layout
+
+\begin_layout Standard
+Für die Entwicklung auf seinen Systemen stellt Apple mit Xcode eine Entwicklungs
+umgebung, die nach eigenen Angaben mächtig genug ist, dass sie von Apple
+ selbst zur Entwicklung von Betriebssystemen und Anwendungen eingesetzt
+ wird - und in den aktuellen Versionen angeblich eine sehr einfach zu erlernende
+ Oberfläche für den Entwurf der GUI mit sich bringt.
+ Neben der Entwicklung einer Anwendung für einen Apple Macintosh bietet
+ sich mit einer relativ neuen Technologie jedoch noch ein weiteres Stück
+ Hardware des Unternehmens aus Kalifornien an: Im Jahr 2010 landete mit
+ dem iPad die Sparte der “Post-PC”-Tablets im Mainstream-Bereich, die 2005
+ ihren ersten Kandidaten mit dem Nokia 770 Internet-Tablet hatte.
+ Diese Post-PCs waren keine herkömmlichen Notebooks mit Tastatur mehr, die
+ über für Stift-Bedienung ausgelegte Touchscreen verfügten, sie waren wesentlich
+ leichter und dünner, liefen mit eigenen, angepassten Betriebssystem und
+ verfügten über eine innovatives Bedienkonzept für Fingerberührungen - auch
+ wenn das beim Nokia 770 noch nicht der Fall war.
+ Auch heute liegt der Marktanteil von Apples iPad noch bei über 50 %
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Der Apple-Marktanteil am Tablet-Markt betrug lt.
  einer IDC-Pressemitteilung vom 5.
  November 2012 50,4 %.
 \end_layout
 
 \end_inset
 
-, so ist es sicherlich eine lohnende Erfahrung, den 
-\begin_inset Quotes eld
-\end_inset
-
-Blick über den Tellerand
-\begin_inset Quotes erd
-\end_inset
-
- auf dieses neuartige Stück Hardware zu fokussieren und eine Anwendung zu
- schreiben, die auf Apples mobilem Betriebssystem iOS läuft.
+, so ist es sicherlich eine lohnende Erfahrung, den “Blick über den Tellerrand”
+ zusätzlich auf dieses neuartige Stück Hardware zu richten und eine Anwendung
+ zu schreiben, die auf Apples mobilem Betriebssystem iOS läuft.
 \end_layout
 
 \begin_layout Standard
-Als Anwendungsbeispiel für meine ersten Erfahrungen in einem neuen Umfeld
- dient die Implementation eines Clienten, der sich ebenfalls in einen für
- mich neuen Bereich bewegt: RESTful Web Services.
- REST - die Abkürzung für Representional State Transfer - ist ein Programmierpar
-adigma für Webanwendungen, welches im Grunde so alt ist wie das Internet
- selbst.
- Dieser erst 2000 in einer Dessertation eingeführte Standard beschreibt
+Als Anwendungsbeispiel für diese ersten Schritte in einer neuen Umgebung
+ wird ein Client implementiert, der die Verbindung mit einem mir ebenfalls
+ neuen Bereich herstellt: RESTful Webservices.
+ Die Abkürzung REST steht für Representional State Transfer und ist ein
+ Programmierparadigma für Webanwendungen, welches im Grunde so alt ist wie
+ das Internet selbst.
+ Dieser erst 2000 in einer Dissertation eingeführte Standard beschreibt
  die Implementation eines Webservices, mit dem die bereits im HTTP-Protokoll
- definierten Methoden auf statistischen Inhalten arbeiten, welche wiederum
- auf permanente URLs abgebildet werden.
- Da diese Methoden auf allen Services, die diesen Standard verwenden, die
- gleichen sind, sollte es möglich sein, einen generischen Client zu entwickeln,
- der mit den verschiedenen Services kommuniziert und deren Antworten auswerten
- kann.
- Diese Antworten bekommt man in der Regel in Form von XML- oder JSON-Daten
- zurückgeliefert.
- Die Anwendung sollte in der Lage sein, diese Daten zu analysieren, die
- Ressourcen darin zu erkennen und aufzubereiten und dem Anwender eine einfache
- Möglichkeit bieten, mit diesen zu interagieren.
+ definierten Methoden GET, PUT, POST, DELETE und HEAD auf statistischen
+ Inhalten arbeiten.
+ Diese werden wiederum auf permanente URLs abgebildet.
+ Da die Funktionalität REST-konformer Webservices immer auf diese HTTP-Methoden
+ abgebildet wird, sollte es möglich sein, einen generischen Client zu entwickeln
+, der mit all diesen Webservices irgendwie eine gemeinsame Kommunikationsschnitt
+stelle bildet.
+ Es sollen Anfragen gesendet und Antworten ausgewertet werden.
+ Diese Antworten bekommt man in der Regel im Format XML oder JSON zurückgeliefer
+t.
+ Der Client sollte in der Lage sein, diese Daten zu analysieren, die potentielle
+n Ressourcen darin zu erkennen, sie zu validieren und aufzubereiten und
+ dem Anwender eine einfache Möglichkeit bieten, mit diesen zu interagieren.
 \end_layout
 
 \begin_layout Standard
-Auf dem Weg dorthin wird zunächst ein kurzer Einblick in die Werkzeugkiste
- gegeben, mit der hier gearbeitet wird.
- Es wird kurz die Programmiersprache Objective-C vorgestellt und auf einige
- Eigenheiten eingegangen, die man in dieser Form so nicht in der Java- oder
- in der C++-Welt findet.
- Weiterhin wird die von Apple verwendete API vorgestellt und die Entwicklungsumg
-ebung, mit der auf diese zugegriffen wird.
- In einem weiteren Kapitel wird auf die Schnittstelle mit der REST-Welt
+Auf dem Weg zum funktionsfähigen Client wird zunächst ein kurzer Einblick
+ in die Werkzeugkiste gegeben, mit der hier gearbeitet wird.
+ Es wird kurz die Programmiersprache Objective-C vorgestellt und einige
+ Eigenheiten aufgezeigt, die man in dieser Form so nicht in der Java- oder
+ C++-Welt findet.
+ Weiterhin wird die von Apple verwendete API Cocoa Touch vorgestellt und
+ die Entwicklungsumgebung Xcode, mit der auf diese zugegriffen wird.
+ Im darauffolgenden Kapitel wird auf die Schnittstelle mit der REST-Welt
  eingegangen.
  Es wird erklärt, was im Genauen unter einem REST-kompatiblen Webservice
- zu verstehen ist und wie man mit solchen Webservices kommuniziert.
- Abschließend wird die Implementation der fertigen Software vorgestellt,
- deren Funktionaliät anhand genereller Abläufe beschrieben werden sowie
- auf Probleme, die sich während dieser Arbeit ergaben, näher eingegangen.
+ zu verstehen ist und wie man mit diesen kommuniziert.
+ Den letzten größeren Bereich stellt die Implementation der fertigen Software,
+ deren Funktionalität anhand genereller Abläufe beschrieben wird.
+ Weiter wird hier auf die Probleme, die sich während des Entwickelns dieser
+ Arbeit ergaben, näher eingegangen.
+ Abgerundet wird diese Arbeit durch einen reflektiven Abriss der vorhergegangen
+ Kapitel und einen persönlichen Ausblick darauf, ob die herausgearbeiteten
+ Erfahrungen den Ausflug in die Welt der Apple-Systeme beenden oder den
+ Grundstein bilden für weitere Entwicklungen auf den mobilen Systemen der
+ Kalifornier.
+ 
 \end_layout
 
 \begin_layout Chapter
@@ -211,157 +229,128 @@ Basissprache: Objective-C
 \end_layout
 
 \begin_layout Standard
-Möchte man seine erste App für ein Apple-Gerät entwickeln, steht man zuallererst
- vor einer kleinen Herausforderung: So wie Microsoft für sein .NET-Framework
- die C#-Sprache entwickelte, welche Grundkonzepte der objektorientierten
- Hochsprachen C++, Java und Delphi in sich vereint, wird für Apple-Hardware
- grundsätzlich die Sprache Objective-C verwendet.
- Anders als C# greift das in den frühen 80ern entwickelte ObjC auf das prozedual
-e ANSI-C zurück, die objektorientierte Erweiterung ist an Smalltalk angelehnt
- und von der C-Syntax strikt getrennt.
- Die syntaktisch wichtigsten Neuerungen sind Klassen und Methodenaufrufe.
- Das gleiche Erweiterungskonzept findet auch auf andere prozeduale Sprachen
- Anwendung, so werden zum Beispiel aus Pascal und , welche über kein Klassenkonz
-ept verfügen, die um Objektorientiertheit ergänzten Sprachen Objective-Pascal
- und Objective-J.
+Das Entwickeln der ersten App für Apple-Hardware bringt die Herausforderung
+ mit sich, eine neue Programmiersprache erlernen zu müssen.
+ So wie Microsoft für sein .NET-Framework die C#-Sprache entwickelte, welche
+ Grundkonzepte der objektorientierten Hochsprachen C++, Java und Delphi
+ in sich vereint, so verwendet Apple für seine Systeme die Sprache Objective-C.
+ Anders als C# greift das in den frühen 80ern entwickelte Objective-C auf
+ das prozedurale ANSI-C zurück.
+ Seine objektorientierte Erweiterung ist eine Anlehnung an Smalltalk und
+ wird als solche von der C-Syntax strikt getrennt.
+ Die syntaktisch wichtigsten Neuerungen sind wie bei anderen Erweiterungskonzept
+en hauptsächlich die Verwendung von Klassen und Methodenaufrufen.
+ Analog kann dieser Ansatz dazu verwendet werden, aus Pascal und Javascript,
+ die beide von Haus aus über kein Klassenkonzept verfügen, die objektorientierte
+n Erweiterungssprachen Objective-Pascal und Objective-J zu erzeugen.
 \end_layout
 
 \begin_layout Standard
-Wie aus der C-Welt bekannt deklariert man das Interface im Header (.h) sowie
- deren Implementierungen in den .m-Dateien, welche ObjC- bzw.
- C-Code enthalten können.
- Aus Kompatibilitätsgründen kann man auch Implementierungen als mit der
- Erweiterung mm anlegen, welcher auch explizit C++-Code enthalten darf.
- Auf diese Art kann man C++-Bibliotheken weiterverwenden.
- Statt #include sollte man hier auf #import zurückgreifen, weil es sicher
- stellt, dass die angegebene Datei nie mehr als einmal eingebunden wird.
- Da das ein äußerst sinnvolles Feature ist, wird es auch von allen gängigen
- ObjC-Compilern unterstützt.
+Wie aus der C-Welt bekannt, wird in einer Header-Datei mit der Endung .h
+ das Interface deklariert, die Implementierungen erfolgt in der dazugehörigen
+ .m-Datei, welche Objective-C- oder einfachen C-Code enthalten kann.
+ Aus Kompatibilitätsgründen lassen sich Implementierungen mit der Dateiendung
+ .mm anlegen, dieser darf expliziten C++-Code enthalten, was die Weiterverwendung
+ von C++-Bibliotheken erlaubt.
+ Statt #include sollte man bei Objective-C auf #import zurückgreifen, da
+ es sicher stellt, dass jede einzubindende Datei auch nur höchstens einmal
+ eingebunden wird.
 \end_layout
 
 \begin_layout Standard
-Die größte Umstellung zum Denken in Objective C ist, dass es keine Funktionen
- mehr gibt, die mit Parametern aufgerufen werden.
- Hier verwendet man Objekte, die sich untereinander Nachrichten an Methoden
+In Objective-C werden keine Funktionen mehr mit Parametern aufgerufen.
+ Statt dessen verwendet man Objekte, die sich untereinander Nachrichten
  senden und so miteinander kommunizieren.
- Dieses Paradigma nennt sich 
-\shape italic
-Message Passings
-\shape default
- und unterscheidet sich stark von der Art der Aufrufe, die C++ nutzt.
- Grundsätzlich darf jedes Objekt jede Nachricht an jedes Objekt senden -
- oder an sich selbst - ganz gleich ob die Zielklasse (oder eine deren Oberklasse
-n) die passende Methode zu dieser Nachricht implementiert.
- Da die Methoden immer erst zur Laufzeit (und nicht bereits beim Kompilieren)
- ermittelt werden, entscheidet sich erst beim Aufruf, wie ein Objekt auf
+ Diese Nachrichten veranlassen ein Objekt, eine Methode auszuführen.
+ Dieses Paradigma wird als Message Passings bezeichnet und unterscheidet
+ sich stark von der Art der Methodenaufrufe, die man C++ verwendet.
+ Es darf grundsätzlich jedes Objekt jede beliebige Nachricht an jedes Objekt
+ senden - oder auch an sich selbst, in dem Fall wird der Bezeichner self
+ verwendet - ganz gleich ob die Zielklasse oder eine beerbte Oberklasse
+ die passende Methode zu dieser Nachricht implementiert.
+ Da Methoden stets erst zur Laufzeit ermittelt werden und nicht bereits
+ beim Übersetzen, entscheidet sich erst beim Aufruf, wie ein Objekt auf
  eine Nachricht reagieren wird.
- Dieses Verfahren bezeichnet man daher auch als 
-\shape italic
-dynamisches Binden
-\shape default
- - im Gegensatz zu verwendeten C-Funktionen, die bei der Kompilierung bereits
- statisch gebunden werden.
- Es lässt sich sogar eine Klassenmethode implementieren, welche auf Nachrichten
- reagiert, für die die Klasse keine eigene Implementierung bereitstellt.
- Abstrakte Klassen kennt ObjC übrigens nicht - jede Klasse muss immer vollständi
-g implementiert werden, damit stets Objekte dieser Klasse erzeugt werden
- können.
- Statt dessen können wir jedoch Protokolle deklarieren, in denen wir zwangsweise
- zu implementierende Methoden unter dem 
-\family typewriter
-\size small
-@required
-\family default
-\size default
--Tag auflisten.
+ Dieses Verfahren bezeichnet man daher auch als dynamisches Binden.
+ Im Gegensatz dazu werden die verwendeten C-Funktionen bereits beim Übersetzen
+ statisch gebunden.
+ Konsequenterweise existiert ebenfalls eine Methode, welche auf Nachrichten
+ reagiert, für die keine eigene Implementierung durch die Klasse bereitgestellt
+ wird.
+ Abstrakte Klassen kennt Objective-C übrigens nicht.
+ Jede Klasse muss vollständig implementiert werden, damit jederzeit Objekte
+ dieser Klasse erzeugt werden können.
+ Um dies zu umgehen lassen sich Protokolle deklarieren, in denen notwendige
+ Methoden unter dem @required-Tag aufgelistet werden.
 \end_layout
 
 \begin_layout Standard
-Ebenso wie in C++ lassen sich aus einer Klasse Objekte erzeugen.
- Darüber hinaus ist aber jede Klasse selbst als Objekt ansprechbar.
- Diese anthalten jedoch keine Member-Variablen und sind stets Singletons
- - Entwurfsmuster, die sicher stellen, dass von einer Klasse genau ein Objekt
- existiert, welches global verfügbar ist.
- So wie ein solches Klassenobjekt in der Lage ist, Nachrichten zu empfangen,
- erfolgt das Binden der entsprechenden Methoden ebenfalls erst zur Laufzeit.
- Strings werden in ObjC in der Notation @
-\begin_inset Quotes erd
-\end_inset
-
-…
-\begin_inset Quotes erd
-\end_inset
-
- erzeugt.
- Dieser String ist ein Objekt vom Typ NSString und als solcher ebenfalls
+Wie in C++ lassen sich aus einer Klasse Objekte erzeugen.
+ Darüber hinaus ist aber jede Klasse auch selbst als Objekt ansprechbar.
+ Diese enthalten jedoch keine Member-Variablen und sind stets Singletons,
+ also Entwurfsmuster, die sicher stellen, dass von einer Klasse genau ein
+ Objekt existiert, welches global verfügbar ist.
+ Da ein solches Klassenobjekt ebenfalls für beliebige Nachrichten empfänglich
+ ist, erfolgt das Binden seiner Methoden auch erst zur Laufzeit.
+ Strings werden in Objective-C mit der Notation @”…” erzeugt.
+ Ein solcher String ist ein Objekt vom Typ NSString und als solcher ebenfalls
  in der Lage, Nachrichten zu empfangen.
- Wird das @ weggelassen, wird ein Nullterminierter C-String erzeugt.
- Per Vorgabe besitzen die Datentypen in ObjC die gleiche Typisierung wie
- in C: Sie sind statisch, schwach und explizit.
- Für das Konzept der dynamischen Typisierung existiert der typlose Datentyp
- id, welcher einen Zeiger auf ein Objekt beliebiger Klasse repräsentiert
- und an den jede beliebige Nachricht gesendet werden kann.
- Falls der Typ des Objektes diese Methode jedoch nicht unterstützt, kommt
- es selbstverständlich zu einem Laufzeitfehler.
- Möchte man eine solche typlose Variable einer Variable mit einem Typ zuweisen,
- so müssen diese Typen natürlich übereinstimmen, sonst kommt es zu einem
- Laufzeitfehler.
+ Das vorangestellte @ ist ein Indikator für ein Objective-C-Objekt.
+ Wird es bei der Angabe des String weggelassen, wird der bekannte, nullterminier
+te C-String erzeugt.
+ Per Vorgabe besitzen die Datentypen in Objective-C die gleiche Typisierung
+ wie in C: Sie sind statisch, schwach und explizit.
+ Das Konzept der dynamischen Typisierung ist mit dem typlose Datentyp id
+ umgesetzt, welcher einen Zeiger auf ein Objekt einer beliebigen Klasse
+ repräsentiert und an den jede beliebige Nachricht gesendet werden kann.
+ Ist für den tatsächlichen Typ dieses Objektes diese Methode jedoch unbekannt
+ oder möchte man eine typlose Variable an eine typgebundene Variable zuweisen,
+ deren Typen nicht übereinstimmen, so kommt es zu einem Laufzeitfehler.
 \end_layout
 
 \begin_layout LyX-Code
 
 \size small
-id typelessObject = @"I'm a string."; // OK
+id stringObject = @"Objective-C is great."; // OK
 \end_layout
 
 \begin_layout LyX-Code
 
 \size small
-NSString *string = typelessObject;    // OK
+NSString *string = stringObject;            // OK
 \end_layout
 
 \begin_layout LyX-Code
 
 \size small
-NSNumber *integer = typelessObject;   // logischer Fehler
+NSNumber *number = stringObject;            // logischer Fehler
 \end_layout
 
 \begin_layout LyX-Code
 
 \size small
-char character = [integer charValue]; // Laufzeitfehler
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
-NSLog(@"%i",integer);
+char character = [number charValue];        // Laufzeitfehler
 \end_layout
 
 \begin_layout Standard
-Ein Instanzobjekt einer Klasse wird erzeugt, indem eine Nachricht an das
- zugehörige Klassenobjekt gesendet wird.
- Für gewöhnlich passiert dies beim Programmstart, im Gegensatz zu C++ können
- bei ObjC jedoch auch während der Laufzeit noch neue Objekte erstellt werden.
- Aus C++/Java bekannte überladene Methoden findet man so in ObjC nicht mehr;
- eine Nachricht an eine Methode besteht aus einem 
-\shape italic
-Selektor
-\shape default
- - dem Methodennamen - und den Parametern.
+Instanzobjekte einer Klasse werden durch das Senden einer entsprechenden
+ Nachricht an das zugehörige Klassenobjekt erzeugt.
+ Für Gewöhnlich geschieht dies beim Programmstart, jedoch können im Gegensatz
+ zu C++ bei Objective-C jederzeit auch während der Laufzeit noch neue Objekte
+ erstellt werden.
+ Überladene Methoden, wie man sie in C++/Java kennt, findet man so in Objective-
+C nicht mehr, denn eine Nachricht an eine Methode besteht aus dem Selektor,
+ der sich aus dem Methodennamen und den Parametern zusammensetzt.
  Das Laufzeitsystem sucht bei einer eingehenden Nachricht nach einer solchen
  Methode und führt diese im Erfolgsfall aus.
- Wird keine entsprechende Methode gefunden, wird ein 
-\shape italic
-nil
-\shape default
- zurückgegeben.
- Es besteht natürlich auch die Möglichkeit, ein Objekt vorher zu fragen,
- ob eine bestimmte Nachricht verstanden wird.
- Diese Fähigeit der Selbstkenntnis beinhaltet ebenfalls das Ermitteln der
- eigenen Klasse oder das Wissen, ob seine Klasse eine Unterklasse einer
- bestimmten anderen Klasse ist und nennt sich Reflexion und sollte dem ein
- oder anderen ebenfalls aus der C++/Java-Welt bekannt sein.
+ Wird keine passende Methode lokalisiert, wird ein nil zurückgeliefert.
+ Möchte man sich absichern, lässt sich das Objekt im Voraus fragen, ob es
+ eine bestimmte Nachricht versteht.
+ Diese Fähigkeit der Selbstkenntnis beinhaltet ebenfalls das Ermitteln der
+ eigenen Klasse und das Wissen, ob seine Klasse eine Unterklasse einer bestimmte
+n anderen Klasse ist.
+ Der Begriff Reflexion sollte dem ein oder anderen ebenfalls aus der Java-/C++-W
+elt bekannt sein.
 \end_layout
 
 \begin_layout LyX-Code
@@ -372,19 +361,13 @@ if([geometricFigure respondsToSelector:@selector(getShape)]) { ...
 \end_layout
 
 \begin_layout Standard
-Dem Smalltalk-Erweiterungsanteil verdankt ObjC die verwendete Notation mit
- eckigen Klammern, um Nachrichten zu versenden.
- Zuerst wird das Empfängerobjekt genannt, anschließend der Selektor und
- ggfls.
- der Parameter.
+Dem Smalltalk-Erweiterungsanteil verdankt Objective-C die verwendete Notation
+ der eckigen Klammern, die ausdrückt, dass an dieser Stelle Nachrichten
+ versendet werden.
+ An erster Stelle wird das Empfängerobjekt genannt, anschließend folgt der
+ Selektor und gegebenenfalls der Parameter.
  Sind Sender und Empfänger der Nachricht das gleiche Objekt, verwendet man
- den Bezeichner 
-\family typewriter
-\size small
-self
-\family default
-\size default
-.
+ den Bezeichner self.
 \end_layout
 
 \begin_layout LyX-Code
@@ -429,49 +412,30 @@ NSInteger age = [self computeAgeFromYear:1981 withMonth:5 andDay:23]
 \end_layout
 
 \begin_layout Standard
-Diese Schreibweise ist für jemanden, der aus der C++/Java-Welt kommt äußerst
- gewöhnungsbedürftig, da hier jeder Parameter eine explizite Benennung erfordert
- und Methodennamen können in ObjC durchaus sehr lang werden.
- Hat man sich jedoch einmal daran gewöhnt, möchte man dies jedoch nur schwer
- wieder missen wollen, fördert es die Lesbarkeit und Verständlichkeit des
- Codes ungemein.
- Die angegebene Methode bezeichnet man vollständig in der Form: 
-\family typewriter
-\size small
-computeAgeFromYear:withMonth:andDay
-\family default
-\size default
-.
+Diese Schreibweise ist für Neulinge äußerst gewöhnungsbedürftig, da hier
+ jeder Parameter eine explizite Benennung erfordert.
+ Methodennamen können in Objective-C durchaus sehr lang werden.
+ Hat man sich jedoch einmal daran gewöhnt, mag man diese Notation jedoch
+ nur ungern missen, denn sie fördert die Lesbarkeit und Verständlichkeit
+ des Kodes ungemein.
+ Die obige Methode bezeichnet man vollständig als: computeAgeFromYear:withMonth:
+andDay, was auch gleichzeitig der Selektor dieser Methode ist.
 \end_layout
 
 \begin_layout Standard
-Das Minus-Präfix zu Beginn der oben stehenden Methode zeigt auf, dass es
- sich hierbei um eine Instanzmethode handelt.
- Das entspricht unserem Verständnis einer Methode in C++/Java.
- Da jedoch auch Klassen Objekte sind, können diese eigene Methoden haben.
+Das Minus-Präfix zu Beginn der oben stehenden Methode gibt an, dass es sich
+ hierbei um eine Instanzmethode handelt.
+ Das entspricht dem Verständnis einer Methode in C++/Java.
+ Da in Objective-C jedoch auch Klassen Objekte sind, können diese eigene
+ Methoden haben.
  Solche Klassenmethoden werden durch ein vorangestelltes Plus gekennzeichnet.
  Ein gutes Beispiel ist der zum Initialisieren gebräuchliche verkettete
- Befehl 
-\family typewriter
-\size small
-[[NSObject alloc] init]
-\family default
-\size default
-, der aus den folgenden Methoden besteht: 
-\family typewriter
-\size small
-+(id)alloc
-\family default
-\size default
- ist die Klassenmethode, welche Speicher für das Objekt reserviert und einen
- Zeiger darauf zurückliefert, anschließend initialisiert sich das erzeugte
- Objekt in dem allokierten Speicher durch den Aufruf von 
-\family typewriter
-\size small
--(id)init
-\family default
-\size default
-.
+ Befehl [[NSObject alloc] init], der aus den folgenden Methoden besteht:
+ +(id)alloc ist die Klassenmethode, die Speicher für das Objekt reserviert
+ und einen Zeiger darauf zurückliefert.
+ Anschließend initialisiert sich das erzeugte Objekt in dem allokierten
+ Speicherbereich durch den Aufruf der Instanzmethode -(id)init.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -481,27 +445,11 @@ Protokolle: Data Sources und Delegates
 \begin_layout Standard
 Wer in Java mit Interfaces umgehen kann, sollte keine Schwierigkeiten haben,
  sich mit der Funktionsweise von Protokollen vertraut zu machen.
- Eine Protokolldeklaration beginnt mit dem Schlüsselwort 
-\family typewriter
-\size small
-@protocol
-\family default
-\size default
-, die enthaltenen Methoden befinden sich entweder unter 
-\family typewriter
-\size small
-@required
-\family default
-\size default
- oder unter 
-\family typewriter
-\size small
-@optional
-\family default
-\size default
-, was selbsterklärend sein sollte.
+ Eine Protokolldeklaration beginnt mit dem Schlüsselwort @protocol, die
+ enthaltenen Methoden befinden sich entweder unter dem Tag @required oder
+ unter dem Tag @optional.
  Bei der Deklaration der Klasse wird das Protokoll in spitzen Klammern hinter
- der Oberklasse angegeben, mehrere Protokolle werden mit Kommata voneinander
+ der Oberklasse angegeben, mehrere Protokolle werden durch Kommata voneinander
  getrennt:
 \end_layout
 
@@ -525,57 +473,23 @@ legate, UITableViewDataSource> {
 \end_layout
 
 \begin_layout Standard
-Ein Konzept, welches so ebenfalls nicht bei C++ anzutreffen ist, sind Delegates
- (vom englischen 
-\shape italic
-delegation
-\shape default
-: Abordnung, Übertragung) und Data Sources.
- Mit ihnen ist es möglich, Nachrichten an einen 
-\begin_inset Quotes eld
-\end_inset
-
-Deligierten
-\begin_inset Quotes erd
-\end_inset
-
- weiterzuleiten, mit denen eine Methode aufgerufen werden soll, die in einen
- bestimmten Funktionalitätsbereich fällt.
- Ein TextField sendet nach dem Betätigen des Enter-Buttons die Nachricht
- 
-\family typewriter
-\size small
-textFieldShouldReturn:(UITextField *)
-\family default
-\size default
- an ihren Deligierten.
- Die kann die eigene Instanz sein - in diesem Fall angesprochen mit 
-\shape italic
-self
-\shape default
- - oder aber ein beliebiges anderes Objekt, welches das Protokoll 
-\family typewriter
-(BOOL)UITextFieldDelegate
-\family default
- implementiert.
- Existiert diese Methode, wird abgefragt, was beim Betätigen der Entertaste
- passieren soll.
- An dieser Stelle bietet es sich an, mittels 
-\family typewriter
-\size small
-[textField resignFirstResponder]
-\family default
-\size default
- das On-Screen-Keyboard wieder zurückzuziehen und eine Methode aufzurufen,
- welche auf den im Textfeld enthaltenen Text zugreift.
- Da bei diesem Vorgang wenig Komplikationen zu erwarten sind, sollte abschließen
-d ein YES zurückgegeben werden, um zu bestätigen, dass die Bearbeitung der
- Entertaste erfolgreich abgeschlossen wurde.
-\end_layout
-
-\begin_layout Standard
-Ein Objekt kann aber nicht nur als Empfänger von Nachrichten dienen, er
- kann auch als Datenquelle fungieren.
+Ein Konzept, welches so ebenfalls nicht bei Java oder C++ anzutreffen ist,
+ sind die so genannten Delegates (vom englischen delegation: Abordnung,
+ Übertragung) und die DataSources.
+ Mit ihnen ist es möglich, Nachrichten an ein delegiertes Objekt weiterzuleiten,
+ die in einen bestimmten Funktionalitätsbereich fallen.
+ Ein UITextField sendet nach dem Betätigen der Eingabetaste die Nachricht
+ textFieldShouldReturn:(UITextField *) an ihre Delegate.
+ Diese Delegate kann die eigene Instanz sein oder aber ein beliebiges anderes
+ Objekt, welches das Protokoll (BOOL)UITextFieldDelegate implementiert.
+ Der Methode textFieldShouldReturn spezifiziert, was beim Betätigen der
+ Eingabetaste passieren soll.
+ An dieser Stelle bietet es sich beispielsweise an, mittels [textField resignFir
+stResponder] das On-Screen-Keyboard wieder zurückzuziehen und eine weitere
+ Methode aufzurufen, welche auf den im Textfeld enthaltenen Text zugreift.
+ Die ordnungsgemäße Durchführung wird mit einem zurückgegebenen YES bestätigt.
+ Ein Objekt kann nicht nur als Empfänger von Nachrichten dienen, er kann
+ andersrum auch als Datenquelle fungieren.
  Implementiert es das einer Programmstruktur zugehörige DataSource-Protokoll,
  lässt es sich von dieser nutzen, um bei Laufzeit von dieser benötigte Daten
  abzufragen.
@@ -588,59 +502,22 @@ Properties
 \begin_layout Standard
 Properties werden in der Headerdatei deklariert und stellen einen einfachen
  Weg dar, Accessoren zu implementieren.
- War in früheren Xcode-Versionen noch das manuelle Anlegen mittels 
-\family typewriter
-\size small
-@synthesize
-\family default
-\size default
- notwendig, werden diese nun automatisch generiert.
- ein 
-\family typewriter
-\size small
-@property (UITextField*)name
-\family default
-\size default
- erzeugt somit per default den Setter 
-\family typewriter
-\size small
-setName
-\family default
-\size default
- sowie den Getter 
-\family typewriter
-\size small
-name
-\family default
-\size default
-.
- Möchte man nun den Namen setzen, hat man hier 2 Möglichkeiten: den C- oder
- den ObjC-Weg.
- Ein 
-\family typewriter
-\size small
-_name.text = string
-\family default
-\size default
- würde intern in ein 
-\family typewriter
-\size small
-[_name setText:NSString]
-\family default
-\size default
- umgewandelt werden.
- In meiner Implementation habe ich ausschließlich die ObjC-Variante verwendet.
- Wenn man es ganz genau nimmt, führt ObjC intern den folgenden Befehl aus:
- 
-\family typewriter
-\size small
-[[self name] setText:NSString]
-\family default
-\size default
-, wobei der Unterstrich aufzeigt, dass es sich um eine Instanzvariable handelt.
+ War in früheren Xcode-Versionen noch das manuelle Synthetisieren mittels
+ @synthesize notwendig, werden diese durch die Deklaration eines Property
+ automatisch generiert.
+ ein @property (UITextField*)name erzeugt per default den Setter setName
+ sowie den Getter name.
+ Möchte man die Variable name nun setzen, werden zwei Möglichkeiten angeboten:
+ den C-Weg oder die nachrichtenbasierte Objective-C-Notation.
+ Ein _name.text = string wird intern in ein [_name setText:NSString] umgewandelt.
+ In der Umsetzung dieser Arbeit wurde konsequent die Objective-C-Notation
+ verwendet.
+ Wenn man es ganz genau nimmt, führt Objective-C intern den folgenden Befehl
+ aus: [[self name] setText:NSString].
+ Der Unterstrich zeigt, dass es sich um eine Instanzvariable handelt.
  Da Apple vorangestellte Unterstriche für eigene Zwecke einsetzt, sollte
- somit zur Vermeidung von Verwechslungen auf deren eigene Verwendung verzichtet
- werden.
+ zur Vermeidung von Verwechslungen auf die eigene Verwendung bei der Namensgebun
+g verzichtet werden.
 \end_layout
 
 \begin_layout Section
@@ -648,65 +525,54 @@ API: Cocoa Touch
 \end_layout
 
 \begin_layout Standard
-iOS lässt sich in vier grundlegende Schichten einteilen: Während sich auf
- dem Core OS der Mach-Kernel sowie die grundlegenden Funktionen beinhaltet,
- stellen die Core Services die Frameworks bereit, die Grundlage aller Anwendunge
-n und Dienste sind, die auf dem Gerät laufen.
- Der darüber liegende Media-Layer beinhaltet sämtliche Multimediafunktionen,
- schlussendlich folgt die Programmierschnittstelle Cocoa Touch, welche Schnittst
-ellen zu sämtlichen darunter liegenden Schichten bereitstellt.
- Gegenüber Cocoa, der Schnittstelle für OS X-Maschinen, greift die Touch-Variant
-e der API auf eine passende Benutzerschnittstelle zurück und beinhaltet
- spezielle Dinge wie Unterstützung der Bewegungssensoren, Multitouch-Gestenerken
-nung sowie Animationen, welche speziell auf iOS abgestimmt sind und dem
- Programmierer darauf abgestimmte Eingabeelemente und Events anbietet.
- Die Basis von Cocoa Touch bilden mehrere Frameworks: das Foundation Framework
- liefert alle Basisklassen, die die Grundlage zur Programmierung mit Objective-C
- bilden und Werkzeuge wie Collections und Dateihandling bereitstellen, ohne
- die eine moderne Programmierung heute nicht mehr auskommt.
- Seit der iOS-Version 2 befindet sich darin bereits XML-Unterstützung, welche
- in iOS 5 um JSON-Unterstützung ergänzt wurde, was es im Rahmen dieser Arbeit
- sehr einfach macht, auf externe Frameworks zu verzichten.
- Das UIKit beinhaltet Klassen, welche speziell auf die Entwicklung der grafische
-n Oberfläche ausgerichtet sind.
+Apples mobiles Betriebssystem iOS lässt sich in vier grundlegende Schichten
+ einteilen: Während das Core OS den Mach-Kernel sowie die grundlegenden
+ Funktionen beinhaltet, stellen die Core Services die Frameworks bereit,
+ welche die Grundlage aller Anwendungen und Dienste sind, die auf dem Gerät
+ laufen.
+ Die darüber liegende Media-Schicht bündelt die Multimediafunktionen, schlussend
+lich folgt an der Spitze die Programmierschnittstelle Cocoa Touch.
+ Diese stellt die Schnittstellen zu sämtlichen darunter liegenden Schichten
+ bereit.
+ Gegenüber Cocoa, der Schnittstelle für OS X-Desktop-Maschinen, greift die
+ Touch-Variante der API auf eine passende Benutzerschnittstelle zurück.
+ Hier bieten spezielle Unterstützung für Bewegungssensoren, Multitouch-Gestenerk
+ennung und Animationen, die speziell auf iOS abgestimmt sind, dem Programmierer
+ darauf abgestimmte Eingabeelemente und Events an.
+ Die Basis von Cocoa Touch bildet zum einen das Foundation Framework.
+ Dieses stellt alle Basisklassen zur Verfügung, welche die Grundlage der
+ Programmierung mit Objective-C bilden.
+ Weiter werden in diesem Werkzeuge wie Collections und Dateihandling bereitgeste
+llt, ohne die eine moderne Programmierung heute nicht mehr auskommt.
+ Seit der iOS-Version 2 befindet sich darin bereits XML-Unterstützung, in
+ iOS 5 wurde diese um JSON-Unterstützung ergänzt.
+ Dies machte es im Rahmen dieser Arbeit sehr einfach, auf externe Frameworks
+ zu verzichten.
+ Das UIKit als weiterer integraler Bestandteil von Cocoa Touch beinhaltet
+ Klassen, die speziell auf die Entwicklung der grafischen Oberfläche ausgerichte
+t sind.
  So enthält die Infrastruktur für grafische Anwendungen verschiedene Ansichten,
  so genannte Views, und deren Fenster, Menüs und Schaltflächen, sowie einen
- Ereignisbetrieb mit Sprachanbindung und Textsystem.
- Eeignisse durchlaufen eine so genannte 
-\begin_inset Quotes eld
-\end_inset
-
-Responder-Chain
-\begin_inset Quotes erd
-\end_inset
-
-, die aus unterschiedlichen Klassen besteht und ein eingetroffenes Ereignis
- entnehmen und verarbeiten.
+ passenden Ereignisbetrieb mit Sprachanbindung und Textsystem.
+ Ereignisse durchlaufen eine so genannte “Responder-Chain”, die aus unterschiedl
+ichen Klassen besteht.
+ Nacheinander werden dieser eingetroffene Ereignisse entnommen und verarbeitet.
  Seit OS X 10.4/iOS 3 wurde diese Sammlung um das Core Data Framework ergänzt,
- welches für die Erstellung von Objektgraphen kümmert und dem schnellen
+ welches die Erstellung von Objektgraphen bereitstellt und dem schnellen
  Entwurf von Modellen im Model-View-Controller-System dienlich ist.
  Das MVC-Muster ist in Cocoa strikt umgesetzt; Klassen lassen sich in der
  Regel eindeutig zuordnen.
  Bei den Klassennamen selbst ist auffallend, dass die meisten mit NS beginnen,
- wie z.
- B.
- NSObject, NSString oder NSArray.
+ wie zum Beispiel NSObject, NSString oder NSArray.
  Dies hat seinen Ursprung darin, dass Apple im Jahre 1996 das OpenStep-Framework
  NeXTStep aufkaufte und als Basis für Mac OS X verwendete.
- Durch die Verwendung von 
-\begin_inset Quotes eld
-\end_inset
-
-Klassen-Clustern
-\begin_inset Quotes erd
-\end_inset
-
- werden viele sichtbare Klassen nie instanziert, sondern es werden direkt
- zur Laufzeit statt dessen Instanzen von passenden Subklassen erzeugt, von
- denen der Programmierer keine Kenntnis hat.
+ Durch die Verwendung von “Klassen-Clustern” werden viele sichtbare Klassen
+ nie instanziiert, sondern es werden statt dessen direkt zur Laufzeit Instanzen
+ von passenden Subklassen erzeugt, von denen der Programmierer keine Kenntnis
+ hat.
  Beispielsweise verlangt ein Anwendungsprogrammierer nach einer Instanz
  von NSArray, erzeugt wird jedoch in Abhängigkeit der Elemente eine Instanz
- eine Klasse, die er nicht kennt.
+ einer Klasse, die er nicht kennt.
 \end_layout
 
 \begin_layout Section
@@ -4537,56 +4403,43 @@ Es ist vollbracht - die erste eigene Anwendung, geschrieben in der auf den
  ersten Blick exotisch anmutenden Programmiersprache mit den vielen eckigen
  Klammern, läuft auf dem marktbeherrschenden Tablet-Computer der Firma Apple
  Inc.
- In einem abschließenden Fazit werde ich die einzelnen Punkte auf dem Weg
- dorthin noch einmal revue passieren lassen und sowohl der persönliche Nutzen
- dieser Arbeit für mich als auch die Bereitschaft, mich weiterhin in dieser
- Umgebung aufzuhalten, einem reflektiven Blick unterzogen.
+ In einem abschließenden Fazit werde ich die einzelnen Schritte auf dem
+ Weg hierher als auch den persönlichen Nutzen dieser Arbeit für mich reflektiv
+ umreißen und auf die sich für mich ergebende Bereitschaft eingehen, weiterhin
+ in dieser Umgebung zu entwickeln.
 \end_layout
 
 \begin_layout Standard
-Objective-C ist anders, allerings nicht so anders, dass man sich nicht mit
- ein wenig Zeit daran gewöhnen kann.
+Objective-C ist anders.
+ Allerdings nicht so anders, dass man sich nicht mit ein wenig Zeit daran
+ gewöhnen kann.
  Und möchte.
  Die Namenskonvention bei Objective-C ist gewöhnungsbedürftig, die Verwendung
- von derart langen Variablennamen oder einer redundanten zusätzlichen Beschreibu
-ng pro Parameter in einer Methode ist gewöhnungsbedürftig, steigert aber
- die Lesbarkeit des Codes ungemein.
- Auch an die Notation der eckigen Klammern gewöhnt man sich ziemlich schnell
- - wenn gleich man das auch nicht wirklich nötig ist, denn die Klammern
- lassen sich in den meisten Fällen mit der alternativ angebotenen Punkt-Syntax
- umgehen.
- Ich selbst habe mich nach einiger Zeit schon während meines ersten Programmes
- auf diese Notation umgestellt, man führt sich dadurch automatisch vor Augen,
- dass es sich um versendete Nachrichten handelt.
-\end_layout
-
-\begin_layout Standard
-Die API erleichtert viele Dinge und es lohnt sich stets, einen Blick in
- die Referenz zu werfen.
- Ich selbst habe anhand der Content-Länge überprüft, wann eine Response
- vollständig eingegangen ist.
- Ein sehr einfacher Weg - sofern die Content-Länge allerdings spezifiziert
- ist.
- Da dies aber nicht imme der Fall ist, habe ich einen Workaround implementiert,
- der durch die Response gestartet und bei jedem eingehenden Package wieder
- zurückgesetzt wird.
- So wollte ich herausfinden, ab wann eine eine Nachricht unbekannter Länge
- als 
-\begin_inset Quotes eld
-\end_inset
-
-vollständig empfangen
-\begin_inset Quotes erd
-\end_inset
-
- anzusehen ist.
+ von scheinbar möglichst langen Variablennamen oder einer redundanten zusätzlich
+en Beschreibung für jeden Parameter in einer Methode ist zu Beginn äußerst
+ gewöhnungsbedürftig, steigert aber die Lesbarkeit des Codes ungemein.
+ Auch an die Notation mit den eckigen Klammern gewöhnt man sich ziemlich
+ schnell - wenngleich das auch nicht wirklich nötig ist, denn die Klammern
+ lassen sich in den meisten Fällen mit der alternativ angebotenen Punkt-Schreibw
+eise umgehen, die für die meisten Umsteiger sehr vertraut wirkt.
+ Ich selbst habe mich nach einiger Eingewöhnungszeit recht schnell schon
+ während meines ersten Programmes auf diese Notation umgestellt; sie führte
+ mir automatisch das Konzept der Nachrichtenkommunikation vor Augen.
+ Die Cocoa-API erleichtert viele programmatische Handgriffe und es lohnt
+ sich stets, einen Blick in die Referenz zu werfen.
+ Beispielsweise habe ich zuerst anhand der Content-Länge überprüft, wann
+ eine Response vollständig eingegangen ist.
+ Ein sehr einfacher Weg, leider setzt er voraus, dass die Content-Länge
+ in der Response angegeben ist.
+ Da dies jedoch nicht immer der Fall ist, implementierte ich einen Workaround,
+ der eine eingehende Response einen NSTimer starten lies, welcher sich bei
+ jedem eingehenden Package wieder zurücksetzte.
+ So sollte der Client herausfinden, ab wann eine Nachricht unbekannter Länge
+ als “vollständig empfangen” anzusehen ist.
  Ein sorgfältiger Blick in die Referenz hätte mir diesen Umstand abgenommen,
- denn dort wäre ich auf die Methode 
-\shape italic
-connectionDidFinishLoading
-\shape default
- gestoßen, welche eine elegante Lösung zu genau dieser Problematik bieteet,
- denn dessen Implementation wird nach dem Erhalt des finalisierenden Packages
+ denn dort wäre ich auf die Methode connectionDidFinishLoading gestoßen,
+ welche eine elegantere Lösung zu genau dieser Problematik bietet, denn
+ deren Implementation wird nach dem Erhalt des finalisierenden Packages
  aufgerufen.
 \end_layout
 
@@ -4594,120 +4447,115 @@ connectionDidFinishLoading
 Auch meine Erfahrungen mit Xcode waren fast durchgängig von sehr angenehmer
  Natur.
  Unter Apples Entwicklungsumgebung lässt es sich sehr angenehm arbeiten.
- Die Live-Prüfung nach syntaktischen Fehlern oder einfachen Vertippern und
- deren Autokorrektur sowie der Assistenzcontroller, der immer gleich eine
- passende Sekundärdatei parat hat, sind Dinge, die ich in künftigen Entwicklungs
-umgebungen ungern misse werde.
+ Die Live-Prüfung, die eine Autokorrektur für syntaktische Fehler und Vertipper
+ anbietet und auch der Assistenzcontroller, der zur geöffneten Datei immer
+ gleich passende Sekundärdateien anbietet, sind Dinge, die ich in künftigen
+ Entwicklungsumgebungen nur ungern missen werde.
  Ein kleiner Wermutstropfen ist, dass Xcode nach einiger Zeit kontinuierlich
- immer langsammer wird.
- Das geht so weit, dass es eine Qual ist, den Tab zu wechseln, wobei ein
- neuer Quelltext geladen wird.
- Ein wenig Foren-Recherche ergibt schnell, dass der Schuldige daran der
- sich ansammelnde Workspace ist.
- Dessen Einstellungen sind in der Datei project.xcworkspace speichert, welche
- man findet, wenn man sich die Contents des Packages Projectname.xcodeproj
- anzeigen lässt.
- Nach einem Löschen der Workspace-Datei und Neustart von Xcode sind zwar
- die Workspaceeinstellungen verschwunden, dafür ist aber die Performance
- von Xcode wiederhergestellt.
+ immer langsamer wird.
+ Das geht so weit, dass es eine Qual ist, den aktiven Quellcode-Tab zu wechseln,
+ da man im schlimmsten Fall eine gefühlte Ewigkeit auf das drehendes Rad
+ schaut, in welchen sich der Mauszeiger verwandelt, um den ausgelasteten
+ Zustand der Anwendung zu signalisieren.
+ Ein wenig Foren-Recherche ergibt schnell, dass der Schuldige die sich ansammeln
+den Workspace-Einstellungen sind.
+ Lässt man sich die Inhalte des Packages Projectname.xcodeproj anzeigen,
+ so findet man dort eine Datei mit der Bezeichnung project.xcworkspace.
+ In dieser Datei speichert Xcode die Einstellungen ab.
+ Nach einem Löschen dieser Datei und Neustart von Xcode sind zwar alle Workspace
+-Einstellungen verschwunden, Xcode im Gegenzug aber um ein Vielfaches performant
+er.
  Ein Opfer, dass man an dieser Stelle gerne zu zahlen bereit ist.
  Es könnte natürlich sein, dass es sich um einen versionsspezifischen Bug
  handelt.
  In der aktuellen Version 4.5.2 habe ich dieses Verhalten noch nicht festgestellt,
- allerdings war beim Update auf diese Version die App bereits nahezu vollständig
- fertig.
+ allerdings war beim Update auf diese Version die Implementation des Clienten
+ nahezu vollständig.
 \end_layout
 
 \begin_layout Standard
 Das Storyboard ist eine ungemeine Arbeitserleichterung, wenn es an die Gestaltun
 g der GUI geht.
- Zu Beginn fühlt es sich schon fast 
-\begin_inset Quotes eld
-\end_inset
-
-zu leicht
-\begin_inset Quotes erd
-\end_inset
-
- an und ermöglicht es in wenigen Minuten die Views zu erstellen und die
- Übergangsverbindungen zu definieren, die GUI-Elemente einzufügen und ggfls.
- deren Delegates und DataSources zu setzen und die Parameter der Elemente
- in der Seitenleiste zu bearbeiten.
- Gleichzeitig werden damit die Bereiche im Quelltext eingefügt und man beginnt
- in kurzer Zeit mit der eigentlichen Implementation der Funktionalität ohne
- sich eine gefühlte Ewigkeit an notwendigen Nebensächlichkeiten aufhalten
- zu müssen.
- Man sollte Storyboards jedoch nach Möglichkeit nicht mit dem programmatischen
- Lösungsweg vermischen.
+ Hier findet der erste Kontakt mit Xcode statt, die ersten Zeilen Code,
+ die bereits ein vollständiges GUI-Grundgerüst bilden, werden hier generiert.
+ Es fühlt es unglaublich einfach an und schafft es, Berührungsängste schnell
+ zu nehmen.
+ Mit wenig Zeitaufwand sind Views und Übergänge erstellt, GUI-Elemente eingefügt
+, gegebenenfalls deren Delegates und DataSources zugewiesen und in der Seitenlei
+ste die Eigenschaften gesetzt, welche die Elemente bei Anwendungsstart besitzen
+ sollten.
+ Automatisch werden die Bereiche im Code eingefügt und mit den Storyboard-Elemen
+ten verbunden und man beginnt kurze Zeit später bereits mit der eigentlichen
+ Implementation der Funktionalitäten, ohne das Gefühl zu haben, sich vorher
+ an notwendigen Nebensächlichkeiten aufhalten zu müssen.
+ Selbstverständlich lässt sich auch alles ohne Storyboards entwerfen.
+ Durch das Storyboard bereit gestellte Funktionalität sollte man jedoch
+ nach Möglichkeit nicht mit dem programmatischen Weg vermischen.
  Es hat mich viel Zeit und Recherche gekostet, festzustellen, dass eine
  im Storyboard erstellte View nicht ohne Weiteres programmatisch zugreifbar
  ist.
- Der Weg, einem Übergang eine Bezeichnung zu verpassen und auf diese über
- die in einem solchen Fall automatisch augerufene Methode prepareForSegue
- zuzugreifen, wirkt auf mich ein wenig wie ein Workaround.
+ Der Weg, einem Übergang eine eindeutige Bezeichnung zu verpassen und auf
+ diese über die in einem solchen Fall automatisch aufgerufene Methode prepareFor
+Segue zuzugreifen, wirkte auf mich ein wenig wie ein Workaround, ist aber
+ wohl der Weg, der in einem solchen Fall zu gehen ist.
  Um der Übersichtlichkeit zu genügen bietet das Storyboard 4 Zoomstufen
  an: 12,5 %, 25 %, 50 % und 100 %.
- Warum ist an dieser Stelle keine manuelle Eingabe der Zoomstufe möglich
- oder zumindest ein Regler gegeben, der sich etwas feingranularer einstellen
- lässt? Bei meiner FullHD-Auflösung habe ich mich oft geärgert, dass hier
- keine 75 % möglich sind.
+ Warum an dieser Stelle keine manuelle Eingabe der Zoomstufe gegeben ist
+ oder zumindest ein Schieberegler angeboten wird, der sich etwas feingranularer
+ einstellen lässt, ist mir nicht ganz ersichtlich.
+ Bei meiner durchaus gängigen FullHD-Auflösung wäre oft 75 % die Zoomstufe
+ meiner Wahl gewesen.
 \end_layout
 
 \begin_layout Standard
-Nicht zuletzt war auch das Thema RESTful Webservices ein interessantes Umsetzung
-sgebiet.
- Die Idee, mit einem generischen Clienten auf verschiedene Webservices zugreifen
- zu können, deren Schnittstelle die Methoden bilden, die das HTTP-Protokoll
- schon selbst mitbringt.
- Die zugrunde liegende Idee ist einfach und angenehm zu implementieren und
- das Arbeiten mit HTTP-Verben fühlt sich 
-\begin_inset Quotes eld
-\end_inset
-
-irgendwie nach Internet an
-\begin_inset Quotes erd
-\end_inset
-
-.
- Zu Beginn der Arbeit verwendete ich das externes Framework RestKit, welches
- mir die Arbeit mit REST-konformen Seiten erleichtern soll.
+In der Wahl der Implementationsthematik fand ich mit den RESTful Webservices
+ ein interessantes Umsetzungsgebiet.
+ Die Umsetzung eines generischen Client, der auf verschiedene Webservices
+ zugreift, deren Schnittstelle die Methoden bilden, die das HTTP-Protokoll
+ schon selbst mitbringt, war interessant und erweiterte meine Kenntnisse
+ der Webservices.
+ Die diesem Standard zugrunde liegende Idee ist einfach und leicht zu implementi
+eren und das Arbeiten mit HTTP-Verben fühlt sich “irgendwie nach Internet”
+ an.
+ In einem ersten Implementationsansatz verwendete ich das externes Framework
+ RestKit, welches ich dafür andachte, mir die Arbeit mit REST-konformen
+ Seiten zu erleichtern.
  Es stellte sich jedoch sehr schnell heraus, dass einige der Funktionen
  meine Erwartungen nicht erfüllen konnten, so bot mir RestKit das Mappen
- einer Ressource in ein NSDictionary an, welches jeodch bereits über die
- Schlüsselwerte verfügen musste.
- Für einen generischen Clienten, der jedoch noch nicht wieß, was er auf
- den Zielseiten alles auffindet, ist dies leider nur von stark eingeschränktem
+ einer JSON-Ressource in ein NSDictionary an, welches jedoch bereits über
+ die Schlüssel verfügen musste, zu welchen anschließend die Werte hinzugefügt
+ werden.
+ Für einen generischen Clienten, der jedoch noch nicht weiß, welche Schlüssel
+ die Zielressource liefern wird, ist das leider nur von eingeschränktem
  Nutzen und die Zuhilfenahme eines Parsers ist unvermeidlich.
  Apple bietet in seinem hauseigenen Framework sowohl einen Parser für XML
- als auch einen Parser für JSON an, welchen allein schon des Supportes Wegen
- den Vorzug gegeben werden sollte.
+ als auch einen Parser für JSON an, welcher bei vergleichbarer Funktionalität
+ bereits wegen der offiziellen Unterstützung durch Apple bevorzugt eingesetzt
+ werden sollte.
  Auch andere Teile, die das externe Framework mir bereitstellen würde, waren
- ohne größere Schwierigkeiten durch die mächtigen Funktionen zu realisieren,
- die Cocoa Touch ohnehin bereitstellt, was mir die Umsetzung dieser Arbeit
- erlaubte, ohne dass ich auf externe Frameworks zurückgreifen musste.
+ ohne größere Schwierigkeiten durch ein breites Arsenal hilfreicher Funktionen
+ zu realisieren, die Cocoa Touch ohnehin bereitstellt.
+ Letztendlich erlaubte dies mir die Umsetzung dieser Arbeit, ohne dass ich
+ auf externe Frameworks zurückgreifen musste.
 \end_layout
 
 \begin_layout Standard
-Schließt diese Arbeit meinen 
-\begin_inset Quotes eld
-\end_inset
-
-Blick über den Tellerrand in Richtung Objective-C
-\begin_inset Quotes erd
-\end_inset
-
- ab? Nein, definitiv nicht.
- Ich möchte noch einige weitere Anwendungen für Apple-Hardware entwickeln.
- Die Arbeit auf und mit Apples Plattform hat sich für mich als sehr angeehm
+Abschließend kann ich über die vergangenen Wochen, in denen ich mich mit
+ dieser Arbeit beschäftigt habe, Folgendes sagen: Mein “Blick über den Tellerran
+d“ in Richtung Objective-C ab fühlt sich befriedigend an.
+ Der Exkurs wird hier noch nicht enden, denn ich möchte noch einige weitere
+ Anwendungen für Apple-Hardware entwickeln.
+ Die Arbeit auf und mit Apples Plattform hat sich für mich als sehr angenehm
  erwiesen und meinen Programmierstil positiv beeinflusst.
- Kurze und unverständliche Variablennamen werde ich künftig vermeiden, ebenso
- werde ich beim Entwickeln fernab Objective-C die zusätzlichen Parameter-Bezeich
-ner in den Methoden vermissen.
- Einen ersten Kundenauftrag für eine iPhone-App habe ich bereits schon jetzt
- vor dem Abschluss dieser Arbeit.
+ Kurze und unverständliche Variablennamen werde ich zugunsten der Lesbarkeit
+ künftig vermeiden, ebenso werde ich beim Entwickeln fernab Objective-C
+ die zusätzlichen Parameter-Bezeichner in den Methoden vermissen.
+ Einen ersten Kundenauftrag für eine iPhone-App habe ich bereits schon vor
+ dem Abschluss dieser Arbeit angenommen.
  Xcode wird also schon sehr bald wieder geöffnet werden und meinen Ausflug
  in die Objective-C-Welt werde ich dort weiterführen, wo ich ihn mit dem
  Abschluss dieser Arbeit unterbrochen habe.
+ 
 \end_layout
 
 \begin_layout Bibliography
