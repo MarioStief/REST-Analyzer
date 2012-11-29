@@ -310,25 +310,25 @@ te C-String erzeugt.
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 id stringObject = @"Objective-C is great."; // OK
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 NSString *string = stringObject;            // OK
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 NSNumber *number = stringObject;            // logischer Fehler
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 char character = [number charValue];        // Laufzeitfehler
 \end_layout
 
@@ -355,7 +355,7 @@ elt bekannt sein.
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 if([geometricFigure respondsToSelector:@selector(getShape)]) { ...
  }
 \end_layout
@@ -372,13 +372,13 @@ Dem Smalltalk-Erweiterungsanteil verdankt Objective-C die verwendete Notation
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 // somewhere lost in code:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 NSInteger age = [self computeAgeFromYear:1981 withMonth:5 andDay:23]
 \end_layout
 
@@ -388,25 +388,25 @@ NSInteger age = [self computeAgeFromYear:1981 withMonth:5 andDay:23]
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 // method declaration:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 - (NSInteger)computeAgeFromYear:(NSInteger)birthyear
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
                       withMonth:(NSInteger)month
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
                          andDay:(NSInteger)day { ...
  }
 \end_layout
@@ -455,20 +455,25 @@ Wer in Java mit Interfaces umgehen kann, sollte keine Schwierigkeiten haben,
 
 \begin_layout LyX-Code
 
-\size small
-@interface ViewController : UIViewController <UITextFieldDelegate, UITableViewDe
-legate, UITableViewDataSource> {
+\size footnotesize
+@interface ViewController : UIViewController <UITextFieldDelegate,
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
+   UITableViewDelegate, UITableViewDataSource> {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
    ...
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 }
 \end_layout
 
@@ -478,10 +483,10 @@ Ein Konzept, welches so ebenfalls nicht bei Java oder C++ anzutreffen ist,
  Übertragung) und die DataSources.
  Mit ihnen ist es möglich, Nachrichten an ein delegiertes Objekt weiterzuleiten,
  die in einen bestimmten Funktionalitätsbereich fallen.
- Ein UITextField sendet nach dem Betätigen der Eingabetaste die Nachricht
- textFieldShouldReturn:(UITextField *) an ihre Delegate.
+ Ein Textfeld sendet nach dem Betätigen der Eingabetaste die Nachricht textField
+ShouldReturn:(UITextField *) an ihre Delegate.
  Diese Delegate kann die eigene Instanz sein oder aber ein beliebiges anderes
- Objekt, welches das Protokoll (BOOL)UITextFieldDelegate implementiert.
+ Objekt, welches das Protokoll UITextFieldDelegate implementiert.
  Der Methode textFieldShouldReturn spezifiziert, was beim Betätigen der
  Eingabetaste passieren soll.
  An dieser Stelle bietet es sich beispielsweise an, mittels [textField resignFir
@@ -826,10 +831,6 @@ http://www.macports.org/
 ne Software für OS X ist.
 \end_layout
 
-\begin_layout Description
-Quelle: http://www.macports.org/
-\end_layout
-
 \begin_layout Standard
 Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
  Verzeichnis unserem Pfad hinzu:
@@ -837,7 +838,7 @@ Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 \end_layout
 
@@ -848,7 +849,7 @@ Nun folgt ein Update dessen Paketquellen und die Installation des gewünschten
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 sudo port selfupdate && sudo port install dpkg
 \end_layout
 
@@ -864,73 +865,73 @@ Zum Konvertieren in ein DEB-Paket besteht dpkg-deb jedoch auf eine Struktur,
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 +- MyProgram
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    +- Applications
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    |  +- MyProgram.app
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    |     +- Info.plist
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    |     +- MyProgram
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    |     +- icon.png
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    +- DEBIAN
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    |  +- control
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    +- System
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       +- Library
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
          +- LaunchDaemons
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
             +- com.identifier.MyProgram.plist
 \end_layout
 
@@ -959,13 +960,13 @@ Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 export COPYFILE_DISABLE
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 export COPY_EXTENDED_ATTRIBUTES_DISABLE
 \end_layout
 
@@ -983,12 +984,8 @@ MyProgramm
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 dpkg-deb -b MyProgram
-\end_layout
-
-\begin_layout Description
-Quelle: http://www.saurik.com/id/7
 \end_layout
 
 \begin_layout Subsubsection
@@ -1006,7 +1003,7 @@ iffen werden.
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 http://cydia.myrepospace.com/Username/
 \end_layout
 
@@ -1403,6 +1400,8 @@ Content-Length: 44
 \end_layout
 
 \begin_layout LyX-Code
+
+\size footnotesize
  
 \end_layout
 
@@ -1443,6 +1442,8 @@ Content-Type: text/xml
 \end_layout
 
 \begin_layout LyX-Code
+
+\size footnotesize
  
 \end_layout
 
@@ -2066,6 +2067,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename Diagram.png
 	lyxscale 45
@@ -2152,89 +2154,89 @@ Beispielhafte Implementation der Methode textFieldShouldReturn im ViewController
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    [textField resignFirstResponder];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    if (textField == _url)
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [self go:nil];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    else if (textField == _username)
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [_password becomeFirstResponder];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    else if (textField == _keyTextField)
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [_valueTextField becomeFirstResponder];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    else if (textField == _valueTextField)
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [self addKeyValue:nil];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    return YES;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 }
 \end_layout
 
 \begin_layout Standard
 Weitere Elemente in dieser View, die eine Delegate benötigen, sind zum einen
- die UIPickerView links oben, in der die zu verwendende HTTP-Methode ausgewählt
- wird sowie die UITableView auf der rechten Seite, in der sich Schlüssel/Wert-Tu
-pel aufnehmen lassen.
+ die PickerView links oben, in der die zu verwendende HTTP-Methode ausgewählt
+ wird sowie die TableView auf der rechten Seite, in der sich Schlüssel/Wert-Tupe
+l aufnehmen lassen.
  Diese werden bei einem PUT oder einem POST automatisch als Header hinzugefügt.
  Diese beiden Komponenten benötigen nicht nur ein Objekt, dem sie Nachrichten
  übermitteln können, die im weiteren Programmverlauf etwas anstoßen.
  Beide benötigen darüber hinaus ebenfalls ein Objekt, bei dem sie Daten
  abfragen dürfen, die sie für ihre eigene Funktion benötigen.
  Das DataSource-Objekt liefert als Antwort auf die im Protokoll deklarierten
- Nachrichten, die es von der UIPickerView oder der UITableView empfängt,
- die benötigten Daten zurück.
+ Nachrichten, die es von der PickerView oder der TableView empfängt, die
+ benötigten Daten zurück.
  Oft handelt es sich dabei bei der Delegate und der DataSource um ein- und
  dasselbe Objekt, daher implementiert der ViewController sowohl die Delegate-Pro
 tokolle UIPickerViewDelegate und UITableViewDelegate als auch die DataSource-Pro
@@ -2248,19 +2250,19 @@ Auf die Anfrage der PickerView nach der Anzahl der Spalten reagiert das
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
      return 1;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 }
 \end_layout
 
@@ -2271,10 +2273,12 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename ViewController1.tiff
 	lyxscale 25
 	scale 25
+	rotateOrigin center
 
 \end_inset
 
@@ -2309,10 +2313,12 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename ViewController2.tiff
 	lyxscale 25
 	scale 25
+	rotateOrigin center
 
 \end_inset
 
@@ -2377,9 +2383,9 @@ Parsed) dem Request als Body hinzugefügt.
  Die an dieser Stelle verwendete Datenstruktur sind die beiden Arrays headerKeys
 Array sowie headerValuesArray, an deren Indexwert x sich der Eintrag der
  x-ten Reihe der Headertabelle befindet.
- Zwar wären die Zellen der UITableView theoretisch ebenfalls in der Lage,
+ Zwar wären die Zellen der TableView theoretisch ebenfalls in der Lage,
  Daten zu speichern, jedoch kommt es dann zu folgendem anormalen Programmverhalt
-en: Als Container dient eine UIScrollView, darin befindet sich eine UITableView.
+en: Als Container dient eine ScrollView, darin befindet sich eine TableView.
  Das hat den Vorteil, dass es möglich ist, mehr Daten darzustellen, als
  sichtbar sind, da sich die Tabelle einfach mit dem Finger aus dem sichtbaren
  Bereich wischen lässt.
@@ -2388,7 +2394,7 @@ en: Als Container dient eine UIScrollView, darin befindet sich eine UITableView.
  auf seine Reusable-Liste.
  Die Daten, die in der Zelle enthalten sind, werden entfernt.
  Kommt die Zelle wieder in den sichtbaren Bereich, so werden nicht die alten
- Daten wiederhergestellt, sondern an die DataSource der UITableViews - ein
+ Daten wiederhergestellt, sondern an die DataSource der TableViews - ein
  instanziiertes Objekt der Klasse HeaderKeysViewController - wird die Nachricht
  tableView:cellForRowAtIndexPath gesendet, woraufhin dieser eine neue Zelle
  erzeugt.
@@ -2406,103 +2412,103 @@ Implementation der tableView:cellforRowAtIndexPath:
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 - (UITableViewCell *)tableView:(UITableView *)tableView
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
   cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       static NSString *CellIdentifier = @"Cell";
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       UITableViewCell *cell =
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       if (cell == nil)
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           cell = [[UITableViewCell alloc]
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
             initWithStyle:UITableViewCellStyleValue1
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           reuseIdentifier:CellIdentifier];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       NSString *cellText; if ([indexPath section] == 0) cellText =
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [[NSString alloc] initWithFormat:@"%@",
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [_generalHeaders objectAtIndex:[indexPath row]]];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       else cellText = [[NSString alloc] initWithFormat:@"%@",
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [_requestHeaders objectAtIndex:[indexPath row]]];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       [[cell textLabel] setText:cellText];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       return cell;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
   }
 \end_layout
 
@@ -2527,133 +2533,133 @@ allenge bereit, in welcher sich dieser Aufforderung angenommen werden sollte.
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 - (void)connection:(NSURLConnection *)connection
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
   didReceiveAuthenticationChallenge:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
   (NSURLAuthenticationChallenge *)challenge {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       if ([challenge previousFailureCount] == 0) {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           NSURLCredential *credential =
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           [NSURLCredential credentialWithUser:[_username text]
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
                                      password:[_password text]
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-                           persistence:NSURLCredentialPersistenceNone];
+\size footnotesize
+                   persistence:NSURLCredentialPersistenceNone];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           [[challenge sender] useCredential:credential
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
                  forAuthenticationChallenge:challenge];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       } else {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           [[challenge sender] cancelAuthenticationChallenge:challenge];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           UIAlertView *alert =
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           [[UIAlertView alloc] initWithTitle:@"Error"
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-                             message:@"Authentication incorrect."
+\size footnotesize
+                                     message:@"Authentication incorrect."
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-                            delegate:self
+\size footnotesize
+                                    delegate:self
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-                   cancelButtonTitle:@"Close"
+\size footnotesize
+                           cancelButtonTitle:@"Close"
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-                   otherButtonTitles:nil];
+\size footnotesize
+                           otherButtonTitles:nil];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           [alert show];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
           [challenge description]);
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       }
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
   }
 \end_layout
 
@@ -2664,6 +2670,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 
 \size small
 \begin_inset Graphics
@@ -2716,6 +2723,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename Flowchart Response.png
 	lyxscale 65
@@ -2761,6 +2769,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename Flowchart BodyData.png
 	lyxscale 65
@@ -2789,218 +2798,120 @@ Eingehende Packages
 
 \end_inset
 
-Mit den willkürlich eingehenden Paketen hatte ich einiges an Problemen,
- denn für jedes Paket mit einem Body wurde stets gleich der Parser angeschmissen.
- Mein erster Ansatz war es, die ContentLength mit der Länge des eingetroffenen
- Bodys zu vergleichen und so lange die Daten in einem statischen String
- zu sammeln, bis die Nachricht vollständig ist.
- Leider gibt nicht jede Nachricht Auskunft über ihre vollständige Größe,
- weswegen ich einen Timer von 3 Sekunden einführte, welcher sich mit jeder
- eingehenden Nachricht wieder zurücksetzte.
+Die eintreffenden Pakete brachten anfangs leider ein paar Probleme mit sich,
+ denn jedes Datenpaket wurde stets gleich an den Parser übergeben.
+ Als erster Ansatz wurde die ContentLength mit der Länge des eingetroffenen
+ Bodys verglichen und die Daten in einem statischen NSString angesammelt,
+ bis die Nachricht vollständig empfangen wurde.
+ Leider ist nicht bei jeder Response der ContentLength-Header gesetzt, wodurch
+ die vollständige Größe nicht immer im Voraus bekannt ist.
+ Als Workaround wurde mit einer Response ein NSTimer mit einer provisorischen
+ Dauer von 3 Sekunden gestartet, welcher sich mit jeder eingehenden Nachricht
+ wieder zurücksetzte.
  Lief dieser ab, so wurde das vollständige Empfangen der Nachricht angenommen
  und die Analyse der Bodydaten begonnen.
- Hier zeigte sich, dass ein tiefergehender Blick ins Referenzhandbuch mit
- einiges an Arbeit erspart hätte, denn wie für so vieles stellt Apple sehr
- einfache Hilfsmethoden bereit und einige Zeit später stieß ich durch Zufall
- auf die Methode 
-\shape italic
-connectionDidFinishLoading
-\shape default
-.
- Da dies natürlich ein wesentlich feinerer Ansatz ist, als ein Timer, wird
- nun auf diese Methode zurückgegriffen, sobald der der Body vollständig
- empfangen wurde.
- Hier erfolgt auch das Abarbeiten der nun vollständigen Bodys.
- Anhand des ersten Bytes wird überprüft, ob es sich um ein Bild handelt.
- Ist das der Fall, so wird eine 
-\shape italic
-ImageView
-\shape default
- in die 
-\shape italic
-ScrollView
-\shape default
+ Hier zeigte sich, dass ein gründlicherer Blick ins Referenzhandbuch Einiges
+ an Arbeit erspart hätte, denn wie für so vieles stellt Apple durchdachte
+ automatische Methodenaufrufe bereit und einige Zeit später stieß ich auf
+ die Methode connectionDidFinishLoading.
+ Da dies natürlich ein wesentlich feinerer Ansatz ist als der Timer wurde
+ die Implementation entsprechend abgeändert.
+\end_layout
+
+\begin_layout Standard
+Anhand des ersten Bytes des Bodys wird überprüft, ob es sich um ein Bild
+ handelt.
+ Ist das der Fall, so wird in die ScrollView programmatisch eine ImageView
  eingebettet und das Bild darin angezeigt.
- Ist dies nicht der Fall und es wurde bereits vorher anhand des 
-\shape italic
-Content Type
-\shape default
- erkannt, dass es sich um JSON- oder um XML-Code handelt, wird der Body
- an den entsprechenden Parser übergeben.
- Im Apple Foundation-Framework findet sich schon seit OS X-Version 10.3 der
- 
-\shape italic
-NSXMLParser
-\shape default
-, seit iOS 5 wurde es nun auch um 
-\shape italic
-NSJSONSerialization
-\shape default
- erweitert, welches ein 
-\shape italic
-NSData
-\shape default
--Objekt parst und ein 
-\shape italic
-NSDictionary
-\shape default
- zurückliefert.
- In beiden Fällen werden sowohl die Keys als auch die Values in je ein 
-\shape italic
-MutableArray
-\shape default
- geschrieben.
- Mutable deswegen, weil es nötig sein wird, an verschiedenen Stellen Felder
- zu löschen und hinzuzufügen.
+ Beim Absenden einer neuen Request werden alle ImageViews wieder aus der
+ ScrollView entfernt.
+ Weist das erste Byte nicht auf ein Bild hin und wurde bereits vorher anhand
+ des Content Type erkannt, dass es sich um JSON- oder um XML-Code handelt,
+ wird der Body an den entsprechenden Parser übergeben.
+ Im Apple Foundation-Framework findet sich bereits seit OS X-Version 10.3
+ der NSXMLParser, seit iOS 5 wurde dieses um die NSJSONSerialization erweitert,
+ welche ein NSData-Objekt parst und ein NSDictionary zurückliefert.
+ In beiden Fällen werden sowohl die Schlüssel als auch die Werte in je ein
+ veränderliches MutableArray geschrieben, da es nötig sein wird, an gezielt
+ Felder zu löschen und neue hinzuzufügen.
  Wurde das Parsen erfolgreich abgeschlossen, wird die rekursive Methode
- 
-\shape italic
-processKeys
-\shape default
- aufgerufen.
- 
-\begin_inset Quotes eld
-\end_inset
-
-Erfolgreich
-\begin_inset Quotes erd
-\end_inset
-
- bereutet im Falle des XML-Parsers dass er nach erfolgter Durchführung ein
- YES zurückliefert, im Falle des NSJSONSerializers befindet sich ein Inhalt
- im Array.
- Die einzelnen Schlüssel/Wert-Paare werden nun daraufhin überprüft, ob es
- sich bei den Werten um eine Ressource handelt.
- Da es nun durchaus sein kann, dass ein komplettes Array mit weiteren Schlüssel/
-Wert-Paaren einen solchen Wert darstellt, ist ein rekursiver Aufruf von
- 
-\shape italic
-processKeys
-\shape default
- äußerst bequem.
- Da hier durchaus Schlüssel/Wert-Paare eingefügt oder gelöscht werden, ist
- das Mitführen eines statischen Indexes staticIndex erforderlich.
- Eingefügt werden Schlüssel/Werte-Paare, wenn ein Array gefunden wird und
- deren Inhalt dem eigenen Array am aktuellen Index eingefügt wird.
+ processKeys aufgerufen.
+ “Erfolgreich” bedeutet im Fall des XML-Parsers dass er nach erfolgter Durchführ
+ung ein YES zurückliefert.
+ NSJSONSerializers definiert einen Durchlauf als „erfolgreich“, wenn sich
+ das zu füllende Array nach Durchlauf des Parsers nicht leer ist.
+ Die einzelnen Schlüssel/Wert-Paare werden daraufhin überprüft, ob es sich
+ bei den Werten um eine Ressource handelt.
+ Da es durchaus sein kann, dass als Wert wiederum ein komplettes Array mit
+ weiteren Schlüssel/Wert-Paaren beinhaltet, ist processKeys so gestaltet,
+ dass ein rekursiver Aufruf möglich ist.
+ Da hierbei Schlüssel/Wert-Paare eingefügt und gelöscht werden, ist das
+ Mitführen des statischen Indexes staticIndex erforderlich.
+ Eingefügt werden Schlüssel/Werte-Paare, wenn ein Unter-Array gefunden wird
+ und deren Inhalt dem eigenen Array am aktuellen Index eingefügt wird.
  Das Schlüssel/Wert-Paar, welches das Array enthielt, hat nach dem rekursiven
  Abarbeiten keine weitere Funktion mehr und es wird entfernt, denn die darin
- enthaltenen Schlüssel/Wert-Paare befinden sich nun bereits in dessen 
-\begin_inset Quotes eld
-\end_inset
-
-Ober-Array
-\begin_inset Quotes erd
-\end_inset
-
-.
+ enthaltenen Schlüssel/Wert-Paare befinden wurden bereits an dessen Stelle
+ eingefügt.
+ Das Array wächst und die enthaltenen Schlüssel/Werte-Paare sind noch in
+ der richtigen Reihenfolge.
 \end_layout
 
 \begin_layout Standard
-Zum Vorbereiten des Tests auf eine valide URL wird der String in einem ersten
- Schritt in eine Variable des Typs 
-\shape italic
-NSURL
-\shape default
- umgewandelt.
- Hier wird intern getestet, ob die Zeichen für eine URL valid sind.
- Ist dem nicht der Fall, wird ein 
-\family typewriter
-\size small
-nil
-\family default
-\size default
- zurückgegeben.
- Wird kein 
-\family typewriter
-\size small
-nil
-\family default
-\size default
- zurückgegeben, wird der Anfang des Strings überprüft.
- Beginnt dieser mit 
-\shape italic
-http
-\shape default
-, wird er unverändert als URL interpretiert.
+Zum Vorbereiten des Validitätstests auf eine valide URL wird der String
+ in einem ersten Schritt in den Typ NSURL umgewandelt.
+ Hierbei wird bereits intern getestet, ob die Zeichen für eine URL valid
+ sind.
+ Ist dem nicht der Fall, wird ein nil zurückliefert.
+ Wird kein nil zurückgegeben, wäre der Einsatz als URL denkbar und der Anfang
+ wird überprüft.
+ Beginnt dieser mit http, wird er unverändert zum Prüfen weitergegeben.
  Beginnt er statt dessen mit einem Schrägstrich, wird er an die Basis-URL
- des zuletzt aufgerufenen Requests angehangen und zur Überprüfung auf eine
- valide URL weitergegeben.
- Treffen beide Fälle nicht zu, so wird die höchste Verzeichnisebene, welche
- sich im letzten Request finden lässt, um diesen String erweitert und ebenfalls
- getestet, ob es sich um eine valide URL handelt.
+ des zuletzt aufgerufenen Requests angefügt und dann ebenfalls zur Validitätsübe
+rprüfung weitergereicht.
+ Treffen beide Fälle nicht zu, wird ein Element auf der gleichen Verzeichniseben
+e vermutet, auf der diese Response basiert.
+ Aus der Request, die hierher führte, wird die höchste Verzeichnisebene
+ (der Teil bis inklusive dem letzten Schrägstrich) abgefragt, um diesen
+ String erweitert und wie zuvor zur Validierung weitergegeben.
 \end_layout
 
 \begin_layout Standard
-Um den Test anschließend durchzuführen, wechselt die App mittels 
-\family typewriter
-\size small
-[self setValidatingState:YES]
-\family default
-\size default
- in einen Zustand, der der Validierung von Ressourcen dient.
+Um den Test durchzuführen, wechselt die App mit [self setValidatingState:YES]
+ in einen Zustand, welcher ausschließlich der Validierung von Ressourcen
+ dient.
  Es wird für jeden Ressourcenkandidaten einen asynchronen HEAD-Request abgesende
-t, deren Responses different betrachtet werden.
- Ein nebenbei laufender Counter führt hierbei Buch über den aktuellen Fortschrit
-t und wird inkrementiert, sobald eine Resource aus irgendeinem Grund invalid
- ist oder sie als valid befunden wird.
- Die endgültige Entscheidung über die Validität wird erst in der Methode
- 
-\shape italic
-didReceiveResponse
-\shape default
- getroffen, welche die Antwort des Servers auswerten darf.
+t, deren Responses unter einem anderen Gesichtspunkt betrachtet werden.
+ Ein nebenbei laufender Counter führt Buch über den aktuellen Fortschritt
+ und wird inkrementiert, sobald eine Ressource als valid oder als invalid
+ befunden wird.
+ Die endgültige Entscheidung über die Validität kann jedoch erst in der
+ Methode didReceiveResponse getroffen werden, welche die Antwort des Servers
+ auswerten darf.
  Da die asynchronen Requests die Responses in willkürlicher Reihenfolge
  eintreffen lassen, kann leider nicht ohne Weiteres zugeordnet werden, für
  welchen Wert gerade eine Antwort empfangen wurde.
- Die ID der abgesendeten 
-\shape italic
-NSURLConnection
-\shape default
- wird daher zusammen mit dem Index des zu überprüfenden Wertes in ein
-\shape italic
- NSDictionary
-\shape default
- gepackt.
- In der empfangenden Methode kann anhand dieser ID der Indexwert aus dem
- Wörterbuch abgefragt werden und es ist wieder klar, welchem Schlüssel/Wert-Paar
- der empfangene Statuscode zuzuordnen ist.
- Ein Statuscode kleiner 400 ist auch positiv zu interpretieren und weist
- auf die Existenz der angefragten Resource hin.
- Der angefragte Wert wird in die 
-\shape italic
-MutableArrays
-\shape default
- 
-\shape italic
-foundResourceKeys
-\shape default
- sowie 
-\shape italic
-foundResourceValues
-\shape default
- geschrieben.
- Da ein asynchroner Request den Nachteil hat, dass die überprüften Resourcen
+ Die ID der abgesendeten NSURLConnection wird daher zusammen mit dem Index
+ des zu überprüfenden Wertes in ein NSDictionary gepackt.
+ In der didReceiveResponse kann anhand dieser ID der Indexwert aus dem Wörterbuc
+h abgefragt werden und es ist wieder klar, welchem Schlüssel/Wert-Paar der
+ empfangene Statuscode zuzuordnen ist.
+ Ein Statuscode kleiner 400 ist auch hier positiv zu interpretieren und
+ weist auf die Existenz der angefragten Resource hin.
+ Der angefragte Wert wird in die NSMutableArrays foundResourceKeys sowie
+ foundResourceValues geschrieben.
+ Da ein asynchroner Request den Nachteil hat, dass die überprüften Ressourcen
  in beliebiger Reihenfolge im Zielarray landen würden, eine synchrone Überprüfun
-g jedoch zu viel Zeit in Anspruch nehmen würde, wird sich hier mit einem
- kleinen Trick beholfen: Die Arrays 
-\shape italic
-foundResourceKeys
-\shape default
- und 
-\shape italic
-foundResourceValues
-\shape default
- werden mit der Größe der Resourcenkandidaten angelegt und die Felder mit
- einem leeren 
-\shape italic
-NSString
-\shape default
+g jedoch zu viel Zeit in Anspruch nehmen würde, wird wie folgt vorgegangen:
+ Die Arrays foundResourceKeys und foundResourceValues werden mit der Größe
+ der Ressourcenkandidaten angelegt und die Felder mit einem leeren NSString
  initialisiert.
- Eine überprüfte Resource, die sich im Quellarray an einem Feld mit dem
+ Eine überprüfte Ressource, die sich im Quellarray an einem Feld mit dem
  Index y befindet, wird in das Zielarray ebenfalls an das Feld mit dem Index
  y geschrieben.
  Alle Felder der beiden Arrays, an die keine Einträge geschrieben wurden,
  enthalten weiterhin leere Strings.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3010,6 +2921,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename Flowchart FinishReceive.png
 	lyxscale 65
@@ -3039,183 +2951,187 @@ Response wurde vollständig empfangen
 \end_inset
 
 Nachdem keine Ressourcenkandidaten mehr auf ihre Validierung warten, lassen
- sie die 
-\shape italic
-MutableArrays
-\shape default
- bereinigen, in dem man die Felder mit den leeren Strings kurzerhand aus
- dem Array entfernt.
- Zurück bleiben je ein Array mit den Schlüsseln und eines mit den Werten,
- welche beim Berühren der Ressourcenschaltfläche - der Lupe - an die Klasse
- 
-\shape italic
-ResourceTableViewController
-\shape default
- übergeben lassen.
- Was sich so fast beiläufig in einem Nebensatz erwähnen lässt war, zumindest
- Zeittechnisch - alles andere als beiläufig, da die sich öffnende TableView
- nach ihrer Instantiierung und Überreichung der Daten stets ihrer leeren
- Seite zeigte.
- Wie sich herausstellte, erzeugt bereits das Storyboard eine Instanz einer
- View nach der Betätigung der Schaltfläche, jede programmatisch erzeugte
- Instanz ist eine weitere, die irgendwo anders abläuft, aber nicht für den
- Anwender im Vordergrund ersichtlich ist.
- Das Ziel ist das Folgende: Nachdem der Button betätigt wurde, welcher das
- Storyboard veranlasst, einen Übergang in neue View einzuleiten, soll diese
- View mit Daten gefüllt werden.
- Dies muss allerdings geschehen, bevor die View auf dem Bildschirm erscheint,
- was ja scheinbar zeitgleich ist.
- Um dieses Kunststück zu bewerkstelligen, lassen sich auf diese Übergänge,
- so genannte 
-\shape italic
-Segues
-\shape default
-, programmatisch zugreifen.
- Falls vorhanden wird bei einem Übergang die Methode 
-\shape italic
-prepareForSegue:sender
-\shape default
- aufgerufen.
- Um gezielt Übergänge ansprechen zu können lassen sich hierfür im Storyboard
- Identifier vergeben; der Identifier des gerade aktiven Überganges kann
- in der Implementation mit [segue identifier] abgefragt werden.
+ sich die NSMutableArrays, welche über die validen Ressourcen verfügen,
+ bereinigen, in dem die Felder mit den leeren Strings kurzerhand aus dem
+ Array entfernt werden.
+ Zurück bleiben je ein Array mit Schlüsseln und eines mit den dazugehörigen
+ Werten.
+ Beide werden beim Berühren der Ressourcenschaltfläche - der Lupe - an die
+ Klasse ResourceTableViewController übergeben.
+ Was hier fast beiläufig klingt war, zumindest zeittechnisch - alles andere
+ als beiläufig, da die sich öffnende TableView nach ihrer Instanziierung
+ und Überreichung der Daten stets jungfräulich präsentierte.
+ Die NSMutableArrays schienen dort nie anzukommen.
+ Wie sich herausstellte, erzeugt bereits das Storyboard nach dem Berühren
+ der Übergangs-Schaltfläche eine Instanz der Ziel-View.
+ Die programmatisch erzeugte Instanz war eine weitere, sich an einem anderen
+ Speicherbereich befindliche Instanz, die unsichtbar im Hintergrund abläuft.
+ Hier soll jedoch auf die Storyboard-erzeugte Instanz zugegriffen werden.
+ Um das zu bewerkstelligen müssen die Daten an diese übergeben werden nachdem
+ der Übergang in die neue View eingeleitet wurde.
+ Dies muss allerdings auch geschehen bevor die View auf dem Bildschirm erscheint
+, was ja scheinbar zeitgleich ist.
+ Um auf dieses Zeitfenster zuzugreifen, lässt sich auf diese Übergänge,
+ die Xcode als Segues bezeichnet, programmatisch zugreifen.
+ Bei einem Übergang erhält an die Ursprungs-View die Nachricht prepareForSegue:s
+ender.
+ Um gezielt Übergänge ansprechen zu können lassen sich im Storyboard Identifier
+ vergeben.
+ Der Identifier des gerade aktiven Überganges kann in der Implementation
+ der Methode prepareForSegue:sender mit [segue identifier] abgefragt werden.
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+\size footnotesize
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-if ([[segue identifier] isEqualToString:@"resourcesTableViewPopover"]) {
+\size footnotesize
+  {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-ResourcesTableViewController *resourceTableViewController =
+\size footnotesize
+     if ([[segue identifier] isEqualToString:@"resourcesTableViewPopover"])
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[segue destinationViewController]; 
+\size footnotesize
+     {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[resourceTableViewController setKeys:foundResourceKeys];
+\size footnotesize
+        ResourcesTableViewController *resourceTableViewController =
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[resourceTableViewController setValues:foundResourceValues];
+\size footnotesize
+           [segue destinationViewController]; 
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[resourceTableViewController setReferenceToUrl:_url];
+\size footnotesize
+        [resourceTableViewController setKeys:foundResourceKeys];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
+\size footnotesize
+        [resourceTableViewController setValues:foundResourceValues];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[resourceTableViewController setReferenceToPopoverController:
+\size footnotesize
+        [resourceTableViewController setReferenceToUrl:_url];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[popoverSegue popoverController]];
+\size footnotesize
+        UIStoryboardPopoverSegue* popoverSegue =
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[resourceTableViewController setReferenceToBaseUrl:[self urlPart:
+\size footnotesize
+           (UIStoryboardPopoverSegue*)segue;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[_url text] definePart:@"baseUrl"]];
+\size footnotesize
+        [resourceTableViewController setReferenceToPopoverController:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[resourceTableViewController setReferenceToHighestDir:
+\size footnotesize
+        [popoverSegue popoverController]];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[self urlPart:[_url text] definePart:@"highestDir"]];
+\size footnotesize
+        [resourceTableViewController setReferenceToBaseUrl:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-} else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"])
- {
+\size footnotesize
+           [self urlPart:[_url text] definePart:@"baseUrl"]];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-LogOutputViewController *logOutputViewController =
+\size footnotesize
+        [resourceTableViewController setReferenceToHighestDir:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-[segue destinationViewController];
+\size footnotesize
+        [self urlPart:[_url text] definePart:@"highestDir"]];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-...
+\size footnotesize
+     }
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+     else if ([[segue identifier] isEqualToString:@"logOutputViewPopover"])
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+     {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+        LogOutputViewController *logOutputViewController =
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+        [segue destinationViewController];
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+        ...
 \end_layout
 
 \begin_layout Standard
-Ein wenig Kopfzerbrechen bereitete mir der Umstand, dass offensichtlich
- zwischen iOS 5.1 und 6 zwischen dem Laden der View ein zeitlicher Unterschied
- besteht.
- Unter iOS 6 ist es vollkommen in Ordnung, wenn die Initialisierung des
- übergebenen Arrays in der Startmethode 
-\shape italic
-viewDidLoad
-\shape default
+Ein wenig Kopfzerbrechen bereitete auch der Umstand, dass offensichtlich
+ zwischen iOS 5.1 und 6 das Laden der View an unterschiedlichen Zeitpunkten
  erfolgt.
- Doch während iOS 6 bei einem 
-\shape italic
-prepareForSegue
-\shape default
- den Aufbau der View verzögert, bis die Methode abgearbeitet wurde, ist
- dies bei iOS 5.1 nicht der Fall.
+ Unter iOS 6 ist es ausreichend, wenn die Initialisierung des übergebenen
+ Arrays in der Startmethode viewDidLoad erfolgt.
+ Doch während dort bei einem prepareForSegue der Aufbau der View verzögert
+ wird, bis die Methode abgearbeitet wurde, ist dies bei iOS 5.1 nicht der
+ Fall.
  Die Initialisierung des übergebenen Arrays darf erst in der Initialisierungsmet
-hode 
-\shape italic
-viewDidAppear
-\shape default
- erfolgen, sonst werden alle Zellen mit 
-\shape italic
-nil
-\shape default
- gefüllt.
+hode viewDidAppear erfolgen, sonst werden alle Zellen mit nil gefüllt.
+ Da dieses Programm zu iOS 5.1 vollständig abwärtskompatibel sein soll, erfolgt
+ die Initialisierung in der Methode viewDidAppear.
 \end_layout
 
 \begin_layout Section
@@ -3227,110 +3143,35 @@ ResourceTableViewController
 \end_layout
 
 \begin_layout Standard
-Die erste Hilfsklasse ist eine View vom Typ 
-\shape italic
-UITableViewController
-\shape default
-, einer Unterklasse des 
-\shape italic
-UIViewController
-\shape default
-.
- Der 
-\shape italic
-TableViewController
-\shape default
- bietet eine View bestehend aus einer einzigen Tabelle, deren 
-\shape italic
-Delegate
-\shape default
- und 
-\shape italic
-DataSource
-\shape default
- er selbst ist.
- Ihm stehen die 
-\shape italic
-NSArrays
-\shape default
- 
-\shape italic
-keys
-\shape default
- und 
-\shape italic
-values
-\shape default
- zur Verfügung, welche die validierten Resourcen darstellen, die er von
- der Hauptview unmittelbar vor dem Erscheinen erhalten hat und die er in
- die Zellen seiner Tabelle einfüllt.
- Da eine Berührung einer Zelle veranlassen soll zur Hauptview zurückzukehren
- und dort die Ressource in das URL-Feld zu füllen, benötigt er für seine
- Funktion ein paar Referenzen: Zum einen benötigt er selbstverständlich
- die Referenz des URL-Feldes, auf deren Text er schreibend zugreift.
- Referenzen zu den 
-\shape italic
-NSStrings
-\shape default
- 
-\shape italic
-highestDir
-\shape default
- und 
-\shape italic
-baseUrl
-\shape default
- benötigt er, um die URLs vollständig erzustellen.
- Eine Resource 
-\shape italic
-1337
-\shape default
-, welche auf 
-\shape italic
-http://www.smartphoneseppel.de/customer/
-\shape default
- gefunden wurde, sollte auf 
-\shape italic
-http://www.smartphoneseppel.de/customer/1337
-\shape default
- verweisen, dafür wird die Ressource an den höchsten Verzeichnispfad der
- Abfrage gehangen, welche die Ressource 
-\shape italic
-1337
-\shape default
- enthielt.
- Lautet eine Ressource 
-\shape italic
-/article/galaxy_s3
-\shape default
- wird das als einen absoluten Pfad interpretiert und direkt an die Base-URL
- angehangen.
- Die Resultierende URL wäre somit 
-\shape italic
-http://www.smartphoneseppel.de/article/galaxy_s3
-\shape default
-.
+Die erste Hilfsklasse ist eine View vom Typ UITableViewController, einer
+ Unterklasse von UIViewController.
+ Der TableViewController bietet eine View, bestehend aus einer einzigen
+ Tabelle, deren Delegate und DataSource er selbst ist.
+ Ihm stehen die NSArrays keys und values zur Verfügung, welche die validierten
+ Ressourcen darstellen, die er von der Hauptview unmittelbar vor dem Aufbau
+ erhalten hat und die er in die Zellen seiner Tabelle einfüllt.
+ Da eine Berührung einer Zelle die Rückkehr zur Hauptview zur Folge haben
+ soll, nachdem die Ressource in das dortige URL-Feld eingefügt wurde, benötigt
+ er für seine Funktion einige Referenzen.
+ Verständlicherweise wird die Referenz des URL-Feldes benötigt, auf deren
+ Text er schreibend zugreift.
+ Referenzen zu den NSStrings highestDir und baseUrl benötigt er, um die
+ URLs zu vervollständigen.
+ Eine Ressource 1337, welche auf http://www.smartphoneseppel.de/customer/
+ gefunden wurde, sollte auf http://www.smartphoneseppel.de/customer/1337 verweisen.
+ Die Ressource wird an den höchsten Verzeichnispfad der Abfrage gehangen,
+ welche die Ressource 1337 enthielt.
+ Eine mit einem Schrägstrich beginnende Ressource /article/galaxy_s3 wird
+ hingegen als einen absoluter Pfad interpretiert und direkt an die Base-URL
+ angehangen: http://www.smartphoneseppel.de/article/galaxy_s3.
 \end_layout
 
 \begin_layout Standard
-Eine View kann sich nicht ohne weiteres selbst wieder schließen.
- Um dies zu realisieren wurde darüber hinaus noch die Referenz des PopoverContro
-llers hierher übergeben.
- Der Zugriff auf diesen ermöglicht es, die View durch 
-\family typewriter
-\size small
-[_referenceToPopoverController dismissPopoverAnimated:YES]
-\family default
-\size default
- wieder 
-\begin_inset Quotes eld
-\end_inset
-
-von unten
-\begin_inset Quotes erd
-\end_inset
-
- zu beenden.
+Eine View kann sich nicht so einfach selbst wieder schließen.
+ Um das dennoch zu realisieren wurde darüber hinaus die Referenz des PopoverCont
+rollers hierher übergeben.
+ Der Zugriff auf diesen ermöglicht es, die View mit dem Befehl [_referenceToPopo
+verController dismissPopoverAnimated:YES] wieder “von unten” zu verwerfen.
 \end_layout
 
 \begin_layout Subsection
@@ -3338,49 +3179,18 @@ HeaderKeysViewController
 \end_layout
 
 \begin_layout Standard
-Wie auch bei der 
-\shape italic
-ResourceTableViewController
-\shape default
- handelt es sich hier um eine Klasse des Typs 
-\shape italic
-UITableViewController
-\shape default
-.
- Er beinhaltet eine Auflistung der für eine Request gebräuchlichen 
-\shape italic
-Request Header
-\shape default
- und der 
-\shape italic
-General Headers
-\shape default
- und soll dem Anwender eine einfache Möglichkeit bieten, seine Anfrage um
- valide Header zu erweitern.
- Wie die zuvor genannte Klasse werden hier die Daten der durch Berührung
- selektierten Zelle in das Headers-Feld der Hauptview geschrieben und die
- View mittels Referenzzugriff auf den darunter liegenden 
-\shape italic
-PopoverController
-\shape default
- beendet.
- Als kleines 
-\begin_inset Quotes eld
-\end_inset
-
-Extra
-\begin_inset Quotes erd
-\end_inset
-
- wird die Referenz für das dem Header zugehörige Wertefeld übergeben, mit
- dessen Hilfe dieses zum 
-\shape italic
-FirstResponder
-\shape default
- wird - nach dem Verwerfen der View hat dieses also den Tastaturfokus und
- es kann sofort nach dem Selektieren des headers mit der Eingabe des Wertes
- begonnen werden.
- 
+Wie auch bei der ResourceTableViewController handelt es sich hier um eine
+ Klasse des Typs UITableViewController.
+ Er beinhaltet eine Auflistung der für einen Request gebräuchlichen Request-Head
+er und der General-Header und soll dem Anwender eine einfache Möglichkeit
+ bieten, seine Anfrage um valide Header zu erweitern.
+ Wie zuvor werden hier die Daten der durch Berührung selektierten Zelle
+ in das Header-Feld der Hauptview geschrieben und die View mittels Referenzzugri
+ff auf den darunter liegenden PopoverController beendet.
+ Als kleines “Extra” wird die Referenz für das dem Header zugehörige Wertefeld
+ übergeben, mit dessen Hilfe dieses zum FirstResponder wird - nach dem Verwerfen
+ der View hat es somit den Tastaturfokus und es kann sofort nach dem Selektieren
+ des Headers mit der Eingabe des Wertes begonnen werden.
 \end_layout
 
 \begin_layout Subsection
@@ -3388,33 +3198,31 @@ XMLParser
 \end_layout
 
 \begin_layout Standard
-Er ist nicht wirklich umfangreich, eignet sich jedoch perfekt, dessen Funktionsu
-mfang in eine eigene Klasse auszugliedern.
- Er wird initialisiert mit zwei leeren 
-\shape italic
-MutableArrays
-\shape default
-, an die sowohl Attribute als auch Elemente der geparsten XML angefügt werden.
- Ein Attributname wird in Klammern gesetzt und erhält den Elementnamen,
- dem es zugehörig ist, vorangestellt.
- Die Bezeichnung der Keys setzt demnach sich wie Folgt zusammen:
+Der Inhalt der Klasse XML-Parser ist nicht wirklich umfangreich, jedoch
+ eignet er sich hervorragend, die abgeschlossene Funktionalität in einer
+ eigenen Klasse auszugliedern.
+ Er wird initialisiert mit zwei leeren NSMutableArrays, an die sowohl Attribute
+ als auch Elemente der geparsten XML angefügt werden.
+ Attributnamen werden in Klammern gesetzt und erhalten den Elementnamen,
+ dem sie zugehörig sind, vorangestellt.
+ Die Bezeichnung der Keys setzt demnach sich wie folgt zusammen:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 for (int i = 0; i < elementsToParse; i++) do
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    if actualObjectType = attribut then
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       keyArray[i] ← elementName + 
 \begin_inset Quotes eld
 \end_inset
@@ -3436,37 +3244,37 @@ for (int i = 0; i < elementsToParse; i++) do
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       valueArray[i] ← AttributValue;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    else if actualObjectType = element then
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       keyArray[i] ← elementName;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
       valueArray[i] ← elementValue;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    fi;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 od;
 \end_layout
 
@@ -3481,32 +3289,24 @@ LogOutputViewController
 \begin_layout Standard
 Da es sich um ein Entwicklertool handelt, wäre es für den ein oder anderen
  sicherlich interessant zu sehen, was das Programm in der Kommandozeile
- an Output erzeugen würde wird.
- Da viele Informatiker ein Faible für schwarze Fenster mit durchlaufendem
- Text haben, soll eine 
-\shape italic
-PopoverView
-\shape default
- ihnen diesen Wunsch erfüllen.
- Um nicht in jeder Zeile mit dem Datum, der Uhrzeit und dem Programmnamen
- beginnen zu lassen, wurden diese zu Beginn der Hauptklasse aus der Ausgabe
- von 
-\shape italic
-NSLog
-\shape default
- herausgeschnitten, indem der reine Ausgabeteil als String in UTF8-Codierung
- mittels fprintf ausgegeben wird:
+ an Log-Ausgabe erzeugen würde.
+ Diese PopoverView stellt die Ausgabe von NSLog dar, welche in eine Datei
+ umgeleitet wurde.
+ Um nicht in jeder Zeile das Datum, die Uhrzeit und den Programmnamen aufzuführe
+n, wurden diese zu Beginn der Hauptklasse aus der Ausgabe von NSLog herausgeschn
+itten, indem der reine Ausgabeteil als String in UTF8-Codierung mittels
+ fprintf ausgegeben wird:
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 #ifdef DEBUG
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 #define NSLog(FORMAT, ...) fprintf(stderr,"%s
 \backslash
 n",
@@ -3514,136 +3314,126 @@ n",
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 #endif
 \end_layout
 
 \begin_layout Standard
-Weiterhin wird geich zu Beginn in der Methode 
-\shape italic
-viewDidLoad
-\shape default
- die Ausgabe in eine Datei umgeleitet.
+Weiterhin wird gleich zum Programmstart in der Methode viewDidLoad die Ausgabe
+ in eine Datei umgeleitet.
  Hierbei wird zuerst geschaut, ob bereits eine Ausgabedatei existiert.
  Ist das der Fall, so wird die Logging-Funktion automatisch eingeschaltet;
  ist sie nicht vorhanden, bleibt sie deaktiviert.
- Deaktiviert man sie im laufenden Programmbetrieb, so wird die Datei ebenso
- entfernt, somit findet man den Logging-Schalter bei einem App-Restart stets
- so vor, wie man ihn verlassen hat.
+ Deaktiviert man sie während der Laufzeit, so wird die Datei ebenfalls entfernt.
+ Somit findet man den Logging-Schalter bei einem App-Restart stets so vor,
+ wie man ihn verlassen hat.
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 NSArray *paths = NSSearchPathForDirectoriesInDomains
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 (NSDocumentDirectory, NSUserDomainMask, YES);
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 NSString *documentsDirectory = [paths objectAtIndex:0];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 logPath = [documentsDirectory stringByAppendingPathComponent:@"console.log"];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 NSFileManager *filemgr;
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 filemgr = [NSFileManager defaultManager];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 if ([filemgr fileExistsAtPath:logPath]) {
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
-   NSLog (@"Existing log file found at %@ - logging to file enabled.", logPath);
-\end_layout
-
-\begin_layout LyX-Code
-
-\size small
+\size footnotesize
    freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    [_logToFileSwitch setOn:YES];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    [_logFileButton setEnabled:YES];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    [_verboseLogLabel setEnabled:YES];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    [_verboseLogSwitch setEnabled:YES];
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
 } else
 \end_layout
 
 \begin_layout LyX-Code
 
-\size small
+\size footnotesize
    NSLog (@"No existing log file found, logging disabled.");
 \end_layout
 
 \begin_layout Standard
-Möchte man das Gesehene nach dem Sichten löschen, das Logging jedoch eingeschalt
-et lassen, lässt sich der Usability wegen der Mülleimer unter dem Ausgabe-Fenste
-r antippen.
- An diesem Icon habe ich keine Bildunterschrift angebracht, denn es sollte
+Mit dem Mülleimer unter dem Ausgabe-Fenster lässt sich die Datei nach dem
+ Sichten aufräumen und das Logging dabei eingeschaltet lassen.
+ An diesem Icon wurde keine Bildunterschrift angebracht, denn es sollte
  selbsterklärend sein, was hier passiert.
- Möchte man noch mehr Mitschnitte, lässt sich ein Verbose-Modus einschalten,
- in dem noch eine Reihe mehr Informationen über das Programmverhalten mitgeschni
-tten werden.
- Auch hier bin ich über ein unerwartetes Problem gestolpert: Da die View
- sehr wenig Code und nichts beinhaltet, was eine Delegate oder DataSource
- benötigt, wollte ich diese recht codezeilenarme Funktionalität in der Hauptview
- unterbringen.
- Jedoch war nach dem Öffnen der View das Ausgabefeld stets leer und ich
- musste einige Zeit lang erst einen Refresh-Button betätigen, der die Datei
- neu in das Textfeld gelagen hat.
+ Werden informationsreichere Mitschnitte gewünscht, lässt sich dieser Wunsch
+ über den Verbose-Schalter mitteilen.
+ Es werden dann mehr Informationen mitgeschnitten.
+ Auch hier ist ein unerwartetes Problem aufgetreten: Da die View nichts
+ beinhaltet, was eine Delegate oder eine DataSource benötigt, wollte ich
+ diese recht codezeilenarme Funktionalität in der Hauptview unterbringen.
+ Jedoch war nach dem Öffnen der View das Ausgabefeld stets leer, so man
+ einen Refresh-Button betätigen musste, der die Datei erneut in das Textfeld
+ mappte hat.
+ Erst dann wurde der Inhalt sichtbar.
  Abhilfe brachte das Auslagern in eine eigene Klasse mit der Initialisierungsmet
 hode viewDidAppear, welche nun das Laden der Datei übernimmt.
 \end_layout
@@ -3653,27 +3443,19 @@ HistoryElement
 \end_layout
 
 \begin_layout Standard
-Hierbei handelt es sich im ein Element einer doppelt verketteten Liste.
+HistoryElement ist die Implementation der URL-History in Form einer doppelt
+ verketteten Liste.
  Es kennt seinen Vorgänger, seinen Nachfolger als auch die an ihn gebundene
  Ressource.
- 
-\shape italic
-HistoryElement
-\shape default
- verfügt über eine Methode 
-\shape italic
-getPart
-\shape default
-, die auf Wunsch die Basis-URL - bestehend aus Protokoll und Domain -, den
- höchsten Verzeichnispfad oder den vorherigen zurückliefert.
- Der Unterschied zwischen vorherigem und höchstem Verzeichnis ist der Folgende:
- Endet eine URL mit einem Schrägstrich, so wird er als Verzeichnis angenommen
- und ist somit gleichzeitig auch das höchste.
- Endet er nicht mit einem Schrägstrich, wird eine Datei in einem Verzeichnis
- vermutet und statt dessen das letzte Verzeichnis zurückgegeben, das mit
- einem Schrägstrich endet.
- Wird das vorherige Verzeichnis angefragt, wird immer das vorherige Verzeichnis
- angegeben, egal ob das aktuelle mit einem Schrägstrich endet oder nicht.
+ HistoryElement verfügt über eine Methode getPart, die auf Wunsch die Basis-URL
+ - bestehend aus Protokoll und Domain -, den höchsten Verzeichnispfad oder
+ den vorherigen zurückliefert.
+ Der Unterschied zwischen vorherigem und höchstem Verzeichnis ist folgender:
+ Endet eine URL mit einem Schrägstrich, so wird er als Verzeichnis betrachtet
+ und ist gleichzeitig das höchste Verzeichnis.
+ Endet er nicht mit einem Schrägstrich, wird eine Datei vermutet und statt
+ dessen das letzte Verzeichnis zurückgegeben, das mit einem Schrägstrich
+ endet.
 \end_layout
 
 \begin_layout Standard
@@ -3754,56 +3536,29 @@ shoppingcart/
 \end_layout
 
 \begin_layout Standard
-Erstellt man ein neues Projekt, befindet sich im Projektordner neben dem
- oder den Controllern stets eine weitere Klasse: die 
-\shape italic
-AppDelegate
-\shape default
-.
- Konzeptuell sollte der 
-\shape italic
-ViewController
-\shape default
- alles beinhalten, womit sich die aktuelle 
-\shape italic
-View
-\shape default
- beschäftigt.
- Die 
-\shape italic
-AppDelegate
-\shape default
- bleibt dabei erschreckend leer und hinterlässt das Gefühl, dass man doch
- etwas Wichtiges vergessen hat.
- Die einzige Methode, die überhaupt etwas macht ist die application 
-\shape italic
-didFinishLaunchingWithOptions:launchOptions
-\shape default
-.
+Erstellt man ein neues Projekt, befindet sich im Projektordner neben den
+ Controllern eine weitere Klasse: die AppDelegate.
+ Konzeptuell sollte der ViewController alles beinhalten, womit sich die
+ aktuelle View beschäftigt.
+ Die AppDelegate bleibt dabei erschreckend leer und hinterlässt das Gefühl,
+ scheinbar etwas Wichtiges vergessen zu haben.
+ Die einzige Methode, die überhaupt etwas macht ist die application didFinishLau
+nchingWithOptions:launchOptions.
  Sie gibt ein YES zurück.
  Immerhin.
 \end_layout
 
 \begin_layout Standard
 Auch hier läuft wieder alles über das Storyboard.
- Wirft man einen Blick auf die Datei 
-\shape italic
-REST Analyzer-Info.plist
-\shape default
- findet sich ein Schlüssel mit der Bezeichnung 
-\shape italic
-Main storyboard file base name
-\shape default
- und dem Wert 
-\shape italic
-MainStoryboard
-\shape default
-.
- Die Bedeutung hinter diesem Eintrag ist Folgende: Ist diese Einstellung
+ Wirft man einen Blick auf die Datei Projektname-Info.plist findet sich ein
+ Schlüssel mit der Bezeichnung Main storyboard file base name und dem Wert
+ MainStoryboard.
+ Die Bedeutung hinter diesem Eintrag ist die Folgende: Ist diese Einstellung
  gesetzt, lädt UIApplication die Datei mit der Bezeichnung MainStoryboard.storybo
-ard, instantiiert den ersten ViewController und packt dessen View in ein
+ard, instanziiert den ersten ViewController und packt dessen View in ein
  neues Objekt des Typs UIWindow.
- Kein Programmieraufwand nötig.
+ Es ist also völlig in Ordnung, wenn diese Datei bei Benutzung von Storyboards
+ leer bleibt.
 \end_layout
 
 \begin_layout Chapter
@@ -4000,6 +3755,17 @@ key "JAXenter"
 
 Tilkov, Stefan (2009): REST - Der bessere Webservice? In: JAXenter, URL:
  http://it-republik.de/jaxenter/artikel/REST---Der-bessere-Web-Service-2158.html
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "saurik"
+
+\end_inset
+
+Freeman, Jay: How to Host a Cydia™ Repository, URL: http://www.saurik.com/id/7
+ (letzter Aufruf am 29.11.2012)
 \end_layout
 
 \begin_layout Bibliography

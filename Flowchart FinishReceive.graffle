@@ -46,7 +46,7 @@
 	<key>Creator</key>
 	<string>Mario Stief</string>
 	<key>DisplayScale</key>
-	<string>1 0/72 in = 1 0/72 in</string>
+	<string>1 0/72 in = 1.0000 in</string>
 	<key>GraphDocumentVersion</key>
 	<integer>8</integer>
 	<key>GraphicsList</key>
@@ -2519,7 +2519,7 @@ Rekursion}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{333.81434157601007, 412.35415486547572}, {80.370656929562301, 24}}</string>
+			<string>{{340.09910103854145, 429.39163288494456}, {70.166636805474809, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2545,7 +2545,7 @@ Rekursion}</string>
 				<key>ID</key>
 				<integer>206</integer>
 				<key>Position</key>
-				<real>0.39081194996833801</real>
+				<real>0.82308632135391235</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -2577,65 +2577,7 @@ Rekursion}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{341.71583990109275, 117.79530733153285}, {75.299726943714631, 24}}</string>
-			<key>Class</key>
-			<string>ShapedGraphic</string>
-			<key>FitText</key>
-			<string>Vertical</string>
-			<key>Flow</key>
-			<string>Resize</string>
-			<key>FontInfo</key>
-			<dict>
-				<key>Color</key>
-				<dict>
-					<key>w</key>
-					<string>0</string>
-				</dict>
-				<key>Font</key>
-				<string>Helvetica</string>
-				<key>Size</key>
-				<real>12</real>
-			</dict>
-			<key>ID</key>
-			<integer>181</integer>
-			<key>Line</key>
-			<dict>
-				<key>ID</key>
-				<integer>178</integer>
-				<key>Position</key>
-				<real>0.30700007081031799</real>
-				<key>RotationType</key>
-				<integer>0</integer>
-			</dict>
-			<key>Shape</key>
-			<string>Rectangle</string>
-			<key>Style</key>
-			<dict>
-				<key>shadow</key>
-				<dict>
-					<key>Draws</key>
-					<string>NO</string>
-				</dict>
-				<key>stroke</key>
-				<dict>
-					<key>Draws</key>
-					<string>NO</string>
-				</dict>
-			</dict>
-			<key>Text</key>
-			<dict>
-				<key>Text</key>
-				<string>{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
-\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
-
-\f0\fs24 \cf0 yes}</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Bounds</key>
-			<string>{{330.61902647723036, 593.37939128613652}, {90, 24}}</string>
+			<string>{{342.9879372383075, 604.73507012511436}, {57.012062072753906, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2661,7 +2603,67 @@ Rekursion}</string>
 				<key>ID</key>
 				<integer>236</integer>
 				<key>Position</key>
-				<real>0.46404144167900085</real>
+				<real>0.78677374124526978</real>
+				<key>RotationType</key>
+				<integer>0</integer>
+			</dict>
+			<key>Shape</key>
+			<string>Rectangle</string>
+			<key>Style</key>
+			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+			</dict>
+			<key>Text</key>
+			<dict>
+				<key>Text</key>
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
+\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
+
+\f0\fs24 \cf0 yes}</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{325.85688018798828, 130.15116218172838}, {101.68462868508448, 24}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>FitText</key>
+			<string>Vertical</string>
+			<key>Flow</key>
+			<string>Resize</string>
+			<key>FontInfo</key>
+			<dict>
+				<key>Color</key>
+				<dict>
+					<key>w</key>
+					<string>0</string>
+				</dict>
+				<key>Font</key>
+				<string>Helvetica</string>
+				<key>Size</key>
+				<real>12</real>
+			</dict>
+			<key>ID</key>
+			<integer>181</integer>
+			<key>Line</key>
+			<dict>
+				<key>ID</key>
+				<integer>178</integer>
+				<key>Offset</key>
+				<real>-9</real>
+				<key>Position</key>
+				<real>0.66812926530838013</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -2810,7 +2812,7 @@ Rekursion}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{180.83061821225283, 691.30643605546038}, {70.166636805474809, 24}}</string>
+			<string>{{168.91393661499021, 701.30643654807045}, {65, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2836,7 +2838,7 @@ Rekursion}</string>
 				<key>ID</key>
 				<integer>245</integer>
 				<key>Position</key>
-				<real>0.44930610060691833</real>
+				<real>0.72893750667572021</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -2868,7 +2870,7 @@ Rekursion}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{343.89064475809414, 861.76936622756966}, {70.166636805474809, 24}}</string>
+			<string>{{355.25143697737303, 871.45995229649725}, {36, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2894,7 +2896,7 @@ Rekursion}</string>
 				<key>ID</key>
 				<integer>313</integer>
 				<key>Position</key>
-				<real>0.41996562480926514</real>
+				<real>0.69352114200592041</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -2987,7 +2989,7 @@ Rekursion}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{357.07720249599083, 694.56297331754377}, {61.450041419151148, 24}}</string>
+			<string>{{357.07720249599083, 709.56297811599507}, {36, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3013,7 +3015,7 @@ Rekursion}</string>
 				<key>ID</key>
 				<integer>240</integer>
 				<key>Position</key>
-				<real>0.38304907083511353</real>
+				<real>0.68038082122802734</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -3045,7 +3047,7 @@ Rekursion}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{346.91158294677734, 261.51407322453144}, {58.006453668730956, 24}}</string>
+			<string>{{330.26502227783203, 272.0710647610988}, {88.64241035666123, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3071,7 +3073,7 @@ Rekursion}</string>
 				<key>ID</key>
 				<integer>192</integer>
 				<key>Position</key>
-				<real>0.41932174563407898</real>
+				<real>0.75029700994491577</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -3103,7 +3105,7 @@ Rekursion}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{333.81434157601007, 500.80073469698345}, {90, 24}}</string>
+			<string>{{343.68845058106308, 513.86873780455426}, {61.450041419151148, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3129,7 +3131,7 @@ Rekursion}</string>
 				<key>ID</key>
 				<integer>212</integer>
 				<key>Position</key>
-				<real>0.37025013566017151</real>
+				<real>0.83386552333831787</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -3207,7 +3209,7 @@ Rekursion}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-11-16 01:03:55 +0000</string>
+	<string>2012-11-29 00:19:10 +0000</string>
 	<key>Modifier</key>
 	<string>Mario Stief</string>
 	<key>NotesVisible</key>
@@ -3288,7 +3290,7 @@ Rekursion}</string>
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{633, 236}, {694, 922}}</string>
+		<string>{{633, 258}, {897, 900}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -3302,7 +3304,7 @@ Rekursion}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{84, 300}, {545, 768}}</string>
+		<string>{{84, 240}, {748, 746}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>
