@@ -6,7 +6,7 @@
 \use_default_options true
 \maintain_unincluded_children false
 \language ngerman
-\language_package auto
+\language_package babel
 \inputencoding auto
 \fontencoding global
 \font_roman default
@@ -61,13 +61,260 @@
 \begin_body
 
 \begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
+
+\lang english
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[scale=0.4]{UniTrier.eps}
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Huge
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+bf
+\end_layout
+
+\begin_layout Plain Layout
+
+	Bachelorarbeit
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+small
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+zur Erlangung des akademischen Grades "Bachelor of Science" im Fach Informatik
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1 cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Large
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Implementierung eines generischen Clients für iOS
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+zur Analyse von REST-Services
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+normalsize
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{2.3 cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Mario Stief
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+geboren am 23.05.1981 in Trier
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+eingereicht im Dezember 2012
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{2.3 cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Betreuer:
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Prof.
+ Dr.
+ Peter Sturm
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Lehrstuhl für Systemsoftware und Verteilte Systeme
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.4 cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Zweitgutachter:
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Prof.
+ Dr.
+ Stefan Diehl
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+
+\backslash
+Lehrstuhl für Softwaretechnik
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{page}{1}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+contentsname}{Inhaltsverzeichnis}
+\end_layout
 
 \end_inset
 
 
-\begin_inset Newpage pagebreak
+\lang ngerman
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
 \end_inset
 
 
@@ -117,8 +364,8 @@ achen.
 status open
 
 \begin_layout Plain Layout
-Quelle: TIOBE Programming Community Index for November 2012, Headline: Objective
--C on its way to become "language of the year" again
+TIOBE Programming Community Index for November 2012, Headline: Objective-C
+ on its way to become "language of the year" again
 \end_layout
 
 \end_inset
@@ -128,7 +375,7 @@ Quelle: TIOBE Programming Community Index for November 2012, Headline: Objective
 status open
 
 \begin_layout Plain Layout
-Quelle: TIOBE Programming Community Index Objective-C
+TIOBE Programming Community Index Objective-C
 \end_layout
 
 \end_inset
@@ -180,7 +427,7 @@ Als Anwendungsbeispiel für diese ersten Schritte in einer neuen Umgebung
  Programmierparadigma für Webanwendungen, welches im Grunde so alt ist wie
  das Internet selbst.
  Dieser erst 2000 in einer Dissertation eingeführte Standard beschreibt
- die Implementation eines Webservices, mit dem die bereits im HTTP-Protokoll
+ die Implementierung eines Webservices, mit dem die bereits im HTTP-Protokoll
  definierten Methoden GET, PUT, POST, DELETE und HEAD auf statistischen
  Inhalten arbeiten.
  Diese werden wiederum auf permanente URLs abgebildet.
@@ -208,7 +455,7 @@ Auf dem Weg zum funktionsfähigen Client wird zunächst ein kurzer Einblick
  eingegangen.
  Es wird erklärt, was im Genauen unter einem REST-kompatiblen Webservice
  zu verstehen ist und wie man mit diesen kommuniziert.
- Den letzten größeren Bereich stellt die Implementation der fertigen Software,
+ Den letzten größeren Bereich stellt die Implementierung der fertigen Software,
  deren Funktionalität anhand genereller Abläufe beschrieben wird.
  Weiter wird hier auf die Probleme, die sich während des Entwickelns dieser
  Arbeit ergaben, näher eingegangen.
@@ -246,15 +493,26 @@ n Erweiterungssprachen Objective-Pascal und Objective-J zu erzeugen.
 \end_layout
 
 \begin_layout Standard
-Wie aus der C-Welt bekannt, wird in einer Header-Datei mit der Endung .h
- das Interface deklariert, die Implementierungen erfolgt in der dazugehörigen
+Wie aus der C-Welt bekannt wird in einer Header-Datei mit der Endung .h das
+ Interface deklariert, die Implementierungen erfolgt in der dazugehörigen
  .m-Datei, welche Objective-C- oder einfachen C-Code enthalten kann.
  Aus Kompatibilitätsgründen lassen sich Implementierungen mit der Dateiendung
- .mm anlegen, dieser darf expliziten C++-Code enthalten, was die Weiterverwendung
+ .mm anlegen, dieser darf explizit C++-Code enthalten, was die Weiterverwendung
  von C++-Bibliotheken erlaubt.
- Statt #include sollte man bei Objective-C auf #import zurückgreifen, da
- es sicher stellt, dass jede einzubindende Datei auch nur höchstens einmal
- eingebunden wird.
+ Statt 
+\family typewriter
+\size footnotesize
+#include
+\family default
+\size default
+ sollte man bei Objective-C auf 
+\family typewriter
+\size footnotesize
+#import
+\family default
+\size default
+ zurückgreifen, da es sicher stellt, dass jede einzubindende Datei auch
+ nur höchstens einmal eingebunden wird.
 \end_layout
 
 \begin_layout Standard
@@ -281,7 +539,13 @@ In Objective-C werden keine Funktionen mehr mit Parametern aufgerufen.
  Jede Klasse muss vollständig implementiert werden, damit jederzeit Objekte
  dieser Klasse erzeugt werden können.
  Um dies zu umgehen lassen sich Protokolle deklarieren, in denen notwendige
- Methoden unter dem @required-Tag aufgelistet werden.
+ Methoden unter dem 
+\family typewriter
+\size footnotesize
+@required
+\family default
+\size default
+-Tag aufgelistet werden.
 \end_layout
 
 \begin_layout Standard
@@ -292,15 +556,29 @@ Wie in C++ lassen sich aus einer Klasse Objekte erzeugen.
  Objekt existiert, welches global verfügbar ist.
  Da ein solches Klassenobjekt ebenfalls für beliebige Nachrichten empfänglich
  ist, erfolgt das Binden seiner Methoden auch erst zur Laufzeit.
- Strings werden in Objective-C mit der Notation @”…” erzeugt.
- Ein solcher String ist ein Objekt vom Typ NSString und als solcher ebenfalls
- in der Lage, Nachrichten zu empfangen.
- Das vorangestellte @ ist ein Indikator für ein Objective-C-Objekt.
+ Strings werden in Objective-C mit der Notation 
+\shape italic
+@”…”
+\shape default
+ erzeugt.
+ Ein solcher String ist ein Objekt vom Typ 
+\shape italic
+NSString
+\shape default
+ und als solcher ebenfalls in der Lage, Nachrichten zu empfangen.
+ Das vorangestellte 
+\shape italic
+@
+\shape default
+ ist ein Indikator für ein Objective-C-Objekt.
  Wird es bei der Angabe des String weggelassen, wird der bekannte, nullterminier
 te C-String erzeugt.
  Per Vorgabe besitzen die Datentypen in Objective-C die gleiche Typisierung
  wie in C: Sie sind statisch, schwach und explizit.
- Das Konzept der dynamischen Typisierung ist mit dem typlose Datentyp id
+ Das Konzept der dynamischen Typisierung ist mit dem typlose Datentyp 
+\shape italic
+id
+\shape default
  umgesetzt, welcher einen Zeiger auf ein Objekt einer beliebigen Klasse
  repräsentiert und an den jede beliebige Nachricht gesendet werden kann.
  Ist für den tatsächlichen Typ dieses Objektes diese Methode jedoch unbekannt
@@ -343,7 +621,11 @@ C nicht mehr, denn eine Nachricht an eine Methode besteht aus dem Selektor,
  der sich aus dem Methodennamen und den Parametern zusammensetzt.
  Das Laufzeitsystem sucht bei einer eingehenden Nachricht nach einer solchen
  Methode und führt diese im Erfolgsfall aus.
- Wird keine passende Methode lokalisiert, wird ein nil zurückgeliefert.
+ Wird keine passende Methode lokalisiert, wird ein 
+\shape italic
+nil
+\shape default
+ zurückgeliefert.
  Möchte man sich absichern, lässt sich das Objekt im Voraus fragen, ob es
  eine bestimmte Nachricht versteht.
  Diese Fähigkeit der Selbstkenntnis beinhaltet ebenfalls das Ermitteln der
@@ -367,7 +649,11 @@ Dem Smalltalk-Erweiterungsanteil verdankt Objective-C die verwendete Notation
  An erster Stelle wird das Empfängerobjekt genannt, anschließend folgt der
  Selektor und gegebenenfalls der Parameter.
  Sind Sender und Empfänger der Nachricht das gleiche Objekt, verwendet man
- den Bezeichner self.
+ den Bezeichner 
+\shape italic
+self
+\shape default
+.
 \end_layout
 
 \begin_layout LyX-Code
@@ -417,9 +703,12 @@ Diese Schreibweise ist für Neulinge äußerst gewöhnungsbedürftig, da hier
  Methodennamen können in Objective-C durchaus sehr lang werden.
  Hat man sich jedoch einmal daran gewöhnt, mag man diese Notation jedoch
  nur ungern missen, denn sie fördert die Lesbarkeit und Verständlichkeit
- des Kodes ungemein.
- Die obige Methode bezeichnet man vollständig als: computeAgeFromYear:withMonth:
-andDay, was auch gleichzeitig der Selektor dieser Methode ist.
+ des Codes ungemein.
+ Die obige Methode bezeichnet man vollständig als: 
+\shape italic
+computeAgeFromYear:withMonth:andDay
+\shape default
+, was auch gleichzeitig der Selektor dieser Methode ist.
 \end_layout
 
 \begin_layout Standard
@@ -430,11 +719,28 @@ Das Minus-Präfix zu Beginn der oben stehenden Methode gibt an, dass es sich
  Methoden haben.
  Solche Klassenmethoden werden durch ein vorangestelltes Plus gekennzeichnet.
  Ein gutes Beispiel ist der zum Initialisieren gebräuchliche verkettete
- Befehl [[NSObject alloc] init], der aus den folgenden Methoden besteht:
- +(id)alloc ist die Klassenmethode, die Speicher für das Objekt reserviert
- und einen Zeiger darauf zurückliefert.
+ Befehl 
+\family typewriter
+\size footnotesize
+[[NSObject alloc] init]
+\family default
+\size default
+, der aus den folgenden Methoden besteht: 
+\family typewriter
+\size footnotesize
++(id)alloc
+\family default
+\size default
+ ist die Klassenmethode, die Speicher für das Objekt reserviert und einen
+ Zeiger darauf zurückliefert.
  Anschließend initialisiert sich das erzeugte Objekt in dem allokierten
- Speicherbereich durch den Aufruf der Instanzmethode -(id)init.
+ Speicherbereich durch den Aufruf der Instanzmethode 
+\family typewriter
+\size footnotesize
+-(id)init
+\family default
+\size default
+.
  
 \end_layout
 
@@ -445,9 +751,25 @@ Protokolle: Data Sources und Delegates
 \begin_layout Standard
 Wer in Java mit Interfaces umgehen kann, sollte keine Schwierigkeiten haben,
  sich mit der Funktionsweise von Protokollen vertraut zu machen.
- Eine Protokolldeklaration beginnt mit dem Schlüsselwort @protocol, die
- enthaltenen Methoden befinden sich entweder unter dem Tag @required oder
- unter dem Tag @optional.
+ Eine Protokolldeklaration beginnt mit dem Schlüsselwort 
+\family typewriter
+\size footnotesize
+@protocol
+\family default
+\size default
+, die enthaltenen Methoden befinden sich entweder unter dem Tag 
+\family typewriter
+\size footnotesize
+@required
+\family default
+\size default
+ oder unter dem Tag 
+\family typewriter
+\size footnotesize
+@optional
+\family default
+\size default
+.
  Bei der Deklaration der Klasse wird das Protokoll in spitzen Klammern hinter
  der Oberklasse angegeben, mehrere Protokolle werden durch Kommata voneinander
  getrennt:
@@ -479,25 +801,62 @@ Wer in Java mit Interfaces umgehen kann, sollte keine Schwierigkeiten haben,
 
 \begin_layout Standard
 Ein Konzept, welches so ebenfalls nicht bei Java oder C++ anzutreffen ist,
- sind die so genannten Delegates (vom englischen delegation: Abordnung,
- Übertragung) und die DataSources.
+ sind die so genannten 
+\shape italic
+Delegates
+\shape default
+ (vom englischen delegation: Abordnung, Übertragung) und die 
+\shape italic
+DataSources
+\shape default
+.
  Mit ihnen ist es möglich, Nachrichten an ein delegiertes Objekt weiterzuleiten,
  die in einen bestimmten Funktionalitätsbereich fallen.
- Ein Textfeld sendet nach dem Betätigen der Eingabetaste die Nachricht textField
-ShouldReturn:(UITextField *) an ihre Delegate.
- Diese Delegate kann die eigene Instanz sein oder aber ein beliebiges anderes
- Objekt, welches das Protokoll UITextFieldDelegate implementiert.
- Der Methode textFieldShouldReturn spezifiziert, was beim Betätigen der
- Eingabetaste passieren soll.
- An dieser Stelle bietet es sich beispielsweise an, mittels [textField resignFir
-stResponder] das On-Screen-Keyboard wieder zurückzuziehen und eine weitere
- Methode aufzurufen, welche auf den im Textfeld enthaltenen Text zugreift.
- Die ordnungsgemäße Durchführung wird mit einem zurückgegebenen YES bestätigt.
+ Ein Textfeld sendet nach dem Betätigen der Eingabetaste die Nachricht 
+\shape italic
+textFieldShouldReturn:(UITextField *)
+\shape default
+ an ihre 
+\shape italic
+Delegate
+\shape default
+.
+ Diese 
+\shape italic
+Delegate
+\shape default
+ kann die eigene Instanz sein oder aber ein beliebiges anderes Objekt, welches
+ das Protokoll 
+\shape italic
+UITextFieldDelegate
+\shape default
+ implementiert.
+ Der Methode 
+\shape italic
+textFieldShouldReturn
+\shape default
+ spezifiziert, was beim Betätigen der Eingabetaste passieren soll.
+ An dieser Stelle bietet es sich beispielsweise an, mittels 
+\family typewriter
+\size footnotesize
+[textField resignFirstResponder]
+\family default
+\size default
+ das On-Screen-Keyboard wieder zurückzuziehen und eine weitere Methode aufzurufe
+n, welche auf den im Textfeld enthaltenen Text zugreift.
+ Die ordnungsgemäße Durchführung wird mit einem zurückgegebenen 
+\shape italic
+YES
+\shape default
+ bestätigt.
  Ein Objekt kann nicht nur als Empfänger von Nachrichten dienen, er kann
  andersrum auch als Datenquelle fungieren.
- Implementiert es das einer Programmstruktur zugehörige DataSource-Protokoll,
- lässt es sich von dieser nutzen, um bei Laufzeit von dieser benötigte Daten
- abzufragen.
+ Implementiert es das einer Programmstruktur zugehörige 
+\shape italic
+DataSource
+\shape default
+-Protokoll, lässt es sich von dieser nutzen, um bei Laufzeit von dieser
+ benötigte Daten abzufragen.
 \end_layout
 
 \begin_layout Subsection
@@ -505,20 +864,68 @@ Properties
 \end_layout
 
 \begin_layout Standard
-Properties werden in der Headerdatei deklariert und stellen einen einfachen
- Weg dar, Accessoren zu implementieren.
+
+\shape italic
+Properties
+\shape default
+ werden in der Headerdatei deklariert und stellen einen einfachen Weg dar,
+ Accessoren zu implementieren.
  War in früheren Xcode-Versionen noch das manuelle Synthetisieren mittels
- @synthesize notwendig, werden diese durch die Deklaration eines Property
+ 
+\family typewriter
+\size footnotesize
+@synthesize
+\family default
+\size default
+ notwendig, werden diese durch die Deklaration eines 
+\shape italic
+Property
+\shape default
  automatisch generiert.
- ein @property (UITextField*)name erzeugt per default den Setter setName
- sowie den Getter name.
- Möchte man die Variable name nun setzen, werden zwei Möglichkeiten angeboten:
- den C-Weg oder die nachrichtenbasierte Objective-C-Notation.
- Ein _name.text = string wird intern in ein [_name setText:NSString] umgewandelt.
+ Ein 
+\family typewriter
+\size footnotesize
+@property (UITextField*)name
+\family default
+\size default
+ erzeugt per default den Setter 
+\shape italic
+setName
+\shape default
+ sowie den Getter 
+\shape italic
+name
+\shape default
+.
+ Möchte man die Variable 
+\shape italic
+name
+\shape default
+ nun setzen, werden zwei Möglichkeiten angeboten: den C-Weg oder die nachrichten
+basierte Objective-C-Notation.
+ Ein 
+\family typewriter
+\size footnotesize
+_name.text = string
+\family default
+\size default
+ wird intern in ein 
+\family typewriter
+\size footnotesize
+[_name setText:NSString]
+\family default
+\size default
+ umgewandelt.
  In der Umsetzung dieser Arbeit wurde konsequent die Objective-C-Notation
  verwendet.
  Wenn man es ganz genau nimmt, führt Objective-C intern den folgenden Befehl
- aus: [[self name] setText:NSString].
+ aus: 
+\family typewriter
+\size footnotesize
+[[self name] setText:NSString]
+\family default
+\size default
+.
  Der Unterstrich zeigt, dass es sich um eine Instanzvariable handelt.
  Da Apple vorangestellte Unterstriche für eigene Zwecke einsetzt, sollte
  zur Vermeidung von Verwechslungen auf die eigene Verwendung bei der Namensgebun
@@ -562,15 +969,24 @@ t sind.
  Ereignisse durchlaufen eine so genannte “Responder-Chain”, die aus unterschiedl
 ichen Klassen besteht.
  Nacheinander werden dieser eingetroffene Ereignisse entnommen und verarbeitet.
- Seit OS X 10.4/iOS 3 wurde diese Sammlung um das Core Data Framework ergänzt,
+ Seit OS X 10.4/iOS 3 wurde diese Sammlung um das Core Data-Framework ergänzt,
  einem schemabasierten Ansatz für die Umsetzung des MVC-Entwurfmusters.
  Der Model-View-Controller ist in Cocoa Touch strikt umgesetzt; Klassen
  lassen sich in der Regel eindeutig zuordnen.
-\end_layout
-
-\begin_layout Standard
-Bei den Klassennamen selbst ist auffallend, dass die meisten mit NS beginnen,
- wie zum Beispiel NSObject, NSString oder NSArray.
+ Bei den Klassennamen selbst ist auffallend, dass die meisten mit NS beginnen,
+ wie zum Beispiel 
+\shape italic
+NSObject
+\shape default
+, 
+\shape italic
+NSString
+\shape default
+ oder 
+\shape italic
+NSArray
+\shape default
+.
  Dies hat seinen Ursprung darin, dass Apple im Jahre 1996 das OpenStep-Framework
  NeXTStep aufkaufte und als Basis für Mac OS X verwendete.
  Durch die Verwendung von “Klassen-Clustern” werden viele sichtbare Klassen
@@ -578,9 +994,12 @@ Bei den Klassennamen selbst ist auffallend, dass die meisten mit NS beginnen,
  von passenden Subklassen erzeugt, von denen der Programmierer keine Kenntnis
  hat.
  Beispielsweise verlangt ein Anwendungsprogrammierer nach einer Instanz
- von NSArray, erzeugt wird jedoch in Abhängigkeit der Elemente eine Instanz
- einer Klasse, die er nicht kennt.
- 
+ von 
+\shape italic
+NSArray
+\shape default
+, erzeugt wird jedoch in Abhängigkeit der Elemente eine Instanz einer Klasse,
+ die er nicht kennt.
 \end_layout
 
 \begin_layout Section
@@ -592,13 +1011,17 @@ Xcode ist Apples integrierte Entwicklungsumgebung und steht aktuell in der
  Version 4.5.2 zur Verfügung.
  Seit der Version 4.1 lässt sich Xcode frei zugänglich im App Store herunterladen.
  In der Version 4.4 sind die SDKs für OS X 10.8 sowie für iOS 5.1 enthalten,
- Xcode 4.5 bringt die SDK für das neue iOS 6 mit.
+ Version 4.5 bringt die SDK für das neue iOS 6 mit.
  Beide benötigen mindestens OS X in der Version 10.7.4 Lion oder 10.8 Mountain
  Lion.
- Mit Xcode lassen sich OS X- oder iOS-Anwendungen entwickeln, wobei OS X-Anwendu
-ngen auf der Cocoa-API basieren; möchte man eine Anwendung für das mobile
- iOS entwickeln, so nutzt man hierfür das im vorherigen Kapitel vorgestellte
- Cocoa Touch-Framework.
+ Die Implementierung dieser Arbeit wurde mit der Version 4.4 begonnen und
+ auf 4.5 gewechselt.
+ Jede Funktionalität wurde stets sowohl für iOS 5.1 als auch für iOS 6 getestet
+ und gegebenenfalls angepasst.
+ Mit Xcode lassen sich sowohl OS X- als auch iOS-Anwendungen entwickeln,
+ wobei OS X-Anwendungen auf der Cocoa-API basieren; möchte man eine Anwendung
+ für das mobile iOS entwickeln, so nutzt man hierfür das im vorherigen Kapitel
+ vorgestellte Cocoa Touch-Framework.
  Xcode kommt mit einer Reihe von Werkzeugen - den Xcode Tools - welche die
  alltägliche Arbeit des Objective-C-Programmierers erleichtern sollen.
  Apples LLVM Compiler bietet eine Echtzeitüberprüfung des eingegebenen Codes
@@ -618,13 +1041,10 @@ ngen auf der Cocoa-API basieren; möchte man eine Anwendung für das mobile
  Es lassen sich verschiedene Hardware-Events simulieren, vom Schwenk des
  Orientation-Modus über die Betätigung der Home-Taste bis hin zu einer Speicherw
 arnung, mit welcher man die eigene Software testen kann.
- Möchte man jedoch Implementationen von spezielleren Sensoren überprüfen,
+ Möchte man jedoch Implementierungen von spezielleren Sensoren überprüfen,
  wie sie in den aktuellen Geräten eingesetzt werden, kommt man an einem
  physikalischen Gerät nicht vorbei.
-\end_layout
-
-\begin_layout Standard
-Das Interface von Xcode besteht zum einen aus dem Source Editor, welcher
+ Das Interface von Xcode besteht zum einen aus dem Source Editor, welcher
  Komfortmerkmale wie Code Completion, Syntax Highlighting und Code Folding
  bereitstellt, sowie die äußerst angenehme Echtzeitsuche nach Fehlern, Warnungen
  und anderer kontextsensitiven Informationen.
@@ -632,7 +1052,7 @@ Das Interface von Xcode besteht zum einen aus dem Source Editor, welcher
  Daneben ermöglicht der Assistant Editor über ein zweigeteiltes Fenster
  den Schnellzugriff auf Dateien, die für gewöhnlich eine hilfreiche Kombination
  mit der geöffneten Datei darstellen, zum Beispiel wird neben dem Interface
- gleich deren Implementation geöffnet.
+ gleich deren Implementierung geöffnet.
  Der Interface Builder, welcher mit Version 4.0 von den externen Xcode Tools
  in die IDE integriert wurde, ermöglicht es, äußerst komfortabel und ohne
  eine Zeile Code, die GUI der App zu designen und die einzelnen Interfacekompone
@@ -654,15 +1074,17 @@ nten untereinander zu verknüpfen und in den Programmcode einzubinden.
  auf Desktop-Systemen, sollte man hier einen entsprechend ökonomischen Programmi
 erstil pflegen und Ressourcen, die nicht mehr benötigt werden nach der Verwendun
 g wieder freigeben.
- In Xcode 4.2 wurde das Automatic Reference Counting eingeführt, um den Entwickle
-r dabei zu unterstützen.
+ In Xcode 4.2 wurde das 
+\shape italic
+Automatic Reference Counting
+\shape default
+ eingeführt, um den Entwickler dabei zu unterstützen.
  Die bislang verwendeten retain und release-Nachrichten, mit denen Speicher
  freizugeben war oder diese Freigabe verhindert werden sollte, wurden obsolet,
  wenn das Projekt mit ARC genutzt wird.
  Statt dessen übernimmt nun der Compiler die Referenzzählung und fügt dem
  Code beim Übersetzen die entsprechenden retain und release-Nachrichten
  hinzu.
- 
 \end_layout
 
 \begin_layout Section
@@ -675,17 +1097,27 @@ Ebenfalls neu hinzugekommen seit Xcode 4.2 bilden Storyboards die Grundlage
  man darauf beschränkt war, zu jedem Zeitpunkt mit je einer View zu arbeiten.
  Storyboards zeigen im Gegensatz dazu die komplette Szene an, bestehend
  aus einzelnen Views und deren Übergänge untereinander.
- Verbindungen zu anderen Views wie die Möglichkeit, diese als Delegates
- oder als DataSource zu nutzen, lassen sich realisieren, indem man ein Objekt
- bei gedrückter Steuerungs-Taste auf die gewünschte View zieht.
+ Verbindungen zu anderen Views wie die Möglichkeit, diese als 
+\shape italic
+Delegates
+\shape default
+ oder als 
+\shape italic
+DataSource
+\shape default
+ zu nutzen, lassen sich realisieren, indem man ein Objekt bei gedrückter
+ Steuerungs-Taste auf die gewünschte View zieht.
  Zieht man diese statt dessen in den Interfaceteil des Programmcodes, werden
  die entsprechenden Codefragmente erstellt, in denen man sofort mit der
- Implementation beginnen kann, ohne sich mit programmatischen Details zum
+ Implementierung beginnen kann, ohne sich mit programmatischen Details zum
  Setzen der einzelnen GUI-Elemente beschäftigen zu müssen.
  Übergänge lassen sich mit ID-Strings versehen, auf die man programmatisch
  zugreifen.
- So wird im Falle eines Überganges auf eine andere View die Methode prepareForSe
-gue mit dem entsprechenden String für diesen Übergang aufgerufen.
+ So wird im Falle eines Überganges auf eine andere View die Methode 
+\shape italic
+prepareForSegue
+\shape default
+ mit dem entsprechenden String für diesen Übergang aufgerufen.
  In dieser lassen sich Vorbereitungen für die neue Ansicht treffen - wie
  z.
  B.
@@ -696,8 +1128,16 @@ gue mit dem entsprechenden String für diesen Übergang aufgerufen.
  komplett verstecken oder man ändert die Schriftart eines Textfeldes.
  Um ein Objekt einem Container unterzuordnen lässt sich das unkompliziert
  per Drag and Drop realisieren.
- Zieht man beispielsweise eine Text View in einen Scroll View-Container
- erhält man Text, welcher sich mit einer Wischbewegung scrollen lässt.
+ Zieht man beispielsweise eine 
+\shape italic
+TextView
+\shape default
+ in einen 
+\shape italic
+ScrollView
+\shape default
+-Container erhält man Text, welcher sich mit einer Wischbewegung scrollen
+ lässt.
 \end_layout
 
 \begin_layout Standard
@@ -707,6 +1147,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename Storyboard.png
 	lyxscale 45
@@ -755,15 +1196,40 @@ rlizenz von Apple.
 \begin_layout Standard
 In einem ersten Schritt werden dort die User angelegt, welche an der Entwicklung
  und Distribution der Software beteiligt sind.
- Es stehen die vordefinierten Rollen Admin, Technical, Finance sowie Sales
+ Es stehen die vordefinierten Rollen 
+\shape italic
+Admin
+\shape default
+, 
+\shape italic
+Technical
+\shape default
+, 
+\shape italic
+Finance
+\shape default
+ sowie 
+\shape italic
+Sales
+\shape default
  zur Verfügung.
- Während der Technical ausschließlich Rechte für die Verwaltung der Apps
- bekommt, stehen dem Finance weitergehend verschiedene Rechte im Bereich
- Finanzwesen, Analyse und Vertrieb bereit, die der Technican in der Regel
- nicht benötigt.
+ Während der 
+\shape italic
+Technical
+\shape default
+ ausschließlich Rechte für die Verwaltung der Apps bekommt, stehen dem 
+\shape italic
+Finance
+\shape default
+ weitergehend verschiedene Rechte im Bereich Finanzwesen, Analyse und Vertrieb
+ bereit, die der Technican in der Regel nicht benötigt.
  Auf die Verwaltung der Apps hat er hingegen nur lesenden Zugriff, so kommen
  sich die Beiden nicht in die Quere.
- Der Rolle Sales stehen lediglich Verkauf und Verkaufsanalyse offen.
+ Der Rolle 
+\shape italic
+Sales
+\shape default
+ stehen lediglich Verkauf und Verkaufsanalyse offen.
 \end_layout
 
 \begin_layout Standard
@@ -771,20 +1237,40 @@ Abhängig vom Vertriebsmodell müssen in iTunes Connect weitere Angaben gemacht
  werden.
  Für unentgeltliche Apps ist es weder notwendig, einen Vertrag zu akzeptieren,
  noch müssen Bankdaten hinterlegt werden.
- Für weniger selbstlose Anwendungen stehen die Vertragstypen iOS Paid Applicatio
-ns sowie das auf in-App-Werbung spezialisierte iAd Network zur Verfügung.
+ Für weniger selbstlose Anwendungen stehen die Vertragstypen 
+\shape italic
+iOS Paid Applications
+\shape default
+ sowie das auf in-App-Werbung spezialisierte 
+\shape italic
+iAd Network
+\shape default
+ zur Verfügung.
  Hier sind entsprechend Vertragsbedingungen zu akzeptieren, Kontaktinformationen
  anzugeben, Landesangaben zur Versteuerung zu machen und die Bankdaten für
  den erwarteten Zahlungsverkehr zu hinterlegen.
- Um eine App direkt auf dem Gerät ausführen zu können, wird ein Development
- Certificate benötigt.
+ Um eine App direkt auf dem Gerät ausführen zu können, wird ein 
+\shape italic
+Development Certificate
+\shape default
+ benötigt.
  Das hinzuzufügende Gerät wird an den Mac angeschlossen und im Organizer
  der Entwicklerlizenz zugeordnet.
- Beim ersten Mal meldet Xcode, dass kein iOS Development Certificate vorhanden
- ist und bietet an, einen solchen von Apple anzufordern.
+ Beim ersten Mal meldet Xcode, dass kein 
+\shape italic
+iOS Development Certificate
+\shape default
+ vorhanden ist und bietet an, einen solchen von Apple anzufordern.
  Anschließend fügt er diesen automatisch der Schlüsselverwaltung hinzu und
  bietet an, das Entwicklerprofil für den Einsatz auf anderen Macs zu exportieren.
- In den Build Settings unserer App stellen wir nun die Code Signing Identity
+ In den 
+\shape italic
+Build Settings
+\shape default
+ unserer App stellen wir nun die 
+\shape italic
+Code Signing Identity
+\shape default
  auf das neu erzeugte Zertifikat um und sind nun in der Lage, das angeschlossene
  iOS-Gerät anstelle des Simulators für die Entwicklung zu nutzen.
  
@@ -797,8 +1283,8 @@ Distributionsalternative: Der Cydia Store
 \begin_layout Standard
 Zum offiziellen Vertriebsweg über den Apple App Store gibt es eine Alternative,
  über die man jedoch nur freigeschaltete “gejailbreakte” Geräte Zugriff
- haben: Der Cydia Store, der in der Regel bei einem Jailbreak gleich mitinstalli
-ert wird.
+ haben: Der Cydia Store, wird in der Regel bei einem Jailbreak gleich mitinstall
+iert.
  Mit diesem kann man sich, wie unter Linux-Systemen bekannt, mit APT-kompatiblen
  Repositorien verbinden und auf deren Angebot zugreifen.
  Wenngleich es auch illegale Repositorien gibt, die urheberrechtlich geschütztes
@@ -822,7 +1308,7 @@ ert wird.
 status open
 
 \begin_layout Plain Layout
-http://www.macports.org/
+Projektpage: http://www.macports.org
 \end_layout
 
 \end_inset
@@ -972,13 +1458,9 @@ export COPY_EXTENDED_ATTRIBUTES_DISABLE
 
 \begin_layout Standard
 Sind wir nun soweit wechseln im Terminal ins Verzeichnis 
-\begin_inset Quotes eld
-\end_inset
-
+\shape italic
 MyProgramm
-\begin_inset Quotes erd
-\end_inset
-
+\shape default
  und erzeugen das DEB-Paket mittels:
 \end_layout
 
@@ -1046,19 +1528,28 @@ key "Wikipedia - Webservice"
  RPCs (Remote Procedure Calls) - oder den einfacheren XML-RPC.
  Diese Webservices arbeiten, wie der Name bereits ausdrückt, mit HTTP POST-Reque
 sts, um auf einem meist entfernten Computer eine Methode aufzurufen.
- Die Kommunikationssprache ist die XML-basierte Webservices Description
- Language oder kurz WSDL.
+ Die Kommunikationssprache ist die XML-basierte 
+\shape italic
+Webservices Description Language
+\shape default
+ oder kurz WSDL.
 \end_layout
 
 \begin_layout Standard
 Im Jahr 2000 führte Roy Fielding, einer der Autoren der HTTP-Spezifikationen
  1.0 und 1.1 und Mitbegründer des Apache HTTP Projektes, in seiner Dissertation
- “Architectural Styles and the Design of Network-based Software Architectures”
- den Begriff REpresentational State Transfer ein und definierte ihn als
- einen “Architekturstil für verteilte hypermediale Systeme, der die Richtlinien
- für die Softwareentwicklung spezifiziert, welche sowohl REST selbst leiten
- als auch die Interaktionsvoraussetzungen, die so gewählt werden, dass sie
- diesen Richtlinien entsprechen
+ 
+\shape italic
+Architectural Styles and the Design of Network-based Software Architectures
+\shape default
+ den Begriff 
+\shape italic
+REpresentational State Transfer
+\shape default
+ ein und definierte ihn als einen “Architekturstil für verteilte hypermediale
+ Systeme, der die Richtlinien für die Softwareentwicklung spezifiziert,
+ welche sowohl REST selbst leiten als auch die Interaktionsvoraussetzungen,
+ die so gewählt werden, dass sie diesen Richtlinien entsprechen
 \begin_inset Quotes erd
 \end_inset
 
@@ -1075,7 +1566,11 @@ key "Dissertation Fielding"
  funktionieren sollte.
  Fielding bezeichnet REST als eine hybride Architektur, die von vielen verschied
 enen Netzwerk basierten Architekturstilen abgeleitet ist und bezeichnet
- Seiten, die mit der Architektur REST kompatibel ist, als RESTful.
+ Seiten, die mit der Architektur REST kompatibel ist, als 
+\shape italic
+RESTful
+\shape default
+.
 \end_layout
 
 \begin_layout Standard
@@ -1087,8 +1582,11 @@ Den Kern dieses Architekturmodells bilden so genannte Ressourcen, weswegen
 nfragen auslösen, gebräuchliche Ressourcen.
  Hervorragende Kandidaten stellen auch die Entitäten in einem Datenmodell:
  Für einen Onlineshop bieten sich die Entitäten Artikel, Kunde und Bestellung
- an, aber auch “Bestellungen des Kunden mit der ID 42 aus Jahr 2010“ kann
- eine valide Ressource sein und sollte ebenfalls eine möglichst langlebige
+ an, aber auch 
+\shape italic
+Bestellungen des Kunden mit der ID 42 aus Jahr 2010
+\shape default
+ kann eine valide Ressource sein und sollte ebenfalls eine möglichst langlebige
  und stabile URL erhalten.
  Ist man sich bei der Wahl der Ressourcen nicht ganz sicher so gilt: Im
  Zweifel besser zu viele Ressourcen als zu wenige.
@@ -1119,13 +1617,13 @@ Adressierbarkeit
 \begin_layout Standard
 SOAP Webservices wie auch viele HTML-Seiten bilden ihre Funktionalität auf
  eine einzelne URL ab.
- Das sieht zwar in der Adresszeile “sauber” aus, bringt jedoch Nachteile
- mit sich.
+ Das sieht zwar in der Adresszeile sauber aus, bringt jedoch Nachteile mit
+ sich.
  Weder lassen sich gezielt Inhalte als Lesezeichen ablegen, noch kann man
- mal eben dem Freund/Kommilitonen einen Link auf ein Produkt zusenden und
- auch Suchmaschinen haben es hier schwer, denn auch diese benötigen zum
- direkten Zugriff auf Unterbereiche einen konkreten Zugriffspfad.
- RESTful gestaltete Anwendungen bieten diese geforderte Adressierbarkeit,
+ mal eben dem Freund einen Link auf ein Produkt zusenden und auch Suchmaschinen
+ haben es hier schwer, denn auch diese benötigen zum direkten Zugriff auf
+ Unterbereiche einen konkreten Zugriffspfad.
+ RESTful gestaltete Anwendungen bieten die geforderte Adressierbarkeit,
  ohne dass Einschränkungen in Kauf genommen werden müssen.
  Durch die Verwendung einer Firewall beispielsweise ist es ohne Weiteres
  möglich, gezielten Zugriff auf eine Ressource zu unterbinden.
@@ -1141,9 +1639,19 @@ Unterschiedliche Repräsentationen
 Von den hinter einer URL bereitgestellten Diensten lassen sich unterschiedliche
  Darstellungen anfordern.
  Diese bezeichnet man als die Repräsentation dieser Ressource.
- Über die im HTTP-Protokoll enthaltenen Accept- und Content-Type-Header
- unterstützt das Internet ebenfalls bereits “von Haus aus” die Content Negotiati
-on, mit der sich unterschiedliche Repräsentationen ein- und derselben Ressource
+ Über die im HTTP-Protokoll enthaltenen 
+\shape italic
+Accept
+\shape default
+- und 
+\shape italic
+Content-Type
+\shape default
+-Header unterstützt das Internet ebenfalls bereits die 
+\shape italic
+Content Negotiation
+\shape default
+, mit der sich unterschiedliche Repräsentationen ein- und derselben Ressource
  anzeigen lassen.
  Hierbei dürfen sich die Clients das Format anfordern, welches am ehesten
  ihren Bedürfnissen entspricht: Ein Browser zeigt sich meist mit einer HTML-Repr
@@ -1182,8 +1690,31 @@ Operationen
 \begin_layout Standard
 Damit RESTful gestaltete Webservices miteinander kommunizieren können muss
  eine gemeinsame Sprache gesprochen werden.
- Das HTTP-Protokoll kennt unter anderem die Optionen GET, POST, PUT, DELETE,
- HEAD und OPTIONS.
+ Das HTTP-Protokoll kennt unter anderem die Optionen 
+\shape italic
+GET
+\shape default
+, 
+\shape italic
+POST
+\shape default
+, 
+\shape italic
+PUT
+\shape default
+, 
+\shape italic
+DELETE
+\shape default
+, 
+\shape italic
+HEAD
+\shape default
+ und 
+\shape italic
+OPTIONS
+\shape default
+.
  Da auf jede REST-Ressource stets die gleichen Operationen angewandt werden
  sollen, definiert dieser Methodensatz gleichzeitig die vom REST-Architekturstil
  geforderten wohldefinierten Operationen.
@@ -1192,26 +1723,53 @@ Damit RESTful gestaltete Webservices miteinander kommunizieren können muss
 \end_layout
 
 \begin_layout Standard
-Die GET-Methode hat hierbei “sicher” zu sein: Es darf nur gelesen werden,
- so dass der Client jederzeit bedenkenlos ein GET auf eine Ressource anwenden
- darf.
- Weiterhin diktiert die HTTP-Spezifikation die idempotente Implementation
- von GET, PUT und DELETE.
+Die 
+\shape italic
+GET
+\shape default
+-Methode hat hierbei sicher zu sein: Es darf nur gelesen werden, so dass
+ der Client jederzeit bedenkenlos ein 
+\shape italic
+GET
+\shape default
+ auf eine Ressource anwenden darf.
+ Weiterhin diktiert die HTTP-Spezifikation die idempotente Implementierung
+ von 
+\shape italic
+GET
+\shape default
+, 
+\shape italic
+PUT
+\shape default
+ und 
+\shape italic
+DELETE
+\shape default
+.
  Wird eine dieser Operationen mehrfach ausgeführt, wird stets das gleiche
  Ergebnis erwartet.
  Ist sich der Client unsicher, ob sein Request erfolgreich abgearbeitet
  wurde, sollte er ihn wiederholen dürfen, ohne dass Seiteneffekte erwartet
  werden.
- HEAD und OPTIONS finden in REST eher selten Verwendung.
+ 
+\shape italic
+HEAD
+\shape default
+ und 
+\shape italic
+OPTIONS
+\shape default
+ finden in REST eher selten Verwendung.
  Die REST-konforme Verwendung der Methoden in einem kurzen Überblick:
 \end_layout
 
 \begin_layout Description
-GET: Mit GET wird die Repräsentation der Ressource vom Server angefordert.
+GET fordert die Repräsentation der Ressource vom Server an.
 \end_layout
 
 \begin_layout Description
-POST: POST fügt eine neue Unterressource zur angegebenen Ressource ein.
+POST fügt eine neue Unterressource zur angegebenen Ressource ein.
  Da die Unterressource vorher noch nicht existierte, wird die URL zu dieser
  vom Server erzeugt und dem Clienten in der Response zurückgeliefert.
  Über diese Verwendung hinaus kann POST auch für Operationen verwendet werden,
@@ -1219,25 +1777,25 @@ POST: POST fügt eine neue Unterressource zur angegebenen Ressource ein.
 \end_layout
 
 \begin_layout Description
-PUT: Die in PUT enthaltene Ressource wird angelegt.
+PUT legt die ihr enthaltenen Ressource an.
  Existiert sie bereits wird sie wie im Body angegeben abgeändert.
 \end_layout
 
 \begin_layout Description
-DELETE: DELETE veranlasst das Entfernen der Ressource.
+DELETE entfernt die angegebene Ressource.
 \end_layout
 
 \begin_layout Description
-HEAD: Die Metadaten einer Ressource lassen sich mit HEAD abfragen.
+HEAD fragt die Metadaten einer Ressource ab.
 \end_layout
 
 \begin_layout Description
-OPTIONS: Weiß man nicht, welche Methoden auf einer Ressource angewendet
- werden dürfen, lässt sich das mit OPTIONS in Erfahrung bringen.
+OPTIONS bringt in Erfahrung, welche Methoden auf eine Ressource angewendet
+ werden dürfen.
 \end_layout
 
 \begin_layout Standard
-Clientseitig sollte demnach das folgende Protokoll anwendbar sein:
+Clientseitig sollte das folgende Protokoll anwendbar sein:
 \end_layout
 
 \begin_layout LyX-Code
@@ -1249,31 +1807,31 @@ Clientseitig sollte demnach das folgende Protokoll anwendbar sein:
 \begin_layout LyX-Code
 
 \size footnotesize
-- Resource(URI u)
+- (NSURLResponse)get
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-- Response get()
+- (NSURLResponse)post:(NSURLRequest *)request
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-- Response post(Request r)
+- (NSURLResponse)put:(NSURLRequest *)request
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-- Response put(Request r)
+- (NSURLResponse)delete
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-- Response delete()
+- (NSURLResponse)head
 \end_layout
 
 \begin_layout LyX-Code
@@ -1283,14 +1841,36 @@ Clientseitig sollte demnach das folgende Protokoll anwendbar sein:
 \end_layout
 
 \begin_layout Standard
-Die (vereinfachte) Implementation der Anlage eines Kundenkontos im Server
- kann wie folgt aussehen:
+Die (vereinfachte) Implementierung der Anlage eines Kundenkontos im Server
+ kann in etwa wie folgt aussehen:
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-class Customers : Resource {
+@interface Customers : NSObject <Resource> {
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   NSURL *resource;
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+}
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+@implementation Customers {
 \end_layout
 
 \begin_layout LyX-Code
@@ -1302,19 +1882,51 @@ class Customers : Resource {
 \begin_layout LyX-Code
 
 \size footnotesize
-   Response post(Request r){
+   (NSURLResponse)post:(NSURLRequest *)request {
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-      id = createCustomer(r)
+      NSInteger customerId = [self createCustomer:request];
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-      return new Response(201, r)
+      ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      return [initWithURL:newResource
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+               statusCode:201
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+              HTTPVersion:@
+\begin_inset Quotes erd
+\end_inset
+
+HTTP/1.1
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+             headerFields:headerFields];
 \end_layout
 
 \begin_layout LyX-Code
@@ -1340,9 +1952,20 @@ Hypermedia
 \end_layout
 
 \begin_layout Standard
-Das Kofferwort Hypermedia ist eine Zusammensetzung aus den Begriffen “Hypertext”
- und “Multimedia” und weist auf die Verwendung von Hypertext mit explizitem
- Akzent auf den multimedialen Gesichtspunkt hin.
+Das Kofferwort 
+\shape italic
+Hypermedia
+\shape default
+ ist eine Zusammensetzung aus den Begriffen 
+\shape italic
+Hypertext
+\shape default
+ und 
+\shape italic
+Multimedia
+\shape default
+ und weist auf die Verwendung von Hypertext mit starkem Akzent auf den multimedi
+alen Gesichtspunkt hin.
  Repräsentationen enthalten in der Regel neben Informationen selbst wieder
  Links zu anderen Ressourcen.
  Das macht das Internet zu dem, was es ist: Eine stark vernetzte Verbindungsstru
@@ -1373,9 +1996,17 @@ Wie so oft lässt sich das Prinzip von REST am Besten an einem Bespiel zeigen.
  Wir betrachten die Schnittstelle für den fiktiven Onlineshop smartphoneseppel.de.
  Ein Neukunde möchte sich ein Smartphone bestellen und legt sich zu diesem
  Zweck ein Kundenkonto an.
- Er wechselt auf die Seite des Onlineshops (GET http://www.smartphoneseppel.de)
- und teilt dem Server des Onlineshops mit einem POST /customer seine Registrieru
-ngsabsicht mit.
+ Er wechselt auf die Seite des Onlineshops mit 
+\family typewriter
+\size footnotesize
+GET http://www.smartphoneseppel.de
+\family default
+\size default
+ und teilt dem Server des Onlineshops mit einem 
+\shape italic
+POST /customer
+\shape default
+ seine Registrierungsabsicht mit.
  Im Requestbody stehen seine Daten, die er für die Registrierung angegeben
  hat.
  Der Server bestätigt mit der Response
@@ -1415,17 +2046,48 @@ http://www.smartphoneseppel.de/customer/1337
 die erfolgreiche Anlage des Kundenkontos und teilt die vergebene Kundennummer
  mit.
  Die Bestandteile einer HTTP-Response sind stets der Statuscode - an dieser
- Stelle weist der Statuscode 201 CREATED darauf hin, dass eine neue Ressource
- angelegt wurde -, die Art des zurückgelieferten Contents sowie der Content
- selbst.
- Nun kann sich der Kunde mit GET /customer/1337 sein Kundenkonto anzeigen
- lassen.
- Eine Änderung ist mit einem PUT /customer/1337 möglich.
+ Stelle weist der Statuscode 
+\shape italic
+201 CREATED
+\shape default
+ darauf hin, dass eine neue Ressource angelegt wurde -, die Art des zurückgelief
+erten Contents sowie der Content selbst.
+ Nun kann sich der Kunde mit 
+\family typewriter
+\size footnotesize
+GET /customer/1337
+\family default
+\size default
+ sein Kundenkonto anzeigen lassen.
+ Eine Änderung ist mit einem 
+\family typewriter
+\size footnotesize
+PUT /customer/1337
+\family default
+\size default
+ möglich.
  Möchte er sich den Artikel Samsung Galaxy S3 anzeigen lassen kann er das
- per GET /article/galaxy_s3.
- Angenommen es gefällt ihm, so packt er es sich mit einem PUT /shoppingcart/1337
-&article=galaxy_s3 in seinen Warenkorb.
- Zur Sicherheit überprüft er nun dessen Inhalt mit GET /shoppingcart/1337.
+ per 
+\family typewriter
+\size footnotesize
+GET /article/galaxy_s3
+\family default
+\size default
+.
+ Angenommen es gefällt ihm, so packt er es sich mit einem 
+\family typewriter
+\size footnotesize
+PUT /shoppingcart/1337&article=galaxy_s3
+\family default
+\size default
+ in seinen Warenkorb.
+ Zur Sicherheit überprüft er nun dessen Inhalt mit 
+\family typewriter
+\size footnotesize
+GET /shoppingcart/1337
+\family default
+\size default
+.
  Die Antwort des Onlineshops könnte wie folgt aussehen:
 \end_layout
 
@@ -1520,22 +2182,57 @@ Content-Type: text/xml
 \end_layout
 
 \begin_layout Standard
-Kunde 1337 ist mit dem Ergebnis einverstanden und sendet mit POST /shoppingcart/
-1337 seine Bestellung ab.
- Der Server quittiert ihm dies mit einem /shoppingcart/1337/open, was auf
- den offenen Bestellstatus hinweist.
+Kunde 1337 ist mit dem Ergebnis einverstanden und sendet mit 
+\family typewriter
+\size footnotesize
+POST /shoppingcart/1337
+\family default
+\size default
+ seine Bestellung ab.
+ Der Server quittiert ihm dies mit einem 
+\family typewriter
+\size footnotesize
+/shoppingcart/1337/open
+\family default
+\size default
+, was auf den offenen Bestellstatus hinweist.
  Nun erscheint jedoch unerwartet das iPhone 5 und der Kunde überlegt es
  sich anders.
- Er überprüft, mit einem GET /customer/1337/orders seinen Bestellstatus
- und hat Glück, die Bestellung wurde noch nicht versendet.
- Er storniert die offene Bestellung mit DELETE /customer/1337/orders/open/2012-0
-9-11_001 und legt sich statt dessen mit PUT /shoppingcart/1337&article=iphone_5
+ Er überprüft, mit einem 
+\family typewriter
+\size footnotesize
+GET /customer/1337/orders
+\family default
+\size default
+ seinen Bestellstatus und hat Glück, die Bestellung wurde noch nicht versendet.
+ Er storniert die offene Bestellung mit 
+\family typewriter
+\size footnotesize
+DELETE /customer/1337/orders/open/2012-09-11_001
+\family default
+\size default
+ und legt sich statt dessen mit 
+\family typewriter
+\size footnotesize
+PUT /shoppingcart/1337&article=iphone_5
+\family default
+\size default
  den neuen Artikel in seinen Korb.
 \end_layout
 
 \begin_layout Standard
-Der Onlineshop seinerseits entfernt nach dem Release des iPhone 5 mit DELETE
- /article/iphone_4s das iPhone 4S aus deinem System und legt mit PUT /article
+Der Onlineshop seinerseits entfernt nach dem Release des iPhone 5 mit 
+\family typewriter
+\size footnotesize
+DELETE /article/iphone_4s
+\family default
+\size default
+ das iPhone 4S aus deinem System und legt mit 
+\family typewriter
+\size footnotesize
+PUT /article
+\family default
+\size default
  das neue Modell an.
  Der Body könnte wie folgt aussehen:
 \end_layout
@@ -1585,13 +2282,17 @@ Der Onlineshop seinerseits entfernt nach dem Release des iPhone 5 mit DELETE
 \begin_layout Standard
 Er sendet Kunde 1337 das gewünschte iPhone 5 und verschiebt seine Bestellung
  vom Status offen nach versendet mit 
-\shape italic
+\family typewriter
+\size footnotesize
 DELETE /customer/1337/orders/open/2012-09-12_001
-\shape default
+\family default
+\size default
  und 
-\shape italic
+\family typewriter
+\size footnotesize
 POST /customer/1337/orders/shipped/2012-09-12_001
-\shape default
+\family default
+\size default
 .
 \end_layout
 
@@ -1603,7 +2304,7 @@ XML
 Die Codebeispiele im vorhergehenden Kapitel zeigen bereits, dass sich hier
  zur Kommunikation eines Austauschformates bedient wird, welches sowohl
  von Menschen gelesen als auch von Maschinen unabhängig von Plattform und
- Implementation geparst werden kann.
+ Implementierung geparst werden kann.
  XML steht für Extensible Markup Language (zu Deutsch: erweiterbare Auszeichnung
 ssprache) und verwendet das - im einfachsten Fall im ASCII-Format kodierte
  - Textformat, um über eine Metasprache strukturiert Informationen verfügbar
@@ -1740,15 +2441,31 @@ Ein einfaches, wohlgeformtes XML-Dokument könnte wie folgt aussehen:
 \end_layout
 
 \begin_layout Standard
-“Wohlgeformt” bedeutet im Kontext eines XML-Dokumentes, dass exakt ein Wurzelele
-ment vorhanden ist.
+
+\shape italic
+Wohlgeformt
+\shape default
+ bedeutet im Kontext eines XML-Dokumentes, dass exakt ein Wurzelelement
+ vorhanden ist.
  Elemente sind Informationsträger, ganz gleich welcher Art, sie können Texte
  oder weitere Elemente enthalten oder eine Kombination aus beiden.
  Die Elementbezeichnung ist frei wählbar.
  Verfügt ein Element über einen Inhalt, so wird dieser mit einem Start-
- sowie mit einem Endelement versehen: <tag>content</tag>.
+ sowie mit einem Endelement versehen: 
+\family typewriter
+\size footnotesize
+<tag>content</tag>
+\family default
+\size default
+.
  Steht ein Element ohne Inhalt, so kann das Element den Ein- und den Auszeichner
- in sich vereinen: <no_content/>.
+ in sich vereinen: 
+\family typewriter
+\size footnotesize
+<no_content/>
+\family default
+\size default
+.
  In einem Einzeichner oder einem leeren Tag können Attribute enthalten sein,
  die aus einem Schlüssel/Wert-Paar bestehen.
  Mehrere gleichlautende Elemente nebeneinander sind kein Problem, mehrere
@@ -1782,15 +2499,26 @@ XML ist nicht immer der ideale Weg seine Daten zu strukturieren.
  Somit kommen in JSON Key/Value-Records und Arrays zum Tragen - Strukturen,
  von denen es undenkbar ist, dass man sie in einer halbwegs modernen Programmier
 sprache nicht in irgendeiner Form wiederfindet.
- Ein Objekt folgt in JSON der Syntax { String : Value }.
- Mehrere solcher Paare werden durch Kommata voneinander getrennt: { String1
- : Value1, String2 : Value2, ...
- }.
+ Ein Objekt folgt in JSON der Syntax 
+\shape italic
+{ String : Value }
+\shape default
+.
+ Mehrere solcher Paare werden durch Kommata voneinander getrennt: 
+\shape italic
+{ String1 : Value1, String2 : Value2, ...
+ }
+\shape default
+.
  Leerzeichen können zwischen den einzelnen JSON-Elementen der Übersichtlichkeit
  wegen beliebig gesetzt werden.
  Wie aus den meisten Programmiersprachen bekannt, kennzeichnet die eckige
- Klammer ein Array: [ Value1, Value2, Value3, ...
- ].
+ Klammer ein Array: 
+\shape italic
+[ Value1, Value2, Value3, ...
+ ]
+\shape default
+.
  Ein Wert kann hierbei ein oben genanntes String/Value-Objekt sein, aber
  auch Strings, Zahlen oder die boolschen Werte true und false sind möglich.
  Darüber hinaus sind auch null und weitere Arrays zulässige Werte.
@@ -2039,7 +2767,7 @@ vip
 \end_layout
 
 \begin_layout Chapter
-Implementation
+Implementierung
 \end_layout
 
 \begin_layout Section
@@ -2049,11 +2777,25 @@ Ein erster Überblick
 \begin_layout Standard
 Da es sich um eine iOS-App handelt und als solche intuitiv sein und nicht
  mit Optionsvielfalt erschlagen sollte, habe ich mich für ein einfaches
- Single View Application-Template und gegen einen NavigationController entschied
-en.
+ 
+\shape italic
+Single View Application
+\shape default
+-Template und gegen einen 
+\shape italic
+NavigationController
+\shape default
+ entschieden.
  Erzeugt man ein Projekt, liefert Xcode bereits einige Template-Dateien,
- in denen man sofort losprogrammieren darf, dazu gehören der ViewController
- und das MainStoryboard.
+ in denen man sofort losprogrammieren darf, dazu gehören der 
+\shape italic
+ViewController
+\shape default
+ und das 
+\shape italic
+MainStoryboard
+\shape default
+.
 \end_layout
 
 \begin_layout Standard
@@ -2093,15 +2835,37 @@ Verwendete Klassen in UML-Notation
 \end_layout
 
 \begin_layout Standard
-Der ViewController ist hierbei die Initialisierungs-View und das zentrale
- Bedieninstrument dieser App.
- Die Implementation jeder View gehört in eine eigene Datei, was den Klassen
- HeaderKeysViewController, ResourcesTableViewController sowie LogOutputViewContr
-oller ihre Existenzberechtigung verleiht.
- Keine eigene View besitzt der XMLParser, dessen Funktionalität sich jedoch
- hervorragend als autonome Klasse ausgliedern lies.
- HistoryElement ist die Implementation einer URL-History in Form einer doppelt
- verketteten linearen Liste.
+Der 
+\shape italic
+ViewController
+\shape default
+ ist hierbei die Initialisierungs-View und das zentrale Bedieninstrument
+ dieser App.
+ Jede View gehört in eine eigene Klasse, was somit den Klassen 
+\shape italic
+HeaderKeysViewController
+\shape default
+, 
+\shape italic
+ResourcesTableViewController
+\shape default
+ sowie 
+\shape italic
+LogOutputViewController
+\shape default
+ ihre Existenzberechtigung verleiht.
+ Keine eigene View besitzt der 
+\shape italic
+XMLParser
+\shape default
+, dessen Funktionalität sich jedoch hervorragend als autonome Klasse ausgliedern
+ lies.
+ 
+\shape italic
+HistoryElement
+\shape default
+ ist die Implementierung einer URL-History in Form einer doppelt verketteten
+ linearen Liste.
 \end_layout
 
 \begin_layout Section
@@ -2109,47 +2873,115 @@ Hauptklasse: ViewController
 \end_layout
 
 \begin_layout Standard
-Der ViewController als unsere Basisklasse erbt vom Typ UIViewController,
- welche das fundamentelle View-Management-Modell für alle iOS Applikationen
+Der 
+\shape italic
+ViewController
+\shape default
+ als unsere Basisklasse erbt vom Typ 
+\shape italic
+UIViewController
+\shape default
+, welche das fundamentelle View-Management-Modell für alle iOS Applikationen
  stellt.
- Seine Oberklasse UIResponder definiert das Interface zum Umgang mit Events
- und erbt selbst direkt von NSObject, der Wurzelklasse aller Objective-C-Klassen.
+ Seine Oberklasse 
+\shape italic
+UIResponder
+\shape default
+ definiert das Interface zum Umgang mit Events und erbt selbst direkt von
+ 
+\shape italic
+NSObject
+\shape default
+, der Wurzelklasse aller Objective-C-Klassen.
  Er wird uns von Xcode zu Projektbeginn bereitgestellt und fügt die Methoden
- viewDidLoad, viewDidUnload mit je einer kurzen Beschreibung ein sowie die
- Methode shouldAutorotateToInterfaceOrientation, mit der sich der Landscape
- Orientation-Modus ein- und ausschalten lässt.
+ 
+\shape italic
+viewDidLoad
+\shape default
+, 
+\shape italic
+viewDidUnload
+\shape default
+ mit je einer kurzen Beschreibung ein sowie die Methode 
+\shape italic
+shouldAutorotateToInterfaceOrientation
+\shape default
+, mit der sich der Landscape Orientation-Modus ein- und ausschalten lässt.
  Letztere sorgt dafür, dass sich der Bildschirminhalt mitdreht, wenn die
  Lagesensoren des iPads ein Kippen des Gerätes erkennen.
  Aufgrund des fehlenden NavigationControllers muss jede weitere View ihr
  aus erreichbar sein.
- Die View beinhaltet mehrere Textfelder und implementiert demnach das UITextFiel
-dDelegate-Protokoll.
+ Die View beinhaltet mehrere Textfelder und implementiert demnach das 
+\shape italic
+UITextFieldDelegate
+\shape default
+-Protokoll.
  Dieses Protokoll definiert die darin möglichen Nachrichten, die ein Textfeld
- an seine Delegate-Klasse sendet, als Teil der Textverarbeitung.
- In der ViewController wird beispielsweise die im Protokoll enthaltene Methode
- textFieldShouldReturn so implementiert, dass nach dem Druck der Eingabetaste
- auf der On Screen-Tastatur das Keyboard wieder vom Bildschirm ausgeblendet
- wird.
+ als Teil der Textverarbeitung an seine 
+\shape italic
+Delegate
+\shape default
+-Klasse sendet.
+ In der 
+\shape italic
+ViewController
+\shape default
+ wird beispielsweise die im Protokoll enthaltene Methode 
+\shape italic
+textFieldShouldReturn
+\shape default
+ so implementiert, dass nach dem Druck der Eingabetaste auf der On Screen-Tastat
+ur das Keyboard wieder vom Bildschirm ausgeblendet wird.
  Sofern das URL-Feld das gerade aktive Textfeld war wird anschließend die
  Methode go aufgerufen, was den gleichen Effekt hat wie das Berühren des
  Go-Buttons oben rechts am Bildschirm.
  Für das Textfeld, welches diese Methode aufrufen möchte, muss zwingend
  eine Delegate spezifiziert werden.
- Dazu wird im Storyboard bei gedrückter Strg-Taste eine Verbindung vom Textfeld
- (hier: dem UITextField *url) zum Controller gezogen und das Outlet delegate
+ Dazu wird im Storyboard bei gedrückter Strg-Taste eine Verbindung vom URL-Textf
+eld zum Controller gezogen und das Outlet 
+\shape italic
+delegate
+\shape default
  ausgewählt.
  Das Interface des entsprechenden Controllers wird automatisch um die entspreche
 nde Deklaration des Protokolls erweitert.
- Der programmatische Weg wäre das manuelle Setzen der Delegate mittels [_url
- setDelegate:self];.
- Noch einmal zur Erinnerung: url wird als property im Interface angegeben
- und es werden standardmäßig die Accessoren generiert.
- Der Zugriff auf url über den Getter erfolgt über die Instanzvariable _url.
+ Der programmatische Weg wäre das manuelle Setzen der Delegate mittels 
+\family typewriter
+\size footnotesize
+[_url setDelegate:self]
+\family default
+\size default
+.
+ Noch einmal zur Erinnerung: 
+\family typewriter
+\size footnotesize
+url
+\family default
+\size default
+ wird als 
+\shape italic
+property
+\shape default
+ im Interface deklariert und deshalb werden standardmäßig die Accessoren
+ generiert.
+ Der Zugriff auf 
+\family typewriter
+\size footnotesize
+url
+\family default
+\size default
+ über den Getter erfolgt über die Instanzvariable 
+\family typewriter
+\size footnotesize
+_url
+\family default
+\size default
+.
 \end_layout
 
 \begin_layout Standard
-Beispielhafte Implementation der Methode textFieldShouldReturn im ViewController
-:
+Beispielhafte Implementierung der Methode textFieldShouldReturn im ViewControlle
+r:
 \end_layout
 
 \begin_layout LyX-Code
@@ -2225,27 +3057,88 @@ Beispielhafte Implementation der Methode textFieldShouldReturn im ViewController
 \end_layout
 
 \begin_layout Standard
-Weitere Elemente in dieser View, die eine Delegate benötigen, sind zum einen
- die PickerView links oben, in der die zu verwendende HTTP-Methode ausgewählt
- wird sowie die TableView auf der rechten Seite, in der sich Schlüssel/Wert-Tupe
-l aufnehmen lassen.
+Weitere Elemente in dieser View, die eine 
+\shape italic
+Delegate
+\shape default
+ benötigen, sind zum einen die 
+\shape italic
+PickerView
+\shape default
+ links oben, in der die zu verwendende HTTP-Methode ausgewählt wird sowie
+ die 
+\shape italic
+TableView
+\shape default
+ auf der rechten Seite, in der sich Schlüssel/Wert-Tupel aufnehmen lassen.
  Diese werden bei einem PUT oder einem POST automatisch als Header hinzugefügt.
  Diese beiden Komponenten benötigen nicht nur ein Objekt, dem sie Nachrichten
  übermitteln können, die im weiteren Programmverlauf etwas anstoßen.
  Beide benötigen darüber hinaus ebenfalls ein Objekt, bei dem sie Daten
  abfragen dürfen, die sie für ihre eigene Funktion benötigen.
- Das DataSource-Objekt liefert als Antwort auf die im Protokoll deklarierten
- Nachrichten, die es von der PickerView oder der TableView empfängt, die
- benötigten Daten zurück.
- Oft handelt es sich dabei bei der Delegate und der DataSource um ein- und
- dasselbe Objekt, daher implementiert der ViewController sowohl die Delegate-Pro
-tokolle UIPickerViewDelegate und UITableViewDelegate als auch die DataSource-Pro
-tokolle UIPickerViewDataSource und UITableViewDataSource.
+ Das 
+\shape italic
+DataSource
+\shape default
+-Objekt liefert als Antwort auf die im Protokoll deklarierten Nachrichten,
+ die es von der 
+\shape italic
+PickerView
+\shape default
+ oder der 
+\shape italic
+TableView
+\shape default
+ empfängt, die benötigten Daten zurück.
+ Oft handelt es sich dabei bei der 
+\shape italic
+Delegate
+\shape default
+ und der 
+\shape italic
+DataSource
+\shape default
+ um ein- und dasselbe Objekt, daher implementiert der 
+\shape italic
+ViewController
+\shape default
+ sowohl die 
+\shape italic
+Delegate
+\shape default
+-Protokolle 
+\shape italic
+UIPickerViewDelegate
+\shape default
+ und 
+\shape italic
+UITableViewDelegate
+\shape default
+ als auch die 
+\shape italic
+DataSource
+\shape default
+-Protokolle 
+\shape italic
+UIPickerViewDataSource
+\shape default
+ und 
+\shape italic
+UITableViewDataSource
+\shape default
+.
 \end_layout
 
 \begin_layout Standard
-Auf die Anfrage der PickerView nach der Anzahl der Spalten reagiert das
- ViewController-Objekt mit der folgenden Methode:
+Auf die Anfrage der 
+\shape italic
+Picker
+\shape default
+View nach der Anzahl der Spalten reagiert das 
+\shape italic
+ViewController
+\shape default
+-Objekt mit der folgenden Methode:
 \end_layout
 
 \begin_layout LyX-Code
@@ -2289,7 +3182,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ViewController nach geparster XML-Response.
+ViewController nach geparster XML-Response
 \end_layout
 
 \end_inset
@@ -2329,7 +3222,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ViewController im Landscape-Modus.
+ViewController im Landscape-Modus
 \end_layout
 
 \end_inset
@@ -2351,11 +3244,12 @@ Beim Senden eines Request passiert Folgendes: Im URL-Textfeld ist die Adresse
  einzugeben, zu welcher die Request gesendet werden soll; im linken oberen
  Picker wird die HTTP-Methode ausgewählt.
  Das Textfeld direkt unter dem Picker bietet die Möglichkeit, zusätzliche
- Methoden in den Picker aufzunehmen, beispielsweise ein OPTIONS.
+ Request-Methoden aufzunehmen wie beispielsweise OPTIONS, das standardmäßig
+ nicht enthalten ist.
  Soll ein PUT- oder ein POST-Request versendet werden, so wird der im Body-Berei
 ch angezeigte Text des aktuell aktiven Tabs im Output-Fenster (Request/Response/
 Parsed) dem Request als Body hinzugefügt.
- Dieser Textbereich ist aus diesem Grund bearbeitbar.
+ Dieser Textbereich ist aus diesem Grund vom Anwender bearbeitbar.
  Es sollte natürlich niemals der Parsed-Tab aktiv sein, da dieser aufbereitete
  Daten enthält und keinen gültigen JSON- oder XML-Code.
  Der angefragte Server wird diesen Text wahrscheinlich nicht interpretieren
@@ -2363,8 +3257,11 @@ Parsed) dem Request als Body hinzugefügt.
  Nach einem PUT- oder einem POST-Request befindet sich eine Kopie des gesendeten
  Bodys im Body/Request-Tab zur eventuellen weiteren Bearbeitung und auch
  die gesendeten Request-Header sind im Bereich Header/Request ersichtlich.
- Der Header Content-Length wurde automatisch mit der Länge der angehangenen
- Body-Nachricht gesetzt.
+ Der Header 
+\shape italic
+Content-Length
+\shape default
+ wurde automatisch mit der Länge der angehangenen Body-Nachricht gesetzt.
  Wurde ein beliebiger Request durchgeführt und die Response erfolgreich
  auf JSON oder XML getestet und ist das Request-Fenster bislang noch leer,
  so wird dem Anwender an dieser Stelle ein einfaches JSON- bzw.
@@ -2380,34 +3277,80 @@ Parsed) dem Request als Body hinzugefügt.
  eingefügt und die Markierung entfernt.
  Ist keine Headerzeile markiert, so wird das neue Tupel am Ende der Liste
  eingefügt.
- Die an dieser Stelle verwendete Datenstruktur sind die beiden Arrays headerKeys
-Array sowie headerValuesArray, an deren Indexwert x sich der Eintrag der
- x-ten Reihe der Headertabelle befindet.
- Zwar wären die Zellen der TableView theoretisch ebenfalls in der Lage,
- Daten zu speichern, jedoch kommt es dann zu folgendem anormalen Programmverhalt
-en: Als Container dient eine ScrollView, darin befindet sich eine TableView.
+ Die an dieser Stelle verwendete Datenstruktur sind die beiden 
+\shape italic
+NSArrays
+\shape default
+ 
+\shape italic
+headerKeysArray
+\shape default
+ sowie 
+\shape italic
+headerValuesArray
+\shape default
+, an deren Indexwert x sich der Eintrag der x-ten Reihe der einspaltigen
+ Headertabelle befindet.
+ Zwar wären die Zellen der 
+\shape italic
+TableView
+\shape default
+ theoretisch ebenfalls in der Lage, Daten zu speichern, jedoch kommt es
+ dann zu folgendem anormalen Programmverhalten: Als Container dient eine
+ 
+\shape italic
+ScrollView
+\shape default
+, darin befindet sich eine 
+\shape italic
+TableView
+\shape default
+.
  Das hat den Vorteil, dass es möglich ist, mehr Daten darzustellen, als
  sichtbar sind, da sich die Tabelle einfach mit dem Finger aus dem sichtbaren
  Bereich wischen lässt.
  Bewegt man nun jedoch eine Zelle aus dem sichtbaren Bereich, existiert
  aktuell keine sichtbare Referenz mehr darauf und das System setzt den Inhalt
- auf seine Reusable-Liste.
+ auf seine 
+\shape italic
+Reusable
+\shape default
+-Liste.
  Die Daten, die in der Zelle enthalten sind, werden entfernt.
  Kommt die Zelle wieder in den sichtbaren Bereich, so werden nicht die alten
- Daten wiederhergestellt, sondern an die DataSource der TableViews - ein
- instanziiertes Objekt der Klasse HeaderKeysViewController - wird die Nachricht
- tableView:cellForRowAtIndexPath gesendet, woraufhin dieser eine neue Zelle
- erzeugt.
+ Daten wiederhergestellt, sondern an die 
+\shape italic
+DataSource
+\shape default
+ der 
+\shape italic
+TableViews
+\shape default
+ - ein instanziiertes Objekt der Klasse HeaderKeysViewController - wird
+ die Nachricht 
+\shape italic
+tableView:cellForRowAtIndexPath
+\shape default
+ gesendet, woraufhin dieser eine neue Zelle erzeugt.
  Diese würde sich den Zelleninhalt jedoch aus den aktuellen Inhalten der
  Textfelder für den HTTP Header-Input besorgen, was nicht das ist, was an
  dieser Stelle passieren sollte.
- Da gemäß MVC allerdings unterhalb der GUI die Daten in Arrays abgelegt
- sind, deren Index mit der Zellennummer identisch ist, kann die Wiederherstellun
-g des Zelleninhaltes auf die entsprechenden Einträge der Arrays zugreifen.
+ Da gemäß MVC allerdings unterhalb der GUI die Daten in 
+\shape italic
+NSArrays
+\shape default
+ abgelegt sind, deren Index mit der Zellennummer identisch ist, kann die
+ Wiederherstellung des Zelleninhaltes auf die entsprechenden Einträge der
+ 
+\shape italic
+NSArrays
+\shape default
+ zugreifen.
+ (siehe Abbildung 4.4)
 \end_layout
 
 \begin_layout Standard
-Implementation der tableView:cellforRowAtIndexPath:
+Implementierung der tableView:cellforRowAtIndexPath:
 \end_layout
 
 \begin_layout LyX-Code
@@ -2522,13 +3465,27 @@ Befindet sich der hinzugefügte Header in der Liste der bekannten General
 \end_layout
 
 \begin_layout Standard
-Benötigt die Seite eine HTTP Basic- oder eine HTTP Digest-Authentifizierung,
- erhält das View-Objekt eine Authentication Challenge.
- Die API stellt hierfür den Methodenaufruf connection:didReceiveAuthenticationCh
-allenge bereit, in welcher sich dieser Aufforderung angenommen werden sollte.
+Benötigt die Seite eine 
+\shape italic
+HTTP Basic
+\shape default
+- oder eine 
+\shape italic
+HTTP Digest
+\shape default
+-Authentifizierung, erhält das View-Objekt eine 
+\shape italic
+Authentication Challenge
+\shape default
+.
+ Die API stellt hierfür den Methodenaufruf 
+\shape italic
+connection:didReceiveAuthenticationChallenge
+\shape default
+ bereit, in welcher sich dieser Aufforderung angenommen werden sollte.
  Sind Authentifizierungsinformationen gegeben, so werden diese nun ausgelesen
  und dem angefragten Server übermittelt.
- Die Implementation dieser Methode sieht wie folgt aus:
+ Die Implementierung dieser Methode sieht wie folgt aus:
 \end_layout
 
 \begin_layout LyX-Code
@@ -2705,7 +3662,10 @@ Empfangen einer Response
 \end_layout
 
 \begin_layout Standard
-Jede eingehende Response ruft die Methode connection:didReceiveResponse
+Jede eingehende Response ruft die Methode 
+\shape italic
+connection:didReceiveResponse
+\shape default
  auf.
  Hier werden die Informationstextfelder im oberen Bereich der View gesetzt,
  die Header in den entsprechenden Bereich im Output-Feld übertragen und
@@ -2714,6 +3674,7 @@ Jede eingehende Response ruft die Methode connection:didReceiveResponse
  eine positive Antwort auf unseren Request hin.
  Es wird nun ein neues Historyelement erzeugt, mit der erfolgreich bearbeiteten
  URL gefüllt und der History-Queue angehangen.
+ (siehe Abbildung 4.5)
 \end_layout
 
 \begin_layout Standard
@@ -2757,9 +3718,23 @@ Eintreffen einer Response
 
 \begin_layout Standard
 Trifft eine Response ein, die neben dem Header einen Body enthält, wird
- mit diesem die Methode connection:didReceiveData aufgerufen.
- Für jede Teilresponse werden die Daten mittels [responseBodyData appendData:_bo
-dyData] der statischen Variable responseBodyData hinzugefügt.
+ mit diesem die Methode 
+\shape italic
+connection:didReceiveData
+\shape default
+ aufgerufen.
+ Für jede Teilresponse werden die Daten mittels 
+\family typewriter
+\size footnotesize
+[responseBodyData appendData:_bodyData]
+\family default
+\size default
+ der statischen Variable 
+\shape italic
+responseBodyData
+\shape default
+ hinzugefügt.
+ (siehe Abbildung 4.6)
 \end_layout
 
 \begin_layout Standard
@@ -2800,53 +3775,131 @@ Eingehende Packages
 
 Die eintreffenden Pakete brachten anfangs leider ein paar Probleme mit sich,
  denn jedes Datenpaket wurde stets gleich an den Parser übergeben.
- Als erster Ansatz wurde die ContentLength mit der Länge des eingetroffenen
- Bodys verglichen und die Daten in einem statischen NSString angesammelt,
- bis die Nachricht vollständig empfangen wurde.
- Leider ist nicht bei jeder Response der ContentLength-Header gesetzt, wodurch
- die vollständige Größe nicht immer im Voraus bekannt ist.
- Als Workaround wurde mit einer Response ein NSTimer mit einer provisorischen
- Dauer von 3 Sekunden gestartet, welcher sich mit jeder eingehenden Nachricht
- wieder zurücksetzte.
+ Als erster Ansatz wurde die 
+\shape italic
+Content Length
+\shape default
+ mit der Länge des eingetroffenen Bodys verglichen und die Daten in einem
+ statischen 
+\shape italic
+NSString
+\shape default
+ angesammelt, bis die Nachricht vollständig empfangen wurde.
+ Leider ist nicht bei jeder Response der 
+\shape italic
+ContentLength
+\shape default
+-Header gesetzt, wodurch die vollständige Größe nicht immer im Voraus bekannt
+ ist.
+ Als Workaround wurde mit einer Response ein 
+\shape italic
+NSTimer
+\shape default
+ mit einer provisorischen Dauer von 3 Sekunden gestartet, welcher sich mit
+ jeder eingehenden Nachricht wieder zurücksetzte.
  Lief dieser ab, so wurde das vollständige Empfangen der Nachricht angenommen
  und die Analyse der Bodydaten begonnen.
  Hier zeigte sich, dass ein gründlicherer Blick ins Referenzhandbuch Einiges
  an Arbeit erspart hätte, denn wie für so vieles stellt Apple durchdachte
  automatische Methodenaufrufe bereit und einige Zeit später stieß ich auf
- die Methode connectionDidFinishLoading.
+ die Methode 
+\shape italic
+connectionDidFinishLoading
+\shape default
+.
  Da dies natürlich ein wesentlich feinerer Ansatz ist als der Timer wurde
- die Implementation entsprechend abgeändert.
+ die Implementierung entsprechend abgeändert.
 \end_layout
 
 \begin_layout Standard
 Anhand des ersten Bytes des Bodys wird überprüft, ob es sich um ein Bild
  handelt.
- Ist das der Fall, so wird in die ScrollView programmatisch eine ImageView
+ Ist das der Fall, so wird in die 
+\shape italic
+ScrollView
+\shape default
+ programmatisch eine 
+\shape italic
+ImageView
+\shape default
  eingebettet und das Bild darin angezeigt.
- Beim Absenden einer neuen Request werden alle ImageViews wieder aus der
- ScrollView entfernt.
+ Beim Absenden einer neuen Request werden alle 
+\shape italic
+ImageViews
+\shape default
+ wieder aus der 
+\shape italic
+ScrollView
+\shape default
+ entfernt.
  Weist das erste Byte nicht auf ein Bild hin und wurde bereits vorher anhand
- des Content Type erkannt, dass es sich um JSON- oder um XML-Code handelt,
- wird der Body an den entsprechenden Parser übergeben.
+ des 
+\shape italic
+Content Type
+\shape default
+ erkannt, dass es sich um JSON- oder um XML-Code handelt, wird der Body
+ an den entsprechenden Parser übergeben.
  Im Apple Foundation-Framework findet sich bereits seit OS X-Version 10.3
- der NSXMLParser, seit iOS 5 wurde dieses um die NSJSONSerialization erweitert,
- welche ein NSData-Objekt parst und ein NSDictionary zurückliefert.
+ der 
+\shape italic
+NSXMLParser
+\shape default
+, seit iOS 5 wurde dieses um die 
+\shape italic
+NSJSONSerialization
+\shape default
+ erweitert, welche ein 
+\shape italic
+NSData
+\shape default
+-Objekt parst und ein 
+\shape italic
+NSDictionary
+\shape default
+ zurückliefert.
  In beiden Fällen werden sowohl die Schlüssel als auch die Werte in je ein
- veränderliches MutableArray geschrieben, da es nötig sein wird, an gezielt
- Felder zu löschen und neue hinzuzufügen.
+ veränderliches 
+\shape italic
+NSMutableArray
+\shape default
+ geschrieben, da es nötig sein wird, an gezielt Felder zu löschen und neue
+ hinzuzufügen.
  Wurde das Parsen erfolgreich abgeschlossen, wird die rekursive Methode
  processKeys aufgerufen.
- “Erfolgreich” bedeutet im Fall des XML-Parsers dass er nach erfolgter Durchführ
-ung ein YES zurückliefert.
- NSJSONSerializers definiert einen Durchlauf als „erfolgreich“, wenn sich
- das zu füllende Array nach Durchlauf des Parsers nicht leer ist.
+ 
+\shape italic
+Erfolgreich
+\shape default
+ bedeutet im Fall des XML-Parsers dass er nach erfolgter Durchführung ein
+ 
+\shape italic
+YES
+\shape default
+ zurückliefert.
+ 
+\shape italic
+NSJSONSerialization
+\shape default
+ definiert einen Durchlauf als 
+\shape italic
+erfolgreich
+\shape default
+, wenn sich das zu füllende Array nach Durchlauf des Parsers nicht leer
+ ist.
  Die einzelnen Schlüssel/Wert-Paare werden daraufhin überprüft, ob es sich
  bei den Werten um eine Ressource handelt.
  Da es durchaus sein kann, dass als Wert wiederum ein komplettes Array mit
- weiteren Schlüssel/Wert-Paaren beinhaltet, ist processKeys so gestaltet,
- dass ein rekursiver Aufruf möglich ist.
+ weiteren Schlüssel/Wert-Paaren beinhaltet, ist 
+\shape italic
+processKeys
+\shape default
+ so gestaltet, dass ein rekursiver Aufruf möglich ist.
  Da hierbei Schlüssel/Wert-Paare eingefügt und gelöscht werden, ist das
- Mitführen des statischen Indexes staticIndex erforderlich.
+ Mitführen des statischen Indexes 
+\shape italic
+staticIndex
+\shape default
+ erforderlich.
  Eingefügt werden Schlüssel/Werte-Paare, wenn ein Unter-Array gefunden wird
  und deren Inhalt dem eigenen Array am aktuellen Index eingefügt wird.
  Das Schlüssel/Wert-Paar, welches das Array enthielt, hat nach dem rekursiven
@@ -2859,13 +3912,25 @@ ung ein YES zurückliefert.
 
 \begin_layout Standard
 Zum Vorbereiten des Validitätstests auf eine valide URL wird der String
- in einem ersten Schritt in den Typ NSURL umgewandelt.
+ in einem ersten Schritt in den Typ 
+\shape italic
+NSURL
+\shape default
+ umgewandelt.
  Hierbei wird bereits intern getestet, ob die Zeichen für eine URL valid
  sind.
- Ist dem nicht der Fall, wird ein nil zurückliefert.
- Wird kein nil zurückgegeben, wäre der Einsatz als URL denkbar und der Anfang
+ Ist dem nicht der Fall, wird ein 
+\shape italic
+nil
+\shape default
+ zurückliefert.
+ Wird kein 
+\shape italic
+nil
+\shape default
+ zurückgegeben, wäre folglich der Einsatz als URL denkbar und der Anfang
  wird überprüft.
- Beginnt dieser mit http, wird er unverändert zum Prüfen weitergegeben.
+ Beginnt dieser mit http, wird er unverändert zum Validieren weitergeleitet.
  Beginnt er statt dessen mit einem Schrägstrich, wird er an die Basis-URL
  des zuletzt aufgerufenen Requests angefügt und dann ebenfalls zur Validitätsübe
 rprüfung weitergereicht.
@@ -2877,7 +3942,12 @@ e vermutet, auf der diese Response basiert.
 \end_layout
 
 \begin_layout Standard
-Um den Test durchzuführen, wechselt die App mit [self setValidatingState:YES]
+Um den Test durchzuführen, wechselt die App mit 
+\family typewriter
+\size footnotesize
+[self setValidatingState:YES]
+\family default
+\size default
  in einen Zustand, welcher ausschließlich der Validierung von Ressourcen
  dient.
  Es wird für jeden Ressourcenkandidaten einen asynchronen HEAD-Request abgesende
@@ -2886,32 +3956,68 @@ t, deren Responses unter einem anderen Gesichtspunkt betrachtet werden.
  und wird inkrementiert, sobald eine Ressource als valid oder als invalid
  befunden wird.
  Die endgültige Entscheidung über die Validität kann jedoch erst in der
- Methode didReceiveResponse getroffen werden, welche die Antwort des Servers
- auswerten darf.
+ Methode 
+\shape italic
+didReceiveResponse
+\shape default
+ getroffen werden, welche die Antwort des Servers auswerten darf.
  Da die asynchronen Requests die Responses in willkürlicher Reihenfolge
  eintreffen lassen, kann leider nicht ohne Weiteres zugeordnet werden, für
  welchen Wert gerade eine Antwort empfangen wurde.
- Die ID der abgesendeten NSURLConnection wird daher zusammen mit dem Index
- des zu überprüfenden Wertes in ein NSDictionary gepackt.
- In der didReceiveResponse kann anhand dieser ID der Indexwert aus dem Wörterbuc
-h abgefragt werden und es ist wieder klar, welchem Schlüssel/Wert-Paar der
- empfangene Statuscode zuzuordnen ist.
+ Die ID der abgesendeten 
+\shape italic
+NSURLConnection
+\shape default
+ wird daher zusammen mit dem Index des zu überprüfenden Wertes in ein 
+\shape italic
+NSDictionary
+\shape default
+ gepackt.
+ In der 
+\shape italic
+didReceiveResponse
+\shape default
+ kann anhand dieser ID der Indexwert aus dem Wörterbuch abgefragt werden
+ und es ist wieder klar, welchem Schlüssel/Wert-Paar der empfangene Statuscode
+ zuzuordnen ist.
  Ein Statuscode kleiner 400 ist auch hier positiv zu interpretieren und
  weist auf die Existenz der angefragten Resource hin.
- Der angefragte Wert wird in die NSMutableArrays foundResourceKeys sowie
- foundResourceValues geschrieben.
+ Der angefragte Wert wird in die 
+\shape italic
+NSMutableArrays
+\shape default
+ 
+\shape italic
+foundResourceKeys
+\shape default
+ sowie 
+\shape italic
+foundResourceValues
+\shape default
+ geschrieben.
  Da ein asynchroner Request den Nachteil hat, dass die überprüften Ressourcen
  in beliebiger Reihenfolge im Zielarray landen würden, eine synchrone Überprüfun
 g jedoch zu viel Zeit in Anspruch nehmen würde, wird wie folgt vorgegangen:
- Die Arrays foundResourceKeys und foundResourceValues werden mit der Größe
- der Ressourcenkandidaten angelegt und die Felder mit einem leeren NSString
+ Die Arrays 
+\shape italic
+foundResourceKeys
+\shape default
+ und 
+\shape italic
+foundResourceValues
+\shape default
+ werden mit der Größe der Ressourcenkandidaten angelegt und die Felder mit
+ einem leeren 
+\shape italic
+NSString
+\shape default
  initialisiert.
  Eine überprüfte Ressource, die sich im Quellarray an einem Feld mit dem
  Index y befindet, wird in das Zielarray ebenfalls an das Feld mit dem Index
  y geschrieben.
  Alle Felder der beiden Arrays, an die keine Einträge geschrieben wurden,
  enthalten weiterhin leere Strings.
- 
+ (siehe Abbildung 4.7)
 \end_layout
 
 \begin_layout Standard
@@ -2951,19 +4057,30 @@ Response wurde vollständig empfangen
 \end_inset
 
 Nachdem keine Ressourcenkandidaten mehr auf ihre Validierung warten, lassen
- sich die NSMutableArrays, welche über die validen Ressourcen verfügen,
- bereinigen, in dem die Felder mit den leeren Strings kurzerhand aus dem
- Array entfernt werden.
+ sich die 
+\shape italic
+NSMutableArrays
+\shape default
+, welche über die validen Ressourcen verfügen, bereinigen, in dem die Felder
+ mit den leeren Strings kurzerhand aus dem Array entfernt werden.
  Zurück bleiben je ein Array mit Schlüsseln und eines mit den dazugehörigen
  Werten.
  Beide werden beim Berühren der Ressourcenschaltfläche - der Lupe - an die
- Klasse ResourceTableViewController übergeben.
+ gerade erzeugte Instanz der Klasse 
+\shape italic
+ResourceTableViewController
+\shape default
+ übergeben.
  Was hier fast beiläufig klingt war, zumindest zeittechnisch - alles andere
  als beiläufig, da die sich öffnende TableView nach ihrer Instanziierung
- und Überreichung der Daten stets jungfräulich präsentierte.
- Die NSMutableArrays schienen dort nie anzukommen.
+ und Überreichung der Daten dennoch stets jungfräulich präsentierte.
+ Die 
+\shape italic
+NSMutableArrays
+\shape default
+ schienen dort nie anzukommen.
  Wie sich herausstellte, erzeugt bereits das Storyboard nach dem Berühren
- der Übergangs-Schaltfläche eine Instanz der Ziel-View.
+ der Übergangs-Schaltfläche eine Instanz der gewünschten View.
  Die programmatisch erzeugte Instanz war eine weitere, sich an einem anderen
  Speicherbereich befindliche Instanz, die unsichtbar im Hintergrund abläuft.
  Hier soll jedoch auf die Storyboard-erzeugte Instanz zugegriffen werden.
@@ -2972,13 +4089,33 @@ Nachdem keine Ressourcenkandidaten mehr auf ihre Validierung warten, lassen
  Dies muss allerdings auch geschehen bevor die View auf dem Bildschirm erscheint
 , was ja scheinbar zeitgleich ist.
  Um auf dieses Zeitfenster zuzugreifen, lässt sich auf diese Übergänge,
- die Xcode als Segues bezeichnet, programmatisch zugreifen.
- Bei einem Übergang erhält an die Ursprungs-View die Nachricht prepareForSegue:s
-ender.
- Um gezielt Übergänge ansprechen zu können lassen sich im Storyboard Identifier
+ die Xcode als 
+\shape italic
+Segues
+\shape default
+ bezeichnet, programmatisch zugreifen.
+ Bei einem Übergang erhält an die Ursprungs-View die Nachricht 
+\shape italic
+prepareForSegue:sender
+\shape default
+.
+ Um gezielt Übergänge ansprechen zu können lassen sich im Storyboard 
+\shape italic
+Identifier
+\shape default
  vergeben.
- Der Identifier des gerade aktiven Überganges kann in der Implementation
- der Methode prepareForSegue:sender mit [segue identifier] abgefragt werden.
+ Der Identifier des gerade aktiven Überganges kann in der Implementierung
+ der Methode 
+\shape italic
+prepareForSegue:sender
+\shape default
+ mit 
+\family typewriter
+\size footnotesize
+[segue identifier]
+\family default
+\size default
+ abgefragt werden.
 \end_layout
 
 \begin_layout LyX-Code
@@ -3124,14 +4261,33 @@ Ein wenig Kopfzerbrechen bereitete auch der Umstand, dass offensichtlich
  zwischen iOS 5.1 und 6 das Laden der View an unterschiedlichen Zeitpunkten
  erfolgt.
  Unter iOS 6 ist es ausreichend, wenn die Initialisierung des übergebenen
- Arrays in der Startmethode viewDidLoad erfolgt.
- Doch während dort bei einem prepareForSegue der Aufbau der View verzögert
- wird, bis die Methode abgearbeitet wurde, ist dies bei iOS 5.1 nicht der
- Fall.
+ Arrays in der Startmethode 
+\shape italic
+viewDidLoad
+\shape default
+ erfolgt.
+ Doch während dort bei einem 
+\shape italic
+prepareForSegue
+\shape default
+ der Aufbau der View verzögert wird, bis die Methode abgearbeitet wurde,
+ ist dies bei iOS 5.1 nicht der Fall.
  Die Initialisierung des übergebenen Arrays darf erst in der Initialisierungsmet
-hode viewDidAppear erfolgen, sonst werden alle Zellen mit nil gefüllt.
+hode 
+\shape italic
+viewDidAppear
+\shape default
+ erfolgen, sonst werden alle Zellen mit 
+\shape italic
+nil
+\shape default
+ gefüllt.
  Da dieses Programm zu iOS 5.1 vollständig abwärtskompatibel sein soll, erfolgt
- die Initialisierung in der Methode viewDidAppear.
+ die Initialisierung in der Methode 
+\shape italic
+viewDi
+\shape default
+dAppear.
 \end_layout
 
 \begin_layout Section
@@ -3143,35 +4299,134 @@ ResourceTableViewController
 \end_layout
 
 \begin_layout Standard
-Die erste Hilfsklasse ist eine View vom Typ UITableViewController, einer
- Unterklasse von UIViewController.
- Der TableViewController bietet eine View, bestehend aus einer einzigen
- Tabelle, deren Delegate und DataSource er selbst ist.
- Ihm stehen die NSArrays keys und values zur Verfügung, welche die validierten
- Ressourcen darstellen, die er von der Hauptview unmittelbar vor dem Aufbau
- erhalten hat und die er in die Zellen seiner Tabelle einfüllt.
+Die erste Hilfsklasse ist eine View vom Typ 
+\shape italic
+UITableViewController
+\shape default
+, einer Unterklasse von 
+\shape italic
+UIViewController
+\shape default
+.
+ Der 
+\shape italic
+TableViewController
+\shape default
+ bietet eine View, bestehend aus einer einzigen Tabelle, deren 
+\shape italic
+Delegate
+\shape default
+ und 
+\shape italic
+DataSource
+\shape default
+ er selbst ist.
+ Ihm stehen die 
+\shape italic
+NSArrays
+\shape default
+ 
+\shape italic
+keys
+\shape default
+ und 
+\shape italic
+values
+\shape default
+ zur Verfügung, welche die validierten Ressourcen darstellen, die er von
+ der Hauptview unmittelbar vor dem Aufbau erhalten hat und die er in die
+ Zellen seiner Tabelle einfüllt.
  Da eine Berührung einer Zelle die Rückkehr zur Hauptview zur Folge haben
  soll, nachdem die Ressource in das dortige URL-Feld eingefügt wurde, benötigt
  er für seine Funktion einige Referenzen.
  Verständlicherweise wird die Referenz des URL-Feldes benötigt, auf deren
  Text er schreibend zugreift.
- Referenzen zu den NSStrings highestDir und baseUrl benötigt er, um die
- URLs zu vervollständigen.
- Eine Ressource 1337, welche auf http://www.smartphoneseppel.de/customer/
- gefunden wurde, sollte auf http://www.smartphoneseppel.de/customer/1337 verweisen.
+ Referenzen zu den 
+\shape italic
+NSStrings
+\shape default
+ 
+\shape italic
+highestDir
+\shape default
+ und 
+\shape italic
+baseUrl
+\shape default
+ benötigt er, um die URLs zu vervollständigen.
+ Eine Ressource 1337, welche auf 
+\shape italic
+http://www.smartphoneseppel.de/customer/
+\shape default
+ gefunden wurde, sollte auf 
+\shape italic
+http://www.smartphoneseppel.de/customer/1337
+\shape default
+ verweisen.
  Die Ressource wird an den höchsten Verzeichnispfad der Abfrage gehangen,
  welche die Ressource 1337 enthielt.
- Eine mit einem Schrägstrich beginnende Ressource /article/galaxy_s3 wird
- hingegen als einen absoluter Pfad interpretiert und direkt an die Base-URL
- angehangen: http://www.smartphoneseppel.de/article/galaxy_s3.
+ Eine mit einem Schrägstrich beginnende Ressource 
+\shape italic
+/article/galaxy_s3
+\shape default
+ wird hingegen als einen absoluter Pfad interpretiert und direkt an die
+ Base-URL angehangen: 
+\shape italic
+http://www.smartphoneseppel.de/article/galaxy_s3
+\shape default
+.
 \end_layout
 
 \begin_layout Standard
 Eine View kann sich nicht so einfach selbst wieder schließen.
- Um das dennoch zu realisieren wurde darüber hinaus die Referenz des PopoverCont
-rollers hierher übergeben.
- Der Zugriff auf diesen ermöglicht es, die View mit dem Befehl [_referenceToPopo
-verController dismissPopoverAnimated:YES] wieder “von unten” zu verwerfen.
+ Um das dennoch zu realisieren wurde darüber hinaus die Referenz des 
+\shape italic
+PopoverControllers
+\shape default
+ hierher übergeben.
+ Der Zugriff auf diesen ermöglicht es, die View mit dem Befehl 
+\family typewriter
+\size footnotesize
+[_referenceToPopoverController dismissPopoverAnimated:YES]
+\family default
+\size default
+ wieder sozusagen “von unten” zu verwerfen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ResourcesTableViewController.tiff
+	lyxscale 25
+	scale 25
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Recognized Resources
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3179,18 +4434,33 @@ HeaderKeysViewController
 \end_layout
 
 \begin_layout Standard
-Wie auch bei der ResourceTableViewController handelt es sich hier um eine
- Klasse des Typs UITableViewController.
+Wie auch bei der 
+\shape italic
+ResourceTableViewController
+\shape default
+ handelt es sich hier um eine Klasse des Typs 
+\shape italic
+UITableViewController
+\shape default
+.
  Er beinhaltet eine Auflistung der für einen Request gebräuchlichen Request-Head
 er und der General-Header und soll dem Anwender eine einfache Möglichkeit
  bieten, seine Anfrage um valide Header zu erweitern.
  Wie zuvor werden hier die Daten der durch Berührung selektierten Zelle
  in das Header-Feld der Hauptview geschrieben und die View mittels Referenzzugri
-ff auf den darunter liegenden PopoverController beendet.
+ff auf den darunter liegenden 
+\shape italic
+PopoverController
+\shape default
+ beendet.
  Als kleines “Extra” wird die Referenz für das dem Header zugehörige Wertefeld
- übergeben, mit dessen Hilfe dieses zum FirstResponder wird - nach dem Verwerfen
- der View hat es somit den Tastaturfokus und es kann sofort nach dem Selektieren
- des Headers mit der Eingabe des Wertes begonnen werden.
+ übergeben, mit dessen Hilfe dieses zum 
+\shape italic
+FirstResponder
+\shape default
+ wird - nach dem Verwerfen der View hat es somit den Tastaturfokus und es
+ kann sofort nach dem Selektieren des Headers mit der Eingabe des Wertes
+ begonnen werden.
 \end_layout
 
 \begin_layout Subsection
@@ -3198,14 +4468,21 @@ XMLParser
 \end_layout
 
 \begin_layout Standard
-Der Inhalt der Klasse XML-Parser ist nicht wirklich umfangreich, jedoch
- eignet er sich hervorragend, die abgeschlossene Funktionalität in einer
- eigenen Klasse auszugliedern.
- Er wird initialisiert mit zwei leeren NSMutableArrays, an die sowohl Attribute
- als auch Elemente der geparsten XML angefügt werden.
+Der Inhalt der Klasse 
+\shape italic
+XMLParser
+\shape default
+ ist nicht wirklich umfangreich, jedoch eignet er sich hervorragend, die
+ abgeschlossene Funktionalität in einer eigenen Klasse auszugliedern.
+ Er wird initialisiert mit zwei leeren 
+\shape italic
+NSMutableArrays
+\shape default
+, an die sowohl Attribute als auch Elemente der geparsten XML angefügt werden.
  Attributnamen werden in Klammern gesetzt und erhalten den Elementnamen,
  dem sie zugehörig sind, vorangestellt.
- Die Bezeichnung der Keys setzt demnach sich wie folgt zusammen:
+ Die Bezeichnung der Keys setzt sich als Pseudocode vereinfacht wie folgt
+ zusammen:
 \end_layout
 
 \begin_layout LyX-Code
@@ -3290,12 +4567,26 @@ LogOutputViewController
 Da es sich um ein Entwicklertool handelt, wäre es für den ein oder anderen
  sicherlich interessant zu sehen, was das Programm in der Kommandozeile
  an Log-Ausgabe erzeugen würde.
- Diese PopoverView stellt die Ausgabe von NSLog dar, welche in eine Datei
- umgeleitet wurde.
+ Diese 
+\shape italic
+PopoverView
+\shape default
+ stellt die Ausgabe von 
+\shape italic
+NSLog
+\shape default
+ dar, welche in eine Datei umgeleitet wurde.
  Um nicht in jeder Zeile das Datum, die Uhrzeit und den Programmnamen aufzuführe
-n, wurden diese zu Beginn der Hauptklasse aus der Ausgabe von NSLog herausgeschn
-itten, indem der reine Ausgabeteil als String in UTF8-Codierung mittels
- fprintf ausgegeben wird:
+n, wurden diese zu Beginn der Hauptklasse aus der Ausgabe von 
+\shape italic
+NSLog
+\shape default
+ herausgeschnitten, indem der reine Ausgabeteil als String in UTF8-Codierung
+ mittels 
+\shape italic
+fprintf
+\shape default
+ ausgegeben wird:
 \end_layout
 
 \begin_layout LyX-Code
@@ -3325,8 +4616,11 @@ n",
 \end_layout
 
 \begin_layout Standard
-Weiterhin wird gleich zum Programmstart in der Methode viewDidLoad die Ausgabe
- in eine Datei umgeleitet.
+Weiterhin wird gleich zum Programmstart in der Methode 
+\shape italic
+viewDidLoad
+\shape default
+ die Ausgabe in eine Datei umgeleitet.
  Hierbei wird zuerst geschaut, ob bereits eine Ausgabedatei existiert.
  Ist das der Fall, so wird die Logging-Funktion automatisch eingeschaltet;
  ist sie nicht vorhanden, bleibt sie deaktiviert.
@@ -3428,14 +4722,62 @@ Mit dem Mülleimer unter dem Ausgabe-Fenster lässt sich die Datei nach dem
  über den Verbose-Schalter mitteilen.
  Es werden dann mehr Informationen mitgeschnitten.
  Auch hier ist ein unerwartetes Problem aufgetreten: Da die View nichts
- beinhaltet, was eine Delegate oder eine DataSource benötigt, wollte ich
- diese recht codezeilenarme Funktionalität in der Hauptview unterbringen.
+ beinhaltet, was eine 
+\shape italic
+Delegate
+\shape default
+ oder eine 
+\shape italic
+DataSource
+\shape default
+ benötigt, wollte ich diese recht codezeilenarme Funktionalität in der Hauptview
+ unterbringen.
  Jedoch war nach dem Öffnen der View das Ausgabefeld stets leer, so man
  einen Refresh-Button betätigen musste, der die Datei erneut in das Textfeld
  mappte hat.
  Erst dann wurde der Inhalt sichtbar.
  Abhilfe brachte das Auslagern in eine eigene Klasse mit der Initialisierungsmet
-hode viewDidAppear, welche nun das Laden der Datei übernimmt.
+hode 
+\shape italic
+viewDidAppear
+\shape default
+, welche nun das Laden der Datei übernimmt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename LogOutputViewController-verbose.tiff
+	lyxscale 25
+	scale 25
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+In Datei umgeleiteter Log-Output im Verbose-Modus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3443,13 +4785,24 @@ HistoryElement
 \end_layout
 
 \begin_layout Standard
-HistoryElement ist die Implementation der URL-History in Form einer doppelt
- verketteten Liste.
+
+\shape italic
+HistoryElement
+\shape default
+ ist die Implementierung der URL-History in Form einer doppelt verketteten
+ Liste.
  Es kennt seinen Vorgänger, seinen Nachfolger als auch die an ihn gebundene
  Ressource.
- HistoryElement verfügt über eine Methode getPart, die auf Wunsch die Basis-URL
- - bestehend aus Protokoll und Domain -, den höchsten Verzeichnispfad oder
- den vorherigen zurückliefert.
+ 
+\shape italic
+HistoryElement
+\shape default
+ verfügt über eine Methode 
+\shape italic
+getPart
+\shape default
+, die auf Wunsch die Basis-URL - bestehend aus Protokoll und Domain -, den
+ höchsten Verzeichnispfad oder den vorherigen zurückliefert.
  Der Unterschied zwischen vorherigem und höchstem Verzeichnis ist folgender:
  Endet eine URL mit einem Schrägstrich, so wird er als Verzeichnis betrachtet
  und ist gleichzeitig das höchste Verzeichnis.
@@ -3537,26 +4890,65 @@ shoppingcart/
 
 \begin_layout Standard
 Erstellt man ein neues Projekt, befindet sich im Projektordner neben den
- Controllern eine weitere Klasse: die AppDelegate.
- Konzeptuell sollte der ViewController alles beinhalten, womit sich die
- aktuelle View beschäftigt.
- Die AppDelegate bleibt dabei erschreckend leer und hinterlässt das Gefühl,
- scheinbar etwas Wichtiges vergessen zu haben.
- Die einzige Methode, die überhaupt etwas macht ist die application didFinishLau
-nchingWithOptions:launchOptions.
- Sie gibt ein YES zurück.
+ Controllern eine weitere Klasse: die 
+\shape italic
+AppDelegate
+\shape default
+.
+ Konzeptuell sollte der 
+\shape italic
+ViewController
+\shape default
+ alles beinhalten, womit sich die aktuelle View beschäftigt.
+ Die 
+\shape italic
+AppDelegate
+\shape default
+ bleibt dabei erschreckend leer und hinterlässt das Gefühl, scheinbar etwas
+ Wichtiges vergessen zu haben.
+ Die einzige Methode, die überhaupt etwas macht ist die application 
+\shape italic
+didFinishLaunchingWithOptions:launchOptions
+\shape default
+.
+ Sie gibt ein 
+\shape italic
+YES
+\shape default
+ zurück.
  Immerhin.
 \end_layout
 
 \begin_layout Standard
 Auch hier läuft wieder alles über das Storyboard.
  Wirft man einen Blick auf die Datei Projektname-Info.plist findet sich ein
- Schlüssel mit der Bezeichnung Main storyboard file base name und dem Wert
- MainStoryboard.
+ Schlüssel mit der Bezeichnung 
+\shape italic
+Main storyboard file base name
+\shape default
+ und dem Wert 
+\shape italic
+MainStoryboard
+\shape default
+.
  Die Bedeutung hinter diesem Eintrag ist die Folgende: Ist diese Einstellung
- gesetzt, lädt UIApplication die Datei mit der Bezeichnung MainStoryboard.storybo
-ard, instanziiert den ersten ViewController und packt dessen View in ein
- neues Objekt des Typs UIWindow.
+ gesetzt, lädt 
+\shape italic
+UIApplication
+\shape default
+ die Datei mit der Bezeichnung 
+\shape italic
+MainStoryboard.storyboard
+\shape default
+, instanziiert den ersten 
+\shape italic
+ViewController
+\shape default
+ und packt dessen View in ein neues Objekt des Typs 
+\shape italic
+UIWindow
+\shape default
+.
  Es ist also völlig in Ordnung, wenn diese Datei bei Benutzung von Storyboards
  leer bleibt.
 \end_layout
@@ -3599,14 +4991,24 @@ eise umgehen, die für die meisten Umsteiger sehr vertraut wirkt.
  Ein sehr einfacher Weg, leider setzt er voraus, dass die Content-Länge
  in der Response angegeben ist.
  Da dies jedoch nicht immer der Fall ist, implementierte ich einen Workaround,
- der eine eingehende Response einen NSTimer starten lies, welcher sich bei
- jedem eingehenden Package wieder zurücksetzte.
+ der eine eingehende Response einen 
+\shape italic
+NSTimer
+\shape default
+ starten lies, welcher sich bei jedem eingehenden Package wieder zurücksetzte.
  So sollte der Client herausfinden, ab wann eine Nachricht unbekannter Länge
- als “vollständig empfangen” anzusehen ist.
+ als 
+\shape italic
+vollständig empfangen
+\shape default
+ anzusehen ist.
  Ein sorgfältiger Blick in die Referenz hätte mir diesen Umstand abgenommen,
- denn dort wäre ich auf die Methode connectionDidFinishLoading gestoßen,
- welche eine elegantere Lösung zu genau dieser Problematik bietet, denn
- deren Implementation wird nach dem Erhalt des finalisierenden Packages
+ denn dort wäre ich auf die Methode 
+\shape italic
+connectionDidFinishLoading
+\shape default
+ gestoßen, welche eine elegantere Lösung zu genau dieser Problematik bietet,
+ denn deren Implementierung wird nach dem Erhalt des finalisierenden Packages
  aufgerufen.
 \end_layout
 
@@ -3626,8 +5028,15 @@ Auch meine Erfahrungen mit Xcode waren fast durchgängig von sehr angenehmer
  Zustand der Anwendung zu signalisieren.
  Ein wenig Foren-Recherche ergibt schnell, dass der Schuldige die sich ansammeln
 den Workspace-Einstellungen sind.
- Lässt man sich die Inhalte des Packages Projectname.xcodeproj anzeigen,
- so findet man dort eine Datei mit der Bezeichnung project.xcworkspace.
+ Lässt man sich die Inhalte des Packages 
+\shape italic
+Projectname.xcodeproj
+\shape default
+ anzeigen, so findet man dort eine Datei mit der Bezeichnung 
+\shape italic
+project.xcworkspace
+\shape default
+.
  In dieser Datei speichert Xcode die Einstellungen ab.
  Nach einem Löschen dieser Datei und Neustart von Xcode sind zwar alle Workspace
 -Einstellungen verschwunden, Xcode im Gegenzug aber um ein Vielfaches performant
@@ -3636,7 +5045,7 @@ er.
  Es könnte natürlich sein, dass es sich um einen versionsspezifischen Bug
  handelt.
  In der aktuellen Version 4.5.2 habe ich dieses Verhalten noch nicht festgestellt,
- allerdings war beim Update auf diese Version die Implementation des Clienten
+ allerdings war beim Update auf diese Version die Implementierung des Client
  nahezu vollständig.
 \end_layout
 
@@ -3648,12 +5057,19 @@ g der GUI geht.
  Es fühlt es unglaublich einfach an und schafft es, Berührungsängste schnell
  zu nehmen.
  Mit wenig Zeitaufwand sind Views und Übergänge erstellt, GUI-Elemente eingefügt
-, gegebenenfalls deren Delegates und DataSources zugewiesen und in der Seitenlei
-ste die Eigenschaften gesetzt, welche die Elemente bei Anwendungsstart besitzen
- sollten.
+, gegebenenfalls deren 
+\shape italic
+Delegates
+\shape default
+ und 
+\shape italic
+DataSources
+\shape default
+ zugewiesen und in der Seitenleiste die Eigenschaften gesetzt, welche die
+ Elemente bei Anwendungsstart besitzen sollten.
  Automatisch werden die Bereiche im Code eingefügt und mit den Storyboard-Elemen
 ten verbunden und man beginnt kurze Zeit später bereits mit der eigentlichen
- Implementation der Funktionalitäten, ohne das Gefühl zu haben, sich vorher
+ Implementierung der Funktionalitäten, ohne das Gefühl zu haben, sich vorher
  an notwendigen Nebensächlichkeiten aufhalten zu müssen.
  Selbstverständlich lässt sich auch alles ohne Storyboards entwerfen.
  Durch das Storyboard bereit gestellte Funktionalität sollte man jedoch
@@ -3662,36 +5078,52 @@ ten verbunden und man beginnt kurze Zeit später bereits mit der eigentlichen
  im Storyboard erstellte View nicht ohne Weiteres programmatisch zugreifbar
  ist.
  Der Weg, einem Übergang eine eindeutige Bezeichnung zu verpassen und auf
- diese über die in einem solchen Fall automatisch aufgerufene Methode prepareFor
-Segue zuzugreifen, wirkte auf mich ein wenig wie ein Workaround, ist aber
- wohl der Weg, der in einem solchen Fall zu gehen ist.
+ diese über die in einem solchen Fall automatisch aufgerufene Methode 
+\shape italic
+prepareForSegue
+\shape default
+ zuzugreifen, wirkte auf mich ein wenig wie ein Workaround, ist aber wohl
+ der Weg, der in einem solchen Fall zu gehen ist.
  Um der Übersichtlichkeit zu genügen bietet das Storyboard 4 Zoomstufen
  an: 12,5 %, 25 %, 50 % und 100 %.
  Warum an dieser Stelle keine manuelle Eingabe der Zoomstufe gegeben ist
  oder zumindest ein Schieberegler angeboten wird, der sich etwas feingranularer
  einstellen lässt, ist mir nicht ganz ersichtlich.
- Bei meiner durchaus gängigen FullHD-Auflösung wäre oft 75 % die Zoomstufe
- meiner Wahl gewesen.
+ Bei meiner nicht als exotisch einzustufenden FullHD-Auflösung wäre oft
+ 75 % die Zoomstufe meiner Wahl gewesen.
 \end_layout
 
 \begin_layout Standard
-In der Wahl der Implementationsthematik fand ich mit den RESTful Webservices
+In der Wahl der Implementierungsthematik fand ich mit den RESTful Webservices
  ein interessantes Umsetzungsgebiet.
- Die Umsetzung eines generischen Client, der auf verschiedene Webservices
- zugreift, deren Schnittstelle die Methoden bilden, die das HTTP-Protokoll
- schon selbst mitbringt, war interessant und erweiterte meine Kenntnisse
- der Webservices.
+ Die Umsetzung eines generischen Client für verschiedene Webservices, deren
+ Schnittstelle die Methoden bilden, die das HTTP-Protokoll schon selbst
+ mitbringt, war interessant und erweiterte meine Kenntnisse der Webservices.
  Die diesem Standard zugrunde liegende Idee ist einfach und leicht zu implementi
-eren und das Arbeiten mit HTTP-Verben fühlt sich “irgendwie nach Internet”
- an.
- In einem ersten Implementationsansatz verwendete ich das externes Framework
- RestKit, welches ich dafür andachte, mir die Arbeit mit REST-konformen
- Seiten zu erleichtern.
+eren und das Arbeiten mit HTTP-Verben fühlt sich 
+\begin_inset Quotes eld
+\end_inset
+
+schon irgendwie nahe am Internet” an.
+ In einem ersten Implementierungsansatz verwendete ich das externes Framework
+ 
+\shape italic
+RestKit
+\shape default
+, welches ich dafür andachte, mir die Arbeit mit REST-konformen Seiten zu
+ erleichtern.
  Es stellte sich jedoch sehr schnell heraus, dass einige der Funktionen
- meine Erwartungen nicht erfüllen konnten, so bot mir RestKit das Mappen
- einer JSON-Ressource in ein NSDictionary an, welches jedoch bereits über
- die Schlüssel verfügen musste, zu welchen anschließend die Werte hinzugefügt
- werden.
+ meine Erwartungen für einen generischen Ansatz nicht erfüllen konnten.
+ So bot mir 
+\shape italic
+RestKit
+\shape default
+ das Mappen einer JSON-Ressource in ein 
+\shape italic
+NSDictionary
+\shape default
+ an, welches jedoch bereits über die Schlüssel verfügen musste, zu welchen
+ anschließend die Werte hinzugefügt werden.
  Für einen generischen Clienten, der jedoch noch nicht weiß, welche Schlüssel
  die Zielressource liefern wird, ist das leider nur von eingeschränktem
  Nutzen und die Zuhilfenahme eines Parsers ist unvermeidlich.
@@ -3699,7 +5131,7 @@ eren und das Arbeiten mit HTTP-Verben fühlt sich “irgendwie nach Internet”
  als auch einen Parser für JSON an, welcher bei vergleichbarer Funktionalität
  bereits wegen der offiziellen Unterstützung durch Apple bevorzugt eingesetzt
  werden sollte.
- Auch andere Teile, die das externe Framework mir bereitstellen würde, waren
+ Auch andere Teile, die das externe Framework bereitstellen würde, waren
  ohne größere Schwierigkeiten durch ein breites Arsenal hilfreicher Funktionen
  zu realisieren, die Cocoa Touch ohnehin bereitstellt.
  Letztendlich erlaubte dies mir die Umsetzung dieser Arbeit, ohne dass ich
@@ -3719,9 +5151,9 @@ d“ in Richtung Objective-C ab fühlt sich befriedigend an.
  die zusätzlichen Parameter-Bezeichner in den Methoden vermissen.
  Einen ersten Kundenauftrag für eine iPhone-App habe ich bereits schon vor
  dem Abschluss dieser Arbeit angenommen.
- Xcode wird also schon sehr bald wieder geöffnet werden und meinen Ausflug
- in die Objective-C-Welt werde ich dort weiterführen, wo ich ihn mit dem
- Abschluss dieser Arbeit unterbrochen habe.
+ Xcode wird also nicht lange geschlossen bleiben und schon bald werde ich
+ meinen Ausflug in die Objective-C-Welt an der Stelle weiterführen, wo ich
+ ihn mit dem Abschluss dieser Arbeit unterbrochen habe.
  
 \end_layout
 
@@ -3743,7 +5175,8 @@ key "Bayer - REST Einführung"
 
 \end_inset
 
-Bayer, Thomas (2002): REST Webservices: Eine Einführung
+Bayer, Thomas (2002): REST Webservices: Eine Einführung, URL: http://www.oio.de/pu
+blic/xml/rest-webservices.htm (letzter Aufruf am 6.9.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3755,6 +5188,7 @@ key "JAXenter"
 
 Tilkov, Stefan (2009): REST - Der bessere Webservice? In: JAXenter, URL:
  http://it-republik.de/jaxenter/artikel/REST---Der-bessere-Web-Service-2158.html
+ (letzter Aufruf am 6.9.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3765,7 +5199,7 @@ key "saurik"
 \end_inset
 
 Freeman, Jay: How to Host a Cydia™ Repository, URL: http://www.saurik.com/id/7
- (letzter Aufruf am 29.11.2012)
+ (letzter Aufruf am 16.11.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3786,7 +5220,8 @@ key "Wikipedia - REST"
 
 \end_inset
 
-http://de.wikipedia.org/wiki/Representational_State_Transfer
+http://de.wikipedia.org/wiki/Representational_State_Transfer (letzter Aufruf
+ am 5.9.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3796,7 +5231,7 @@ key "JSON.org - Einführung in JSON"
 
 \end_inset
 
-Introducing JSON, URL: http://json.org/index.html
+Introducing JSON, URL: http://json.org/index.html (letzter Aufruf am 15.09.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3806,7 +5241,8 @@ key "W3C - XML Essentials"
 
 \end_inset
 
-XML ESSENTIALS, URL: http://www.w3.org/standards/xml/core
+XML ESSENTIALS, URL: http://www.w3.org/standards/xml/core (letzter Aufruf
+ am 16.09.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3816,8 +5252,8 @@ key "The Objective-C Programming Language"
 
 \end_inset
 
-https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ObjectiveC
-/Introduction/introObjectiveC.html
+https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ Objective
+C/Introduction/introObjectiveC.html (letzter Aufruf am 10.10.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3827,8 +5263,8 @@ key "Learning Objective-C"
 
 \end_inset
 
-http://developer.apple.com/library/ios/#referencelibrary/GettingStarted/Learning_O
-bjective-C_A_Primer/_index.html
+http://developer.apple.com/library/ios/#referencelibrary/GettingStarted/ Learning_
+Objective-C_A_Primer/_index.html (letzter Aufruf am 10.10.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -3841,7 +5277,7 @@ key "Galileo Computing"
 Rodewig, Klaus M.
  / Wagner, Clemens: Apps entwickeln für iPhone und iPad - Das Praxisbuch,
  Galileo Computing, 2012, URL: http://openbook.galileocomputing.de/apps_entwickeln
-_fuer_iphone_und_ipad/index.html
+_fuer_iphone_und_ ipad/index.html (letzter Aufruf am 12.11.2012)
 \end_layout
 
 \end_body

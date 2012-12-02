@@ -850,16 +850,6 @@
         
         [self processKeys:keyArray withValues:valueArray iteration:nil];
         
-        if ([parsedText length] > 0) {
-            
-            [_progressBarDescription setHidden:YES];
-            [_loadProgressBar setHidden:YES];
-            
-            [_contentScrollViewText setText:parsedText];
-            [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
-            [_outputSwitch setSelectedSegmentIndex:2];   // auf Parsed-Tab wechseln
-        }
-        
         // ********** End Filling Header + Body Fields: PARSED **********
     }
 }
@@ -1029,6 +1019,11 @@
     [_progressBarDescription setHidden:YES];
     [_loadProgressBar setHidden:YES];
     [_loadIndicatorView stopAnimating];
+    if ([parsedText length] > 0) {
+        [_contentScrollViewText setText:parsedText];
+        [_outputSwitch setEnabled:YES forSegmentAtIndex:2];   // Parsed-Tab enablen
+        [_outputSwitch setSelectedSegmentIndex:2];   // auf Parsed-Tab wechseln
+    }
     
     // trim arrays, fields with empty strings should be deleted
     for (int i = 0; i < [foundResourceKeys count]; i++) {

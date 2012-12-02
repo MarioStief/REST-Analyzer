@@ -25,6 +25,7 @@
 		AC98D474160B820F0083FB39 /* Circle_Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D472160B820F0083FB39 /* Circle_Grey.png */; };
 		AC98D479160B835D0083FB39 /* Box_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D477160B835D0083FB39 /* Box_Green.png */; };
 		AC98D47A160B835D0083FB39 /* Box_Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D478160B835D0083FB39 /* Box_Red.png */; };
+		AC996D32166AFA9B00BB9C74 /* UniTrier-eps-converted-to.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AC996D31166AFA9B00BB9C74 /* UniTrier-eps-converted-to.pdf */; };
 		ACB2F182162323D60047C497 /* LogOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB2F181162323D60047C497 /* LogOutputViewController.m */; };
 		ACB2F18416232FEA0047C497 /* code.png in Resources */ = {isa = PBXBuildFile; fileRef = ACB2F18316232FEA0047C497 /* code.png */; };
 		ACBC27A91610EEEF006F982E /* ResourcesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */; };
@@ -86,6 +87,8 @@
 		AC98D472160B820F0083FB39 /* Circle_Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Grey.png; sourceTree = "<group>"; };
 		AC98D477160B835D0083FB39 /* Box_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Green.png; sourceTree = "<group>"; };
 		AC98D478160B835D0083FB39 /* Box_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Red.png; sourceTree = "<group>"; };
+		AC996D30166AF92600BB9C74 /* UniTrier.eps */ = {isa = PBXFileReference; lastKnownFileType = file; path = UniTrier.eps; sourceTree = "<group>"; };
+		AC996D31166AFA9B00BB9C74 /* UniTrier-eps-converted-to.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "UniTrier-eps-converted-to.pdf"; sourceTree = "<group>"; };
 		ACB2F180162323D60047C497 /* LogOutputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogOutputViewController.h; sourceTree = "<group>"; };
 		ACB2F181162323D60047C497 /* LogOutputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogOutputViewController.m; sourceTree = "<group>"; };
 		ACB2F18316232FEA0047C497 /* code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = code.png; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 				AC5EDB171655D16800949307 /* ViewController2.tiff */,
 				AC5EDB181655D16800949307 /* webservice.png */,
 				AC8E797215DF715F003DCA88 /* Dokumentation.lyx */,
+				AC996D30166AF92600BB9C74 /* UniTrier.eps */,
+				AC996D31166AFA9B00BB9C74 /* UniTrier-eps-converted-to.pdf */,
 			);
 			name = Thesis;
 			path = ..;
@@ -278,6 +283,7 @@
 				ACCBB93B1622CEBC00E097E3 /* Magnifier.png in Resources */,
 				ACB2F18416232FEA0047C497 /* code.png in Resources */,
 				ACBF1CB0162A1E1800D4410B /* Trash.png in Resources */,
+				AC996D32166AFA9B00BB9C74 /* UniTrier-eps-converted-to.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
