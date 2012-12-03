@@ -343,9 +343,9 @@ tierte Programmierung bietet, seien es Möglichkeiten zur Datenkapselung,
  welche ursprünglich als Basis für das Betriebssystem NextStep verwendet
  wurde.
  Mit der Übernahme zu Apple wurde die aus NextStep hervorgehende OpenStep-API
- ebenfalls Grundlage für OS X, womit sich auch die zu Systemsprache von
- Pascal auf Objective-C änderte.
- Anders als C+ greift Objective-C für die objektorientierte Erweiterung
+ ebenfalls Grundlage für OS X, womit sich auch die Systemsprache von Pascal
+ auf Objective-C änderte.
+ Anders als C++ greift Objective-C für die objektorientierte Erweiterung
  auf die Sprache Smalltalk zurück, in der mit Nachrichtenkommunikation gearbeite
 t wird und in der es nur drei eingebaute ausführbare Konstrukte gibt: Eine
  Botschaft wird an ein Objekt gesendet, einer Variable wird ein Objekt zugewiese
@@ -428,8 +428,8 @@ Als Anwendungsbeispiel für diese ersten Schritte in einer neuen Umgebung
  das Internet selbst.
  Dieser erst 2000 in einer Dissertation eingeführte Standard beschreibt
  die Implementierung eines Webservices, mit dem die bereits im HTTP-Protokoll
- definierten Methoden GET, PUT, POST, DELETE und HEAD auf statistischen
- Inhalten arbeiten.
+ definierten Methoden GET, PUT, POST, DELETE und HEAD auf statischen Inhalten
+ arbeiten.
  Diese werden wiederum auf permanente URLs abgebildet.
  Da die Funktionalität REST-konformer Webservices immer auf diese HTTP-Methoden
  abgebildet wird, sollte es möglich sein, einen generischen Client zu entwickeln
@@ -574,8 +574,37 @@ NSString
  Wird es bei der Angabe des String weggelassen, wird der bekannte, nullterminier
 te C-String erzeugt.
  Per Vorgabe besitzen die Datentypen in Objective-C die gleiche Typisierung
- wie in C: Sie sind statisch, schwach und explizit.
- Das Konzept der dynamischen Typisierung ist mit dem typlose Datentyp 
+ wie in C: Sie sind 
+\shape italic
+schwach
+\shape default
+, 
+\shape italic
+statisch
+\shape default
+ und 
+\shape italic
+explizit
+\shape default
+.
+ Während eine 
+\shape italic
+schwache
+\shape default
+ Typisierung Auskunft darüber gibt, dass Dateitypen ineinander umgewandelt
+ werden können, weist das Merkmal 
+\shape italic
+statisch
+\shape default
+ darauf hin, dass der Datentyp bereits zur Übersetzungszeit geprüft wird.
+ Im Gegensatz dazu werden dynamische Datentypen erst zur Laufzeit getestet.
+ 
+\shape italic
+Explizit
+\shape default
+ letztlich bedeutet, dass die Datentypen nicht erst per Typableitung ermittelt
+ werden.Das Konzept der dynamischen Typisierung ist mit dem typlose Datentyp
+ 
 \shape italic
 id
 \shape default
@@ -749,8 +778,8 @@ Protokolle: Data Sources und Delegates
 \end_layout
 
 \begin_layout Standard
-Wer in Java mit Interfaces umgehen kann, sollte keine Schwierigkeiten haben,
- sich mit der Funktionsweise von Protokollen vertraut zu machen.
+Ein Protokoll ist einem Interface in Java sehr ähnlich: Es deklariert die
+ Methoden, die in eine Klasse vorhanden sein müssen, welche es implementiert.
  Eine Protokolldeklaration beginnt mit dem Schlüsselwort 
 \family typewriter
 \size footnotesize
@@ -1002,6 +1031,45 @@ NSArray
  die er nicht kennt.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Layers.tiff
+	lyxscale 25
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Schichtenmodell von iOS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 IDE: Xcode
 \end_layout
@@ -1087,6 +1155,45 @@ Automatic Reference Counting
  hinzu.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Xcode.tiff
+	lyxscale 21
+	scale 21
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Xcode
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Interface Builder: Storyboards
 \end_layout
@@ -1107,12 +1214,12 @@ DataSource
 \shape default
  zu nutzen, lassen sich realisieren, indem man ein Objekt bei gedrückter
  Steuerungs-Taste auf die gewünschte View zieht.
- Zieht man diese statt dessen in den Interfaceteil des Programmcodes, werden
- die entsprechenden Codefragmente erstellt, in denen man sofort mit der
- Implementierung beginnen kann, ohne sich mit programmatischen Details zum
- Setzen der einzelnen GUI-Elemente beschäftigen zu müssen.
+ Zieht man diese statt dessen in den Programmcode, werden die entsprechenden
+ Codefragmente erstellt, in denen man sofort mit der Implementierung beginnen
+ kann, ohne sich mit programmatischen Details zum Setzen der einzelnen GUI-Eleme
+nte beschäftigen zu müssen.
  Übergänge lassen sich mit ID-Strings versehen, auf die man programmatisch
- zugreifen.
+ zugreifen kann.
  So wird im Falle eines Überganges auf eine andere View die Methode 
 \shape italic
 prepareForSegue
@@ -1162,7 +1269,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-GUI im Storyboard
+GUI-Entwurf im Storyboard
 \end_layout
 
 \end_inset
@@ -1260,7 +1367,7 @@ Development Certificate
 \shape italic
 iOS Development Certificate
 \shape default
- vorhanden ist und bietet an, einen solchen von Apple anzufordern.
+ vorhanden ist und bietet an, eine solche von Apple anzufordern.
  Anschließend fügt er diesen automatisch der Schlüsselverwaltung hinzu und
  bietet an, das Entwicklerprofil für den Einsatz auf anderen Macs zu exportieren.
  In den 
@@ -1282,20 +1389,18 @@ Distributionsalternative: Der Cydia Store
 
 \begin_layout Standard
 Zum offiziellen Vertriebsweg über den Apple App Store gibt es eine Alternative,
- über die man jedoch nur freigeschaltete “gejailbreakte” Geräte Zugriff
- haben: Der Cydia Store, wird in der Regel bei einem Jailbreak gleich mitinstall
-iert.
+ über die jedoch nur freigeschaltete “gejailbreakte” Geräte Zugriff haben:
+ Der Cydia Store wird in der Regel bei einem Jailbreak gleich mitinstalliert.
  Mit diesem kann man sich, wie unter Linux-Systemen bekannt, mit APT-kompatiblen
  Repositorien verbinden und auf deren Angebot zugreifen.
- Wenngleich es auch illegale Repositorien gibt, die urheberrechtlich geschütztes
- Material verteilen, ist der Cydia Store nicht als Distributionssystem für
- raubkopierte Software zu verstehen.
- Auch der Cydia Store verfügt über ein Bezahlsystem, mit dem Entwickler
- ihre Anwendungen entgeltlich anbieten.
+ Der Cydia Store ist hierbei nicht als Distributionssystem für raubkopierte
+ Software zu verstehen, denn auch er verfügt wie der App Store über ein
+ Bezahlsystem, mit dem Entwickler ihre Anwendungen entgeltlich anbieten
+ können.
  Interessant wird diese Vertriebsmethode, wenn man eine App entwickeln möchte,
- welche die Rechte überschreitet, die Apple seinen Anwendungen einräumt.
+ welche die von Apple eingeräumten Rechte überschreitet.
  Ein Beispiel für eine solche Anwendung ist der Fenstermanager Quasar, der
- eine Alternative zu Apples Einzelanwendungsmodus eröffnet.
+ eine Alternative zu Apples Einzelanwendungsmodus bietet.
  Vor allem auf iPads mit Retina-Auflösung kann es durchaus eine wünschenswerte
  Option sein, zwei oder mehr Fenster nebeneinander betreiben zu können.
  So könnte man beispielsweise auf der einen Seite ein Textverarbeitungsprogramm
@@ -1318,30 +1423,27 @@ ne Software für OS X ist.
 \end_layout
 
 \begin_layout Standard
-Da sich dieses Programm nach /opt/local/bin installiert, fügen wir dieses
- Verzeichnis unserem Pfad hinzu:
-\end_layout
-
-\begin_layout LyX-Code
-
+Da sich dieses Programm nach 
+\shape italic
+/opt/local/bin
+\shape default
+ installiert, fügen wir dieses Verzeichnis mit 
+\family typewriter
 \size footnotesize
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-\end_layout
-
-\begin_layout Standard
-Nun folgt ein Update dessen Paketquellen und die Installation des gewünschten
- Paketes dpkg:
-\end_layout
-
-\begin_layout LyX-Code
-
+\family default
+\size default
+ unserem Pfad hinzu.
+ Der Befehl 
+\family typewriter
 \size footnotesize
 sudo port selfupdate && sudo port install dpkg
-\end_layout
-
-\begin_layout Standard
-Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repository-konf
-orme DEB-Pakete zu erstellen.
+\family default
+\size default
+ führt ein Paketquellen-Update durch und installiert das gewünschte Paketes
+ dpkg.
+ Mit diesem sind wir nun in der Lage, aus den fertigen Apps Cydia-Repository-kon
+forme DEB-Pakete zu erstellen.
 \end_layout
 
 \begin_layout Standard
@@ -1440,34 +1542,24 @@ Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden – die ein
  werden.
  Davon abgesehen, dass diese Dateien sowieso nicht zum Paket gehören, könnten
  Sie auf dem Zielsystem Konflikte mit anderen Paketen erzeugen.
- Um dieses Feature zu deaktivieren werden folgende Umgebungsvariablen exportiert
-:
-\end_layout
-
-\begin_layout LyX-Code
-
+ Um dieses Feature zu deaktivieren werden durch 
+\family typewriter
 \size footnotesize
-export COPYFILE_DISABLE
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-export COPY_EXTENDED_ATTRIBUTES_DISABLE
-\end_layout
-
-\begin_layout Standard
-Sind wir nun soweit wechseln im Terminal ins Verzeichnis 
+export COPYFILE_DISABLE && export COPY_EXTENDED_ATTRIBUTES_DISABLE
+\family default
+\size default
+ die erforderlichen Umgebungsvariablen exportiert.
+ Abschließend lässt sich im Verzeichnis 
 \shape italic
 MyProgramm
 \shape default
- und erzeugen das DEB-Paket mittels:
-\end_layout
-
-\begin_layout LyX-Code
-
+ durch 
+\family typewriter
 \size footnotesize
 dpkg-deb -b MyProgram
+\family default
+\size default
+ das DEB-Paket erzeugen.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1477,16 +1569,17 @@ Vom DEB-Paket aufs Device
 \begin_layout Standard
 Um die nun fertige DEB-Datei auf das iPad zu bekommen, wird ein Cydia-kompatible
 s Repositorium benötigt.
- Hierfür kann zum Beispiel auf das kostenlose Angebot von MyRepoSpace zurückgegr
-iffen werden.
- Über ein Webinterface können die Pakete hochgeladen werden und sind im
- Cydia Store zugreifbar über:
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
+ Hierfür kann zum Beispiel auf das kostenlose Angebot von 
+\shape italic
+MyRepoSpace
+\shape default
+ zurückgegriffen werden.
+ Über ein Webinterface können die Pakete hochgeladen werden, anschließend
+ sind sie in Cydia über das Repositorium 
+\shape italic
 http://cydia.myrepospace.com/Username/
+\shape default
+ zugreifbar.
 \end_layout
 
 \begin_layout Chapter
@@ -2066,7 +2159,7 @@ PUT /customer/1337
 \family default
 \size default
  möglich.
- Möchte er sich den Artikel Samsung Galaxy S3 anzeigen lassen kann er das
+ Möchte er sich den Artikel Samsung Galaxy S3 anzeigen lassen, kann er das
  per 
 \family typewriter
 \size footnotesize
@@ -2198,14 +2291,15 @@ POST /shoppingcart/1337
 , was auf den offenen Bestellstatus hinweist.
  Nun erscheint jedoch unerwartet das iPhone 5 und der Kunde überlegt es
  sich anders.
- Er überprüft, mit einem 
+ Er überprüft mit einem 
 \family typewriter
 \size footnotesize
 GET /customer/1337/orders
 \family default
 \size default
- seinen Bestellstatus und hat Glück, die Bestellung wurde noch nicht versendet.
- Er storniert die offene Bestellung mit 
+ seinen Bestellstatus und er hat Glück, denn die Bestellung wurde noch nicht
+ versendet.
+ Er storniert seine noch offene Bestellung mit 
 \family typewriter
 \size footnotesize
 DELETE /customer/1337/orders/open/2012-09-11_001
@@ -2227,7 +2321,7 @@ Der Onlineshop seinerseits entfernt nach dem Release des iPhone 5 mit
 DELETE /article/iphone_4s
 \family default
 \size default
- das iPhone 4S aus deinem System und legt mit 
+ das iPhone 4S aus seinem System und legt mit 
 \family typewriter
 \size footnotesize
 PUT /article
@@ -2445,10 +2539,13 @@ Ein einfaches, wohlgeformtes XML-Dokument könnte wie folgt aussehen:
 \shape italic
 Wohlgeformt
 \shape default
- bedeutet im Kontext eines XML-Dokumentes, dass exakt ein Wurzelelement
- vorhanden ist.
- Elemente sind Informationsträger, ganz gleich welcher Art, sie können Texte
- oder weitere Elemente enthalten oder eine Kombination aus beiden.
+ bedeutet im Kontext eines XML-Dokumentes, dass es sich an die offiziellen
+ Regeln des W3C zur Erstellung von XML-Dokumenten hält.
+ Es muss exakt ein Wurzelelement vorhanden sein, welches das gesamte Dokument
+ umschließt.
+ Die einzelnen Elemente sind Informationsträger, ganz gleich welcher Art,
+ sie können Texte oder weitere Elemente enthalten oder eine Kombination
+ aus beiden.
  Die Elementbezeichnung ist frei wählbar.
  Verfügt ein Element über einen Inhalt, so wird dieser mit einem Start-
  sowie mit einem Endelement versehen: 
@@ -2559,6 +2656,9 @@ u, einen vierstelligen Zahlencode eingeben, an dessen Stelle wird dann der
 \end_layout
 
 \begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
 Ein Beispiel für eine JSON-Datei: 
 \end_layout
 
@@ -2775,9 +2875,11 @@ Ein erster Überblick
 \end_layout
 
 \begin_layout Standard
-Da es sich um eine iOS-App handelt und als solche intuitiv sein und nicht
- mit Optionsvielfalt erschlagen sollte, habe ich mich für ein einfaches
- 
+Erstellt man ein neues Projekt, hat man verschiedene vorgefertigte Templates
+ zur Auswahl.
+ Die App sollte nicht mit Optionsvielfalt erschlagen und alles intuitiv
+ aus einer View heraus erreichbar sein.
+ Die Wahl viel auf ein einfaches 
 \shape italic
 Single View Application
 \shape default
@@ -2785,7 +2887,8 @@ Single View Application
 \shape italic
 NavigationController
 \shape default
- entschieden.
+, der einen zentralen Navigator bereitstellt, von dem aus man die einzelnen
+ Views anwählen kann.
  Erzeugt man ein Projekt, liefert Xcode bereits einige Template-Dateien,
  in denen man sofort losprogrammieren darf, dazu gehören der 
 \shape italic
@@ -2805,10 +2908,6 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename Diagram.png
@@ -2821,7 +2920,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Verwendete Klassen in UML-Notation
+Klassen als UML-Diagramm
 \end_layout
 
 \end_inset
@@ -2937,8 +3036,8 @@ ur das Keyboard wieder vom Bildschirm ausgeblendet wird.
  Go-Buttons oben rechts am Bildschirm.
  Für das Textfeld, welches diese Methode aufrufen möchte, muss zwingend
  eine Delegate spezifiziert werden.
- Dazu wird im Storyboard bei gedrückter Strg-Taste eine Verbindung vom URL-Textf
-eld zum Controller gezogen und das Outlet 
+ Dazu wird im Storyboard bei gedrückter Steuerungstaste eine Verbindung
+ vom URL-Textfeld zum Controller gezogen und das Outlet 
 \shape italic
 delegate
 \shape default
@@ -3236,12 +3335,12 @@ ViewController im Landscape-Modus
 \end_layout
 
 \begin_layout Subsection
-Senden einer Request
+Senden eines Request
 \end_layout
 
 \begin_layout Standard
 Beim Senden eines Request passiert Folgendes: Im URL-Textfeld ist die Adresse
- einzugeben, zu welcher die Request gesendet werden soll; im linken oberen
+ einzugeben, zu welcher der Request gesendet werden soll; im linken oberen
  Picker wird die HTTP-Methode ausgewählt.
  Das Textfeld direkt unter dem Picker bietet die Möglichkeit, zusätzliche
  Request-Methoden aufzunehmen wie beispielsweise OPTIONS, das standardmäßig
@@ -3346,7 +3445,6 @@ NSArrays
 NSArrays
 \shape default
  zugreifen.
- (siehe Abbildung 4.4)
 \end_layout
 
 \begin_layout Standard
@@ -3622,6 +3720,7 @@ connection:didReceiveAuthenticationChallenge
 
 \begin_layout LyX-Code
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
@@ -3674,11 +3773,11 @@ connection:didReceiveResponse
  eine positive Antwort auf unseren Request hin.
  Es wird nun ein neues Historyelement erzeugt, mit der erfolgreich bearbeiteten
  URL gefüllt und der History-Queue angehangen.
- (siehe Abbildung 4.5)
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
@@ -3717,6 +3816,9 @@ Eintreffen einer Response
 \end_layout
 
 \begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
 Trifft eine Response ein, die neben dem Header einen Body enthält, wird
  mit diesem die Methode 
 \shape italic
@@ -3734,11 +3836,11 @@ connection:didReceiveData
 responseBodyData
 \shape default
  hinzugefügt.
- (siehe Abbildung 4.6)
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
@@ -3799,7 +3901,7 @@ NSTimer
  jeder eingehenden Nachricht wieder zurücksetzte.
  Lief dieser ab, so wurde das vollständige Empfangen der Nachricht angenommen
  und die Analyse der Bodydaten begonnen.
- Hier zeigte sich, dass ein gründlicherer Blick ins Referenzhandbuch Einiges
+ Hier zeigte sich, dass ein gründlicherer Blick ins Referenzhandbuch einiges
  an Arbeit erspart hätte, denn wie für so vieles stellt Apple durchdachte
  automatische Methodenaufrufe bereit und einige Zeit später stieß ich auf
  die Methode 
@@ -3862,7 +3964,7 @@ NSDictionary
 \shape italic
 NSMutableArray
 \shape default
- geschrieben, da es nötig sein wird, an gezielt Felder zu löschen und neue
+ geschrieben, da es nötig sein wird, gezielt Felder zu löschen und neue
  hinzuzufügen.
  Wurde das Parsen erfolgreich abgeschlossen, wird die rekursive Methode
  processKeys aufgerufen.
@@ -3870,7 +3972,7 @@ NSMutableArray
 \shape italic
 Erfolgreich
 \shape default
- bedeutet im Fall des XML-Parsers dass er nach erfolgter Durchführung ein
+ bedeutet im Fall des XML-Parsers, dass er nach erfolgter Durchführung ein
  
 \shape italic
 YES
@@ -3884,8 +3986,7 @@ NSJSONSerialization
 \shape italic
 erfolgreich
 \shape default
-, wenn sich das zu füllende Array nach Durchlauf des Parsers nicht leer
- ist.
+, wenn das zu füllende Array nach Durchlauf des Parsers nicht leer ist.
  Die einzelnen Schlüssel/Wert-Paare werden daraufhin überprüft, ob es sich
  bei den Werten um eine Ressource handelt.
  Da es durchaus sein kann, dass als Wert wiederum ein komplettes Array mit
@@ -3904,8 +4005,7 @@ staticIndex
  und deren Inhalt dem eigenen Array am aktuellen Index eingefügt wird.
  Das Schlüssel/Wert-Paar, welches das Array enthielt, hat nach dem rekursiven
  Abarbeiten keine weitere Funktion mehr und es wird entfernt, denn die darin
- enthaltenen Schlüssel/Wert-Paare befinden wurden bereits an dessen Stelle
- eingefügt.
+ enthaltenen Schlüssel/Wert-Paare wurden bereits an dessen Stelle eingefügt.
  Das Array wächst und die enthaltenen Schlüssel/Werte-Paare sind noch in
  der richtigen Reihenfolge.
 \end_layout
@@ -3919,7 +4019,7 @@ NSURL
  umgewandelt.
  Hierbei wird bereits intern getestet, ob die Zeichen für eine URL valid
  sind.
- Ist dem nicht der Fall, wird ein 
+ Verläuft dieser Test negativ, wird ein 
 \shape italic
 nil
 \shape default
@@ -4017,11 +4117,11 @@ NSString
  y geschrieben.
  Alle Felder der beiden Arrays, an die keine Einträge geschrieben wurden,
  enthalten weiterhin leere Strings.
- (siehe Abbildung 4.7)
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
@@ -4094,7 +4194,7 @@ NSMutableArrays
 Segues
 \shape default
  bezeichnet, programmatisch zugreifen.
- Bei einem Übergang erhält an die Ursprungs-View die Nachricht 
+ Bei einem Übergang erhält die Ursprungs-View die Nachricht 
 \shape italic
 prepareForSegue:sender
 \shape default
@@ -4369,8 +4469,8 @@ http://www.smartphoneseppel.de/customer/1337
 \shape italic
 /article/galaxy_s3
 \shape default
- wird hingegen als einen absoluter Pfad interpretiert und direkt an die
- Base-URL angehangen: 
+ wird hingegen als absoluter Pfad interpretiert und direkt an die Base-URL
+ angehangen: 
 \shape italic
 http://www.smartphoneseppel.de/article/galaxy_s3
 \shape default
@@ -4394,9 +4494,11 @@ PopoverControllers
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
 status open
 
 \begin_layout Plain Layout
@@ -4416,11 +4518,15 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Recognized Resources
+Erkannte Ressourcen
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -4732,9 +4838,9 @@ DataSource
 \shape default
  benötigt, wollte ich diese recht codezeilenarme Funktionalität in der Hauptview
  unterbringen.
- Jedoch war nach dem Öffnen der View das Ausgabefeld stets leer, so man
- einen Refresh-Button betätigen musste, der die Datei erneut in das Textfeld
- mappte hat.
+ Jedoch war nach dem Öffnen der View das Ausgabefeld stets leer, so dass
+ ein Refresh-Button betätigt werden musste, der die Datei erneut in das
+ Textfeld mappte.
  Erst dann wurde der Inhalt sichtbar.
  Abhilfe brachte das Auslagern in eine eigene Klasse mit der Initialisierungsmet
 hode 
@@ -4745,9 +4851,11 @@ viewDidAppear
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
 status open
 
 \begin_layout Plain Layout
@@ -4767,11 +4875,15 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-In Datei umgeleiteter Log-Output im Verbose-Modus
+Logging-Output im Verbose-Modus
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -5089,12 +5201,12 @@ prepareForSegue
  Warum an dieser Stelle keine manuelle Eingabe der Zoomstufe gegeben ist
  oder zumindest ein Schieberegler angeboten wird, der sich etwas feingranularer
  einstellen lässt, ist mir nicht ganz ersichtlich.
- Bei meiner nicht als exotisch einzustufenden FullHD-Auflösung wäre oft
- 75 % die Zoomstufe meiner Wahl gewesen.
+ Bei meiner nicht ungewöhnlichen Auflösung von 1920x1200 wäre oft 75 % die
+ Zoomstufe meiner Wahl gewesen.
 \end_layout
 
 \begin_layout Standard
-In der Wahl der Implementierungsthematik fand ich mit den RESTful Webservices
+In der Wahl der Implementierungsthematik fand ich mit RESTful Webservices
  ein interessantes Umsetzungsgebiet.
  Die Umsetzung eines generischen Client für verschiedene Webservices, deren
  Schnittstelle die Methoden bilden, die das HTTP-Protokoll schon selbst
@@ -5141,7 +5253,7 @@ NSDictionary
 \begin_layout Standard
 Abschließend kann ich über die vergangenen Wochen, in denen ich mich mit
  dieser Arbeit beschäftigt habe, Folgendes sagen: Mein “Blick über den Tellerran
-d“ in Richtung Objective-C ab fühlt sich befriedigend an.
+d“ in Richtung Objective-C fühlt sich befriedigend an.
  Der Exkurs wird hier noch nicht enden, denn ich möchte noch einige weitere
  Anwendungen für Apple-Hardware entwickeln.
  Die Arbeit auf und mit Apples Plattform hat sich für mich als sehr angenehm
