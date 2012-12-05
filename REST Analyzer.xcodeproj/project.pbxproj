@@ -19,8 +19,6 @@
 		AC8B878C15DF646000E12B48 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8B878B15DF646000E12B48 /* AppDelegate.m */; };
 		AC8B878F15DF646000E12B48 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC8B878D15DF646000E12B48 /* MainStoryboard.storyboard */; };
 		AC8B879215DF646000E12B48 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8B879115DF646000E12B48 /* ViewController.m */; };
-		AC8E797315DF715F003DCA88 /* Dokumentation.lyx in Resources */ = {isa = PBXBuildFile; fileRef = AC8E797215DF715F003DCA88 /* Dokumentation.lyx */; };
-		AC92022F15E30128009B1426 /* webservice.png in Resources */ = {isa = PBXBuildFile; fileRef = AC92022E15E30128009B1426 /* webservice.png */; };
 		AC98D473160B820F0083FB39 /* Circle_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D471160B820F0083FB39 /* Circle_Green.png */; };
 		AC98D474160B820F0083FB39 /* Circle_Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D472160B820F0083FB39 /* Circle_Grey.png */; };
 		AC98D479160B835D0083FB39 /* Box_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AC98D477160B835D0083FB39 /* Box_Green.png */; };
@@ -33,6 +31,10 @@
 		ACCBB93B1622CEBC00E097E3 /* Magnifier.png in Resources */ = {isa = PBXBuildFile; fileRef = ACCBB93A1622CEBC00E097E3 /* Magnifier.png */; };
 		ACCE8CF01645874D0057484B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877B15DF645F00E12B48 /* UIKit.framework */; };
 		ACCE8CF1164587A60057484B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B877D15DF645F00E12B48 /* Foundation.framework */; };
+		ACD171F6166FD31B0097C21C /* webservice144.png in Resources */ = {isa = PBXBuildFile; fileRef = ACD171F4166FD31B0097C21C /* webservice144.png */; };
+		ACD171F8166FD34D0097C21C /* webservice72.png in Resources */ = {isa = PBXBuildFile; fileRef = ACD171F7166FD34D0097C21C /* webservice72.png */; };
+		ACD1720416700A3B0097C21C /* Thesis.lyx in Resources */ = {isa = PBXBuildFile; fileRef = ACD1720216700A3B0097C21C /* Thesis.lyx */; };
+		ACD1720516700A3B0097C21C /* Thesis.pdf in Resources */ = {isa = PBXBuildFile; fileRef = ACD1720316700A3B0097C21C /* Thesis.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +61,6 @@
 		AC5EDB151655D16800949307 /* Storyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Storyboard.png; sourceTree = "<group>"; };
 		AC5EDB161655D16800949307 /* ViewController1.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ViewController1.tiff; sourceTree = "<group>"; };
 		AC5EDB171655D16800949307 /* ViewController2.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ViewController2.tiff; sourceTree = "<group>"; };
-		AC5EDB181655D16800949307 /* webservice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webservice.png; sourceTree = "<group>"; };
 		AC8B877715DF645F00E12B48 /* REST Analyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REST Analyzer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B877B15DF645F00E12B48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AC8B877D15DF645F00E12B48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -81,8 +82,6 @@
 		AC8B87CC15DF654E00E12B48 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AC8B87CD15DF654E00E12B48 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AC8B87CE15DF654E00E12B48 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		AC8E797215DF715F003DCA88 /* Dokumentation.lyx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dokumentation.lyx; sourceTree = "<group>"; };
-		AC92022E15E30128009B1426 /* webservice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = webservice.png; path = ../webservice.png; sourceTree = "<group>"; };
 		AC98D471160B820F0083FB39 /* Circle_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Green.png; sourceTree = "<group>"; };
 		AC98D472160B820F0083FB39 /* Circle_Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Grey.png; sourceTree = "<group>"; };
 		AC98D477160B835D0083FB39 /* Box_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box_Green.png; sourceTree = "<group>"; };
@@ -96,6 +95,10 @@
 		ACBC27A81610EEEF006F982E /* ResourcesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcesTableViewController.m; sourceTree = "<group>"; };
 		ACBF1CAF162A1E1800D4410B /* Trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trash.png; sourceTree = "<group>"; };
 		ACCBB93A1622CEBC00E097E3 /* Magnifier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Magnifier.png; sourceTree = "<group>"; };
+		ACD171F4166FD31B0097C21C /* webservice144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webservice144.png; sourceTree = "<group>"; };
+		ACD171F7166FD34D0097C21C /* webservice72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webservice72.png; sourceTree = SOURCE_ROOT; };
+		ACD1720216700A3B0097C21C /* Thesis.lyx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Thesis.lyx; sourceTree = "<group>"; };
+		ACD1720316700A3B0097C21C /* Thesis.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Thesis.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +130,8 @@
 				AC5EDB151655D16800949307 /* Storyboard.png */,
 				AC5EDB161655D16800949307 /* ViewController1.tiff */,
 				AC5EDB171655D16800949307 /* ViewController2.tiff */,
-				AC5EDB181655D16800949307 /* webservice.png */,
-				AC8E797215DF715F003DCA88 /* Dokumentation.lyx */,
+				ACD1720216700A3B0097C21C /* Thesis.lyx */,
+				ACD1720316700A3B0097C21C /* Thesis.pdf */,
 				AC996D30166AF92600BB9C74 /* UniTrier.eps */,
 				AC996D31166AFA9B00BB9C74 /* UniTrier-eps-converted-to.pdf */,
 			);
@@ -209,8 +212,9 @@
 				AC98D472160B820F0083FB39 /* Circle_Grey.png */,
 				AC98D477160B835D0083FB39 /* Box_Green.png */,
 				AC98D478160B835D0083FB39 /* Box_Red.png */,
-				AC92022E15E30128009B1426 /* webservice.png */,
 				AC8B878315DF646000E12B48 /* REST Analyzer-Info.plist */,
+				ACD171F7166FD34D0097C21C /* webservice72.png */,
+				ACD171F4166FD31B0097C21C /* webservice144.png */,
 				AC8B878415DF646000E12B48 /* InfoPlist.strings */,
 				AC8B878715DF646000E12B48 /* main.m */,
 				AC8B878915DF646000E12B48 /* REST Analyzer-Prefix.pch */,
@@ -270,8 +274,6 @@
 			files = (
 				AC8B878615DF646000E12B48 /* InfoPlist.strings in Resources */,
 				AC8B878F15DF646000E12B48 /* MainStoryboard.storyboard in Resources */,
-				AC8E797315DF715F003DCA88 /* Dokumentation.lyx in Resources */,
-				AC92022F15E30128009B1426 /* webservice.png in Resources */,
 				AC98D473160B820F0083FB39 /* Circle_Green.png in Resources */,
 				AC98D474160B820F0083FB39 /* Circle_Grey.png in Resources */,
 				AC98D479160B835D0083FB39 /* Box_Green.png in Resources */,
@@ -284,6 +286,10 @@
 				ACB2F18416232FEA0047C497 /* code.png in Resources */,
 				ACBF1CB0162A1E1800D4410B /* Trash.png in Resources */,
 				AC996D32166AFA9B00BB9C74 /* UniTrier-eps-converted-to.pdf in Resources */,
+				ACD171F6166FD31B0097C21C /* webservice144.png in Resources */,
+				ACD171F8166FD34D0097C21C /* webservice72.png in Resources */,
+				ACD1720416700A3B0097C21C /* Thesis.lyx in Resources */,
+				ACD1720516700A3B0097C21C /* Thesis.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
