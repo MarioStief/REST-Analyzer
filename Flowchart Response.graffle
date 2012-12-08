@@ -105,7 +105,7 @@
 			<integer>296</integer>
 			<key>Points</key>
 			<array>
-				<string>{222.5, 623}</string>
+				<string>{227.09599992729005, 622.99999999999989}</string>
 				<string>{227.00000026629732, 515.16618587003882}</string>
 				<string>{200.29911626364432, 479.40066275114884}</string>
 			</array>
@@ -181,7 +181,7 @@
 			<integer>142</integer>
 			<key>Points</key>
 			<array>
-				<string>{164, 650}</string>
+				<string>{163.5, 650}</string>
 				<string>{116.96826934814453, 650}</string>
 			</array>
 			<key>Style</key>
@@ -248,7 +248,7 @@
 			<key>Points</key>
 			<array>
 				<string>{315.5, 650}</string>
-				<string>{281, 650}</string>
+				<string>{290.19199985457999, 650}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -312,7 +312,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{164, 623}, {117, 54}}</string>
+			<string>{{164, 623}, {126.1919998545801, 54}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
@@ -336,7 +336,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
 
-\f0\fs20 \cf0 foundResources != 0?}</string>
+\f0\fs20 \cf0 More items in foundResources?}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -769,7 +769,8 @@
 			<key>Points</key>
 			<array>
 				<string>{435, 483.5}</string>
-				<string>{422.34443840384483, 136.06190350669203}</string>
+				<string>{431, 188}</string>
+				<string>{397, 102}</string>
 				<string>{249.5, 92}</string>
 			</array>
 			<key>Style</key>
@@ -923,7 +924,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
 
-\f0\fs20 \cf0 add to foundResources}</string>
+\f0\fs20 \cf0 Add to foundResources}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -974,8 +975,8 @@
 			<key>Points</key>
 			<array>
 				<string>{254, 177.5}</string>
-				<string>{324.89665251743372, 192}</string>
-				<string>{358.67968394302, 280.53285490912873}</string>
+				<string>{345, 189}</string>
+				<string>{358.85794067382812, 281}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1129,7 +1130,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
 
-\f0\fs20 \cf0 State = Validating?}</string>
+\f0\fs20 \cf0 App State = "Validating"?}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -1287,7 +1288,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{289.47452990970231, 163.49606806774747}, {36, 38}}</string>
+			<string>{{320.00000034151265, 159.84997636684281}, {36, 38}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1346,11 +1347,11 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{370.67939655649087, 81.684388630948689}, {24, 38}}</string>
+			<string>{{388.99999901003901, 79.028518387710662}, {36, 38}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
-			<string>YES</string>
+			<string>Vertical</string>
 			<key>Flow</key>
 			<string>Resize</string>
 			<key>FontInfo</key>
@@ -1402,12 +1403,10 @@
 \f0\fs24 \cf0 no\
 }</string>
 			</dict>
-			<key>Wrap</key>
-			<string>NO</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{186.00000135251716, 540.67072640544097}, {63.956638336181641, 24}}</string>
+			<string>{{196.98018983967415, 540.74761924936161}, {41.019809722900391, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1465,7 +1464,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{128.80631895627585, 631}, {29, 38}}</string>
+			<string>{{128.52631320134424, 631}, {29, 38}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1746,7 +1745,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-12-05 21:58:49 +0000</string>
+	<string>2012-12-07 23:26:49 +0000</string>
 	<key>Modifier</key>
 	<string>Mario Stief</string>
 	<key>NotesVisible</key>

@@ -295,129 +295,6 @@ newpage
 
 
 \backslash
-thispagestyle{empty}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{center}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-large
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-bf
-\end_layout
-
-\begin_layout Plain Layout
-
-	Erklärung zur Bachelorarbeit
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{center}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1 cm}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-normalsize
-\end_layout
-
-\begin_layout Plain Layout
-
-	Hiermit erkläre ich, dass ich die Bachelorarbeit selbstständig  verfasst
- und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt 
- und die aus fremden Quellen direkt oder indirekt  übernommenen Gedanken
- als  solche kenntlich gemacht habe.
- Die Arbeit habe ich bisher keinem anderen Prüfungsamt in gleicher oder
- vergleichbarer Form vorgelegt.
- Sie wurde bisher nicht veröffentlicht.
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1.5 cm}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{center}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tabular}{lp{2em}l}   
-\backslash
-hspace{6cm}   && 
-\backslash
-hspace{6cm}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-
-\backslash
-
-\backslash
-cline{1-1}
-\backslash
-cline{3-3}   Ort, Datum     && Unterschrift  
-\backslash
-end{tabular}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{center}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-newpage
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
 setcounter{page}{1}
 \end_layout
 
@@ -5393,8 +5270,15 @@ key "Dissertation Fielding"
 
 \end_inset
 
-Fielding, Roy (2000) Dissertation: Architectural Styles and the Design of
- Network-based Software Architectures
+Fielding, Roy (2000) Dissertation: 
+\begin_inset Quotes eld
+\end_inset
+
+Architectural Styles and the Design of Network-based Software Architectures
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
@@ -5404,8 +5288,16 @@ key "Bayer - REST Einführung"
 
 \end_inset
 
-Bayer, Thomas (2002): REST Webservices: Eine Einführung, URL: http://www.oio.de/pu
-blic/xml/rest-webservices.htm (letzter Aufruf am 6.9.2012)
+Bayer, Thomas (2002): 
+\begin_inset Quotes eld
+\end_inset
+
+REST Webservices: Eine Einführung
+\begin_inset Quotes erd
+\end_inset
+
+, URL: http://www.oio.de/public/xml/rest-webservices.htm (letzter Aufruf am
+ 6.9.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -5415,9 +5307,16 @@ key "JAXenter"
 
 \end_inset
 
-Tilkov, Stefan (2009): REST - Der bessere Webservice? In: JAXenter, URL:
- http://it-republik.de/jaxenter/artikel/REST---Der-bessere-Web-Service-2158.html
- (letzter Aufruf am 6.9.2012)
+Tilkov, Stefan (2009): 
+\begin_inset Quotes eld
+\end_inset
+
+REST - Der bessere Webservice?
+\begin_inset Quotes erd
+\end_inset
+
+, In: JAXenter, URL: http://it-republik.de/jaxenter/artikel/REST---Der-bessere-We
+b-Service-2158.html (letzter Aufruf am 6.9.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -5427,8 +5326,15 @@ key "saurik"
 
 \end_inset
 
-Freeman, Jay: How to Host a Cydia™ Repository, URL: http://www.saurik.com/id/7
- (letzter Aufruf am 16.11.2012)
+Freeman, Jay: 
+\begin_inset Quotes eld
+\end_inset
+
+How to Host a Cydia™ Repository
+\begin_inset Quotes erd
+\end_inset
+
+, URL: http://www.saurik.com/id/7 (letzter Aufruf am 16.11.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -5438,8 +5344,16 @@ key "Wikipedia - Webservice"
 
 \end_inset
 
-Wikipedia: Web service, URL: http://en.wikipedia.org/wiki/Web_service (letzter
- Aufruf am 5.9.2012)
+Artikel 
+\begin_inset Quotes eld
+\end_inset
+
+Web service
+\begin_inset Quotes erd
+\end_inset
+
+, In: Wikipedia, Die freie Enzyklopädie, URL: http://en.wikipedia.org/wiki/Web_ser
+vice (letzter Aufruf am 5.9.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -5449,8 +5363,16 @@ key "Wikipedia - REST"
 
 \end_inset
 
-http://de.wikipedia.org/wiki/Representational_State_Transfer (letzter Aufruf
- am 5.9.2012)
+Artikel 
+\begin_inset Quotes eld
+\end_inset
+
+Representational State Transfer
+\begin_inset Quotes erd
+\end_inset
+
+, In: Wikipedia, Die freie Enzyklopädie, URL: http://de.wikipedia.org/wiki/Represe
+ntational_State_Transfer (letzter Aufruf am 5.9.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -5470,7 +5392,15 @@ key "W3C - XML Essentials"
 
 \end_inset
 
-XML ESSENTIALS, URL: http://www.w3.org/standards/xml/core (letzter Aufruf
+Artikel 
+\begin_inset Quotes eld
+\end_inset
+
+XML ESSENTIALS
+\begin_inset Quotes erd
+\end_inset
+
+, In: W3C Standards, URL: http://www.w3.org/standards/xml/core (letzter Aufruf
  am 16.09.2012)
 \end_layout
 
@@ -5481,8 +5411,17 @@ key "The Objective-C Programming Language"
 
 \end_inset
 
-https://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ Objective
-C/Introduction/introObjectiveC.html (letzter Aufruf am 10.10.2012)
+Artikel 
+\begin_inset Quotes eld
+\end_inset
+
+The Objective-C Programming Language
+\begin_inset Quotes erd
+\end_inset
+
+, In: iOS Developer Library, URL: https://developer.apple.com/library/ios/#documen
+tation/Cocoa/Conceptual/ ObjectiveC/Introduction/introObjectiveC.html (letzter
+ Aufruf am 10.10.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -5492,8 +5431,17 @@ key "Learning Objective-C"
 
 \end_inset
 
-http://developer.apple.com/library/ios/#referencelibrary/GettingStarted/ Learning_
-Objective-C_A_Primer/_index.html (letzter Aufruf am 10.10.2012)
+Artikel 
+\begin_inset Quotes eld
+\end_inset
+
+Learning Objective-C
+\begin_inset Quotes erd
+\end_inset
+
+, In: iOS Developer Library, URL: http://developer.apple.com/library/ios/#referenc
+elibrary/GettingStarted/ Learning_Objective-C_A_Primer/_index.html (letzter
+ Aufruf am 10.10.2012)
 \end_layout
 
 \begin_layout Bibliography
@@ -5504,9 +5452,149 @@ key "Galileo Computing"
 \end_inset
 
 Rodewig, Klaus M.
- / Wagner, Clemens: Apps entwickeln für iPhone und iPad - Das Praxisbuch,
- Galileo Computing, 2012, URL: http://openbook.galileocomputing.de/apps_entwickeln
-_fuer_iphone_und_ ipad/index.html (letzter Aufruf am 12.11.2012)
+ / Wagner, Clemens (2012): 
+\begin_inset Quotes eld
+\end_inset
+
+Apps entwickeln für iPhone und iPad - Das Praxisbuch
+\begin_inset Quotes erd
+\end_inset
+
+, Galileo Computing, URL: http://openbook.galileocomputing.de/apps_entwickeln_fuer
+_iphone_und_ ipad/index.html (letzter Aufruf am 12.11.2012)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+large
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+bf
+\end_layout
+
+\begin_layout Plain Layout
+
+	Eidesstattliche Erklärung zur Bachelorarbeit
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1 cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+normalsize
+\end_layout
+
+\begin_layout Plain Layout
+
+	Hiermit erkläre ich, dass ich die Bachelorarbeit selbstständig  verfasst
+ und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt 
+ und die aus fremden Quellen direkt oder indirekt  übernommenen Gedanken
+ als  solche kenntlich gemacht habe.
+ Alle enthaltenen Abbildungen wurden von mir selbst angefertigt.
+ Die Arbeit habe ich bisher keinem anderen Prüfungsamt in gleicher oder
+ vergleichbarer Form vorgelegt.
+ Sie wurde bisher nicht veröffentlicht.
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1.5 cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tabular}{lp{2em}l}   
+\backslash
+hspace{6cm}   && 
+\backslash
+hspace{6cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\backslash
+cline{1-1}
+\backslash
+cline{3-3}   Ort, Datum     && Unterschrift  
+\backslash
+end{tabular}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

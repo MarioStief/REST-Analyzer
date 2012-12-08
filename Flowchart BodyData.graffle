@@ -168,7 +168,7 @@
 			<key>Points</key>
 			<array>
 				<string>{77.5, 208}</string>
-				<string>{84.800000041723251, 257}</string>
+				<string>{79, 255}</string>
 				<string>{100.00000000000003, 262}</string>
 			</array>
 			<key>Style</key>
@@ -285,7 +285,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
 
-\f0\fs20 \cf0 State = Validating?}</string>
+\f0\fs20 \cf0 App State = "Validating"?}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -452,7 +452,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{32.5, 219.43688848763216}, {73.092053724898392, 24}}</string>
+			<string>{{40.513086663372334, 220.63004702939281}, {50.486911773681641, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -556,7 +556,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-11-29 00:16:52 +0000</string>
+	<string>2012-12-07 23:19:34 +0000</string>
 	<key>Modifier</key>
 	<string>Mario Stief</string>
 	<key>NotesVisible</key>
@@ -637,7 +637,7 @@
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{1931, 181}, {844, 940}}</string>
+		<string>{{542, 218}, {844, 940}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
