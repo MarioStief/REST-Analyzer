@@ -13,6 +13,7 @@
 		AC263D23161E5E0900173788 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D20161E5E0900173788 /* Home.png */; };
 		AC263D26161E602600173788 /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = AC263D25161E602600173788 /* Globe.png */; };
 		AC263D29161E630100173788 /* HistoryElement.m in Sources */ = {isa = PBXBuildFile; fileRef = AC263D28161E630100173788 /* HistoryElement.m */; };
+		AC40BA4C167E349C008CC17B /* Storyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = AC40BA4B167E349C008CC17B /* Storyboard.png */; };
 		AC4A6B95161B1961000C9BBE /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4A6B94161B1961000C9BBE /* XMLParser.m */; };
 		AC6369F91672CAF900FF1A90 /* webservice72.png in Resources */ = {isa = PBXBuildFile; fileRef = AC6369F81672CAF900FF1A90 /* webservice72.png */; };
 		AC8B878615DF646000E12B48 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC8B878415DF646000E12B48 /* InfoPlist.strings */; };
@@ -45,6 +46,19 @@
 		AC263D25161E602600173788 /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
 		AC263D27161E630100173788 /* HistoryElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryElement.h; sourceTree = "<group>"; };
 		AC263D28161E630100173788 /* HistoryElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryElement.m; sourceTree = "<group>"; };
+		AC40BA43167E3454008CC17B /* CD+DVD-LABEL A4_DdD-Vorlage.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CD+DVD-LABEL A4_DdD-Vorlage.docx"; sourceTree = "<group>"; };
+		AC40BA44167E3454008CC17B /* Cover.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cover.docx; sourceTree = "<group>"; };
+		AC40BA46167E345D008CC17B /* Kolloquium.pptx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kolloquium.pptx; sourceTree = "<group>"; };
+		AC40BA47167E346D008CC17B /* Layers.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Layers.docx; sourceTree = "<group>"; };
+		AC40BA48167E346D008CC17B /* Layers.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Layers.tiff; sourceTree = "<group>"; };
+		AC40BA49167E346D008CC17B /* LogOutputViewController-verbose.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "LogOutputViewController-verbose.tiff"; sourceTree = "<group>"; };
+		AC40BA4A167E346D008CC17B /* ResourcesTableViewController.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ResourcesTableViewController.tiff; sourceTree = "<group>"; };
+		AC40BA4B167E349C008CC17B /* Storyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Storyboard.png; sourceTree = "<group>"; };
+		AC40BA4D167E34D2008CC17B /* UniTrier Treverensis.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "UniTrier Treverensis.bmp"; sourceTree = "<group>"; };
+		AC40BA4E167E34D2008CC17B /* UniTrier.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = UniTrier.bmp; sourceTree = "<group>"; };
+		AC40BA4F167E34D2008CC17B /* UniTrier.eps */ = {isa = PBXFileReference; lastKnownFileType = file; path = UniTrier.eps; sourceTree = "<group>"; };
+		AC40BA50167E34E1008CC17B /* Webservice.psd */ = {isa = PBXFileReference; lastKnownFileType = file; name = Webservice.psd; path = ../Webservice.psd; sourceTree = "<group>"; };
+		AC40BA51167E34E1008CC17B /* Xcode.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Xcode.tiff; sourceTree = "<group>"; };
 		AC4A6B93161B1961000C9BBE /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
 		AC4A6B94161B1961000C9BBE /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
 		AC5EDB0B1655D16800949307 /* Diagram.graffle */ = {isa = PBXFileReference; lastKnownFileType = file; path = Diagram.graffle; sourceTree = "<group>"; };
@@ -115,6 +129,18 @@
 		AC5EDB0A1655D12000949307 /* Thesis */ = {
 			isa = PBXGroup;
 			children = (
+				AC40BA51167E34E1008CC17B /* Xcode.tiff */,
+				AC40BA4D167E34D2008CC17B /* UniTrier Treverensis.bmp */,
+				AC40BA4E167E34D2008CC17B /* UniTrier.bmp */,
+				AC40BA4F167E34D2008CC17B /* UniTrier.eps */,
+				AC40BA4B167E349C008CC17B /* Storyboard.png */,
+				AC40BA47167E346D008CC17B /* Layers.docx */,
+				AC40BA48167E346D008CC17B /* Layers.tiff */,
+				AC40BA49167E346D008CC17B /* LogOutputViewController-verbose.tiff */,
+				AC40BA4A167E346D008CC17B /* ResourcesTableViewController.tiff */,
+				AC40BA46167E345D008CC17B /* Kolloquium.pptx */,
+				AC40BA43167E3454008CC17B /* CD+DVD-LABEL A4_DdD-Vorlage.docx */,
+				AC40BA44167E3454008CC17B /* Cover.docx */,
 				AC5EDB0B1655D16800949307 /* Diagram.graffle */,
 				AC5EDB0C1655D16800949307 /* Diagram.png */,
 				AC5EDB0D1655D16800949307 /* Flowchart BodyData.graffle */,
@@ -198,6 +224,7 @@
 		AC8B878215DF646000E12B48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AC40BA50167E34E1008CC17B /* Webservice.psd */,
 				ACB2F18316232FEA0047C497 /* code.png */,
 				ACBF1CAF162A1E1800D4410B /* Trash.png */,
 				ACCBB93A1622CEBC00E097E3 /* Magnifier.png */,
@@ -286,6 +313,7 @@
 				ACD1720416700A3B0097C21C /* Thesis.lyx in Resources */,
 				ACD1720516700A3B0097C21C /* Thesis.pdf in Resources */,
 				AC6369F91672CAF900FF1A90 /* webservice72.png in Resources */,
+				AC40BA4C167E349C008CC17B /* Storyboard.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
