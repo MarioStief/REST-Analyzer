@@ -34,8 +34,7 @@
         [_logFileButton setEnabled:YES];
         [_verboseLogLabel setEnabled:YES];
         [_verboseLogSwitch setEnabled:YES];
-    }
-    else
+    } else
         // no logging by default
         NSLog (@"No existing log file found, logging disabled.");
 
@@ -532,6 +531,8 @@
     
     // -> Implement POST, PUT, DELETE, HEAD
     
+    if (![[_url text] hasPrefix:@"http://"] && ![[_url text] hasPrefix:@"https://"])
+        [_url setText:[[NSString alloc] initWithFormat:@"%@%@", @"http://", [_url text]]];
     NSString *urlString = [[NSString alloc] initWithString:[_url text]];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];

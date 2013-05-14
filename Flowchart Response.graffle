@@ -1407,7 +1407,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{196.98018983967415, 540.74761924936161}, {41.019809722900391, 24}}</string>
+			<string>{{198.98018983967415, 540.74761924936161}, {27, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1746,7 +1746,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-12-08 18:33:33 +0000</string>
+	<string>2012-12-18 15:42:47 +0000</string>
 	<key>Modifier</key>
 	<string>Mario Stief</string>
 	<key>NotesVisible</key>
