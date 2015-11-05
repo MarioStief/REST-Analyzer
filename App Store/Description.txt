@@ -1,0 +1,8 @@
+Generic Client for RESTful Web Services
+
+* Add additional methods (like OPTIONS)
+* Add Header to request
+* Parse XML and JSON responses
+* Analyse the parse results and check for availability
+* Simply browse recognised resources
+* Show logging output produced by NSLog

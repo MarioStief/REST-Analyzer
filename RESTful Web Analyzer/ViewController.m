@@ -18,8 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
     // ******************** Begin redirect logging output to file ********************
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -65,8 +63,6 @@
     headerValuesArray = [[NSMutableArray alloc] init];
     
     // ******************** End additional setup ********************
-    
-    
     
 #pragma debug
     // Debug: JSON
@@ -496,6 +492,7 @@
 }
 
 - (IBAction)Impressum:(id)sender {
+    int count = [[NSUserDefaults standardUserDefaults] integerForKey:@"LaunchCount"];
     NSString *string = [[NSMutableString alloc] initWithFormat:@"Copyright © 2012 Mario Stief\n"
                         "\n"
                         "Generic Client for\n"
@@ -505,18 +502,21 @@
                         "• Parsing XML and JSON\n"
                         "• Analyzing results\n"
                         "\n"
-                        "Using free icons from:\n"
-                        "• www.vistaico.com\n"
-                        "• www.icons-land.com\n"
-                        "\n"
                         "Contact adress:\n"
-                        "mario.stief@gmail.com\n"];
+                        "mario.stief@gmail.com\n"
+                        "\n"
+                        "This app has been started %i times.", count];
     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Impressum"
                                                         message:string
                                                        delegate:self
                                               cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:nil];
+                                              otherButtonTitles:@"Rate this app",nil];
     [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1)
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id639570541"]];
 }
 
 // ******************** End log to file ********************
@@ -645,7 +645,7 @@
         [_encoding setText:@"unknown"];
     else
         [_encoding setText:[response textEncodingName]]; // Content Type-Feld setzen
-    responseLength = [response expectedContentLength];
+    responseLength = (NSInteger) [response expectedContentLength];
     [self checkStatusCode:[response statusCode]]; // Statuscode aktualisieren
     if ([response statusCode] < 400) // color status code field
         [_statusCode setBackgroundColor:[[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:0.1]];

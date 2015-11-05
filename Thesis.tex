@@ -1,0 +1,2159 @@
+%% LyX 2.1.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english,ngerman]{ucthesisLyx}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{textcomp}
+\usepackage{graphicx}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newenvironment{lyxcode}
+{\par\begin{list}{}{
+\setlength{\rightmargin}{\leftmargin}
+\setlength{\listparindent}{0pt}% needed for AMS classes
+\raggedright
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\normalfont\ttfamily}%
+ \item[]}
+{\end{list}}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\selectlanguage{english}%
+\thispagestyle{empty}
+\begin{center}
+\includegraphics[scale=0.3]{UniTrier.eps}
+\vspace{2 cm}
+{
+	\Huge
+	\bf
+	Bachelorarbeit
+}
+\small
+	\\zur Erlangung des akademischen Grades "Bachelor of Science" im Fach Informatik
+\vspace{1 cm}
+\Large
+	\\Implementierung eines generischen Clients für iOS
+	\\zur Analyse von REST-Services
+\normalsize
+\vspace{2.4 cm}
+	\\Mario Stief
+	\\geboren am 23.05.1981 in Trier
+	\\eingereicht im Dezember 2012
+\vspace{2.4 cm}
+	\\Betreuer:
+	\\Prof. Dr. Peter Sturm
+	\\Lehrstuhl für Systemsoftware und Verteilte Systeme
+\vspace{0.5 cm}
+	\\Zweitgutachter:
+	\\Prof. Dr. Stephan Diehl
+	\\Lehrstuhl für Softwaretechnik
+\end{center}
+\newpage
+\setcounter{page}{1}
+\renewcommand{\contentsname}{Inhaltsverzeichnis}\foreignlanguage{ngerman}{\tableofcontents{}}
+
+\selectlanguage{ngerman}%
+
+\chapter{Einleitung}
+
+Im Programmieralltag eines Informatikers an der Universität Trier
+beschäftigt man sich hauptsächlich mit der plattformunabhängigen objektorientierten
+Programmiersprache Java. Sie eignet sich aufgrund ihrer Portabilität
+hervorragend als Einsteigersprache, denn die für das Ausführen benötigte
+Laufzeitumgebung kann man sich für nahezu jedes Betriebssystem herunterladen
+und installieren. Eine Ausnahme bildet das mobile Betriebssystem iOS,
+für welches Apple die Entwicklung einer Java Runtime nicht gestattet.
+Maschinennähere Erfahrungen sammelt man in C++, welches auf dem prozeduralen
+ANSI-C basiert, jedoch zahlreiche Erweiterungen in Hinblick auf die
+objektorientierte Programmierung bietet, seien es Möglichkeiten zur
+Datenkapselung, Vererbung oder Polymorphie, um nur einige zu nennen.
+Dazu wurden Sprachkonstrukte von C abgeändert, so dass manche C-Programme
+angepasst werden müssen, um sich als C++-Programm übersetzen zu lassen.
+Einen etwas anderen Ansatz geht Apple mit der Programmiersprache Objective-C,
+welche ursprünglich als Basis für das Betriebssystem NextStep verwendet
+wurde. Mit der Übernahme durch Apple wurde die aus NextStep hervorgehende
+OpenStep-API ebenfalls Grundlage für OS X, womit sich auch die Systemsprache
+von Pascal auf Objective-C änderte. Anders als C++ greift Objective-C
+für die objektorientierte Erweiterung auf die Sprache Smalltalk zurück,
+in der mit Nachrichtenkommunikation gearbeitet wird und es nur drei
+eingebaute ausführbare Konstrukte gibt: Eine Botschaft wird an ein
+Objekt gesendet, einer Variable wird ein Objekt zugewiesen oder ein
+Objekt wird als Rückgabewert einer Methode zurückgeliefert. Die Smalltalk-Erweiterung
+ist von der gewöhnlichen C-Syntax strikt getrennt, somit gibt es kein
+Problem, herkömmlichen C-Code zu übersetzen. Dieser andersartige Ansatz
+macht neugierig, einmal selbst in die Tiefen des auf Nachrichten basierenden
+C-Derivates abzutauchen und einen genaueren Blick auf das Konzept
+hinter den vielen eckigen Klammern zu werfen, mit denen sich ein in
+Objective-C geschriebenes Programm präsentiert. Der TIOBE-Index, der
+seit 2001 ein monatlich aktualisiertes Ranking von Programmiersprachen
+nach ihrer Popularität publiziert, listet Objective-C hinter C und
+Java derzeit auf Platz 3 der am meisten verwendeten Programmiersprachen.%
+\footnote{TIOBE Programming Community Index for November 2012, Headline: Objective-C
+on its way to become \char`\"{}language of the year\char`\"{} again%
+} Die Tendenz: kontinuierlich steigend.%
+\footnote{TIOBE Programming Community Index Objective-C%
+} Diese Arbeit bietet eine attraktive Möglichkeit, sich im universitären
+Rahmen in diesen Bereich einzuarbeiten und einen Blick über den Tellerrand
+zu werfen. Eine Möglichkeit, die ich hiermit gerne ergreifen möchte.
+
+Für die Entwicklung auf seinen Systemen stellt Apple mit Xcode eine
+Entwicklungsumgebung, die nach eigenen Angaben mächtig genug ist,
+dass sie von Apple selbst zur Entwicklung von Betriebssystemen und
+Anwendungen eingesetzt wird \textendash{} und in den aktuellen Versionen
+angeblich eine sehr einfach zu erlernende Oberfläche für den Entwurf
+der GUI mit sich bringt. Neben der Entwicklung einer Anwendung für
+einen Apple Macintosh bietet sich mit einer relativ neuen Technologie
+jedoch noch ein weiteres Stück Hardware des Unternehmens aus Kalifornien
+an: Im Jahr 2010 landete mit dem iPad die Sparte der \textquotedblleft Post-PC\textquotedblright -Tablets
+im Mainstream-Bereich, die 2005 ihren ersten Kandidaten mit dem Nokia
+770 Internet-Tablet hatte. Diese Post-PCs waren keine herkömmlichen
+Notebooks mit Tastatur mehr, die über für Stift-Bedienung ausgelegte
+Touchscreen verfügten, sie waren wesentlich leichter und dünner, liefen
+mit eigenen, angepassten Betriebssystem und verfügten über eine innovatives
+Bedienkonzept für Fingerberührungen \textendash{} auch wenn das beim
+Nokia 770 noch nicht der Fall war. Auch heute liegt der Marktanteil
+von Apples iPad noch bei über 50 \%%
+\footnote{Der Apple-Marktanteil am Tablet-Markt betrug lt. einer IDC-Pressemitteilung
+vom 5. November 2012 50,4 \%.%
+}, so ist es sicherlich eine lohnende Erfahrung, den \textquotedblleft Blick
+über den Tellerrand\textquotedblright{} zusätzlich auf dieses neuartige
+Stück Hardware zu richten und eine Anwendung zu schreiben, die auf
+Apples mobilem Betriebssystem iOS läuft.
+
+Als Anwendungsbeispiel für diese ersten Schritte in einer neuen Umgebung
+wird ein Client implementiert, der die Verbindung mit einem ebenfalls
+neuen Bereich herstellt: \textit{REST Services}. Die Abkürzung \textit{REST}
+steht für Representional State Transfer und ist ein Programmierparadigma
+für Webanwendungen, welches im Grunde so alt ist wie das Internet
+selbst. Dieser erst 2000 in einer Dissertation eingeführte Standard
+beschreibt die Implementierung eines Webservices, mit dem die bereits
+im HTTP-Protokoll definierten Methoden GET, PUT, POST, DELETE und
+HEAD auf statischen Inhalten arbeiten. Diese werden wiederum auf permanente
+URLs abgebildet. Da die Funktionalität \textit{REST}-konformer Webservices
+immer auf diese HTTP-Methoden abgebildet wird, sollte es möglich sein,
+einen generischen Client zu entwickeln, der mit all diesen Webservices
+irgendwie eine gemeinsame Kommunikationsschnittstelle bildet. Es sollen
+Anfragen gesendet und Antworten ausgewertet werden. Diese Antworten
+bekommt man in der Regel im Format XML oder JSON zurückgeliefert.
+Der Client sollte in der Lage sein, diese Daten zu analysieren, die
+potentiellen Ressourcen darin zu erkennen, sie zu validieren und aufzubereiten
+und dem Anwender eine einfache Möglichkeit bieten, mit diesen zu interagieren.
+
+Auf dem Weg zum funktionsfähigen Client wird zunächst ein kurzer Einblick
+in die Werkzeugkiste gegeben, mit der hier gearbeitet wird. Es wird
+kurz die Programmiersprache Objective-C vorgestellt und einige Eigenheiten
+aufgezeigt, die man in dieser Form so nicht in der Java- oder C++-Welt
+findet. Weiterhin wird die von Apple verwendete API Cocoa Touch vorgestellt
+und die Entwicklungsumgebung Xcode, mit der auf diese zugegriffen
+wird. Im nachfolgenden Kapitel wird auf die Schnittstelle mit der
+\textit{REST}-Welt eingegangen. Es wird erklärt, was im Genauen unter
+einem \textit{REST}-kompatiblen Webservice zu verstehen ist und wie
+man mit diesem kommuniziert. Den letzten größeren Bereich stellt die
+Implementierung der fertigen Software, deren Funktionalität anhand
+genereller Abläufe beschrieben wird. Weiter wird hier auf die Probleme,
+die sich während des Entwickelns dieser Arbeit ergaben, näher eingegangen.
+Abgerundet wird diese Arbeit durch einen reflektiven Abriss der vorhergegangen
+Kapitel und einen persönlichen Ausblick darauf, ob die herausgearbeiteten
+Erfahrungen den Ausflug in die Welt der Apple-Systeme beenden oder
+den Grundstein bilden für weitere Entwicklungen auf den mobilen Systemen
+der Kalifornier. 
+
+
+\chapter{Die Werkzeugkiste}
+
+
+\section{Basissprache: Objective-C}
+
+Das Entwickeln der ersten App für Apple-Hardware bringt die Herausforderung
+mit sich, eine neue Programmiersprache erlernen zu müssen. So wie
+Microsoft für sein .NET-Framework die C\#-Sprache entwickelte, welche
+Grundkonzepte der objektorientierten Hochsprachen C++, Java und Delphi
+in sich vereint, so verwendet Apple für seine Systeme die Sprache
+Objective-C. Anders als C\# greift das in den frühen 80ern entwickelte
+Objective-C auf das prozedurale ANSI-C zurück. Seine objektorientierte
+Erweiterung kommt von Smalltalk und wird als solche strikt von der
+C-Syntax getrennt. Die syntaktisch wichtigsten Neuerungen sind wie
+bei anderen Erweiterungskonzepten hauptsächlich die Verwendung von
+Klassen und Methodenaufrufen. Analog kann dieser Ansatz dazu verwendet
+werden, aus Pascal und Javascript, die beide von Haus aus über kein
+Klassenkonzept verfügen, die objektorientierten Erweiterungssprachen
+Objective-Pascal und Objective-J zu erzeugen.
+
+Wie aus der C-Welt bekannt wird in einer Header-Datei mit der Endung
+.h das Interface deklariert, die Implementierungen erfolgt in der
+dazugehörigen .m-Datei, welche Objective-C- oder einfachen C-Code
+enthalten kann. Aus Kompatibilitätsgründen lassen sich Implementierungen
+mit der Dateiendung .mm anlegen, dieser darf explizit C++-Code enthalten,
+was die Weiterverwendung von C++-Bibliotheken erlaubt. Statt \texttt{\footnotesize{}\#include}
+sollte man bei Objective-C auf \texttt{\footnotesize{}\#import} zurückgreifen,
+da es sicher stellt, dass jede einzubindende Datei auch nur höchstens
+einmal eingebunden wird. (Siehe auch \cite{Learning Objective-C}.)
+
+In Objective-C werden keine Funktionen mehr mit Parametern aufgerufen.
+Statt dessen verwendet man Objekte, die sich untereinander Nachrichten
+senden und so miteinander kommunizieren. Diese Nachrichten veranlassen
+ein Objekt eine Methode auszuführen. Dieses Paradigma wird als Message
+Passings bezeichnet und unterscheidet sich stark von der Art der Methodenaufrufe,
+die man C++ verwendet. Es darf grundsätzlich jedes Objekt jede beliebige
+Nachricht an jedes Objekt senden \textendash{} oder auch an sich selbst,
+in dem Fall wird der Bezeichner self verwendet \textendash{} ganz
+gleich ob die Zielklasse oder eine beerbte Oberklasse die passende
+Methode zu dieser Nachricht implementiert. Da Methoden stets erst
+zur Laufzeit ermittelt werden und nicht bereits beim Übersetzen, entscheidet
+sich erst beim Aufruf, wie ein Objekt auf eine Nachricht reagieren
+wird. Dieses Verfahren bezeichnet man daher auch als dynamisches Binden.
+Im Gegensatz dazu werden die verwendeten C-Funktionen bereits beim
+Übersetzen statisch gebunden. Konsequenterweise existiert ebenfalls
+eine Methode, welche auf Nachrichten reagiert, für die keine eigene
+Implementierung durch die Klasse bereitgestellt wird. Abstrakte Klassen
+kennt Objective-C übrigens nicht. Jede Klasse muss vollständig implementiert
+werden, damit jederzeit Objekte dieser Klasse erzeugt werden können.
+Um dies zu umgehen lassen sich Protokolle deklarieren, in denen notwendige
+Methoden unter dem \texttt{\footnotesize{}@required}-Tag aufgelistet
+werden.
+
+Wie in C++ lassen sich aus einer Klasse Objekte erzeugen. Darüber
+hinaus ist aber jede Klasse auch selbst als Objekt ansprechbar. Diese
+enthalten jedoch keine Member-Variablen und sind stets Singletons,
+also Entwurfsmuster, die sicherstellen, dass von einer Klasse genau
+ein Objekt existiert, welches global verfügbar ist. Da ein solches
+Klassenobjekt ebenfalls für beliebige Nachrichten empfänglich ist,
+erfolgt das Binden seiner Methoden auch erst zur Laufzeit. Strings
+werden in Objective-C mit der Notation \textit{@\textquotedblright \dots \textquotedblright{}}
+erzeugt. Ein solcher String ist ein Objekt vom Typ \textit{NSString}
+und als solcher ebenfalls in der Lage, Nachrichten zu empfangen. Das
+vorangestellte \textit{@} ist ein Indikator für ein Objective-C-Objekt.
+Wird es bei der Angabe des String weggelassen, wird der bekannte nullterminierte
+C-String erzeugt. Per Vorgabe besitzen die Datentypen in Objective-C
+die gleiche Typisierung wie in C: Sie sind \textit{schwach}, \textit{statisch}
+und \textit{explizit}. Während eine \textit{schwache} Typisierung
+Auskunft darüber gibt, dass Dateitypen ineinander umgewandelt werden
+können, weist das Merkmal \textit{statisch} darauf hin, dass der Datentyp
+bereits zur Übersetzungszeit geprüft wird. Im Gegensatz dazu werden
+dynamische Datentypen erst zur Laufzeit getestet. \textit{Explizit}
+letztlich bedeutet, dass die Datentypen nicht erst per Typableitung
+ermittelt werden. Das Konzept der dynamischen Typisierung ist mit
+dem typlosen Datentyp \textit{id} umgesetzt, welcher einen Zeiger
+auf ein Objekt einer beliebigen Klasse repräsentiert und an den jede
+beliebige Nachricht gesendet werden kann. Ist für den tatsächlichen
+Typ dieses Objektes diese Methode jedoch unbekannt oder möchte man
+eine typlose Variable an eine typgebundene Variable zuweisen, deren
+Typen nicht übereinstimmen, so kommt es zu einem Laufzeitfehler. (Siehe
+auch \cite[Kapitel 1.5.3 Nachrichten]{Galileo Computing}.)
+\begin{lyxcode}
+{\footnotesize{}id~stringObject~=~@\char`\"{}Objective-C~is~great.\char`\"{};~//~OK}{\footnotesize \par}
+
+{\footnotesize{}NSString~{*}string~=~stringObject;~~~~~~~~~~~~//~OK}{\footnotesize \par}
+
+{\footnotesize{}NSNumber~{*}number~=~stringObject;~~~~~~~~~~~~//~logischer~Fehler}{\footnotesize \par}
+
+{\footnotesize{}char~character~=~{[}number~charValue{]};~~~~~~~~//~Laufzeitfehler}{\footnotesize \par}
+\end{lyxcode}
+Instanzobjekte einer Klasse werden durch das Senden einer entsprechenden
+Nachricht an das zugehörige Klassenobjekt erzeugt. Für gewöhnlich
+geschieht dies beim Programmstart, jedoch können im Gegensatz zu C++
+bei Objective-C jederzeit auch während der Laufzeit noch neue Objekte
+erstellt werden. Überladene Methoden, wie man sie in C++/Java kennt,
+findet man in Objective-C nicht mehr. Eine Nachricht an eine Methode
+besteht aus dem Selektor, der sich aus dem Methodennamen und den Parametern
+zusammensetzt. Das Laufzeitsystem sucht bei einer eingehenden Nachricht
+nach einer solchen Methode und führt diese im Erfolgsfall aus. Wird
+keine passende Methode lokalisiert, wird ein \textit{nil} zurückgeliefert.
+Möchte man sich absichern, lässt sich das Objekt im Voraus fragen,
+ob es eine bestimmte Nachricht versteht. Diese Fähigkeit der Selbstkenntnis
+beinhaltet ebenfalls das Ermitteln der eigenen Klasse und das Wissen,
+ob seine Klasse eine Unterklasse einer bestimmten anderen Klasse ist.
+Der Begriff Reflexion sollte dem ein oder anderen ebenfalls aus der
+Java-/C++-Welt bekannt sein.
+\begin{lyxcode}
+{\footnotesize{}if({[}geometricFigure~respondsToSelector:@selector(getShape){]})~\{~...~\}}{\footnotesize \par}
+\end{lyxcode}
+Dem Smalltalk-Erweiterungsanteil verdankt Objective-C die verwendete
+Notation der eckigen Klammern, die ausdrückt, dass an dieser Stelle
+Nachrichten versendet werden. An erster Stelle wird das Empfängerobjekt
+genannt, anschließend folgt der Selektor und gegebenenfalls der Parameter.
+Sind Sender und Empfänger der Nachricht das gleiche Objekt, verwendet
+man den Bezeichner \textit{self}.
+\begin{lyxcode}
+{\footnotesize{}//~somewhere~lost~in~code:}{\footnotesize \par}
+
+{\footnotesize{}NSInteger~age~=~{[}self~computeAgeFromYear:1981~withMonth:5~andDay:23{]};}{\footnotesize \par}
+
+
+
+{\footnotesize{}//~method~declaration:}{\footnotesize \par}
+
+{\footnotesize{}-~(NSInteger)computeAgeFromYear:(NSInteger)birthyear}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~~~~withMonth:(NSInteger)month}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~~~~~~~andDay:(NSInteger)day~\{~...~\}}{\footnotesize \par}
+\end{lyxcode}
+Diese Schreibweise ist für Neulinge äußerst gewöhnungsbedürftig, da
+hier jeder Parameter eine explizite Benennung erfordert. Methodennamen
+können in Objective-C durchaus sehr lang werden. Hat man sich jedoch
+einmal daran gewöhnt, mag man diese Notation jedoch nur ungern missen,
+denn sie fördert die Lesbarkeit und Verständlichkeit des Codes ungemein.
+Die obige Methode bezeichnet man vollständig als: \textit{computeAgeFromYear:withMonth:andDay:},
+was auch gleichzeitig der Selektor dieser Methode ist. Um einen anderen
+Selektor zu erstellen kann man den Datentyp \textit{SEL} nehmen:
+\begin{lyxcode}
+{\footnotesize{}SEL~computeAge~=~@selector(computeAgeFromYear:withMonth:andYear:);}{\footnotesize \par}
+\end{lyxcode}
+Das Minus-Präfix zu Beginn der oben stehenden Methode gibt an, dass
+es sich hierbei um eine Instanzmethode handelt. Das entspricht dem
+Verständnis einer Methode in C++/Java. Da in Objective-C jedoch auch
+Klassen Objekte sind, können diese eigene Methoden haben. Solche Klassenmethoden
+werden durch ein vorangestelltes Plus gekennzeichnet. Ein gutes Beispiel
+ist der zum Initialisieren gebräuchliche verkettete Befehl \texttt{\footnotesize{}{[}{[}NSObject
+alloc{]} init{]}}, der aus den folgenden Methoden besteht: \texttt{\footnotesize{}+(id)alloc}
+ist die Klassenmethode, die Speicher für das Objekt reserviert und
+einen Zeiger darauf zurückliefert. Anschließend initialisiert sich
+das erzeugte Objekt in dem allokierten Speicherbereich durch den Aufruf
+der Instanzmethode \texttt{\footnotesize{}-(id)init}.
+
+
+\subsection{Protokolle: Data Sources und Delegates}
+
+Ein Protokoll ist einem Interface in Java sehr ähnlich: Es deklariert
+die Methoden, die in der Klasse vorhanden sein muss, die das Protokoll
+implementiert. Eine Protokolldeklaration beginnt mit dem Schlüsselwort
+\texttt{\footnotesize{}@protocol}, die enthaltenen Methoden befinden
+sich entweder unter dem Tag \texttt{\footnotesize{}@required} oder
+unter dem Tag \texttt{\footnotesize{}@optional}. Bei der Deklaration
+der Klasse wird das Protokoll in spitzen Klammern hinter der Oberklasse
+angegeben, mehrere Protokolle werden durch Kommata voneinander getrennt:
+\begin{lyxcode}
+{\footnotesize{}@interface~ViewController~:~UIViewController~\textless{}UITextFieldDelegate,}{\footnotesize \par}
+
+{\footnotesize{}~~~UITableViewDelegate,~UITableViewDataSource\textgreater{}~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~...}{\footnotesize \par}
+
+{\footnotesize{}\}}{\footnotesize \par}
+\end{lyxcode}
+Ein Konzept, welches so ebenfalls nicht bei Java oder C++ anzutreffen
+ist, sind die so genannten \textit{Delegates} (vom englischen delegation:
+Abordnung, Übertragung) und die \textit{DataSources}. Mit ihnen ist
+es möglich, Nachrichten an ein delegiertes Objekt weiterzuleiten,
+die in einen bestimmten Funktionalitätsbereich fallen. Ein Textfeld
+sendet nach dem Betätigen der Eingabetaste die Nachricht \textit{textFieldShouldReturn:(UITextField
+{*})} an ihre \textit{Delegate}. Diese \textit{Delegate} kann die
+eigene Instanz sein oder aber ein beliebiges anderes Objekt, welches
+das Protokoll \textit{UITextFieldDelegate} implementiert. Die Implementation
+der Methode \textit{textFieldShouldReturn} gibt an, was beim Betätigen
+der Eingabetaste passieren soll. An dieser Stelle bietet es sich beispielsweise
+an, mittels \texttt{\footnotesize{}{[}textField resignFirstResponder{]}}
+das On-Screen-Keyboard wieder auszublenden und eine weitere Methode
+aufzurufen, welche auf den im Textfeld enthaltenen Text zugreift.
+Die ordnungsgemäße Durchführung wird mit einem zurückgegebenen \textit{YES}
+bestätigt.
+
+Ein Objekt kann nicht nur als Empfänger von Nachrichten dienen, er
+kann andersrum auch als Datenquelle fungieren. Implementiert es das
+einer Programmstruktur zugehörige \textit{DataSource}-Protokoll, lässt
+es sich von dieser nutzen, um bei Laufzeit von dieser benötigte Daten
+abzufragen.
+
+
+\subsection{Properties}
+
+\textit{Properties} werden in der Headerdatei deklariert und stellen
+einen einfachen Weg dar, Accessoren zu implementieren. War in früheren
+Xcode-Versionen noch das manuelle Synthetisieren mittels \texttt{\footnotesize{}@synthesize}
+notwendig, werden diese durch die Deklaration eines \textit{Property}
+automatisch generiert. Ein \texttt{\footnotesize{}@property (UITextField{*})name}
+erzeugt per default den Setter \textit{setName} sowie den Getter \textit{name}.
+Möchte man die Variable \textit{name} setzen, werden zwei Möglichkeiten
+angeboten: Den C-basierten Weg oder die nachrichtenbasierte Objective-C-Notation.
+Ein \texttt{\footnotesize{}\_name.text = string} wird intern in ein
+\texttt{\footnotesize{}{[}\_name setText:NSString{]}} umgewandelt.
+In der Umsetzung dieser Arbeit wurde konsequent die Objective-C-Notation
+verwendet. Genau genommen führt Objective-C intern den folgenden Befehl
+aus: \texttt{\footnotesize{}{[}{[}self name{]} setText:NSString{]}}.
+Der Unterstrich zeigt, dass es sich um eine Instanzvariable handelt.
+Da Apple vorangestellte Unterstriche für eigene Zwecke einsetzt, sollte
+zur Vermeidung von Verwechslungen auf die eigene Verwendung bei der
+Namensgebung verzichtet werden.
+
+
+\section{API: Cocoa Touch}
+
+\begin{wrapfigure}{o}{0.5\columnwidth}%
+\begin{centering}
+\includegraphics[scale=0.25]{Layers}
+\par\end{centering}
+
+\protect\caption{Schichtenmodell von iOS}
+\end{wrapfigure}%
+
+
+Apples mobiles Betriebssystem iOS lässt sich in vier grundlegende
+Schichten einteilen: Während das Core OS den Mach-Kernel sowie die
+grundlegenden Funktionen beinhaltet, stellen die Core Services die
+Frameworks bereit, welche die Grundlage aller auf dem Gerät laufenden
+Anwendungen und Dienste sind. Die darüber liegende Media-Schicht bündelt
+die Multimediafunktionen. Schlussendlich folgt an der Spitze die Programmierschnittstelle
+Cocoa Touch, welche die Schnittstellen zu sämtlichen darunter liegenden
+Schichten bereitstellt. Gegenüber Cocoa, der Schnittstelle für OS
+X-Desktop-Maschinen, greift die Touch-Variante der API auf eine angepasste
+Benutzerschnittstelle zurück. Hier bieten speziell auf iOS abgestimmte
+Eingabeelemente und Events dem Programmierer Unterstützungen für Bewegungssensoren,
+Multitouch-Gestenerkennung und Animationen. Die Basis von Cocoa Touch
+bildet zum einen das Foundation Framework. Dieses stellt alle Basisklassen
+zur Verfügung, die für die grundlegende Programmierung mit Objective-C
+unverzichtbar sind. Weiter werden in diesem Werkzeuge wie Collections
+und Dateihandling bereitgestellt, ohne die eine moderne Programmierung
+heute nicht mehr auskommen würde. Seit iOS 2 befindet sich darin bereits
+XML-Unterstützung, in iOS 5 wurde diese um Unterstützung für das JSON-Format
+ergänzt. Dies machte es im Rahmen dieser Arbeit sehr einfach, auf
+externe Frameworks zu verzichten. Das UIKit als weiterer integraler
+Bestandteil von Cocoa Touch beinhaltet Klassen, die speziell auf die
+Entwicklung der grafischen Oberfläche ausgerichtet sind. So enthält
+diese die Infrastruktur für grafische Anwendungen, verschiedene Ansichten
+\textendash{} so genannte Views \textendash{} und deren Fenster, Menüs
+und Schaltflächen, sowie ein passendes Ereignissystem mit Sprachanbindung
+und Textsystem. Ereignisse durchlaufen eine so genannte \textit{Responder-Chain},
+die aus unterschiedlichen Klassen besteht. Nacheinander werden dieser
+eingetroffene Ereignisse entnommen und abgearbeitet. Seit OS X 10.4/iOS
+3 wurde diese Sammlung um das Core Data-Framework ergänzt, einem schemabasierten
+Ansatz für die Umsetzung des MVC-Entwurfmusters. Der Model-View-Controller
+ist in Cocoa Touch strikt umgesetzt; Klassen lassen sich in der Regel
+eindeutig zuordnen. Bei den Klassennamen selbst ist auffallend, dass
+die meisten mit NS beginnen, wie zum Beispiel \textit{NSObject}, \textit{NSString}
+oder \textit{NSArray}. Das hat seinen Ursprung darin, dass Apple im
+Jahre 1996 das OpenStep-Framework NeXTStep aufkaufte und als Basis
+für Mac OS X verwendete. Durch die Verwendung von \textit{Klassen-Clustern}
+werden viele sichtbare Klassen nie instanziiert, sondern es werden
+statt dessen direkt zur Laufzeit Instanzen von passenden Subklassen
+erzeugt, von denen der Programmierer keine Kenntnis hat. Beispielsweise
+verlangt ein Anwendungsprogrammierer nach einer Instanz von \textit{NSArray},
+erzeugt wird jedoch in Abhängigkeit der Elemente eine Instanz einer
+Klasse, die er nicht kennt. (Siehe auch: \cite{Wikipedia - Cocoa})
+
+
+\section{IDE: Xcode}
+
+Xcode ist Apples integrierte Entwicklungsumgebung und steht aktuell
+in der Version 4.5.2 zur Verfügung. Seit der Version 4.1 lässt sich
+Xcode frei zugänglich im App Store herunterladen. In der Version 4.4
+sind die SDKs für OS X 10.8 sowie für iOS 5.1 enthalten, Version 4.5
+bringt die SDK für das neue iOS 6 mit. Beide benötigen mindestens
+OS X in der Version 10.7.4 Lion oder 10.8 Mountain Lion. Diese Arbeit
+wurde mit der Version 4.4 begonnen und mit Version 4.5 beendet. Jede
+Funktionalität wurde stets sowohl für iOS 5.1 als auch für iOS 6 getestet
+und gegebenenfalls angepasst. Mit Xcode lassen sich sowohl OS X- als
+auch iOS-Anwendungen entwickeln, wobei OS X-Anwendungen auf der Cocoa-API
+basieren. Möchte man eine Anwendung für das mobile iOS entwickeln,
+so nutzt man hierfür das im vorherigen Kapitel vorgestellte Cocoa
+Touch-Framework. Xcode kommt mit einer Reihe von Werkzeugen \textendash{}
+den Xcode Tools \textendash{} welche die alltägliche Arbeit des Objective-C-Programmierers
+erleichtern. Apples LLVM Compiler bietet eine Echtzeitüberprüfung
+des eingegebenen Codes und meldet auffallende Syntax- oder Schreibfehler
+umgehend. Oft bietet die eingeblendete Fix-it-Funktion gleich eine
+adäquate Lösung, die sich mit einem Klick übernehmen lässt. Natürlich
+darf man hier keine Wunder erwarten, im Rahmen dieser Arbeit hat sich
+deren Vorhandensein jedoch als sehr angenehm erwiesen. Mit dem Analysetool
+Instruments lassen sich diverse Messinstrumente mit einem Prozess
+verbinden und deren Laufzeitverhalten akribisch genau analysieren.
+Um ein Programmverhalten auf einem bestimmten iOS-Gerät zu testen,
+lässt sich auf den integrierten iPhone- und iPad-Simulator zurückgreifen,
+für den verschiedene iOS-Versionen bereitgestellt werden. Diese lassen
+sich aus Xcode heraus mit einem Klick installieren. Auf dem Simulator
+lässt sich das Produkt testen, ohne dass man ein physisches Gerät
+zur Hand haben muss. Es lassen sich verschiedene Hardware-Events simulieren,
+vom Schwenk des Orientation-Modus über die Betätigung der Home-Taste
+bis hin zu einer Speicherwarnung, mit welcher man die eigene Software
+testen kann. Möchte man jedoch Implementierungen von spezielleren
+Sensoren überprüfen, wie sie in den aktuellen Geräten eingesetzt werden,
+kommt man an einem physikalischen Gerät nicht vorbei. Das Interface
+von Xcode besteht zum einen aus dem \textit{Source Editor}, welcher
+Komfortmerkmale wie Code Completion, Syntax Highlighting und Code
+Folding bereitstellt, sowie die angenehme Echtzeitsuche nach Fehlern,
+Warnungen und anderen kontextsensitiven Informationen. Diese Fehler,
+Warnungen und Informationen werden in Nachrichtenblasen am Fehlerort
+eingeblendet. Daneben ermöglicht der \textit{Assistant Editor} über
+ein zweigeteiltes Fenster den Schnellzugriff auf Dateien, die für
+gewöhnlich eine hilfreiche Kombination mit der geöffneten Datei darstellen.
+Zum Beispiel wird neben dem Interface gleich deren Implementierung
+geöffnet. Der \textit{Interface Builder}, welcher bis zur Xcode-Version
+4.0 ein Bestandteil der externen \textit{Xcode Tools} war, wurde ab
+Version 4.1 in die IDE integriert. Er ermöglicht es, äußerst komfortabel
+und ohne eine Zeile Code, die GUI zu designen, die einzelnen Interfacekomponenten
+untereinander zu verknüpfen und in den Programmcode einzubinden. Der
+\textit{Organizer} als weiteres Element ist die zentrale Verwaltung
+für hinzugefügte Entwicklergeräte, die Versionsverwaltung über lokale
+sowie entfernte Repositorien, Projekte und deren Snapshots. Hier befindet
+sich auch ein App Archiv, von dem aus man seine entwickelten Apps
+verwaltet und zum App Store sendet. Am Rand lassen sich weitere Leisten
+einblenden: Auf der linken Seite den \textit{Navigator}, der durch
+Dateien, Fehler und Logs navigiert, rechts lässt uns die \textit{Utility
+Bar} einige Einstellungen vornehmen. Darüber hinaus befindet sich
+dort im unteren Bereich auch eine File Templates-Library und eine
+Code Snippets-Library für Code-Fragmente, die man immer mal wieder
+benötigt. Im unteren mittleren Bereich lässt sich selbstverständlich
+die für das Debugging obligatorische \textit{Konsole} einblenden.
+Da es vor allem auf mobilen Geräten eher zu Ressourcenknappheit kommt
+als auf Desktop-Systemen, sollte man hier einen entsprechend ökonomischen
+Programmierstil pflegen und Ressourcen, die nicht mehr benötigt werden,
+nach der Verwendung wieder freigeben. In Xcode 4.2 wurde das \textit{Automatic
+Reference Counting} eingeführt, um den Entwickler dabei zu unterstützen.
+Die bislang verwendeten retain und release-Nachrichten, mit denen
+Speicher freizugeben war oder diese Freigabe verhindert werden sollte,
+sind obsolet, wenn das Projekt mit ARC genutzt wird. Statt dessen
+übernimmt nun der Compiler die Referenzzählung und fügt dem Code beim
+Übersetzen die entsprechenden retain und release-Nachrichten hinzu.
+
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.21]{Xcode}
+\par\end{centering}
+
+\protect\caption{Xcode}
+
+
+\end{figure}
+
+
+
+\section{Interface Builder: Storyboards}
+
+Ebenfalls seit Xcode-Version 4.2 neu hinzugekommen bilden Storyboards
+die Grundlage des Interface Builders und lösen die vorhergehenden
+NIBs ab, bei denen man darauf beschränkt war, zu jedem Zeitpunkt mit
+je einer View zu arbeiten. Storyboards zeigen im Gegensatz dazu die
+komplette Szene an, bestehend aus einzelnen Views und deren Übergänge
+untereinander. Verbindungen zu anderen Views wie die Möglichkeit,
+diese als \textit{Delegates} oder als \textit{DataSource} zu nutzen,
+lassen sich realisieren, indem man ein Objekt bei gedrückter Steuerung-Taste
+auf die gewünschte View zieht. Zieht man diese statt dessen in den
+Programmcode, werden die entsprechenden Codefragmente erstellt. In
+diesen lässt sich sofort mit der Implementierung beginnen, ohne dass
+man sich mit programmatischen Details zum Setzen der einzelnen GUI-Elemente
+aufhalten muss. Übergänge lassen sich mit ID-Strings versehen, auf
+die man programmatisch zugreifen kann. So wird bei einem Übergang
+auf eine andere View die Methode \textit{prepareForSegue} mit dem
+entsprechenden String für diesen Übergang aufgerufen. In dieser lassen
+sich Vorbereitungen für die neue Ansicht treffen \textendash{} wie
+z. B. Daten und Referenzen übergeben \textendash{} bevor diese dann
+geladen wird. Im Utility-Bereich kann praktisch jede Eigenschaft bearbeitet
+werden, mit der das Erscheinungsbild beeinflusst werden kann. So lässt
+sich ein Objekt inaktiv darstellen bzw. komplett verstecken oder man
+ändert die Schriftart eines Textfeldes. Um ein Objekt einem Container
+unterzuordnen lässt sich das unkompliziert per Drag and Drop realisieren.
+Zieht man beispielsweise eine \textit{TextView} in einen \textit{ScrollView}-Container
+erhält man Text, welcher sich mit einer Wischbewegung scrollen lässt.
+
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.45]{Storyboard}
+\par\end{centering}
+
+\protect\caption{GUI-Entwurf im Storyboard}
+\end{figure}
+
+
+
+\section{Entwicklerlizenz: Testen auf echter Hardware}
+
+Grundsätzlich lässt sich eine App auch ohne Lizenz entwickeln und
+auf dem eingebauten iOS Simulator des seit der Version 4.1 frei verfügbaren
+Xcode testen. Möchte man jedoch die App auf einem echten Gerät zur
+Ausführung bringen oder sie später einmal in den App Store stellen,
+so benötigt man eine Entwicklerlizenz von Apple. Diese kostet derzeit
+99 USD bzw. 80 EUR und ist für ein Jahr gültig. Mit diesem Entwickleraccount
+hat man Zugriff auf iTunes Connect, mit dem sich der eigene Account,
+die verfügbaren iOS-Geräte sowie die in den App Store eingestellten
+Apps verwalten lassen.
+
+In einem ersten Schritt werden dort die User angelegt, welche an der
+Entwicklung und Distribution der Software beteiligt sind. Es stehen
+die vordefinierten Rollen \textit{Admin}, \textit{Technical}, \textit{Finance}
+sowie \textit{Sales} zur Verfügung. Während der \textit{Technical}
+ausschließlich Rechte für die Verwaltung der Apps bekommt, stehen
+dem \textit{Finance} weitergehend verschiedene Rechte im Bereich Finanzwesen,
+Analyse und Vertrieb bereit, die der \textit{Technican} in der Regel
+nicht benötigt. Auf die Verwaltung der Apps hat er hingegen nur lesenden
+Zugriff. Der Rolle \textit{Sales} schließlich stehen lediglich Verkauf
+und Verkaufsanalyse offen.
+
+Abhängig vom Vertriebsmodell müssen in iTunes Connect weitere Angaben
+gemacht werden. Für unentgeltliche Apps ist es weder notwendig, einen
+Vertrag zu akzeptieren, noch müssen Bankdaten hinterlegt werden. Für
+entgeltliche Anwendungen stehen die Vertragstypen \textit{iOS Paid
+Applications} sowie das auf In-App-Werbung spezialisierte \textit{iAd
+Network} zur Verfügung. Hier sind entsprechend Vertragsbedingungen
+zu akzeptieren, Kontaktinformationen anzugeben, Landesangaben zur
+Versteuerung zu machen und die Bankdaten für den hoffentlich eingehenden
+Zahlungsverkehr zu hinterlegen. Um eine App direkt auf dem Gerät ausführen
+zu können, wird ein \textit{Development Certificate} benötigt. Das
+hinzuzufügende Gerät wird an den Mac angeschlossen und im Organizer
+der Entwicklerlizenz zugeordnet. Beim ersten Mal meldet Xcode, dass
+kein \textit{iOS Development Certificate} vorhanden ist und bietet
+an, eine solche von Apple anzufordern. Anschließend fügt er diesen
+automatisch der Schlüsselverwaltung hinzu und bietet an, das Entwicklerprofil
+für den Einsatz auf anderen Macs zu exportieren. Nachdem in den \textit{Build
+Settings} der App die \textit{Code Signing Identity} auf das neu erzeugte
+Zertifikat umgestellt wurde, ist man in der Lage, das angeschlossene
+iOS-Gerät anstelle des Simulators für die Entwicklung zu nutzen.
+
+\begin{wrapfigure}{o}{0.5\columnwidth}%
+\begin{centering}
+\includegraphics[scale=0.5]{\string"REST Analyzer\string".eps}
+\par\end{centering}
+
+\protect\caption{App-Icon für iPads mit Retina-Auflösung}
+
+
+\end{wrapfigure}%
+
+
+
+\section{Distributionsalternative: Der Cydia Store}
+
+Zum offiziellen Vertriebsweg über den Apple App Store gibt es eine
+Alternative, über die jedoch nur freigeschaltete (\textquotedblleft gejailbreakte\textquotedblright )
+Geräte Zugriff haben: Den Cydia Store. Dieser wird in der Regel bei
+einem Jailbreak gleich mitinstalliert. Mit diesem kann man sich, wie
+unter Linux-Systemen bekannt, mit APT-kompatiblen Repositorien verbinden
+und deren Angebot herunterladen. Der Cydia Store ist hierbei nicht
+als Distributionssystem für raubkopierte Software zu verstehen, denn
+auch er verfügt wie der App Store über ein Bezahlsystem, mit dem Entwickler
+ihre Anwendungen entgeltlich anbieten können. Interessant wird diese
+Vertriebsmethode, wenn man eine App entwickeln möchte, welche die
+von Apple eingeräumten Rechte überschreitet. Ein Beispiel für eine
+solche Anwendung ist der Fenstermanager Quasar, der eine Alternative
+zu Apples Einzelanwendungsmodus bietet. Vor allem auf iPads mit Retina-Auflösung
+kann es durchaus eine wünschenswerte Option sein, zwei oder mehr Fenster
+nebeneinander betreiben zu können. So könnte man beispielsweise auf
+der einen Seite ein Textverarbeitungsprogramm geöffnet haben, während
+auf der anderen Bildschirmhälfte ein Internetbrowser geöffnet ist.
+
+Um kompilierte Apps in ein DEB-Paket umzuwandeln \textendash{} wofür
+nach wie vor eine Entwicklerlizenz benötigt wird \textendash{} benötigt
+man das Paket dpkg. Dieses kann man sich beispielsweise mit dem Programm
+MacPorts%
+\footnote{Projekt-Homepage: http://www.macports.org/%
+} installieren, welches eine Paketverwaltung für freie und quelloffene
+Software für OS X ist. Da sich dieses Programm nach \textit{/opt/local/bin}
+installiert, muss dieses Verzeichnis mit dem Befehl \texttt{\footnotesize{}export
+PATH=/opt/local/bin:/opt/local/sbin:\$PATH} dem Pfad hinzugefügt werden.
+Der Befehl \texttt{\footnotesize{}sudo port selfupdate \&\& sudo port
+install dpkg} führt ein Paketquellen-Update durch und installiert
+das gewünschte Paket \textit{dpkg}. Mit diesem lassen sich aus den
+übersetzten Apps Cydia-Repository-konforme DEB-Pakete erstellen. Der
+Entwickler des Cydia-Stores beschreibt auf seinem Blog die Vorgehensweise,
+mit der sich Apps in ein DEB-Paket umwandeln und in den Cydia-Store
+stellen lassen (siehe \cite{saurik}): \newpage{}
+
+Zum Konvertieren in ein DEB-Paket besteht dpkg-deb auf eine Struktur,
+welche sich wie folgt aufbaut:
+\begin{lyxcode}
+{\footnotesize{}+-~MyProgram}{\footnotesize \par}
+
+{\footnotesize{}~~~+-~Applications}{\footnotesize \par}
+
+{\footnotesize{}~~~\textbar{}~~+-~MyProgram.app}{\footnotesize \par}
+
+{\footnotesize{}~~~\textbar{}~~~~~+-~Info.plist}{\footnotesize \par}
+
+{\footnotesize{}~~~\textbar{}~~~~~+-~MyProgram}{\footnotesize \par}
+
+{\footnotesize{}~~~\textbar{}~~~~~+-~icon.png}{\footnotesize \par}
+
+{\footnotesize{}~~~+-~DEBIAN}{\footnotesize \par}
+
+{\footnotesize{}~~~\textbar{}~~+-~control}{\footnotesize \par}
+
+{\footnotesize{}~~~+-~System}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~+-~Library}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~+-~LaunchDaemons}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~+-~com.identifier.MyProgram.plist}{\footnotesize \par}
+\end{lyxcode}
+Das Verzeichnis System ist hierbei optional.
+
+Die Datei \textit{control} kann folgende Einträge beinhalten: \textit{Package},
+\textit{Name}, \textit{Version}, \textit{Architecture}, \textit{Description},
+\textit{Homepage}, \textit{Depiction}, \textit{Maintainer}, \textit{Auth}or,
+\textit{Sponsor} und \textit{Section}. Zwingend vorgeschrieben sind
+davon jedoch nur \textit{Package} und \textit{Version}.
+
+Darüber hinaus erstellt OS X, wenn TAR-Dateien erzeugt werden \textendash{}
+die ein Teil der internen Struktur eines Debian-Paketes darstellen
+\textendash{} einige Dateien mit der Endung .\_{*}, welche zusätzliche
+Informationen enthalten. Diese zusätzlichen Dateien würden zusammen
+mit dem erzeugten Paket installiert werden. Davon abgesehen, dass
+diese Dateien sowieso nicht zum Paket gehören, könnten Sie auf dem
+Zielsystem Konflikte mit anderen Paketen erzeugen. Um dieses Feature
+zu deaktivieren, werden durch \texttt{\footnotesize{}export COPYFILE\_DISABLE
+\&\& export COPY\_EXTENDED\_ATTRIBUTES\_DISABLE} die erforderlichen
+Umgebungsvariablen exportiert. Abschließend lässt sich im Verzeichnis
+\textit{MyProgramm} durch \texttt{\footnotesize{}dpkg-deb -b MyProgram}
+das DEB-Paket erzeugen.
+
+Um das fertige DEB-Paket auf das iPad zu übertragen, wird ein Cydia-kompatibles
+Repositorium benötigt. Hierfür kann zum Beispiel auf das kostenlose
+Angebot von \textit{MyRepoSpace} zurückgegriffen werden. Über ein
+Webinterface lassen sich die fertigen Pakete hochladen, welche anschließend
+in Cydia über das Repositorium \textit{http://cydia.myrepospace.com/Username/}
+zugreifbar sind.
+
+
+\chapter{Schnittstelle mit der REST-Welt}
+
+
+\section{RESTful Webservices}
+
+
+\subsection{Begriffseinführung}
+
+Mit dem Begriff \textit{Webservice} verbindet man primär Akronyme
+wie SOAP (Simple Object Access Protocol), ein Netzwerkprotokoll für
+den Transfer von Daten und RPCs (Remote Procedure Calls), oder den
+einfacheren XML-RPC. Diese Webservices arbeiten, wie der Name bereits
+ausdrückt, mit HTTP POST-Requests, um auf einem in der Regel entfernten
+Computer eine Methode aufzurufen. Die verwendete Kommunikationssprache
+ist die XML-basierte \textit{Webservices Description Language} oder
+kurz WSDL.
+
+Im Jahr 2000 führte Roy Fielding, einer der Autoren der HTTP-Spezifikationen
+1.0 und 1.1 und Mitbegründer des Apache HTTP Projektes, in seiner
+Dissertation \textit{Architectural Styles and the Design of Network-based
+Software Architectures} den Begriff \textit{Representational State
+Transfer} ein. Er definiert ihn als einen \textquotedblleft Architekturstil
+für verteilte hypermediale Systeme, der die Richtlinien für die Softwareentwicklung
+spezifiziert, welche sowohl \textit{REST} selbst leiten als auch die
+Interaktionsvoraussetzungen, die so gewählt werden, dass sie diesen
+Richtlinien entsprechen''%
+\footnote{Fielding (2000), S. 76%
+}. Die \textit{REST}-Architektur ist also ein Modell, das spezifiziert,
+wie das Internet, das im Grunde bereits eine riesige \textit{REST}-Anwendung
+darstellt, eigentlich funktionieren sollte. Fielding bezeichnet \textit{REST}
+als eine hybride Architektur, die von vielen verschiedenen Netzwerk
+basierten Architekturstilen abgeleitet ist und bezeichnet Seiten,
+die mit der Architektur \textit{REST} kompatibel ist, als \textit{RESTful}.
+
+Den Kern dieses Architekturmodells bilden so genannte Ressourcen,
+weswegen es auch gerne als Ressource-oriented Architecture bezeichnet
+wird. Alles, was sich eindeutig identifizieren lässt, ist eine Ressource
+und sollte über eine statische Adresse zugreifbar gemacht werden.
+Neben Dateien und Verzeichnissen sind auch ausführbare Methoden, die
+Datenbankanfragen auslösen, gebräuchliche Ressourcen. Hervorragende
+Kandidaten stellen auch die Entitäten eines Datenmodells. Für einen
+Onlineshop bieten sich somit \textit{Artikel}, \textit{Kunde} und
+\textit{Bestellung} an, aber auch \textit{Bestellungen des Kunden
+mit der ID 42 aus Jahr 2010} kann eine valide Ressource sein und sollte
+ebenfalls eine möglichst langlebige und stabile URL erhalten. Ist
+man sich bei der Wahl der Ressourcen nicht ganz sicher so gilt: Im
+Zweifel besser zu viele Ressourcen als zu wenige. (Siehe auch \cite{JAXenter}.)
+
+
+\subsection{Richtlinien}
+
+HTTP bringt bereits ressourcenbezogenes Caching mit sich, wodurch
+man das Gefühl bekommt, mit einer \textit{REST}-Anwendung im Internet
+bereits ``irgendwie zu Hause zu sein''. Viele Onlineshops, Suchmaschinen
+oder Buchungssysteme sind, auch ohne darauf abzuzielen, bereits \textit{RESTful}.
+Damit eine Anwendung das HTTP jedoch auch tatsächlich \textit{REST}-konform
+nutzt, hat sie sich an die Richtlinien zu halten, wie sie Fielding
+in seiner Arbeit beschreibt. Diese Richtlinien lassen sich wie folgt
+untergliedern, wobei es den einzelnen Diensten obliegt, wie diese
+implementiert werden:
+
+
+\subsubsection{Adressierbarkeit}
+
+SOAP Webservices, wie auch viele HTML-Seiten, bilden ihre Funktionalität
+auf eine einzelne URL ab. Das sieht zwar in der Adresszeile sauber
+aus, bringt jedoch Nachteile mit sich. Weder lassen sich gezielt Inhalte
+als Lesezeichen ablegen, noch ist es möglich, dem Freund einen Link
+auf ein Produkt zusenden. Auch Suchmaschinen haben es hier schwer,
+denn auch diese benötigen zum direkten Zugriff auf Unterbereiche einen
+konkreten Zugriffspfad. \textit{RESTful} gestaltete Anwendungen bieten
+die geforderte Adressierbarkeit, ohne dass Einschränkungen in Kauf
+genommen werden müssen. Durch die Verwendung einer Firewall ist es
+beispielsweise ohne Weiteres möglich, gezielten Zugriff auf eine Ressource
+zu unterbinden. Natürlich ließe sich das URL-Prinzip ebenfalls auf
+SOAP anwenden. Aber sobald diese dereferenziert werden, bewegen wir
+uns wieder in der \textit{REST}-Welt. (Siehe auch \cite{JAXenter}.)
+
+
+\subsubsection{Unterschiedliche Repräsentationen}
+
+Von den hinter einer URL bereitgestellten Diensten lassen sich unterschiedliche
+Darstellungen anfordern. Diese bezeichnet man als Repräsentation dieser
+Ressource. Über die im HTTP-Protokoll enthaltenen \textit{Accept}-
+und \textit{Content-Type}-Header unterstützt das Internet ebenfalls
+bereits die \textit{Content Negotiation}, mit der sich unterschiedliche
+Repräsentationen ein- und derselben Ressource anzeigen lassen. Hierbei
+dürfen sich die Clients das Format anfordern, welches am ehesten ihren
+Bedürfnissen entspricht. Ein Browser zeigt sich meist mit einer HTML-Repräsentation
+zufrieden, während andere Clients \textendash{} wie der in dieser
+Arbeit vorgestellte \textendash{} eher an der XML- oder an der JSON-Repräsentation
+interessiert sind. Darüber hinaus lassen sich sogar Versionswünsche
+über die \textit{Content Negotiation} realisieren und beispielsweise
+der gewünschte Content nach Belieben in XML 1.1 oder in XML 1.2 angefordert
+werden. (Siehe auch \cite{JAXenter}.)
+
+
+\subsubsection{Zustandslosigkeit}
+
+\textit{REST} ist konzeptionell ein zustandsloses Protokoll, wodurch
+auch jeder \textit{RESTful}-Webservice zustandslos ist. Jede Nachricht
+muss stets alle Informationen beinhalten, die erforderlich sind, diese
+Nachricht korrekt zu interpretieren und die Anfrage ordnungsgemäß
+verarbeiten zu können. Durch die Abgeschlossenheit der einzelnen Nachrichten
+lassen sich darüber hinaus Lasten sehr leicht auf mehrere Maschinen
+verteilen, was sich positiv auf die Skalierbarkeit des Webservice
+auswirkt. In der Praxis wird jedoch auch gerne auf Cookies und andere
+Techniken zurückgegriffen, um über den Request hinaus an Zustandsinformationen
+gelangen. (Siehe auch \cite{Wikipedia - REST}).
+
+
+\subsubsection{Operationen}
+
+Damit eine Kommunikation mit \textit{RESTful} gestalteten Webservices
+möglich ist, muss eine gemeinsame Sprache gesprochen werden. Das HTTP-Protokoll
+kennt unter anderem die Optionen \textit{GET}, \textit{POST}, \textit{PUT},
+\textit{DELETE}, \textit{HEAD} und \textit{OPTIONS}. Da auf jede \textit{REST}-Ressource
+stets die gleichen Operationen angewandt werden sollen, definiert
+dieser Methodensatz gleichzeitig die vom \textit{REST}-Architekturstil
+geforderten wohldefinierten Operationen. Durch die Verwendung dieser
+elementaren Webtechniken wird die Integration und Interaktion der
+beteiligten Softwarekomponenten deutlich vereinfacht.
+
+Die \textit{GET}-Methode hat hierbei sicher zu sein: Ausschließlich
+lesender Zugriff garantiert, dass der Client jederzeit bedenkenlos
+ein \textit{GET} auf eine Ressource anwenden darf. Weiterhin diktiert
+die HTTP-Spezifikation die idempotente Implementierung von \textit{GET},
+\textit{PUT} und \textit{DELETE}. Wird eine dieser Operationen mehrfach
+ausgeführt, wird stets das gleiche Ergebnis erwartet. Ist sich der
+Client unsicher, ob sein Request erfolgreich abgearbeitet wurde, kann
+er ihn wiederholen, ohne Seiteneffekte zu erwarten. \textit{HEAD}
+und \textit{OPTIONS} finden in \textit{REST} eher selten Verwendung.
+Die \textit{REST}-konforme Verwendung der Methoden in einem kurzen
+Überblick:
+\begin{description}
+\item [{GET}] fordert die Repräsentation der Ressource vom Server an.
+\item [{POST}] fügt eine neue Unterressource zur angegebenen Ressource
+ein. Da die Unterressource vorher noch nicht existierte, wird die
+URL zu dieser vom Server erzeugt und dem Clienten in der Response
+zurückgeliefert.
+\item [{PUT}] legt die ihr enthaltenen Ressource an. Existiert sie bereits,
+wird sie wie im Body angegeben abgeändert.
+\item [{DELETE}] entfernt die angegebene Ressource.
+\item [{HEAD}] fragt die Metadaten einer Ressource ab.
+\item [{OPTIONS}] bringt in Erfahrung, welche Methoden auf eine Ressource
+angewendet werden dürfen.
+\end{description}
+Clientseitig sollte das folgende Protokoll implementierbar sein:
+\begin{lyxcode}
+{\footnotesize{}@protocol~Resource}{\footnotesize \par}
+
+{\footnotesize{}-~(NSURLResponse)get}{\footnotesize \par}
+
+{\footnotesize{}-~(NSURLResponse)post:(NSURLRequest~{*})request}{\footnotesize \par}
+
+{\footnotesize{}-~(NSURLResponse)put:(NSURLRequest~{*})request}{\footnotesize \par}
+
+{\footnotesize{}-~(NSURLResponse)delete}{\footnotesize \par}
+
+{\footnotesize{}-~(NSURLResponse)head}{\footnotesize \par}
+
+{\footnotesize{}@end}{\footnotesize \par}
+\end{lyxcode}
+Die (vereinfachte) Implementierung der Anlage eines Kundenkontos im
+Server kann in etwa wie folgt aussehen:
+\begin{lyxcode}
+{\footnotesize{}@interface~Customers~:~NSObject~\textless{}Resource\textgreater{}~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~NSURL~{*}resource;}{\footnotesize \par}
+
+{\footnotesize{}\}}{\footnotesize \par}
+
+
+
+{\footnotesize{}@implementation~Customers~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~...}{\footnotesize \par}
+
+{\footnotesize{}~~~(NSURLResponse)post:(NSURLRequest~{*})request~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~NSInteger~customerId~=~{[}self~createCustomer:request{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~...}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~return~{[}initWithURL:newResource}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~statusCode:201}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~HTTPVersion:@''HTTP/1.1''}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~headerFields:headerFields{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~\}}{\footnotesize \par}
+
+{\footnotesize{}~~~...}{\footnotesize \par}
+
+{\footnotesize{}\}}{\footnotesize \par}
+\end{lyxcode}
+
+\subsubsection{Hypermedia}
+
+Das Kofferwort \textit{Hypermedia} ist eine Zusammensetzung aus den
+Begriffen \textit{Hypertext} und \textit{Multimedia} und weist auf
+die Verwendung von Hypertext mit starkem Akzent auf den multimedialen
+Gesichtspunkt hin. Repräsentationen enthalten in der Regel neben Informationen
+selbst wieder Links zu anderen Ressourcen. Das macht das Internet
+zu dem, was es ist: Eine stark vernetzte Verbindungsstruktur von identifizierbaren
+Ressourcen über hypermediale Links auf andere identifizierbare Ressourcen.
+Die standardisierte Adressierung sorgt dafür, dass sich die verlinkte
+Ressource in einem anderen Prozess im gleichen System oder auf einem
+anderen Rechner befinden kann, ganz gleich ob sich dieser im lokalen
+Netzwerk befindet, an einem beliebigen anderen Ort dieses Planeten
+oder auf einer Raumstation. Hierfür wird auch gerne der Ausdruck Verbindungshaftigkeit
+verwendet. Im Optimalfall werden dem Clienten in der angeforderten
+Repräsentation gleich die nächsten möglichen Übergänge als hypermediale
+Links mitgeteilt. Der Wert einer Anwendung ist proportional zur Anzahl
+der Ressourcen, auf die sie verlinkt. Mit einem Link auf einen \textit{REST}-konform
+konzipierten Webservice eines Telekommunikationsunternehmens würden
+mit wenigen Klicks Millionen von Kundendaten zugreifbar gemacht werden.
+Diese könnten von der Anwendung selbst ausgewertet oder dem Endanwender
+zur Weiterverarbeitung überlassen werden. (Siehe auch \cite{JAXenter}.)
+
+
+\subsection{Beispiel}
+
+Im Folgenden wird das Prinzip von \textit{REST} an einem Bespiel gezeigt.
+Wir betrachten die Schnittstelle für den fiktiven Onlineshop \textit{smartphoneseppel.de}.
+Ein Neukunde möchte sich ein Smartphone bestellen und legt sich zu
+diesem Zweck ein Kundenkonto an. Er wechselt auf die Seite des Onlineshops
+mit \texttt{\footnotesize{}GET http://www.smartphoneseppel.de} und
+teilt dem Server des Onlineshops mit einem \textit{POST /customer}
+seine Registrierungsabsicht mit. Im Body seines Requests stehen die
+Daten, die er für die Registrierung angegeben hat. Der Server bestätigt
+mit der Response
+\begin{lyxcode}
+{\footnotesize{}HTTP/1.1~201~CREATED}{\footnotesize \par}
+
+{\footnotesize{}Content-Type:~text/xml;}{\footnotesize \par}
+
+{\footnotesize{}Content-Length:~44}{\footnotesize \par}
+
+{\footnotesize{}~}{\footnotesize \par}
+
+{\footnotesize{}http://www.smartphoneseppel.de/customer/1337}{\footnotesize \par}
+\end{lyxcode}
+die erfolgreiche Anlage des Kundenkontos und teilt die vergebene Kundennummer
+mit. Die Bestandteile einer HTTP-Response sind stets der Statuscode
+\textendash{} an dieser Stelle weist der Statuscode \textit{201 CREATED}
+darauf hin, dass eine neue Ressource angelegt wurde -, die Art des
+zurückgelieferten Contents sowie der Content selbst. Nun kann sich
+der Kunde mit \texttt{\footnotesize{}GET /customer/1337} sein Kundenkonto
+anzeigen lassen. Eine Änderung ist mit einem \texttt{\footnotesize{}PUT
+/customer/1337} möglich. Möchte er sich den Artikel Samsung Galaxy
+S3 anzeigen lassen, kann er das per \texttt{\footnotesize{}GET /article/galaxy\_s3}.
+Angenommen es gefällt ihm, so packt er es sich mit einem \texttt{\footnotesize{}PUT
+/shoppingcart/1337\&article=galaxy\_s3} in seinen Warenkorb. Zur Sicherheit
+überprüft er dessen Inhalt mit \texttt{\footnotesize{}GET /shoppingcart/1337}.
+Die Antwort des Onlineshops könnte wie folgt aussehen:
+\begin{lyxcode}
+{\footnotesize{}HTTP/1.1~200~OK}{\footnotesize \par}
+
+{\footnotesize{}Content-Type:~text/xml}{\footnotesize \par}
+
+{\footnotesize{}~}{\footnotesize \par}
+
+{\footnotesize{}\textless{}?xml~version=\char`\"{}1.0\char`\"{}?\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}\textless{}shoppingcart~xmlns:xlink=\char`\"{}http://www.w3.org/1999/xlink\char`\"{}\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}customer~xlink:href=\char`\"{}http://www.smartphoneseppel.de/customer/1337\char`\"{}\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~1337}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}/customer\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}position~pos=\char`\"{}1\char`\"{}~amount=\char`\"{}1\char`\"{}\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~\textless{}article~xlink:href=\char`\"{}http://www.smartphoneseppel.de/article=\char`\"{}galaxy\_s3\char`\"{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~article=\char`\"{}galaxy\_s3\char`\"{}\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\textless{}description\textgreater{}Samsung~Galaxy~S3\textless{}/description\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~\textless{}/article\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}/position\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}\textless{}/shoppingcart\textgreater{}}{\footnotesize \par}
+\end{lyxcode}
+Kunde 1337 ist mit dem Ergebnis einverstanden und sendet mit \texttt{\footnotesize{}POST
+/shoppingcart/1337} seine Bestellung ab. Der Server quittiert ihm
+dies mit einem \texttt{\footnotesize{}/shoppingcart/1337/open}, was
+auf den offenen Bestellstatus hinweist. Nun erscheint jedoch unerwartet
+das iPhone 5 und der Kunde überlegt es sich anders. Er überprüft mit
+einem \texttt{\footnotesize{}GET /customer/1337/orders} seinen Bestellstatus
+und er hat Glück, denn die Bestellung wurde noch nicht versendet.
+Er storniert seine noch offene Bestellung mit \texttt{\footnotesize{}DELETE
+/customer/1337/orders/open/2012-09-11\_001} und legt sich statt dessen
+mit \texttt{\footnotesize{}PUT /shoppingcart/1337\&article=iphone\_5}
+den neuen Artikel in seinen Korb.
+
+Der Onlineshop seinerseits entfernt nach dem Release des iPhone 5
+mit \texttt{\footnotesize{}DELETE /article/iphone\_4s} das iPhone
+4S aus seinem System und legt mit \texttt{\footnotesize{}PUT /article}
+das neue Modell an. Der Body könnte wie folgt aussehen:
+\begin{lyxcode}
+{\footnotesize{}\textless{}articles\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}name\textgreater{}iPhone~5~64~GB\textless{}/name\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}description\textgreater{}Das~Größte,~was~dem~iPhone~passieren~konnte.\textless{}/description\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}size\textgreater{}58.6\textless{}/size\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}weight\textgreater{}112\textless{}/weight\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~\textless{}price\textgreater{}899\textless{}/price\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}\textless{}/articles\textgreater{}}{\footnotesize \par}
+\end{lyxcode}
+Er sendet Kunde 1337 das gewünschte iPhone 5 und verschiebt dessen
+Bestellung vom Status \textit{offen} nach \textit{versendet} mit \texttt{\footnotesize{}DELETE
+/customer/1337/orders/open/2012-09-12\_001} und \texttt{\footnotesize{}POST
+/customer/1337/orders/shipped/2012-09-12\_001}.
+
+
+\section{XML}
+
+Die Codebeispiele im vorhergehenden Kapitel zeigen bereits, dass sich
+hier zur Kommunikation eines Austauschformates bedient wird, welches
+sowohl von Menschen gelesen als auch von Maschinen unabhängig von
+Plattform und Implementierung geparst werden kann. XML steht für Extensible
+Markup Language (zu Deutsch: erweiterbare Auszeichnungssprache) und
+verwendet das \textendash{} im einfachsten Fall im ASCII-Format kodierte
+\textendash{} Textformat, um über eine Metasprache strukturiert Informationen
+verfügbar zu machen. Diese vom World Wide Web Consortium (kurz: W3C)
+herausgegebene Spezifikation ist aktuell in der 5ten Ausgabe verfügbar
+und ein Derivat des älteren SGML. In vielen Punkten ist XML sehr verwandt
+mit HTML, jedoch folgt XML einer konsequenteren Syntax. Das führt
+dazu, dass valide XML-Dokumente zuverlässig von verschiedenen Anwendungen
+gelesen werden können. Um die zur Formatierung verwendeten Zeichen
+\texttt{\footnotesize{}\textless{}}, \texttt{\footnotesize{}\textgreater{}},
+\texttt{\footnotesize{}\&}, \texttt{\footnotesize{}\char`\"{}} und
+\texttt{\footnotesize{}'} in Texten einzubetten, greift man auf die
+Entitäten \texttt{\footnotesize{}\&lt;}, \texttt{\footnotesize{}\&gt;},
+\texttt{\footnotesize{}\&amp;}, \texttt{\footnotesize{}\&quot;} und
+\texttt{\footnotesize{}\&apos;} zurück. Daneben lassen sich beliebige
+weitere Entitäten definieren.
+
+Die Struktur von XML bietet einige Vorteile gegenüber anderen Austauschformaten:
+Die redundante vollständige Wiederholung des Tagnamens beim Schließen
+erschwert Fehler bei der Verschachtelung und die vergleichsweise einfache
+Syntax von XML mit seinen Element- und Attributbezeichnungen macht
+es Einsteigern leicht, gleich zu Beginn ein gutes Gefühl zu bekommen,
+wie man mit XML umzugehen hat. Da die volle XML-Spezifikation allerdings
+über einen Umfang von gut 30 Seiten verfügt, soll an dieser Stelle
+nur ein kleiner Überblick über das Basiswissen im Umgang mit XML vermittelt
+werden.
+
+Ein einfaches und wohlgeformtes XML-Dokument könnte wie folgt aussehen:
+\begin{lyxcode}
+{\footnotesize{}\textless{}?xml~version=\char`\"{}1.0\char`\"{}~encoding=\char`\"{}UTF-8\char`\"{}~?\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}\textless{}!-{}-~Gliederung~Bachelorarbeit~-{}-\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}\textless{}!-{}-~Mario~Stief,~2012~-{}-\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}\textless{}content\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}chapter~no=''1''\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\textless{}description\textgreater{}Einleitung\textless{}/description\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}/chapter\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}chapter~no=''2''\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\textless{}description\textgreater{}Die~Werkzeugkiste\textless{}/description\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}/chapter\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}chapter~no=''3''\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\textless{}description\textgreater{}Schnittstelle~mit~der~REST-Welt\textless{}/description\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}/chapter\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}chapter~no=''4''\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\textless{}description\textgreater{}Implementierung\textless{}/description\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}/chapter\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}chapter~no=''5''\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\textless{}description\textgreater{}Schlusswort~und~Ausblick\textless{}/description\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}~~~\textless{}/chapter\textgreater{}}{\footnotesize \par}
+
+{\footnotesize{}\textless{}/content\textgreater{}}{\footnotesize \par}
+\end{lyxcode}
+\textit{Wohlgeformt} bedeutet im Kontext eines XML-Dokumentes, dass
+es sich an die Spezifikation des W3C zur Erstellung von XML-Dokumenten
+hält. Es muss exakt ein Wurzelelement vorhanden sein, welches das
+gesamte Dokument umschließt. Die einzelnen Elemente sind Informationsträger,
+ganz gleich welcher Art, sie können Texte oder weitere Elemente enthalten
+oder eine Kombination aus beiden. Die Elementbezeichnung ist frei
+wählbar. Verfügt ein Element über einen Inhalt, so wird dieser mit
+einem Start- sowie mit dem Endelement \texttt{\footnotesize{}\textless{}tag\textgreater{}content\textless{}/tag\textgreater{}}
+versehen. Steht ein Element ohne Inhalt, so kann das Element \texttt{\footnotesize{}\textless{}no\_content/\textgreater{}}
+den Ein- und Auszeichner in sich vereinen. In einem Einzeichner oder
+einem leeren Tag können Attribute enthalten sein, die aus einem Schlüssel/Werte-Paar
+bestehen. Mehrere gleichlautende Elemente nebeneinander sind kein
+Problem, mehrere gleichlautende Attribute in einem Element sind jedoch
+nicht zulässig. Die Verschachtelung erfolgt ebenentreu, ein Element
+muss also geschlossen werden, bevor ein Geschwisterelement beginnt
+oder ein Elternelement geschlossen wird. Über die Wohldefiniertheit
+hinaus besteht die Möglichkeit, weitere Anforderungen an unser Dokument
+zu stellen, welches sich mit einer Grammatik wie einer DTD (Document
+Type Definition) oder einem XML-Schema realisieren lässt. Ein Dokument,
+welches einen Verweis auf eine solche Grammatik enthält, diese auch
+einhält und darüber hinaus noch wohlgeformt ist, bezeichnet man als
+valide.
+
+
+\section{JSON}
+
+XML ist nicht immer der ideale Weg seine Daten zu strukturieren. Das
+Tag-System vergrößert kleine Datenbestände schnell und das Ansprechen
+einzelner XML-Nodes ist nicht immer leicht. JSON \textendash{} die
+Kurzform für Java Script Object Notation \textendash{} ist XML sehr
+ähnlich und bietet eine leichtgewichtige Alternative. JSON ist ein
+weiteres vom Menschen gut lesbares Austauschformat, welches so konzipiert
+ist, dass es sich leicht erstellen und parsen lässt. Für ein sprachenübergreifendes
+Austauschformat ist es natürlich sinnig, dass man für den Aufbau auf
+Strukturen zurückgreift, die gängigen Sprachen geläufig sind. Somit
+kommen in JSON Key/Value-Records und Arrays zum Tragen \textendash{}
+Strukturen, von denen es undenkbar ist, dass man sie in einer halbwegs
+modernen Programmiersprache nicht in irgendeiner Form wiederfindet.
+Ein Objekt folgt in JSON der Syntax \textit{\{ String : Value \}}.
+Mehrere solcher Paare werden durch Kommata voneinander getrennt: \textit{\{
+String1 : Value1, String2 : Value2, ... \}}. Leerzeichen können zwischen
+den einzelnen JSON-Elementen zugunsten der Übersichtlichkeit beliebig
+gesetzt werden. Wie aus den meisten Programmiersprachen bekannt, kennzeichnet
+die eckige Klammer ein Array: \textit{{[} Value1, Value2, Value3,
+... {]}}. Ein Wert kann hierbei ein oben genanntes String/Value-Objekt
+sein, aber auch Strings, Zahlen oder die boolschen Werte \textit{true}
+und \textit{false} sind möglich. Darüber hinaus sind auch \textit{null}
+und weitere Arrays zulässige Werte. Zeichenketten, bestehend aus \textit{0
+bis n} Unicode-kompatiblen Zeichen, beginnen und enden je mit einem
+Anführungszeichen. Diese können, ebenfalls wie aus C und Java bekannt,
+Escape-Sequenzen beinhalten und beginnen mit einem Backslash. \texttt{\footnotesize{}\textbackslash{}\textquotedblright },
+\texttt{\footnotesize{}\textbackslash{}\textbackslash{}} sowie \texttt{\footnotesize{}\textbackslash{}/}
+geben jeweils den Wert hinter dem \texttt{\footnotesize{}\textbackslash{}}
+aus, also \texttt{\footnotesize{}\textquotedblleft }, \texttt{\footnotesize{}\textbackslash{}}
+und \texttt{\footnotesize{}/}. Hingegen steht \texttt{\footnotesize{}\textbackslash{}b}
+für ein Backspace, \texttt{\footnotesize{}\textbackslash{}f} für einen
+Seitenumbruch, \texttt{\footnotesize{}\textbackslash{}n} kennzeichnet
+eine neue Zeile, \texttt{\footnotesize{}\textbackslash{}r} den Zeilenrücklauf
+und \texttt{\footnotesize{}\textbackslash{}t} einen horizontalen Tabulator.
+Schließlich kann man noch, beginnend mit \texttt{\footnotesize{}\textbackslash{}u},
+einen vierstelligen Zahlencode eingeben, an dessen Stelle der entsprechende
+Wert der Unicodetabelle eingefügt wird. Die Zahlensyntax ist ebenfalls
+aus C und Java bekannt mit der Ausnahme, dass JSON weder die Oktal-
+noch die Hexadezimaldarstellung beherrscht. 42 ist ebenso zulässig
+wie 1.35e-4 oder -3.7589E+20. (Siehe \cite{JSON.org - Einf=0000FChrung in JSON}.)
+
+\pagebreak{}Ein Beispiel für eine JSON-Datei: 
+\begin{lyxcode}
+{\footnotesize{}\{}{\footnotesize \par}
+
+{\footnotesize{}~~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~``customer-id'':~1337,}{\footnotesize \par}
+
+{\footnotesize{}~~~~``name'':~``John~Doe'',}{\footnotesize \par}
+
+{\footnotesize{}~~~~``contact'':~{[}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~{[}~3456,}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~``123-4567''}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~{]},~``john.doe@example.com''}{\footnotesize \par}
+
+{\footnotesize{}~~~~~{]},}{\footnotesize \par}
+
+{\footnotesize{}~~~~``vip'':~true}{\footnotesize \par}
+
+{\footnotesize{}~~\},}{\footnotesize \par}
+
+{\footnotesize{}~~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~``customer-id'':~1338,}{\footnotesize \par}
+
+{\footnotesize{}~~~~``name'':~``Jane~Doe'',}{\footnotesize \par}
+
+{\footnotesize{}~~~~``contact'':~null,}{\footnotesize \par}
+
+{\footnotesize{}~~~~``vip'':~false}{\footnotesize \par}
+
+{\footnotesize{}~~\}}{\footnotesize \par}
+
+{\footnotesize{}\}}{\footnotesize \par}
+\end{lyxcode}
+
+\chapter{Implementierung}
+
+
+\section{Ein erster Überblick}
+
+Erstellt man ein neues Projekt, hat man verschiedene vorgefertigte
+Templates zur Auswahl. Die App sollte nicht mit Optionsvielfalt erschlagen
+und alles sollte intuitiv aus einer View heraus erreichbar sein. Die
+Wahl viel auf ein einfaches \textit{Single View Application}-Template
+und gegen einen \textit{NavigationController}. Letzterer stellt einen
+zentralen Navigator bereit, von dem aus sich die einzelnen Views anwählen
+lassen. Erzeugt man ein Projekt, liefert Xcode bereits einige Template-Dateien.
+Hierzu gehören der \textit{ViewController} und das \textit{MainStoryboard}.
+
+\begin{figure}
+\centering{}\includegraphics[scale=0.45]{Diagram}\protect\caption{Klassen als UML-Diagramm}
+\end{figure}
+
+
+Der \textit{ViewController} ist hierbei die Initialisierungs-View
+und das zentrale Bedieninstrument dieser App. Jede View gehört in
+eine eigene Klasse, was somit den Klassen \textit{HeaderKeysViewController},
+\textit{ResourcesTableViewController} sowie \textit{LogOutputViewController}
+ihre Existenzberechtigung verleiht. Keine eigene View besitzt der
+\textit{XMLParser}, dessen Funktionalität sich jedoch hervorragend
+als autonome Klasse ausgliedern lässt. \textit{HistoryElement} ist
+die Implementierung einer URL-History in Form einer doppelt verketteten
+linearen Liste.
+
+
+\section{Hauptklasse: ViewController}
+
+Der \textit{ViewController} als unsere Basisklasse erbt von \textit{UIViewController},
+welche das fundamentelle View-Management-Modell für alle iOS Applikationen
+stellt. Dessen Oberklasse \textit{UIResponder} definiert das Interface
+zum Umgang mit Events und erbt selbst direkt von \textit{NSObject},
+der Wurzelklasse aller Objective-C-Klassen. Er wird uns von Xcode
+zu Projektbeginn bereitgestellt und fügt die Methoden \textit{viewDidLoad},
+\textit{viewDidUnload} \textendash{} mit je einer kurzen Beschreibung
+\textendash{} ein sowie die Methode \textit{shouldAutorotateToInterfaceOrientation},
+mit der sich der \textit{Landscape Orientation}-Modus ein- und ausschalten
+lässt. Er sorgt dafür, dass sich der Bildschirminhalt mitdreht, wenn
+die Lagesensoren des iPad einen Ausrichtungswechsel des Gerätes erkennen.
+Aufgrund des fehlenden \textit{NavigationControllers} muss jede weitere
+View vom \textit{ViewController} aus erreichbar sein. Die View beinhaltet
+mehrere Textfelder und implementiert demnach das \textit{UITextFieldDelegate}-Protokoll.
+Dieses Protokoll definiert die darin möglichen Nachrichten, die ein
+Textfeld als Teil der Textverarbeitung an seine \textit{Delegate}-Klasse
+sendet. In der \textit{ViewController} wird beispielsweise die im
+Protokoll enthaltene Methode \textit{textFieldShouldReturn} so implementiert,
+dass nach dem Berühren der Eingabetaste auf der On Screen-Tastatur
+das Keyboard wieder aus dem Bildschirm ausgeblendet wird. Sofern das
+URL-Feld das gerade aktive Textfeld war, wird anschließend die Methode
+\textit{go} aufgerufen, was den gleichen Effekt hat wie das Berühren
+der oben rechts am Bildschirm positionierten \textit{Go}-Schaltfläche.
+Für das Textfeld, welches diese Methode aufrufen möchte, muss zwingend
+eine \textit{Delegate} angegeben werden. Dazu wird im Storyboard bei
+gedrückter Steuerung-Taste eine Verbindung vom URL-Textfeld zum Controller
+gezogen und das Outlet \textit{delegate} ausgewählt. Das Interface
+des entsprechenden Controllers wird automatisch um die entsprechende
+Deklaration des Protokolls erweitert. Der programmatische Weg wäre
+das manuelle Setzen der Delegate mittels \texttt{\footnotesize{}{[}\_url
+setDelegate:self{]}}. Noch einmal zur Erinnerung: \texttt{\footnotesize{}url}
+wird als \textit{property} im Interface deklariert und deshalb werden
+standardmäßig die Accessoren generiert. Der Zugriff auf \texttt{\footnotesize{}url}
+über den Getter erfolgt über die Instanzvariable \texttt{\footnotesize{}\_url}.
+
+Beispielhafte Implementierung der Methode textFieldShouldReturn im
+ViewController:
+\begin{lyxcode}
+{\footnotesize{}-~(BOOL)textFieldShouldReturn:(UITextField~{*})textField~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~{[}textField~resignFirstResponder{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~if~(textField~==~\_url)}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}self~go:nil{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~else~if~(textField~==~\_username)}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}\_password~becomeFirstResponder{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~else~if~(textField~==~\_keyTextField)}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}\_valueTextField~becomeFirstResponder{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~else~if~(textField~==~\_valueTextField)}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}self~addKeyValue:nil{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~return~YES;}{\footnotesize \par}
+
+{\footnotesize{}\}}{\footnotesize \par}
+\end{lyxcode}
+Weitere Elemente in dieser View, die eine \textit{Delegate} benötigen,
+sind zum einen die \textit{PickerView} links oben, in der die zu verwendende
+HTTP-Methode ausgewählt wird, sowie die \textit{TableView} auf der
+rechten Seite, in der sich Schlüssel/Werte-Tupel aufnehmen lassen.
+Diese werden bei einem \textit{PUT} oder einem \textit{POST} automatisch
+als Header hinzugefügt. Diese beiden Komponenten benötigen nicht nur
+ein Objekt, dem sie Nachrichten übermitteln können, die im weiteren
+Programmverlauf etwas anstoßen. Beide benötigen darüber hinaus ebenfalls
+ein Objekt, bei dem sie Daten abfragen dürfen, die sie für ihre eigene
+Funktion benötigen. Das \textit{DataSource}-Objekt liefert als Antwort
+auf die im Protokoll deklarierten Nachrichten, die es von der \textit{PickerView}
+oder der \textit{TableView} empfängt, die benötigten Daten zurück.
+Oft handelt es sich dabei bei der \textit{Delegate} und der \textit{DataSource}
+um ein- und dasselbe Objekt, daher implementiert der \textit{ViewController}
+sowohl die \textit{Delegate}-Protokolle \textit{UIPickerViewDelegate}
+und \textit{UITableViewDelegate} als auch die \textit{DataSource}-Protokolle
+\textit{UIPickerViewDataSource} und \textit{UITableViewDataSource}.
+
+Auf die Anfrage der \textit{PickerView} nach der Anzahl der Spalten
+reagiert das \textit{ViewController}-Objekt mit der folgenden Methode:
+\begin{lyxcode}
+{\footnotesize{}-~(NSInteger)numberOfComponentsInPickerView:(UIPickerView~{*})pickerView~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~return~1;}{\footnotesize \par}
+
+{\footnotesize{}\}}{\footnotesize \par}
+\end{lyxcode}
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.25]{ViewController1}
+\par\end{centering}
+
+\protect\caption{ViewController nach geparster XML-Response}
+
+
+\end{figure}
+
+
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.25]{ViewController2}
+\par\end{centering}
+
+\protect\caption{ViewController im Landscape-Modus}
+\end{figure}
+
+
+
+\subsection{Senden eines Requests}
+
+Beim Senden eines Requests passiert Folgendes: Im URL-Textfeld ist
+die Adresse des REST-konformen Webservices einzugeben, im linken oberen
+Picker wird die HTTP-Methode ausgewählt. Das Textfeld direkt unter
+dem Picker bietet die Möglichkeit, zusätzliche Request-Methoden aufzunehmen,
+wie beispielsweise OPTIONS, das standardmäßig nicht enthalten ist.
+Soll ein PUT- oder ein POST-Request versendet werden, so wird der
+im Body-Bereich angezeigte Text des aktuell aktiven Tabs im Output-Fenster
+(Request/Response/Parsed) dem Request als Body hinzugefügt. Dieser
+Textbereich ist aus diesem Grund vom Anwender bearbeitbar. Es sollte
+natürlich niemals der Parsed-Tab aktiv sein, da dieser aufbereitete
+Daten enthält und somit weder gültigen JSON- noch XML-Code. Der angefragte
+Webservice wird diesen Text höchstwahrscheinlich nicht interpretieren
+können. Nach einem PUT- oder POST-Request befindet sich eine Kopie
+des gesendeten Bodys im Body/Request-Tab zur eventuellen weiteren
+Bearbeitung und auch die gesendeten Request-Headers sind im Bereich
+Headers/Request ersichtlich. Der Header \textit{Content-Length} wurde
+automatisch mit der Länge der angehangenen Body-Nachricht gesetzt.
+Wurde ein beliebiger Request durchgeführt, die Response erfolgreich
+auf JSON oder XML getestet und das Request-Fenster ist bislang noch
+leer, so wird dem Anwender an dieser Stelle ein einfaches, anpassbares
+JSON- bzw. ein XML-Template generiert. Der Anwender hat darüber hinaus
+im rechten Bereich die Möglichkeit, diesen um weitere Headers zu erweitern.
+An dieser Stelle kann man aus der angebotenen Liste einen gebräuchlichen
+General- oder einen Request-Header auswählen, man darf jedoch auch
+ein beliebiges Schlüssel/Werte-Paar eingeben. Zwei gleichnamige Headers
+sind hier verständlicherweise ebenso wenig erlaubt, wie ein leeres
+Schlüssel- oder Wertefeld. Wird eine Headerzeile markiert, so wird
+der neue Header direkt darüber eingefügt und die Markierung entfernt.
+Ist keine Headerzeile markiert, so wird das neue Tupel am Ende der
+Liste eingefügt. Die an dieser Stelle verwendete Datenstruktur sind
+die beiden \textit{NSArrays} \textit{headerKeysArray} sowie \textit{headerValuesArray},
+an deren Indexwert x sich der Eintrag der x-ten Reihe der einspaltigen
+Headertabelle befindet. Zwar wären die Zellen der \textit{TableView}
+theoretisch ebenfalls in der Lage Daten zu speichern, jedoch kommt
+es dann zu folgendem unerwarteten Programmverhalten: Als Container
+dient eine \textit{ScrollView}, darin befindet sich eine \textit{TableView}.
+Das hat den Vorteil, dass es möglich ist, mehr Daten darzustellen
+als sichtbar sind, da sich die Tabelle einfach mit dem Finger aus
+dem sichtbaren Bereich wischen lässt. Bewegt man jedoch eine Zelle
+aus dem sichtbaren Bereich, existiert aktuell keine sichtbare Referenz
+mehr darauf und das System setzt den Inhalt auf eine so genannte \textit{Reusable}-Liste.
+Die Daten, die in der Zelle enthalten sind, werden entfernt. Wird
+die Zelle wieder sichtbar, werden nicht die alten Daten wiederhergestellt,
+sondern an die \textit{DataSource} der \textit{TableViews} \textendash{}
+ein instanziiertes Objekt der Klasse \textit{HeaderKeysViewController}
+\textendash{} wird die Nachricht \textit{tableView:cellForRowAtIndexPath}
+gesendet, woraufhin dieser eine neue Zelle erzeugt. Diese würde sich
+den Zelleninhalt jedoch aus den aktuellen Inhalten der Textfelder
+für den HTTP Header-Input besorgen, was nicht das ist, was an dieser
+Stelle passieren sollte. Da gemäß MVC allerdings unterhalb der GUI
+die Daten in \textit{NSArrays} abgelegt sind, deren Index mit der
+Zellennummer identisch ist, kann die Wiederherstellung des Zelleninhaltes
+auf die entsprechenden Einträge der \textit{NSArrays} zugreifen.
+
+Implementierung der \textit{tableView:cellforRowAtIndexPath:}
+\begin{lyxcode}
+{\footnotesize{}-~(UITableViewCell~{*})tableView:(UITableView~{*})tableView}{\footnotesize \par}
+
+{\footnotesize{}~~cellForRowAtIndexPath:(NSIndexPath~{*})indexPath~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~static~NSString~{*}CellIdentifier~=~@\char`\"{}Cell\char`\"{};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~UITableViewCell~{*}cell~=}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}tableView~dequeueReusableCellWithIdentifier:CellIdentifier{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~if~(cell~==~nil)}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~cell~=~{[}{[}UITableViewCell~alloc{]}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~initWithStyle:UITableViewCellStyleValue1}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~reuseIdentifier:CellIdentifier{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~NSString~{*}cellText;~if~({[}indexPath~section{]}~==~0)~cellText~=}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}{[}NSString~alloc{]}~initWithFormat:@\char`\"{}\%@\char`\"{},}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}\_generalHeaders~objectAtIndex:{[}indexPath~row{]}{]}{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~else~cellText~=~{[}{[}NSString~alloc{]}~initWithFormat:@\char`\"{}\%@\char`\"{},}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}\_requestHeaders~objectAtIndex:{[}indexPath~row{]}{]}{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~{[}{[}cell~textLabel{]}~setText:cellText{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~return~cell;}{\footnotesize \par}
+
+{\footnotesize{}~~\}}{\footnotesize \par}
+\end{lyxcode}
+Befindet sich der hinzugefügte Header in der Liste der bekannten General
+Headers, so wird er mit grüner Schrift angezeigt, ist er ein bekannter
+Request Header, erscheint seine Schrift in blaugrün. Befindet sich
+der hinzugefügte Header weder in der General- noch in der Request-Header-Liste,
+so wird dessen Name rot gefärbt. Dies soll der Vermeidung von Tippfehlern
+dienen.
+
+Verlangt die Seite eine \textit{HTTP Basic}- oder eine \textit{HTTP
+Digest}-Authentifizierung, erhält das View-Objekt eine \textit{Authentication
+Challenge}. Die API stellt hierfür den Methodenaufruf \textit{connection:didReceiveAuthenticationChallenge}
+bereit, in welcher sich dieser Aufforderung angenommen werden sollte.
+Sind Authentifizierungsinformationen gegeben, so werden diese ausgelesen
+und dem angefragten Server übermittelt. Die Implementierung dieser
+Methode sieht wie folgt aus:\newpage{}
+\begin{lyxcode}
+{\footnotesize{}-~(void)connection:(NSURLConnection~{*})connection}{\footnotesize \par}
+
+{\footnotesize{}~~didReceiveAuthenticationChallenge:}{\footnotesize \par}
+
+{\footnotesize{}~~(NSURLAuthenticationChallenge~{*})challenge~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~if~({[}challenge~previousFailureCount{]}~==~0)~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~NSURLCredential~{*}credential~=}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~{[}NSURLCredential~credentialWithUser:{[}\_username~text{]}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~password:{[}\_password~text{]}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~persistence:NSURLCredentialPersistenceNone{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~{[}{[}challenge~sender{]}~useCredential:credential}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~forAuthenticationChallenge:challenge{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\}~else~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~{[}{[}challenge~sender{]}~cancelAuthenticationChallenge:challenge{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~UIAlertView~{*}alert~=}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~{[}{[}UIAlertView~alloc{]}~initWithTitle:@\char`\"{}Error\char`\"{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~message:@\char`\"{}Authentication~incorrect.\char`\"{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~delegate:self}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~~~~~~~~~cancelButtonTitle:@\char`\"{}Close\char`\"{}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~~~~~~~~~~~~~~~~~otherButtonTitles:nil{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~{[}alert~show{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~{[}challenge~description{]});}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~\}}{\footnotesize \par}
+
+{\footnotesize{}~~\}}{\footnotesize \par}
+
+\begin{figure}[H]
+\begin{centering}
+{\small{}\includegraphics[scale=0.65]{\string"Flowchart Request\string".eps}}
+\par\end{centering}{\small \par}
+
+\protect\caption{Senden eines Request}
+\end{figure}
+
+\end{lyxcode}
+
+\subsection{Empfangen einer Response}
+
+Jede eingehende Response ruft die Methode \textit{connection:didReceiveResponse}
+auf. Hier werden die Informationstextfelder im oberen Bereich der
+View gesetzt, die Headers in den entsprechenden Bereich im Output-Feld
+übertragen und überprüft, ob der Inhaltstyp als JSON oder XML angegeben
+wird. Liegt der vom Server zurückgelieferte Statuscode unter 400 deutet
+das darauf hin, dass es auf den Request hin keinen Fehler gab. Es
+wird ein neues Historyelement erzeugt, mit der erfolgreich bearbeiteten
+URL gefüllt und der History-Queue angehangen.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.65]{\string"Flowchart Response\string".eps}
+\par\end{centering}
+
+\protect\caption{Eintreffen einer Response}
+
+
+\end{figure}
+
+
+\pagebreak{}Trifft eine Response ein, die neben dem Header einen
+Body enthält, wird mit diesem die Methode \textit{connection:didReceiveData}
+aufgerufen. Für jede Teilresponse werden die Daten mittels \texttt{\footnotesize{}{[}responseBodyData
+appendData:\_bodyData{]}} der statischen Variable \textit{responseBodyData}
+hinzugefügt.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.65]{\string"Flowchart BodyData\string".eps}
+\par\end{centering}
+
+\protect\caption{Eingehende Pakete}
+
+
+\end{figure}
+Die eintreffenden Pakete brachten anfangs leider ein paar Probleme
+mit sich, denn jedes Datenpaket wurde gleich an den Parser übergeben.
+Als erster Ansatz wurde die \textit{Content Length} mit der Länge
+des eingetroffenen Bodys verglichen und die Daten in einem statischen
+\textit{NSString} angesammelt, bis die Nachricht vollständig empfangen
+wurde. Leider ist nicht bei jeder Response der \textit{ContentLength}-Header
+gesetzt, wodurch die vollständige Größe nicht immer im Voraus bekannt
+ist. Als Workaround wurde mit einer eingehenden Response ein \textit{NSTimer}
+mit einer provisorischen Dauer von 3 Sekunden gestartet, welcher mit
+jedem eingehenden Paket wieder zurückgesetzt wurde. Lief dieser ab,
+so wurde das vollständige Empfangen der Nachricht angenommen und die
+Analyse der Bodydaten begonnen. Hier zeigte sich, dass ein gründlicherer
+Blick ins Referenzhandbuch einiges an Arbeit erspart hätte, denn wie
+für so vieles stellt Apple durchdachte automatische Methodenaufrufe
+bereit und einige Zeit später viel die Methode \textit{connectionDidFinishLoading}
+auf. Da dies ein wesentlich feinerer Ansatz ist als ein Timer, wurde
+die Implementierung entsprechend abgeändert.
+
+Anhand des ersten Bytes des Bodys wird überprüft, ob es sich um ein
+Bild handelt. Ist das der Fall, so wird in die \textit{ScrollView}
+programmatisch eine \textit{ImageView} eingebettet und diese darin
+angezeigt. Beim Absenden eines neuen Requests werden alle \textit{ImageViews}
+wieder aus der \textit{ScrollView} entfernt. Weist das erste Byte
+nicht auf ein Bild hin und wurde bereits vorher anhand des \textit{Content
+Type} erkannt, dass es sich um JSON- oder um XML-Code handelt, wird
+der Body an den entsprechenden Parser übergeben. Im Apple Foundation-Framework
+findet sich bereits seit OS X-Version 10.3 der \textit{NSXMLParser},
+seit iOS 5 wurde dieses um die \textit{NSJSONSerialization} erweitert,
+welche ein \textit{NSData}-Objekt parst und ein \textit{NSDictionary}
+zurückliefert. In beiden Fällen werden sowohl die Schlüssel als auch
+die Werte in je ein veränderliches \textit{NSMutableArray} geschrieben,
+da es nötig sein wird, gezielt Felder zu löschen und neue hinzuzufügen.
+Wurde das Parsen erfolgreich abgeschlossen, wird die rekursive Methode
+\textit{processKeys} aufgerufen. \textit{Erfolgreich} bedeutet im
+Fall des XML-Parsers, dass nach erfolgter Durchführung ein \textit{YES}
+zurückgeliefert wird. \textit{NSJSONSerialization} definiert einen
+Durchlauf als \textit{erfolgreich}, wenn das zu füllende Array nach
+Durchlauf des Parsers nicht leer ist. Die einzelnen Schlüssel/Werte-Paare
+werden daraufhin überprüft, ob es sich bei den Werten um eine Ressource
+handelt. Da es durchaus sein kann, dass ein Wert wiederum ein komplettes
+Array mit weiteren Schlüssel/Werte-Paaren beinhaltet, ist \textit{processKeys}
+so gestaltet, dass ein rekursiver Aufruf möglich ist. Da hierbei Schlüssel/Werte-Paare
+eingefügt und gelöscht werden, ist das Mitführen des statischen Indexes
+\textit{staticIndex} erforderlich. Eingefügt werden Schlüssel/Werte-Paare,
+wenn ein Unter-Array gefunden wird und deren Inhalt dem eigenen Array
+am aktuellen Index eingefügt wird. Das Schlüssel/Werte-Paar, welches
+das Array enthielt, hat nach dem rekursiven Abarbeiten keine weitere
+Funktion mehr und es wird entfernt, denn die darin enthaltenen Schlüssel/Werte-Paare
+wurden bereits an dessen Stelle eingefügt. Das Array wächst und die
+enthaltenen Schlüssel/Werte-Paare sind noch in der richtigen Reihenfolge.
+
+Zum Vorbereiten des Validitätstests auf eine valide URL wird der String
+in einem ersten Schritt in den Typ \textit{NSURL} umgewandelt. Hierbei
+wird bereits intern getestet, ob die Zeichen für eine URL valide sind.
+Verläuft dieser Test negativ, wird ein \textit{nil} zurückliefert.
+Passiert das nicht, wäre folglich der Einsatz als URL denkbar und
+der Anfang wird überprüft. Beginnt dieser mit \textit{http}, wird
+er unverändert zum Validieren weitergeleitet. Beginnt er statt dessen
+mit einem Schrägstrich, wird er an die Basis-URL des zuletzt aufgerufenen
+Requests angefügt und dann ebenfalls zur Validitätsüberprüfung weitergereicht.
+Treffen beide Fälle nicht zu, wird ein Element auf der gleichen Verzeichnisebene
+vermutet, auf der diese Response basiert. Vor den String wird die
+höchste Verzeichnisebene des Requests gehangen, der hierher führte,
+was den Teil bis inklusive dem letzten Schrägstrich bedeutet, und
+wie zuvor zur Validierung weitergegeben.
+
+Um den Test durchzuführen, wechselt die App mit \texttt{\footnotesize{}{[}self
+setValidatingState:YES{]}} in einen Zustand, welcher ausschließlich
+der Validierung von Ressourcen dient. Es wird für jeden Ressourcenkandidaten
+einen asynchronen HEAD-Request abgesendet, deren Responses anders
+behandelt werden als bislang. Ein nebenbei laufender Counter führt
+Buch über den aktuellen Fortschritt und wird inkrementiert, sobald
+eine Ressource als valid oder als invalid befunden wird. Die endgültige
+Entscheidung über die Validität kann jedoch erst in der Methode \textit{didReceiveResponse}
+getroffen werden, welche die Antwort des Servers auswerten darf. Da
+asynchrone Requests die Responses in willkürlicher Reihenfolge eintreffen
+lassen, kann leider nicht ohne Weiteres zugeordnet werden, für welchen
+Wert gerade eine Antwort empfangen wurde. Die ID der abgesendeten
+\textit{NSURLConnection} wird daher zusammen mit dem Index des zu
+überprüfenden Wertes in ein \textit{NSDictionary} gespeichert. In
+der \textit{didReceiveResponse} kann anhand dieser ID der Indexwert
+aus dem Wörterbuch abgefragt werden und es ist wieder klar, welchem
+Schlüssel/Werte-Paar der empfangene Statuscode zuzuordnen ist. Ein
+Statuscode kleiner 400 weist auch hier auf die Existenz der angefragten
+Ressource hin. Das verifizierte Tupel wird in die \textit{NSMutableArrays}
+\textit{foundResourceKeys} sowie \textit{foundResourceValues} geschrieben.
+Da ein asynchroner Request den Nachteil hat, dass die überprüften
+Ressourcen in beliebiger Reihenfolge im Zielarray landen würden, eine
+synchrone Überprüfung jedoch zu viel Zeit in Anspruch nehmen würde,
+wird wie folgt vorgegangen: Die Arrays \textit{foundResourceKeys}
+und \textit{foundResourceValues} werden mit der Größe der Ressourcenkandidaten
+angelegt und die Felder mit einem leeren \textit{NSString} initialisiert.
+Eine überprüfte Ressource, die sich im Quellarray an einem Feld mit
+dem Index y befindet, wird in das Zielarray ebenfalls an das Feld
+mit dem Index y geschrieben. Alle Felder der beiden Arrays, an die
+keine Einträge geschrieben wurden, enthalten weiterhin leere Strings.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.65]{\string"Flowchart FinishReceive\string".eps}
+\par\end{centering}
+
+\protect\caption{Response wurde vollständig empfangen}
+
+
+\end{figure}
+Nachdem keine Ressourcenkandidaten mehr auf ihre Validierung warten,
+lassen sich die \textit{NSMutableArrays}, welche über die validen
+Ressourcen verfügen, bereinigen, in dem die Felder mit den leeren
+Strings aus dem Array entfernt werden. Zurück bleiben je ein Array
+mit Schlüsseln und eines mit den dazugehörigen Werten. Beide werden
+beim Berühren der Ressourcenschaltfläche \textendash{} der Lupe \textendash{}
+an die gerade erzeugte Instanz der Klasse \textit{ResourceTableViewController}
+übergeben. Was hier beiläufig erwähnt wird war zumindest zeittechnisch
+alles andere als beiläufig, da die sich öffnende TableView nach ihrer
+Instanziierung und Überreichung der Daten stets jungfräulich präsentierte.
+Die \textit{NSMutableArrays} schienen dort nie anzukommen. Wie sich
+herausstellte, erzeugt bereits das Storyboard nach dem Berühren der
+Übergangs-Schaltfläche eine Instanz der gewünschten View. Die programmatisch
+erzeugte Instanz war eine weitere, sich an einem anderen Speicherbereich
+befindliche Instanz, die unsichtbar im Hintergrund ablief. Hier sollte
+jedoch auf die Storyboard-Instanz zugegriffen werden. Um das zu bewerkstelligen,
+müssen die Daten an diese übergeben werden, nachdem der Übergang in
+die neue View eingeleitet wurde. Dies muss allerdings auch geschehen,
+bevor die View auf dem Bildschirm erscheint, was ja scheinbar zeitgleich
+ist. Um auf dieses Zeitfenster zuzugreifen, lässt sich auf diese Übergänge,
+die Xcode als \textit{Segues} bezeichnet, programmatisch zugreifen.
+Bei einem Übergang erhält die Ursprungs-View die Nachricht \textit{prepareForSegue:sender}.
+Um gezielt Übergänge ansprechen zu können, lassen sich im Storyboard
+\textit{Identifier} vergeben. Der Identifier des gerade aktiven Überganges
+kann in der Implementierung der Methode \textit{prepareForSegue:sender}
+mit \texttt{\footnotesize{}{[}segue identifier{]}} abgefragt werden.
+\begin{lyxcode}
+{\footnotesize{}-~(void)prepareForSegue:(UIStoryboardSegue~{*})segue~sender:(id)sender}{\footnotesize \par}
+
+{\footnotesize{}~~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~if~({[}{[}segue~identifier{]}~isEqualToString:@\char`\"{}resourcesTableViewPopover\char`\"{}{]})}{\footnotesize \par}
+
+{\footnotesize{}~~~~~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~ResourcesTableViewController~{*}resourceTableViewController~=}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~{[}segue~destinationViewController{]};~}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}resourceTableViewController~setKeys:foundResourceKeys{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}resourceTableViewController~setValues:foundResourceValues{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}resourceTableViewController~setReferenceToUrl:\_url{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~UIStoryboardPopoverSegue{*}~popoverSegue~=}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~(UIStoryboardPopoverSegue{*})segue;}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}resourceTableViewController~setReferenceToPopoverController:}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}popoverSegue~popoverController{]}{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}resourceTableViewController~setReferenceToBaseUrl:}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~~~~{[}self~urlPart:{[}\_url~text{]}~definePart:@\char`\"{}baseUrl\char`\"{}{]}{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}resourceTableViewController~setReferenceToHighestDir:}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}self~urlPart:{[}\_url~text{]}~definePart:@\char`\"{}highestDir\char`\"{}{]}{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~\}}{\footnotesize \par}
+
+{\footnotesize{}~~~~~else~if~({[}{[}segue~identifier{]}~isEqualToString:@\char`\"{}logOutputViewPopover\char`\"{}{]})}{\footnotesize \par}
+
+{\footnotesize{}~~~~~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~LogOutputViewController~{*}logOutputViewController~=}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~{[}segue~destinationViewController{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~~~...}{\footnotesize \par}
+\end{lyxcode}
+Ein weiteres Problem war die Tatsache, dass offensichtlich zwischen
+iOS 5.1 und 6 das Laden der View an unterschiedlichen Zeitpunkten
+erfolgt. Unter iOS 6 ist es ausreichend, wenn die Initialisierung
+des übergebenen Arrays in der Startmethode \textit{viewDidLoad} erfolgt.
+Doch während dort bei einem \textit{prepareForSegue} der Aufbau der
+View verzögert wird, bis die Methode abgearbeitet wurde, ist dies
+bei iOS 5.1 nicht der Fall. Die Initialisierung des übergebenen Arrays
+darf erst in der Initialisierungsmethode \textit{viewDidAppear} erfolgen,
+sonst werden alle Zellen mit \textit{nil} gefüllt. Da dieses Programm
+zu iOS 5.1 vollständig abwärtskompatibel sein soll, erfolgt die Initialisierung
+in der Methode \textit{viewDidAppear}.
+
+
+\section{Hilfsklassen}
+
+
+\subsection{ResourceTableViewController}
+
+Die erste Hilfsklasse ist eine View vom Typ \textit{UITableViewController},
+einer Unterklasse von \textit{UIViewController}. Der \textit{TableViewController}
+bietet eine View, bestehend aus einer einzigen Tabelle, deren \textit{Delegate}
+und \textit{DataSource} er selbst ist. Ihm stehen die \textit{NSArrays}
+\textit{keys} und \textit{values} zur Verfügung, welche die validierten
+Ressourcen darstellen, die er von der Hauptview unmittelbar vor dem
+Aufbau erhalten hat und die er in die Zellen seiner Tabelle einfüllt.
+Da eine Berührung einer Zelle die Rückkehr zur Hauptview zur Folge
+haben soll, nachdem die Ressource in das dortige URL-Feld eingefügt
+wurde, benötigt er für seine Funktion einige Referenzen. Verständlicherweise
+wird die Referenz des URL-Feldes benötigt, auf deren Text er schreibend
+zugreift. Referenzen zu den \textit{NSStrings} \textit{highestDir}
+und \textit{baseUrl} benötigt er, um die URLs zu vervollständigen.
+Eine Ressource 1337, welche auf \textit{http://www.smartphoneseppel.de/customer/}
+gefunden wurde, sollte auf \textit{http://www.smartphoneseppel.de/customer/1337}
+verweisen. Die Ressource wird an den höchsten Verzeichnispfad der
+Abfrage gehangen, welche die Ressource 1337 enthielt. Eine mit einem
+Schrägstrich beginnende Ressource \textit{/article/galaxy\_s3} wird
+hingegen als absoluter Pfad interpretiert und direkt an die Base-URL
+angehangen: \textit{http://www.smartphoneseppel.de/article/galaxy\_s3}.
+
+Da sich eine View sich nicht so einfach selbst wieder schließen kann,
+wurde darüber hinaus die Referenz des \textit{PopoverControllers}
+hierher übergeben. Der Zugriff auf diesen ermöglicht es, die View
+mit dem Befehl \texttt{\footnotesize{}{[}\_referenceToPopoverController
+dismissPopoverAnimated:YES{]}} wieder sozusagen \textquotedblleft von
+unten\textquotedblright{} zu verwerfen.
+
+\begin{wrapfigure}{o}{0.5\columnwidth}%
+\begin{centering}
+\includegraphics[scale=0.25]{ResourcesTableViewController}
+\par\end{centering}
+
+\protect\caption{Erkannte Ressourcen}
+
+
+\end{wrapfigure}%
+\newpage{}
+
+
+\subsection{HeaderKeysViewController}
+
+Wie auch bei der \textit{ResourceTableViewController} handelt es sich
+hier um eine Klasse des Typs \textit{UITableViewController}. Er beinhaltet
+eine Auflistung der für einen Request gebräuchlichen Request-Headers
+und der General-Headers und soll dem Anwender eine einfache Möglichkeit
+bieten, seine Anfrage um valide Headers zu erweitern. Wie zuvor werden
+hier die Daten der durch Berührung selektierten Zelle in das Header-Feld
+der Hauptview geschrieben und die View mittels Referenzzugriff auf
+den darunter liegenden \textit{PopoverController} beendet. Anschließend
+wird die Referenz für das dem Header zugehörige Wertefeld übergeben,
+mit dessen Hilfe dieses zum \textit{FirstResponder} wird. Nach dem
+Verwerfen der View hat es somit den Tastaturfokus und es kann sofort
+nach dem Selektieren des Headers mit der Eingabe des Wertes begonnen
+werden.
+
+
+\subsection{XMLParser}
+
+Der Inhalt der Klasse \textit{XMLParser} ist nicht umfangreich, eignete
+sich jedoch hervorragend, um als abgeschlossene Funktionalität in
+einer eigenen Klasse ausgegliedert zu werden. Er wird initialisiert
+mit zwei leeren \textit{NSMutableArrays}, an die sowohl Attribute
+als auch Elemente der geparsten XML angefügt werden. Attributnamen
+werden in Klammern gesetzt und erhalten den Elementnamen, dem sie
+zugehörig sind, vorangestellt. Die Bezeichnung der Keys setzt sich
+als Pseudocode vereinfacht wie folgt zusammen:
+\begin{lyxcode}
+{\footnotesize{}\newpage{}for~(int~i~=~0;~i~\textless{}~elementsToParse;~i++)~do}{\footnotesize \par}
+
+{\footnotesize{}~~~if~actualObjectType~=~attribut~then}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~keyArray{[}i{]}~\textleftarrow{}~elementName~+~``(``~+~attributName~+~``)'';}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~valueArray{[}i{]}~\textleftarrow{}~AttributValue;}{\footnotesize \par}
+
+{\footnotesize{}~~~else~if~actualObjectType~=~element~then}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~keyArray{[}i{]}~\textleftarrow{}~elementName;}{\footnotesize \par}
+
+{\footnotesize{}~~~~~~valueArray{[}i{]}~\textleftarrow{}~elementValue;}{\footnotesize \par}
+
+{\footnotesize{}~~~fi;}{\footnotesize \par}
+
+{\footnotesize{}od;}{\footnotesize \par}
+
+
+\end{lyxcode}
+
+\subsection{LogOutputViewController}
+
+Da es sich um ein Entwicklertool handelt, wäre es für den einen oder
+anderen sicherlich interessant zu sehen, was das Programm in der Kommandozeile
+an Log-Ausgabe erzeugen würde. Eine die Hauptview nicht vollständig
+überdeckende \textit{PopoverView} stellt die Ausgabe von \textit{NSLog}
+dar, welche der normale App-Anwender eigentlich gar nicht zu sehen
+bekäme und leitet sie in eine Datei um. Um nicht in jeder Zeile das
+Datum, die Uhrzeit und den Programmnamen aufzuführen, wurden diese
+zu Beginn der Hauptklasse aus der Ausgabe von \textit{NSLog} herausgeschnitten,
+indem der reine Ausgabeteil als String in UTF8-Codierung mittels \textit{fprintf}
+ausgegeben wird:
+\begin{lyxcode}
+{\footnotesize{}\#ifdef~DEBUG}{\footnotesize \par}
+
+{\footnotesize{}\#define~NSLog(FORMAT,~...)~fprintf(stderr,\char`\"{}\%s\textbackslash{}n\char`\"{},}{\footnotesize \par}
+
+{\footnotesize{}{[}{[}NSString~stringWithFormat:FORMAT,~\#\#\_\_VA\_ARGS\_\_{]}~UTF8String{]});}{\footnotesize \par}
+
+{\footnotesize{}\#endif}{\footnotesize \par}
+\end{lyxcode}
+Gleich zum Programmstart wird die Ausgabe in der Methode \textit{viewDidLoad}
+in eine Datei umgeleitet. Hierbei wird zuerst geschaut, ob bereits
+eine Ausgabedatei existiert. Ist das der Fall, so wird die Logging-Funktion
+automatisch eingeschaltet; ist sie nicht vorhanden bleibt sie deaktiviert.
+Deaktiviert man sie während der Laufzeit, so wird die Datei ebenfalls
+entfernt. Somit findet man den Logging-Schalter bei Programmstart
+stets so vor, wie man ihn verlassen hat.
+\begin{lyxcode}
+{\footnotesize{}NSArray~{*}paths~=~NSSearchPathForDirectoriesInDomains}{\footnotesize \par}
+
+{\footnotesize{}(NSDocumentDirectory,~NSUserDomainMask,~YES);}{\footnotesize \par}
+
+{\footnotesize{}NSString~{*}documentsDirectory~=~{[}paths~objectAtIndex:0{]};}{\footnotesize \par}
+
+{\footnotesize{}logPath~=~{[}documentsDirectory~stringByAppendingPathComponent:@\char`\"{}console.log\char`\"{}{]};}{\footnotesize \par}
+
+{\footnotesize{}NSFileManager~{*}filemgr;}{\footnotesize \par}
+
+{\footnotesize{}filemgr~=~{[}NSFileManager~defaultManager{]};}{\footnotesize \par}
+
+{\footnotesize{}if~({[}filemgr~fileExistsAtPath:logPath{]})~\{}{\footnotesize \par}
+
+{\footnotesize{}~~~freopen({[}logPath~cStringUsingEncoding:NSASCIIStringEncoding{]},\char`\"{}a+\char`\"{},stderr);}{\footnotesize \par}
+
+{\footnotesize{}~~~{[}\_logToFileSwitch~setOn:YES{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~{[}\_logFileButton~setEnabled:YES{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~{[}\_verboseLogLabel~setEnabled:YES{]};}{\footnotesize \par}
+
+{\footnotesize{}~~~{[}\_verboseLogSwitch~setEnabled:YES{]};}{\footnotesize \par}
+
+{\footnotesize{}\}~else}{\footnotesize \par}
+
+{\footnotesize{}~~~NSLog~(@\char`\"{}No~existing~log~file~found,~logging~disabled.\char`\"{});}{\footnotesize \par}
+\end{lyxcode}
+Mit dem Papierkorb unter dem Ausgabe-Fenster lässt sich die Datei
+nach dem Sichten aufräumen, ohne das Logging deaktivieren zu müssen.
+An diesem Icon wurde keine Bildunterschrift angebracht, denn es sollte
+selbsterklärend sein, was hier passiert. Werden informationsreichere
+Mitschnitte gewünscht, lassen sich diese auf Wunsch über den Verbose-Schalter
+aktivieren. Es werden dann mehr Informationen aufgezeichnet. Auch
+hier ist ein unerwartetes Problem aufgetreten. Die View beinhaltet
+nichts, was eine \textit{Delegate} oder eine \textit{DataSource} benötigt,
+demnach sollte diese recht codezeilenarme Funktionalität in der Hauptview
+untergebracht werden. Jedoch war nach dem Öffnen der View das Ausgabefeld
+stets leer, so dass ein Refresh-Button betätigt werden musste, der
+die Datei erneut in das Textfeld mappte. Erst dann wurde der Inhalt
+sichtbar. Abhilfe brachte das Auslagern in eine eigene Klasse mit
+der Initialisierungsmethode \textit{viewDidAppear}, welche das Laden
+der Datei übernimmt.
+
+\begin{figure}
+\begin{centering}
+\includegraphics[scale=0.25]{LogOutputViewController-verbose}
+\par\end{centering}
+
+\protect\caption{Logging-Output im Verbose-Modus}
+
+
+\end{figure}
+
+
+
+\subsection{HistoryElement}
+
+\textit{HistoryElement} ist die Implementierung der URL-History in
+Form einer doppelt verketteten Liste. Es kennt seinen Vorgänger, seinen
+Nachfolger als auch die an ihn gebundene Ressource. \textit{HistoryElement}
+verfügt über eine Methode \textit{getPart}, die auf Wunsch die Basis-URL,
+bestehend aus Protokoll und Domain, den höchsten oder den vorherigen
+Verzeichnispfad zurückliefert. Der Unterschied zwischen vorherigem
+und höchstem Verzeichnis ist folgender: Endet eine URL mit einem Schrägstrich,
+so wird er als Verzeichnis betrachtet und ist gleichzeitig das höchste
+Verzeichnis. Endet er nicht mit einem Schrägstrich, wird eine Datei
+vermutet und statt dessen den Pfad zum letzten Verzeichnis zurückgegeben,
+das mit einem Schrägstrich endet.
+
+Beispiel 1: @``http://www.smartphoneseppel.de/customer/1337''
+
+highestDir = previousDir = @``http://www.smartphoneseppel.de/customer/''
+
+Beispiel 2: @``http://www.smartphoneseppel.de\textit{/}shoppingcart/1337/''
+
+highestDir = @``http://www.smartphoneseppel.de\textit{/}shoppingcart/1337/''
+
+previousDir = @``http://www.smartphoneseppel.de\textit{/}shoppingcart/''
+
+
+\subsection{... und die AppDelegate?}
+
+Erstellt man ein neues Projekt, befindet sich im Projektordner neben
+den Controllern eine weitere Klasse: die \textit{AppDelegate}. Konzeptionell
+sollte der \textit{ViewController} alles beinhalten, womit sich die
+aktuelle View beschäftigt. Die \textit{AppDelegate} bleibt dabei erschreckend
+leer und hinterlässt das Gefühl, scheinbar etwas Wichtiges vergessen
+zu haben. Die einzige Methode, die überhaupt etwas macht, ist die
+\textit{application:didFinishLaunchingWithOptions:launchOptions}.
+Sie gibt ein \textit{YES} zurück. Immerhin.
+
+Die Erklärung hierfür ist das Storyboard. Wirft man einen Blick auf
+die Datei \textit{Projektname-Info.plist}, findet sich darin ein Schlüssel
+mit der Bezeichnung \textit{Main storyboard file base name} und dem
+Wert \textit{MainStoryboard}. Die Bedeutung hinter diesem Eintrag
+ist Folgende: Ist diese Einstellung gesetzt, lädt \textit{UIApplication}
+die Datei mit der Bezeichnung \textit{MainStoryboard.storyboard},
+instanziiert den ersten \textit{ViewController} und packt dessen View
+in ein neues Objekt des Typs \textit{UIWindow}. Es ist also völlig
+in Ordnung, wenn diese Datei bei Benutzung von Storyboards leer bleibt.
+
+
+\chapter{Schlusswort und Ausblick}
+
+Es ist vollbracht \textendash{} die erste eigene Anwendung, geschrieben
+in der auf den ersten Blick exotisch anmutenden Programmiersprache
+mit den vielen eckigen Klammern, läuft auf dem marktbeherrschenden
+Tablet-Computer der Firma Apple Inc. In einem abschließenden Fazit
+werde ich die einzelnen Schritte auf dem Weg hierher als auch den
+persönlichen Nutzen dieser Arbeit für mich reflektiv umreißen und
+auf die sich für mich ergebende Bereitschaft eingehen, weiterhin in
+dieser Umgebung zu entwickeln.
+
+Objective-C ist anders. Allerdings nicht so anders, dass man sich
+nicht mit ein wenig Zeit daran gewöhnen kann. Und möchte. Die Namenskonvention
+bei Objective-C ist gewöhnungsbedürftig, die Verwendung von scheinbar
+möglichst langen Variablennamen oder einer redundanten zusätzlichen
+Beschreibung für jeden Parameter in einer Methode ist zu Beginn äußerst
+fremd, steigert aber die Lesbarkeit des Codes ungemein. Auch an die
+Notation mit den eckigen Klammern gewöhnt man sich ziemlich schnell
+\textendash{} wenngleich das auch nicht wirklich nötig ist, denn die
+Klammern lassen sich in den meisten Fällen mit der alternativ angebotenen
+Punkt-Schreibweise umgehen, die für die meisten Umsteiger sehr vertraut
+wirkt. Ich selbst habe mich nach einiger Eingewöhnungszeit recht schnell
+schon während meines ersten Projektes auf diese Notation umgestellt;
+sie führte mir automatisch das Konzept der Nachrichtenkommunikation
+vor Augen. Die Cocoa-API erleichtert viele programmatische Handgriffe
+und es lohnt sich stets, einen Blick in die Referenz zu werfen. Beispielsweise
+habe ich zuerst anhand der Content-Länge überprüft, wann eine Response
+vollständig eingegangen ist. Ein sehr einfacher Weg, leider setzt
+er voraus, dass die Content-Länge in der Response angegeben ist. Da
+dies jedoch nicht immer der Fall ist, implementierte ich einen Workaround,
+der eine eingehende Response einen \textit{NSTimer} starten lies,
+welcher sich bei jedem eingehenden Paket wieder zurücksetzte. So sollte
+der Client herausfinden, ab wann eine Nachricht unbekannter Länge
+als \textit{vollständig empfangen} anzusehen ist. Ein sorgfältiger
+Blick in die Referenz hätte mir diesen Umstand abgenommen. Dort wäre
+ich auf die Methode \textit{connectionDidFinishLoading} gestoßen,
+welche eine elegantere Lösung zu genau dieser Problematik bietet,
+denn deren Implementierung wird nach dem Erhalt des finalisierenden
+Paketes aufgerufen.
+
+Auch meine Erfahrungen mit Xcode waren fast durchgängig von sehr angenehmer
+Natur. Unter Apples Entwicklungsumgebung lässt es sich sehr angenehm
+arbeiten. Die Live-Prüfung, die eine Autokorrektur für syntaktische
+Fehler und Tippfehler anbietet und auch der \textit{Assistant Editor},
+der zur geöffneten Datei immer gleich passende Sekundärdateien anbietet,
+sind Dinge, die ich in künftigen Entwicklungsumgebungen nur ungern
+missen werde. Ein kleiner Wermutstropfen war, dass Xcode nach einiger
+Zeit kontinuierlich langsamer wurde. Das ging so weit, dass es eine
+Qual war, den aktiven Quellcode-Tab zu wechseln. Man schaute sehr
+lange auf das drehende bunte Rad, in welches sich der Mauszeiger verwandelt,
+um den ausgelasteten Zustand der Anwendung zu signalisieren. Ein wenig
+Foren-Recherche ergab, dass der Schuldige sich ansammelnde Workspace-Einstellungen
+sind. Lässt man sich die Inhalte des Projektes \textit{Projectname.xcodeproj}
+anzeigen, so findet man dort eine Datei mit der Bezeichnung \textit{project.xcworkspace}.
+In dieser Datei speichert Xcode seine Einstellungen ab. Nach einem
+Löschen dieser Datei und dem Neustart von Xcode sind zwar alle Workspace-Einstellungen
+verschwunden, Xcode im Gegenzug aber um ein Vielfaches performanter.
+Ein Opfer, dass man an dieser Stelle gerne zu zahlen bereit ist. Es
+könnte natürlich sein, dass es sich um einen versionsspezifischen
+Bug handelt. In der aktuellen Version 4.5.2 habe ich dieses Verhalten
+noch nicht festgestellt, allerdings war beim Update auf diese Version
+die Implementierung des REST Analyzer nahezu vollständig.
+
+Das Storyboard ist eine ungemeine Arbeitserleichterung, wenn es um
+die Gestaltung der GUI geht. Hier findet der erste Kontakt mit Xcode
+statt, die ersten Zeilen Code, die bereits ein vollständiges GUI-Grundgerüst
+bilden, werden hier generiert. Es fühlt sich sehr einfach an und schafft
+es, Berührungsängste schnell zu nehmen. Mit wenig Zeitaufwand sind
+Views und Übergänge erstellt, GUI-Elemente eingefügt, gegebenenfalls
+deren \textit{Delegates} und \textit{DataSources} zugewiesen und in
+der Seitenleiste die Eigenschaften gesetzt, welche die Elemente bei
+Anwendungsstart besitzen sollten. Automatisch werden die Bereiche
+im Code eingefügt und mit den Storyboard-Elementen verbunden und man
+beginnt kurze Zeit später bereits mit der eigentlichen Implementierung
+der Funktionalitäten, ohne das Gefühl zu haben, sich vorher an notwendigen
+Nebensächlichkeiten aufhalten zu müssen. Selbstverständlich lässt
+sich auch alles ohne Storyboards entwerfen. Durch das Storyboard bereit
+gestellte Funktionalität sollte man jedoch nach Möglichkeit nicht
+mit dem programmatischen Weg vermischen. Es hat mich viel Zeit und
+Recherche gekostet, festzustellen, dass eine im Storyboard erstellte
+View nicht ohne Weiteres programmatisch zugreifbar ist. Der Weg, einem
+Übergang eine eindeutige Bezeichnung zu geben und auf diese über die
+in einem solchen Fall automatisch aufgerufene Methode \textit{prepareForSegue}
+zuzugreifen, wirkte auf mich ein wenig wie ein Workaround, ist aber
+wohl der Weg, der in einem solchen Fall zu gehen ist. Um der Übersichtlichkeit
+zu genügen bietet das Storyboard 4 Zoomstufen an: 12,5 \%, 25 \%,
+50 \% und 100 \%. Warum an dieser Stelle keine manuelle Eingabe der
+Zoomstufe gegeben ist oder zumindest ein Schieberegler angeboten wird,
+der sich etwas feingranularer einstellen lässt, ist mir nicht ganz
+ersichtlich. Bei meiner nicht ungewöhnlichen Auflösung von 1920x1200
+wäre oft 75 \% die Zoomstufe meiner Wahl gewesen.
+
+In der Wahl der Implementierungsthematik fand ich mit den \textit{REST
+Services} einen interessanten Bereich. Die Umsetzung eines generischen
+Clients für verschiedene Webservices, deren Schnittstelle die Methoden
+bilden, die das HTTP-Protokoll schon selbst mitbringt, war interessant
+und erweiterte meine Kenntnisse über Webservices. Die diesem Standard
+zugrunde liegende Idee ist einfach und leicht zu implementieren und
+das Arbeiten mit HTTP-Verben fühlt sich ``irgendwie nahe am Internet\textquotedblright{}
+an. In einem ersten Implementierungsansatz wurde das externe Framework
+\textit{RestKit} verwendet, welches die Arbeit mit \textit{REST}-konformen
+Seiten erleichtern sollte. Es stellte sich jedoch sehr schnell heraus,
+dass einige der Funktionen meine Erwartungen für einen generischen
+Ansatz nicht erfüllen konnten. So bot mir \textit{RestKit} das Mappen
+einer JSON-Ressource in ein \textit{NSDictionary} an, welches jedoch
+bereits über die Schlüssel verfügen musste, zu welchen anschließend
+die Werte hinzugefügt wurden. Für einen generischen Clienten, der
+jedoch vorher noch nicht weiß, welche Schlüssel die Zielressource
+liefern wird, ist das leider von eingeschränktem Nutzen und die Zuhilfenahme
+eines Parsers wurde unvermeidlich. Apple bietet in seinem hauseigenen
+Framework sowohl einen Parser für XML als auch einen Parser für JSON
+an, welcher bei vergleichbarer Funktionalität bereits wegen der offiziellen
+Unterstützung durch Apple bevorzugt eingesetzt werden sollte. Auch
+andere relevante Teile, die das externe Framework bereitstellen würde,
+waren schnell durch ein breites Arsenal hilfreicher Funktionen zu
+realisieren, die Cocoa Touch ohnehin bereitstellt. Letztendlich erlaubte
+dies mir die Umsetzung dieser Arbeit, ohne dass ich auf externe Frameworks
+zurückgreifen musste.
+
+Abschließend kann ich über die vergangenen Wochen, in denen ich mich
+mit dieser Arbeit beschäftigt habe, Folgendes sagen: Mein \textquotedblleft Blick
+über den Tellerrand\textquotedblleft{} in Richtung Objective-C fühlt
+sich befriedigend an. Der Exkurs wird hier noch nicht enden, denn
+ich möchte noch einige weitere Anwendungen für Apple-Hardware entwickeln.
+Die Arbeit auf und mit Apples Plattform hat sich für mich als sehr
+angenehm erwiesen und meinen Programmierstil positiv beeinflusst.
+Kurze und unverständliche Variablennamen werde ich zugunsten der Lesbarkeit
+künftig vermeiden, ebenso werde ich beim Entwickeln fernab Objective-C
+die zusätzlichen Parameter-Bezeichner in den Methoden vermissen. Einen
+ersten Kundenauftrag für eine iPhone-App habe ich bereits schon vor
+dem Abschluss dieser Arbeit angenommen. Xcode wird also nicht lange
+geschlossen bleiben und schon bald werde ich meinen Ausflug in die
+Objective-C-Welt an der Stelle weiterführen, wo ich ihn mit dem Abschluss
+dieser Arbeit unterbrochen habe.
+\begin{thebibliography}{1}
+\bibitem{Learning Objective-C}Artikel ``Learning Objective-C'',
+In: iOS Developer Library, URL: http://developer.apple.com/library/ios/\#referencelibrary/GettingStarted/
+Learning\_Objective-C\_A\_Primer/\_index.html (letzter Aufruf am 9.12.2012)
+
+\bibitem{Galileo Computing}Rodewig, Klaus M. / Wagner, Clemens (2012):
+``Apps entwickeln für iPhone und iPad \textendash{} Das Praxisbuch'',
+Galileo Computing, URL: http://openbook.galileocomputing.de/apps\_entwickeln\_fuer\_iphone\_und\_
+ipad/index.html (letzter Aufruf am 9.12.2012)
+
+\bibitem{Wikipedia - Cocoa}Artikel ``Cocoa'', In: Wikipedia, Die
+freie Enzyklopädie, URL: http://de.wikipedia.org/wiki/Cocoa (letzter
+Aufruf am 9.12.2012)
+
+\bibitem{saurik}Freeman, Jay: ``How to Host a Cydia\texttrademark{}
+Repository'', URL: http://www.saurik.com/id/7 (letzter Aufruf am
+9.12.2012)
+
+\bibitem{Dissertation Fielding}Fielding, Roy (2000) Dissertation:
+``Architectural Styles and the Design of Network-based Software Architectures''
+
+\bibitem{JAXenter}Tilkov, Stefan (2009): ``REST \textendash{} Der
+bessere Webservice?'', In: JAXenter, URL: http://it-republik.de/jaxenter/artikel/REST---Der-bessere-Web-Service-2158.html
+(letzter Aufruf am 9.12.2012)
+
+\bibitem{Wikipedia - REST}Artikel ``Representational State Transfer'',
+In: Wikipedia, Die freie Enzyklopädie, URL: http://de.wikipedia.org/wiki/Representational\_State\_Transfer
+(letzter Aufruf am 9.12.2012)
+
+\bibitem{JSON.org - Einf=0000FChrung in JSON}Introducing JSON, URL:
+http://json.org/index.html (letzter Aufruf am 9.12.2012)
+
+\end{thebibliography}
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\large
+\bf
+	Eidesstattliche Erklärung zur Bachelorarbeit
+\end{center}
+\vspace{1 cm}
+\normalsize
+	Hiermit erkläre ich, dass ich die Bachelorarbeit selbstständig  verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt  und die aus fremden Quellen direkt oder indirekt  übernommenen Gedanken als  solche kenntlich gemacht habe. Alle enthaltenen Abbildungen wurden von mir selbst angefertigt. Die Arbeit habe ich bisher keinem anderen Prüfungsamt in gleicher oder vergleichbarer Form vorgelegt. Sie wurde bisher nicht veröffentlicht.\\
+\vspace{1.5 cm}
+\begin{center}
+\begin{tabular}{lp{2em}l}   \hspace{6cm}   && \hspace{6cm}
+\\\cline{1-1}\cline{3-3}   Ort, Datum     && Unterschrift  \end{tabular}
+\end{center}
+\end{document}

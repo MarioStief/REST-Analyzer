@@ -13,9 +13,30 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    int count = [[NSUserDefaults standardUserDefaults] integerForKey:@"LaunchCount"];
+        if(count < 0) count = 0;
+        [[NSUserDefaults standardUserDefaults] setInteger:count+1 forKey:@"LaunchCount"];
+        if(count == 10) {
+        NSString *string = [[NSMutableString alloc] initWithFormat:@"You started this app more than 10 times.\n"
+                            "If you like it, please consider rating it.\n"
+                            "This popup won't bug you again.\n"];
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Do you like me?"
+                                                            message:string
+                                                           delegate:self
+                                                  cancelButtonTitle:@"No, I will not."
+                                                  otherButtonTitles:@"Rate this app",nil];
+        [alertView show];
+    }
     return YES;
 }
-							
+
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1)
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id639570541"]];
+}
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
